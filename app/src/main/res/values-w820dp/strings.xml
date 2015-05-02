@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ceph Monitor</string>
+
+    //LoginActivity
+    <string name="login_title_one">Login</string>
+    <string name="login_title_two">Welcome</string>
+    <string name="login_title_three">Ceph Monitor！</string>
+    <string name="login_host">Host</string>
+    <string name="login_port">Port</string>
+    <string name="login_name">Name</string>
+    <string name="login_password">Password</string>
+
+
+</resources>

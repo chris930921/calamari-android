@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ceph Monitor</string>
+    <string name="login_message">Incorrect username or password.</string>
+    <string name="login_success">Login successfully</string>
+    <string name="check_network">Please check the network connection</string>
+    <string name="login_fail_other_error">Web request status code:\u0020</string>
+</resources>

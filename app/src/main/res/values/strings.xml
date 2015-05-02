@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ceph Monitor</string>
+
+    //LoginActivity
+    <string name="login_title_one">Login</string>
+    <string name="login_title_two">Welcome</string>
+    <string name="login_title_three">Ceph Monitor！</string>
+    <string name="login_host">Host</string>
+    <string name="login_port">Port</string>
+    <string name="login_name">Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_fail_title">Login Failed</string>
+    <string name="login_fail_content">\u0020is incorrect!</string>
+    <string name="login_fail_confirm">Confirm</string>
+    <string name="login_fail_sing_in">Incorrect username or password.</string>
+    <string name="login_sign_in">Sign in</string>
+
+
+    //HealthFragment
+    <string name="health_card_health">HEALTH</string>
+    <string name="health_card_ago">ago</string>
+
+    <string name="health_card_osd">OSD</string>
+    <string name="health_card_in_and_up">In \u0026 Up</string>
+
+    <string name="health_card_mon">MON</string>
+    <string name="health_card_quorom">Quorom</string>
+
+    <string name="health_card_pools">POOLS</string>
+    <string name="health_card_active">Active</string>
+
+    <string name="health_card_hosts">HOSTS</string>
+    <string name="health_card_reporting">Reporting</string>
+
+    <string name="health_card_pg">PG STATUS</string>
+    <string name="health_card_clean">Clean</string>
+    <string name="health_card_Working">Working</string>
+    <string name="health_card_Dirty">Dirty</string>
+
+    <string name="health_card_warnings">Warnings</string>
+    <string name="health_card_errors">Errors</string>
+
+
+</resources>
