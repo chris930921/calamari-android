@@ -87,4 +87,17 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
         CheckExitDialog.create(activity).show();
     }
+
+    public void showHealthDetailFragment() {
+        FragmentLauncher.goHealthDetailFragment(activity);
+        layout.bottomBar.setVisibility(View.GONE);
+        layout.showBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentLauncher.goHealthFragment(activity);
+                layout.bottomBar.setVisibility(View.VISIBLE);
+                layout.hideBack();
+            }
+        });
+    }
 }

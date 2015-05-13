@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.cephmonitor.cephmonitor.MainActivity;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
@@ -85,7 +86,17 @@ public class HealthFragment extends Fragment {
 
         requestParams = new LoginParams(getActivity());
         requestFirstClusterId();
+
+        layout.healthCard.setTitleOnClickListener(healthCardClickEvent);
     }
+
+    private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            MainActivity activity = (MainActivity) getActivity();
+            activity.showHealthDetailFragment();
+        }
+    };
 
     private void requestFirstClusterId() {
         ClusterV2ListRequest spider = new ClusterV2ListRequest(getActivity());

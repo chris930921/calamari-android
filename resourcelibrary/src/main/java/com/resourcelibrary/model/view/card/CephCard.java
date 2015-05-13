@@ -502,4 +502,8 @@ public class CephCard extends RelativeLayout {
         canvas.drawRoundRect(bounds, radius, radius, paint);
         super.onDraw(canvas);
     }
+
+    public void setTitleOnClickListener(OnClickListener event) {
+        topContainer.setOnClickListener(event);
+    }
 }

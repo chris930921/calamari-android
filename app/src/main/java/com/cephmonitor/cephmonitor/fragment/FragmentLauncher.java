@@ -22,11 +22,11 @@ public class FragmentLauncher {
         }
     }
 
-    public static void goHealthDetialFragment(Activity activity) {
+    public static void goHealthDetailFragment(Activity activity) {
         String fragmentName = HealthDetailFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
-            HealthFragment page = new HealthFragment();
+            HealthDetailFragment page = new HealthDetailFragment();
             cleanAllPopFragment(activity);
             change(activity, MainLayout.CONTAINER_ID, page);
         }

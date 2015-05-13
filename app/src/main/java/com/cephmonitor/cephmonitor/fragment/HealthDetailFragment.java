@@ -6,14 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cephmonitor.cephmonitor.layout.fragment.LogsLayout;
+import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
 
 public class HealthDetailFragment extends Fragment {
-    private LogsLayout layout;
+    private HealthDetailLayout layout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
-            layout = new LogsLayout(getActivity());
+            layout = new HealthDetailLayout(getActivity());
         }
         return layout;
     }

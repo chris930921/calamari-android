@@ -214,4 +214,14 @@ public class MainLayout extends RelativeLayout {
     public void setTitle(String title) {
         this.title.setText(title);
     }
+
+    public void showBack(OnClickListener event) {
+        back.setVisibility(VISIBLE);
+        back.setOnClickListener(event);
+    }
+
+    public void hideBack() {
+        back.setVisibility(INVISIBLE);
+        back.setOnClickListener(null);
+    }
 }
