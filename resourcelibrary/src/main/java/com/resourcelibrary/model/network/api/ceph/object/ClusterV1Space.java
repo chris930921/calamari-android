@@ -14,11 +14,6 @@ public class ClusterV1Space extends PortableJsonObject {
         super(Json);
     }
 
-    public String getOverallStatus() throws JSONException {
-        JSONObject report = json.getJSONObject("report");
-        return report.getString("overall_status");
-    }
-
     public long getFreeBytes() throws JSONException {
         JSONObject space = json.getJSONObject("space");
         return space.getLong("free_bytes");
