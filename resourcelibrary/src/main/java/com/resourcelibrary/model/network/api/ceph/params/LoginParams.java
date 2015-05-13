@@ -1,6 +1,5 @@
 package com.resourcelibrary.model.network.api.ceph.params;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -13,8 +12,8 @@ public class LoginParams extends CephParams {
     private static final String FILE_PATH = "account_file";
     private SharedPreferences settings;
 
-    public LoginParams(Activity activity) {
-        this.settings = activity.getSharedPreferences(FILE_PATH, Context.MODE_PRIVATE);
+    public LoginParams(Context context) {
+        this.settings = context.getSharedPreferences(FILE_PATH, Context.MODE_PRIVATE);
     }
 
     public void failLogin() {

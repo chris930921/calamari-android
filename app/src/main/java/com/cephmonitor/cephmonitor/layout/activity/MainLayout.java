@@ -138,7 +138,7 @@ public class MainLayout extends RelativeLayout {
     }
 
     private Button addFunctionButton() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ruler.getW(16.32), LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ruler.getW(16.32), ruler.getW(16.32));
         params.weight = 1;
 
         Button v = new Button(context);

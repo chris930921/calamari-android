@@ -42,5 +42,29 @@
     <string name="health_card_warnings">Warnings</string>
     <string name="health_card_errors">Errors</string>
 
+    //RequestAndCheckService
+    <string name="check_service_mon_count_error_title">錯誤！Monitor 損毀</string>
+    <string name="check_service_mon_count_error_content">有 %1$s 個 Monitor 損毀！</string>
+
+    <string name="check_service_mon_count_warn_title">警告！Monitor 異常</string>
+    <string name="check_service_mon_count_warn_content">有 %1$s 個 Monitor 異常！</string>
+
+    <string name="check_service_osd_count_error_title">錯誤！OSD 損毀</string>
+    <string name="check_service_osd_count_error_content">有 %1$s 個 OSD 損毀！</string>
+
+    <string name="check_service_osd_count_warn_title">警告！OSD 異常</string>
+    <string name="check_service_osd_count_warn_content">有 %1$s 個 OSD 異常！</string>
+
+    <string name="check_service_pg_count_error_title">錯誤！PG 損毀</string>
+    <string name="check_service_pg_count_error_content">有 %1$s 個 PG 損毀！</string>
+
+    <string name="check_service_pg_count_warn_title">警告！PG 異常</string>
+    <string name="check_service_pg_count_warn_content">有 %1$s 個 PG 異常！</string>
+
+    <string name="check_service_usage_percent_error_title">錯誤！使用量滿載</string>
+    <string name="check_service_usage_percent_error_content">使用量已達到上限！請擴充儲存空間。</string>
+
+    <string name="check_service_usage_percent_warn_title">警告！使用量即將滿載</string>
+    <string name="check_service_usage_percent_warn_content">使用量已達到 %1$s ！建議擴充儲存空間。</string>
 
 </resources>

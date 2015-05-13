@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cephmonitor.cephmonitor.fragment.FragmentChange;
+import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
@@ -33,14 +33,14 @@ public class MainActivity extends Activity {
         super.onResume();
 
         setTitle("Health");
-        FragmentChange.goHealthFragment(activity);
+        FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
         layout.health.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 layout.recoverAllButton();
                 layout.health.setBackgroundResource(R.drawable.icon06);
-                FragmentChange.goHealthFragment(activity);
+                FragmentLauncher.goHealthFragment(activity);
             }
         });
 

@@ -1,6 +1,7 @@
 package com.resourcelibrary.model.network;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -12,7 +13,7 @@ import com.resourcelibrary.model.log.ShowLog;
  * Created by User on 2/9/2015.
  */
 public class GeneralError {
-    public static final Response.ErrorListener callback(final Activity activity) {
+    public static final Response.ErrorListener callback(final Context context) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -24,7 +25,7 @@ public class GeneralError {
                 try {
                     String responseBody = new String(volleyError.networkResponse.data, "utf-8");
                     ShowLog.d("狀態碼: " + volleyError.networkResponse.statusCode + " 訊息: " + responseBody);
-                    Toast.makeText(activity, activity.getResources().getString(R.string.check_network), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.check_network), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

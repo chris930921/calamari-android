@@ -7,6 +7,7 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
+import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
@@ -57,6 +58,8 @@ public class LoginActivity extends Activity {
         layout.password.setText(loginInfo.getPassword());
 
         layout.signIn.setOnClickListener(clickSignIn());
+
+        ServiceLauncher.startLooperService(this);
     }
 
     private View.OnClickListener clickSignIn() {
@@ -91,7 +94,7 @@ public class LoginActivity extends Activity {
         public void onResponse(String s) {
             ShowLog.d("登入結果為: " + s);
             ShowLog.d("Session為: " + params.getSession());
-            ActivityChange.goMainActivity(activity);
+            ActivityLauncher.goMainActivity(activity);
             loadingDialog.cancel();
             activity.finish();
         }
@@ -103,14 +106,14 @@ public class LoginActivity extends Activity {
             loadingDialog.cancel();
             params.failLogin();
             if (volleyError.networkResponse == null) {
-                shoeLoginErrorDialog();
+                showLoginErrorDialog();
             } else {
                 GeneralError.showStatusCode(activity, volleyError);
             }
         }
     };
 
-    private void shoeLoginErrorDialog() {
+    private void showLoginErrorDialog() {
         dialog.setOnConfirmClickListener(null);
         String title = getResources().getString(R.string.login_fail_title);
         String content = getResources().getString(R.string.login_fail_sing_in);

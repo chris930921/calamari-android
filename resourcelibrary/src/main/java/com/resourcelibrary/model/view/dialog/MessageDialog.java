@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,6 +40,12 @@ public class MessageDialog extends RelativeLayout {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = ruler.getW(88);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
 
         addView(title = title());
         addView(content = content(title));
@@ -77,7 +84,7 @@ public class MessageDialog extends RelativeLayout {
     }
 
     public Button confirm(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(8.43));
         params.addRule(BELOW, relativeView.getId());
 
         Button v = new Button(context);
