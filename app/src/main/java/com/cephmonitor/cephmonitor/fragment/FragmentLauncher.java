@@ -22,6 +22,16 @@ public class FragmentLauncher {
         }
     }
 
+    public static void goHealthDetialFragment(Activity activity) {
+        String fragmentName = HealthDetailFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            HealthFragment page = new HealthFragment();
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
     private static boolean checkFragmentOpening(Activity activity, String fragmentName) {
         return activity.getFragmentManager().findFragmentByTag(fragmentName) == null;
     }

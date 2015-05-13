@@ -14,11 +14,6 @@ public class ServiceLauncher {
         context.startService(intent);
     }
 
-    public static void startRequestAndCheckService(Context context) {
-        Intent intent = new Intent(context, RequestAndCheckService.class);
-        context.startService(intent);
-    }
-
     public static PendingIntent pendingRequestAndCheckService(Context context) {
         Intent intent = new Intent(context, RequestAndCheckService.class);
         return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,12 +19,14 @@ import com.resourcelibrary.model.view.WH;
 public class MainLayout extends RelativeLayout {
     public static final int CONTAINER_ID = RandomId.get();
     public RelativeLayout bottomBar;
+    public RelativeLayout topBar;
     public LinearLayout bottomContainer;
     public Button health;
     public Button usage;
     public Button performance;
     public Button more;
     public View bottomBarLine;
+    public ImageView back;
 
     public TextView title;
     public FrameLayout fragment;
@@ -41,7 +44,9 @@ public class MainLayout extends RelativeLayout {
         setLayoutParams(params);
         setBackgroundColor(Color.WHITE);
 
-        addView(title = title());
+        addView(topBar = topBar());
+        topBar.addView(back = back());
+        topBar.addView(title = title(back));
 
         addView(bottomBar = bottomBar());
         bottomBar.addView(bottomBarLine = bottomBarLine());
@@ -54,12 +59,42 @@ public class MainLayout extends RelativeLayout {
         bottomContainer.addView(divider());
         bottomContainer.addView(more = more());
 
-        addView(fragment = fragment(title, bottomBar));
+        addView(fragment = fragment(topBar, bottomBar));
     }
 
-    private TextView title() {
+    private RelativeLayout topBar() {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.04));
         params.addRule(ALIGN_PARENT_TOP);
+
+
+        RelativeLayout v = new RelativeLayout(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER);
+        v.setBackgroundColor(Color.parseColor("#e63427"));
+
+        return v;
+    }
+
+    private ImageView back() {
+        LayoutParams params = new LayoutParams(ruler.getH(12.04), LayoutParams.MATCH_PARENT);
+        params.addRule(ALIGN_PARENT_TOP);
+        params.addRule(ALIGN_PARENT_LEFT);
+
+        ImageView v = new ImageView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setPadding(ruler.getW(5), ruler.getW(5), ruler.getW(5), ruler.getW(5));
+        v.setImageResource(R.drawable.icon021);
+        v.setVisibility(INVISIBLE);
+
+        return v;
+    }
+
+    private TextView title(View leftView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.addRule(RIGHT_OF, leftView.getId());
+        params.setMargins(0, 0, ruler.getH(12.04), 0);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
@@ -67,7 +102,6 @@ public class MainLayout extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER);
         v.setTypeface(null, Typeface.BOLD);
-        v.setBackgroundColor(Color.parseColor("#e63427"));
         v.setTextColor(Color.parseColor("#ffffff"));
 
         return v;

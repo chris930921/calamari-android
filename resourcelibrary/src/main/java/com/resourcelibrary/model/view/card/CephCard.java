@@ -135,7 +135,7 @@ public class CephCard extends RelativeLayout {
     }
 
     public ImageView icon() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(ruler.getW(10.45), ruler.getW(10.45));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(CENTER_IN_PARENT);
         params.setMargins(ruler.getW(4.08), 0, 0, 0);
@@ -147,7 +147,7 @@ public class CephCard extends RelativeLayout {
     }
 
     public ImageView arrow() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(ruler.getW(10.45), ruler.getW(10.45));
         params.addRule(ALIGN_PARENT_RIGHT);
         params.addRule(CENTER_IN_PARENT);
         params.setMargins(0, 0, ruler.getW(4.08), 0);
