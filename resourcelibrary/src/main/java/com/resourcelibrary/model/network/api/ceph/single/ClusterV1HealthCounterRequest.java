@@ -29,6 +29,6 @@ public class ClusterV1HealthCounterRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "{ \"pg\": { \"warn\": { \"count\": 0, \"states\": {} }, \"critical\": { \"count\": 0, \"states\": {} }, \"ok\": { \"count\": 960, \"states\": { \"active\": 960, \"clean\": 960 } } }, \"mds\": { \"up_not_in\": 0, \"not_up_not_in\": 0, \"total\": 0, \"up_in\": 0 }, \"mon\": { \"warn\": { \"count\": 0, \"states\": {} }, \"critical\": { \"count\": 0, \"states\": {} }, \"ok\": { \"count\": 1, \"states\": { \"in\": 1 } } }, \"osd\": { \"warn\": { \"count\": 1, \"states\": {} }, \"critical\": { \"count\": 2, \"states\": {} }, \"ok\": { \"count\": 3, \"states\": { \"up/in\": 3 } } }, \"cluster_update_time\": \"2015-04-22T18:42:23.046870+00:00\", \"cluster_update_time_unix\": 1429728143000 }";
+        return "{ \"pg\": { \"warn\": { \"count\": 10, \"states\": {} }, \"critical\": { \"count\": 15, \"states\": {} }, \"ok\": { \"count\": 960, \"states\": { \"active\": 960, \"clean\": 960 } } }, \"mds\": { \"up_not_in\": 0, \"not_up_not_in\": 0, \"total\": 0, \"up_in\": 0 }, \"mon\": { \"warn\": { \"count\": 4, \"states\": {} }, \"critical\": { \"count\": 6, \"states\": {} }, \"ok\": { \"count\": 1, \"states\": { \"in\": 1 } } }, \"osd\": { \"warn\": { \"count\": 1, \"states\": {} }, \"critical\": { \"count\": 2, \"states\": {} }, \"ok\": { \"count\": 3, \"states\": { \"up/in\": 3 } } }, \"cluster_update_time\": \"2015-04-22T18:42:23.046870+00:00\", \"cluster_update_time_unix\": 1429728143000 }";
     }
 }

@@ -6,33 +6,59 @@ import android.os.IBinder;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountErrorNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountWarnNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.OsdCountErrorNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.OsdCountWarnNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.PgCountErrorNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.PgCountWarnNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.UsagePercentErrorNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.UsagePercentWarnNotification;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2Data;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
+import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
 
 import org.json.JSONException;
 
-public class RequestAndCheckService extends Service {
-    private Boolean isFirstOpen = true;
-    private LoginParams requestParams;
+import java.util.ArrayList;
 
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (isFirstOpen) {
-            init();
-            isFirstOpen = false;
-        }
-        return START_REDELIVER_INTENT;
+public class RequestAndCheckService extends Service {
+    private LoginParams requestParams;
+    private ArrayList<ConditionNotification> healthCountCheckList;
+    private ArrayList<ConditionNotification> clusterSpaceCheckList;
+
+    @Override
+    public void onCreate() {
+        healthCountCheckList = new ArrayList<>();
+        healthCountCheckList.add(new MonCountErrorNotification(this));
+        healthCountCheckList.add(new MonCountWarnNotification(this));
+        healthCountCheckList.add(new OsdCountErrorNotification(this));
+        healthCountCheckList.add(new OsdCountWarnNotification(this));
+        healthCountCheckList.add(new PgCountErrorNotification(this));
+        healthCountCheckList.add(new PgCountWarnNotification(this));
+
+        clusterSpaceCheckList = new ArrayList<>();
+        clusterSpaceCheckList.add(new UsagePercentErrorNotification(this));
+        clusterSpaceCheckList.add(new UsagePercentWarnNotification(this));
     }
 
-    private void init() {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         requestParams = new LoginParams(this);
+        ShowLog.d("位址:" + requestParams.getHost());
+        ShowLog.d("Port:" + requestParams.getPort());
+        ShowLog.d("名稱:" + requestParams.getName());
+        ShowLog.d("密碼:" + requestParams.getPassword());
         requestLoginPost();
+        return START_REDELIVER_INTENT;
     }
 
     private void requestLoginPost() {
@@ -68,6 +94,7 @@ public class RequestAndCheckService extends Service {
             try {
                 dealWithFirstClusterExists(s);
                 requestOsdMonStatus();
+                requestClusterSpace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -109,21 +136,37 @@ public class RequestAndCheckService extends Service {
 
 
     private void dealWithStatusCount(String response) throws JSONException {
+        ShowLog.d("背景服務 dealWithStatusCount:" + response);
         ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(response);
-//        monCardOkCount = data.getMonOkCount();
-//        monCardTotalCount = data.getMonTotalCount();
-//        monCardWarningCount = data.getMonWarningCount();
-//        monCardErrorCount = data.getMonErrorCount();
-//
-//        osdCardOkCount = data.getOsdOkCount();
-//        oadCardTotalCount = data.getOsdTotalCount();
-//        osdCardWarningCount = data.getOsdWarningCount();
-//        osdCardErrorCount = data.getOsdErrorCount();
-//
-//        pgCardActiveCount = data.getPlacmentGroupsActiveCount();
-//        pgCardCleanCount = data.getPlacmentGroupsCleanCount();
-//        pgCardWorkingCount = data.getPlacmentGroupsWarningCount();
-//        pgCardDirtyCount = data.getPlacmentGroupsErrorCount();
+        for (ConditionNotification checker : healthCountCheckList) {
+            checker.check(data);
+        }
+    }
+
+    private void requestClusterSpace() {
+        ClusterV1SpaceRequest spider = new ClusterV1SpaceRequest(this);
+        spider.setRequestParams(requestParams);
+        spider.request(successClusterSpace, GeneralError.callback(this));
+    }
+
+    private Response.Listener<String> successClusterSpace = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String s) {
+            try {
+                dealWithClusterSpace(s);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+
+    private void dealWithClusterSpace(String response) throws JSONException {
+        ShowLog.d("背景服務 dealWithClusterSpace:" + response);
+        ClusterV1Space data = new ClusterV1Space(response);
+        for (ConditionNotification checker : clusterSpaceCheckList) {
+            checker.check(data);
+        }
     }
 
     public IBinder onBind(Intent intent) {

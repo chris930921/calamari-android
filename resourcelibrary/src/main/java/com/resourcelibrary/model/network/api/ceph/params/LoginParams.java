@@ -13,7 +13,7 @@ public class LoginParams extends CephParams {
     private SharedPreferences settings;
 
     public LoginParams(Context context) {
-        this.settings = context.getSharedPreferences(FILE_PATH, Context.MODE_PRIVATE);
+        this.settings = context.getSharedPreferences(FILE_PATH, Context.MODE_MULTI_PROCESS);
     }
 
     public void failLogin() {

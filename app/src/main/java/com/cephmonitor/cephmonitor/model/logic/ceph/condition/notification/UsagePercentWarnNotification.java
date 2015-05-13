@@ -13,18 +13,21 @@ import org.json.JSONException;
 /**
  * Created by User on 5/13/2015.
  */
-public class UsagePercentErrorNotification extends ConditionNotification<ClusterV1Space> {
-    public static final float WARN_PERCENT_MAX = 0.8f;
+public class UsagePercentWarnNotification extends ConditionNotification<ClusterV1Space> {
+    private static final float WARN_PERCENT_MIN = 0.7f;
+    private double percent;
 
-    public UsagePercentErrorNotification(Context context) {
+    public UsagePercentWarnNotification(Context context) {
         super(context);
     }
 
     @Override
     protected boolean decide(ClusterV1Space data) {
         try {
-            double percent = (double) data.getUsedBytes() / (double) data.getCapacityBytes();
-            return percent >= WARN_PERCENT_MAX;
+            percent = (double) data.getUsedBytes() / (double) data.getCapacityBytes();
+            boolean result = percent >= WARN_PERCENT_MIN;
+            result &= percent < UsagePercentErrorNotification.WARN_PERCENT_MAX;
+            return result;
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
@@ -33,8 +36,11 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
 
     @Override
     protected Notification onTrue(ClusterV1Space data) {
-        String title = getContext().getResources().getString(R.string.check_service_usage_percent_error_title);
-        String content = getContext().getResources().getString(R.string.check_service_usage_percent_error_content);
+        String title = getContext().getResources().getString(R.string.check_service_usage_percent_warn_title);
+        String content = String.format(
+                getContext().getResources().getString(R.string.check_service_usage_percent_warn_content),
+                percent
+        );
 
         Notification msg = new NotificationCompat.Builder(getContext())
                 .setContentIntent(null)

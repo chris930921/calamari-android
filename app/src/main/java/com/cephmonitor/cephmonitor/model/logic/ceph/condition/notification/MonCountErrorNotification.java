@@ -20,7 +20,7 @@ public class MonCountErrorNotification extends ConditionNotification<ClusterV1He
     }
 
     @Override
-    public boolean decide(Context context, ClusterV1HealthCounterData data) {
+    protected boolean decide(ClusterV1HealthCounterData data) {
         try {
             return data.getMonErrorCount() > 0;
         } catch (JSONException e) {
@@ -30,15 +30,15 @@ public class MonCountErrorNotification extends ConditionNotification<ClusterV1He
     }
 
     @Override
-    public Notification onTrue(Context context, ClusterV1HealthCounterData data) {
+    protected Notification onTrue(ClusterV1HealthCounterData data) {
         try {
-            String title = context.getResources().getString(R.string.check_service_mon_count_error_title);
+            String title = getContext().getResources().getString(R.string.check_service_mon_count_error_title);
             String content = String.format(
-                    context.getResources().getString(R.string.check_service_mon_count_error_content),
+                    getContext().getResources().getString(R.string.check_service_mon_count_error_content),
                     data.getMonErrorCount()
             );
 
-            Notification msg = new NotificationCompat.Builder(context)
+            Notification msg = new NotificationCompat.Builder(getContext())
                     .setContentIntent(null)
                     .setTicker(content)
                     .setSmallIcon(R.drawable.ic_launcher)

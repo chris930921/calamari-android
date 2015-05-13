@@ -13,16 +13,16 @@ import org.json.JSONException;
 /**
  * Created by User on 5/13/2015.
  */
-public class OsdCountErrorNotification extends ConditionNotification<ClusterV1HealthCounterData> {
+public class OsdCountWarnNotification extends ConditionNotification<ClusterV1HealthCounterData> {
 
-    public OsdCountErrorNotification(Context context) {
+    public OsdCountWarnNotification(Context context) {
         super(context);
     }
 
     @Override
     protected boolean decide(ClusterV1HealthCounterData data) {
         try {
-            return data.getOsdErrorCount() > 0;
+            return data.getOsdWarningCount() > 0;
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
@@ -32,10 +32,10 @@ public class OsdCountErrorNotification extends ConditionNotification<ClusterV1He
     @Override
     protected Notification onTrue(ClusterV1HealthCounterData data) {
         try {
-            String title = getContext().getResources().getString(R.string.check_service_osd_count_error_title);
+            String title = getContext().getResources().getString(R.string.check_service_osd_count_warn_title);
             String content = String.format(
-                    getContext().getResources().getString(R.string.check_service_osd_count_error_content),
-                    data.getOsdErrorCount()
+                    getContext().getResources().getString(R.string.check_service_osd_count_warn_content),
+                    data.getOsdWarningCount()
             );
 
             Notification msg = new NotificationCompat.Builder(getContext())

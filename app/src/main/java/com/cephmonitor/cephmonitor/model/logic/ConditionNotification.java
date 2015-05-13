@@ -16,13 +16,13 @@ public abstract class ConditionNotification<T> {
 
     public void check(T data) {
         try {
-            boolean isAbove = decide(context, data);
+            boolean isAbove = decide(data);
             Notification msg;
 
             if (isAbove) {
-                msg = onTrue(context, data);
+                msg = onTrue(data);
             } else {
-                msg = onFalse(context, data);
+                msg = onFalse(data);
             }
 
             if (msg != null) {
@@ -35,13 +35,17 @@ public abstract class ConditionNotification<T> {
         }
     }
 
-    protected abstract boolean decide(Context context, T data);
+    protected Context getContext() {
+        return context;
+    }
 
-    protected Notification onTrue(Context context, T data) {
+    protected abstract boolean decide(T data);
+
+    protected Notification onTrue(T data) {
         return null;
     }
 
-    protected Notification onFalse(Context context, T data) {
+    protected Notification onFalse(T data) {
         return null;
     }
 }
