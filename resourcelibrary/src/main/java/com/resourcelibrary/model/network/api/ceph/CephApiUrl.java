@@ -23,6 +23,10 @@ public class CephApiUrl {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/health";
     }
 
+    public static String clusterV1Space(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/space";
+    }
+
     public static String clusterV1HealthCounter(CephParams params) {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/health_counters";
     }
