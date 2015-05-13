@@ -12,6 +12,8 @@ import java.util.Calendar;
 
 public class LooperService extends Service {
     private Boolean isFirstOpen = true;
+    private PendingIntent intent;
+    private AlarmManager alarm;
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (isFirstOpen) {
@@ -24,9 +26,16 @@ public class LooperService extends Service {
 
     private void init() {
         Calendar cal = Calendar.getInstance();
-        PendingIntent intent = ServiceLauncher.pendingRequestAndCheckService(this);
-        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        intent = ServiceLauncher.pendingRequestAndCheckService(this);
+        alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 30000, intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(intent);
     }
 
     public IBinder onBind(Intent intent) {
