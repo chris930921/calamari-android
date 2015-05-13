@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -32,8 +33,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        setTitle("Health");
-        FragmentLauncher.goHealthFragment(activity);
+        showHealthFragment();
         layout.health.setBackgroundResource(R.drawable.icon06);
         layout.health.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,15 +88,23 @@ public class MainActivity extends Activity {
         CheckExitDialog.create(activity).show();
     }
 
+    public void showHealthFragment() {
+        setTitle("Health");
+        layout.topBar.setBackgroundColor(Color.parseColor("#e63427"));
+        FragmentLauncher.goHealthFragment(activity);
+        layout.bottomBar.setVisibility(View.VISIBLE);
+        layout.hideBack();
+    }
+
     public void showHealthDetailFragment() {
+        setTitle("Health Detail");
+        layout.topBar.setBackgroundColor(Color.parseColor("#CD2626"));
         FragmentLauncher.goHealthDetailFragment(activity);
         layout.bottomBar.setVisibility(View.GONE);
         layout.showBack(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentLauncher.goHealthFragment(activity);
-                layout.bottomBar.setVisibility(View.VISIBLE);
-                layout.hideBack();
+                showHealthFragment();
             }
         });
     }

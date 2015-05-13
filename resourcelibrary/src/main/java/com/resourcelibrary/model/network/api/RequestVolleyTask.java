@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley;
  */
 public class RequestVolleyTask<T> {
     //是否啟用測試資料。
-    private boolean isFakeValue = false;
+    private boolean isFakeValue = true;
     //測試資料的回應時間。
     private int fakeRequestTime = 300;
     //Volley的請求佇列，只使用唯一實體。
