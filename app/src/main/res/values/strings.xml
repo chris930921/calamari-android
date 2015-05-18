@@ -67,4 +67,9 @@
     <string name="check_service_usage_percent_warn_title">警告！使用量即將滿載</string>
     <string name="check_service_usage_percent_warn_content">使用量已達到 %1$s ！建議擴充儲存空間。</string>
 
+    //OsdHealthFragment
+    <string name="osd_health_all">All</string>
+    <string name="osd_health_great">Great !</string>
+    <string name="osd_health_work_fine">All OSD work fine !</string>
+
 </resources>

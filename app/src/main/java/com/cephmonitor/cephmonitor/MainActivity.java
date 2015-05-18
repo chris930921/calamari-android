@@ -83,10 +83,6 @@ public class MainActivity extends Activity {
         layout.setTitle(title);
     }
 
-    @Override
-    public void onBackPressed() {
-        CheckExitDialog.create(activity).show();
-    }
 
     public void showHealthFragment() {
         setTitle("Health");
@@ -108,4 +104,23 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+    public void showOsdHealthFragment() {
+        setTitle("Osd Health");
+        layout.topBar.setBackgroundColor(Color.parseColor("#CD2626"));
+        FragmentLauncher.goOsdHealthFragment(activity);
+        layout.bottomBar.setVisibility(View.VISIBLE);
+        layout.showBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHealthFragment();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        CheckExitDialog.create(activity).show();
+    }
+
 }

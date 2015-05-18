@@ -33,8 +33,6 @@ public class OsdHealthBoxes extends View {
     public ArrayList<OsdBox> errorBoxes;
     public ArrayList<OsdBox> drawBoxes;
     public int dividerSize;
-    public int horizonPadding;
-    public int verticalPadding;
     public int boxSize;
     public WH ruler;
     public Paint boxPaint;
@@ -44,6 +42,7 @@ public class OsdHealthBoxes extends View {
     public int showStatus;
     public OsdBox touchedBox;
     private OnOsdBoxClickListener clickEvent;
+    private OnStatusChangeListener changeEvent;
 
     public OsdHealthBoxes(Context context) {
         super(context);
@@ -54,7 +53,7 @@ public class OsdHealthBoxes extends View {
         this.boxPaint = new Paint();
         boxPaint.setAntiAlias(true);
 
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         TextView v = new TextView(context);
         v.setTextSize(14);
@@ -69,12 +68,6 @@ public class OsdHealthBoxes extends View {
         showStatus = ALL;
 
         dividerSize = ruler.getW(5);
-        horizonPadding = ruler.getW(5);
-        verticalPadding = ruler.getH(5);
-
-        int totalSpace = dividerSize * (columnCount - 1) + horizonPadding * 2;
-        int totalBoxSpace = ruler.getW(100) - totalSpace;
-        boxSize = totalBoxSpace / 4;
     }
 
     public void setData(ArrayList<OsdBox> boxes) {
@@ -95,8 +88,24 @@ public class OsdHealthBoxes extends View {
         changeHeight(rowCount);
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        int totalSpace = dividerSize * (columnCount - 1);
+        int totalBoxSpace = w - totalSpace;
+        int boxSize = totalBoxSpace / 4;
+        if (this.boxSize != boxSize) {
+            this.boxSize = boxSize;
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    changeHeight(rowCount);
+                }
+            });
+        }
+    }
+
     protected void changeHeight(int rowCount) {
-        int viewHeight = boxSize * rowCount + dividerSize * (rowCount - 1) + verticalPadding * 2;
+        int viewHeight = boxSize * rowCount + dividerSize * (rowCount - 1);
         ViewGroup.LayoutParams params = getLayoutParams();
         params.height = viewHeight;
         setLayoutParams(params);
@@ -142,6 +151,8 @@ public class OsdHealthBoxes extends View {
     }
 
     public void setShowStatus(int status) {
+        int oldStatus = showStatus;
+
         this.showStatus = status;
         if (showStatus == ALL) {
             drawBoxes = boxes;
@@ -150,6 +161,11 @@ public class OsdHealthBoxes extends View {
         } else if (showStatus == ERROR) {
             drawBoxes = errorBoxes;
         }
+
+        if (oldStatus != showStatus && changeEvent != null) {
+            changeEvent.onChange(this, drawBoxes);
+        }
+
         changeHeight(getRow(drawBoxes));
         invalidate();
     }
@@ -162,13 +178,13 @@ public class OsdHealthBoxes extends View {
     protected int getBoxTop(int row) {
         if (row >= rowCount) return -1;
 
-        return verticalPadding + boxSize * row + dividerSize * row;
+        return boxSize * row + dividerSize * row;
     }
 
     protected int getBoxLeft(int column) {
         if (column >= columnCount) return -1;
 
-        return horizonPadding + boxSize * column + dividerSize * column;
+        return boxSize * column + dividerSize * column;
     }
 
     @Override
@@ -181,13 +197,8 @@ public class OsdHealthBoxes extends View {
         public void onDown(MotionEvent event) {
             touchedBox = null;
 
-            if (event.getX() < horizonPadding) return;
-            if (event.getX() > getMeasuredWidth() - horizonPadding) return;
-            if (event.getY() < verticalPadding) return;
-            if (event.getY() > getMeasuredHeight() - verticalPadding) return;
-
-            float touchX = event.getX() - horizonPadding;
-            float touchY = event.getY() - verticalPadding;
+            float touchX = event.getX();
+            float touchY = event.getY();
 
             float touchSize = boxSize + dividerSize;
 
@@ -229,5 +240,9 @@ public class OsdHealthBoxes extends View {
 
     public void setOnOsdBoxClickListener(OnOsdBoxClickListener event) {
         clickEvent = event;
+    }
+
+    public void setOnStatusChangeListener(OnStatusChangeListener event) {
+        changeEvent = event;
     }
 }

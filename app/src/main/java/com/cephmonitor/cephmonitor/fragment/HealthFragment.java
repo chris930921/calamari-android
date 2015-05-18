@@ -88,6 +88,7 @@ public class HealthFragment extends Fragment {
         requestFirstClusterId();
 
         layout.healthCard.setTitleOnClickListener(healthCardClickEvent);
+        layout.osdCard.setTitleOnClickListener(osdCardClickEvent);
     }
 
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
@@ -95,6 +96,13 @@ public class HealthFragment extends Fragment {
         public void onClick(View view) {
             MainActivity activity = (MainActivity) getActivity();
             activity.showHealthDetailFragment();
+        }
+    };
+    private View.OnClickListener osdCardClickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            MainActivity activity = (MainActivity) getActivity();
+            activity.showOsdHealthFragment();
         }
     };
 

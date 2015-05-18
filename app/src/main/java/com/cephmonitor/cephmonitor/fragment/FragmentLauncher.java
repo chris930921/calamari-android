@@ -16,7 +16,7 @@ public class FragmentLauncher {
         String fragmentName = HealthFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
-            HealthFragment page = new HealthFragment();
+            Fragment page = new HealthFragment();
             cleanAllPopFragment(activity);
             change(activity, MainLayout.CONTAINER_ID, page);
         }
@@ -26,7 +26,17 @@ public class FragmentLauncher {
         String fragmentName = HealthDetailFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
-            HealthDetailFragment page = new HealthDetailFragment();
+            Fragment page = new HealthDetailFragment();
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goOsdHealthFragment(Activity activity) {
+        String fragmentName = OSDHealthFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new OSDHealthFragment();
             cleanAllPopFragment(activity);
             change(activity, MainLayout.CONTAINER_ID, page);
         }
