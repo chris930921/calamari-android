@@ -1,1 +1,1 @@
-include ':app', ':resourcelibrary'
+include ':app', ':resourcelibrary', ':androidfontsize', ':testmoduleproject'
