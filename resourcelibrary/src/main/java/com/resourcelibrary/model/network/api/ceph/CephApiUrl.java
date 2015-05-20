@@ -19,6 +19,10 @@ public class CephApiUrl {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId();
     }
 
+    public static String clusterV2OsdList(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/osd";
+    }
+
     public static String clusterV1Health(CephParams params) {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/health";
     }

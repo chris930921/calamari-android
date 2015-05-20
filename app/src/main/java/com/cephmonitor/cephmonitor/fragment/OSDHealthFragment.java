@@ -5,18 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.cephmonitor.cephmonitor.MainActivity;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OnOsdBoxClickListener;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OnStatusChangeListener;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
 import com.cephmonitor.cephmonitor.layout.fragment.OSDHealthLayout;
+import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.network.GeneralError;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdListData;
+import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
+import com.resourcelibrary.model.network.api.ceph.single.ClusterV2OsdListRequest;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
 public class OSDHealthFragment extends Fragment {
     private OSDHealthLayout layout;
+    private LoginParams requestParams;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -27,17 +37,7 @@ public class OSDHealthFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        ArrayList<OsdBox> boxes = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            OsdBox box = new OsdBox();
-            box.setStatus((int) (Math.random() * 2));
-            box.value = i;
-            boxes.add(box);
-        }
-
-        layout.boxesContainer.setData(boxes);
+        requestParams = new LoginParams(getActivity());
 
         layout.boxesContainer.setOnOsdBoxClickListener(clickOsdBox);
         layout.boxesContainer.setOnStatusChangeListener(changeShowedBox);
@@ -47,12 +47,15 @@ public class OSDHealthFragment extends Fragment {
         layout.centerButton.setOnClickListener(clickCenterButton);
 
         layout.leftButton.changeClickColor();
+
+        requestOsdList();
     }
 
     private OnOsdBoxClickListener clickOsdBox = new OnOsdBoxClickListener() {
         @Override
         public void onClick(OsdHealthBoxes boxGroup, OsdBox box) {
-            Toast.makeText(getActivity(), box.value + "", Toast.LENGTH_SHORT).show();
+            MainActivity activity = (MainActivity) getActivity();
+            activity.showOSDHealthDetailFragment(box);
         }
     };
 
@@ -90,4 +93,41 @@ public class OSDHealthFragment extends Fragment {
             layout.boxesContainer.setShowStatus(OsdHealthBoxes.ERROR);
         }
     };
+
+    private void requestOsdList() {
+        ClusterV2OsdListRequest spider = new ClusterV2OsdListRequest(getActivity());
+        spider.setRequestParams(requestParams);
+        spider.request(successOsdList(), GeneralError.callback(getActivity()));
+    }
+
+    private Response.Listener<String> successOsdList() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    ShowLog.d("ClusterV2OsdListRequest" + " 結果:" + s);
+                    dealWithOsdList(s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    private void dealWithOsdList(String response) throws JSONException {
+        ClusterV2OsdListData clusterList = new ClusterV2OsdListData(response);
+        ArrayList<ClusterV2OsdData> osdList = clusterList.getList();
+        ArrayList<OsdBox> boxes = new ArrayList<>();
+        for (int i = 0; i < osdList.size(); i++) {
+            OsdBox box = new OsdBox();
+            ClusterV2OsdData osd = osdList.get(i);
+            int osdStatus = osd.getStatus();
+            int boxStatus = box.changeStatus(osdStatus);
+            box.setStatus(boxStatus);
+            box.value = osd.getID();
+            box.osdData = osd;
+            boxes.add(box);
+        }
+        layout.boxesContainer.setData(boxes);
+    }
 }

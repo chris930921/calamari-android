@@ -70,6 +70,16 @@ public class LoginParams extends CephParams {
         return get("session", "");
     }
 
+    @Override
+    public String getClusterId() {
+        return get("clusterId", "");
+    }
+
+    @Override
+    public void setClusterId(String value) {
+        save("clusterId", value);
+    }
+
     protected void save(String key, String value) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);

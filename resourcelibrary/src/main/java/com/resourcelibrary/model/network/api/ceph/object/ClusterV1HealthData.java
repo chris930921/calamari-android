@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by User on 4/22/2015.
  */
@@ -47,5 +49,28 @@ public class ClusterV1HealthData extends PortableJsonObject {
             }
         }
         return count;
+    }
+
+    public ArrayList<String> getSummarySeverities() throws JSONException {
+        return getSummaryContent("severity");
+    }
+
+    public ArrayList<String> getSummaryDescriptions() throws JSONException {
+        return getSummaryContent("summary");
+    }
+
+    private ArrayList<String> getSummaryContent(String key) throws JSONException {
+        ArrayList<String> results = new ArrayList<>();
+
+        JSONObject report = json.getJSONObject("report");
+        JSONArray summary = report.getJSONArray("summary");
+
+        for (int i = 0; i < summary.length(); i++) {
+            JSONObject object = summary.getJSONObject(i);
+            String severity = object.getString(key);
+            results.add(severity);
+        }
+
+        return results;
     }
 }

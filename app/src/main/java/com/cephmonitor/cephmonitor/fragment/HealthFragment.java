@@ -31,6 +31,8 @@ import java.util.Calendar;
 public class HealthFragment extends Fragment {
     private HealthLayout layout;
     private LoginParams requestParams;
+    private ClusterV1HealthData healthData;
+
     public String healthCardStatus;
     public long healthCardLastUpdate;
     public int healthCardWarningCount;
@@ -94,8 +96,10 @@ public class HealthFragment extends Fragment {
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (healthData == null) return;
+
             MainActivity activity = (MainActivity) getActivity();
-            activity.showHealthDetailFragment();
+            activity.showHealthDetailFragment(healthData);
         }
     };
     private View.OnClickListener osdCardClickEvent = new View.OnClickListener() {
@@ -160,11 +164,11 @@ public class HealthFragment extends Fragment {
     }
 
     private void dealWithHealthStatus(String response) throws JSONException {
-        ClusterV1HealthData data = new ClusterV1HealthData(response);
-        healthCardStatus = data.getOverallStatus();
-        healthCardLastUpdate = data.getLastUpdateTimestamp();
-        healthCardWarningCount = data.getWarningCount();
-        healthCardErrorCount = data.getErrorCount();
+        healthData = new ClusterV1HealthData(response);
+        healthCardStatus = healthData.getOverallStatus();
+        healthCardLastUpdate = healthData.getLastUpdateTimestamp();
+        healthCardWarningCount = healthData.getWarningCount();
+        healthCardErrorCount = healthData.getErrorCount();
     }
 
     private void requestOsdMonStatus() {

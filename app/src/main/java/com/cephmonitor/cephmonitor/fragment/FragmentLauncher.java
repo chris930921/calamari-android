@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 
@@ -11,36 +12,6 @@ import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
  * Created by User on 4/17/2015.
  */
 public class FragmentLauncher {
-
-    public static void goHealthFragment(Activity activity) {
-        String fragmentName = HealthFragment.class.getName();
-        boolean isClosed = checkFragmentOpening(activity, fragmentName);
-        if (isClosed) {
-            Fragment page = new HealthFragment();
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
-        }
-    }
-
-    public static void goHealthDetailFragment(Activity activity) {
-        String fragmentName = HealthDetailFragment.class.getName();
-        boolean isClosed = checkFragmentOpening(activity, fragmentName);
-        if (isClosed) {
-            Fragment page = new HealthDetailFragment();
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
-        }
-    }
-
-    public static void goOsdHealthFragment(Activity activity) {
-        String fragmentName = OSDHealthFragment.class.getName();
-        boolean isClosed = checkFragmentOpening(activity, fragmentName);
-        if (isClosed) {
-            Fragment page = new OSDHealthFragment();
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
-        }
-    }
 
     private static boolean checkFragmentOpening(Activity activity, String fragmentName) {
         return activity.getFragmentManager().findFragmentByTag(fragmentName) == null;
@@ -60,4 +31,48 @@ public class FragmentLauncher {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
+
+    public static void goHealthFragment(Activity activity) {
+        String fragmentName = HealthFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new HealthFragment();
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goHealthDetailFragment(Activity activity, Bundle arg) {
+        String fragmentName = HealthDetailFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new HealthDetailFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goOsdHealthFragment(Activity activity) {
+        String fragmentName = OSDHealthFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new OSDHealthFragment();
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goOSDHealthDetailFragment(Activity activity, Bundle arg) {
+        String fragmentName = OSDHealthDetailFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new OSDHealthDetailFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity);
+            change(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+
 }

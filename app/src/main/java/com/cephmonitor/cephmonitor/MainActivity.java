@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
+import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
@@ -78,6 +81,11 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        CheckExitDialog.create(activity).show();
+    }
+
 
     public void setTitle(String title) {
         layout.setTitle(title);
@@ -92,10 +100,13 @@ public class MainActivity extends Activity {
         layout.hideBack();
     }
 
-    public void showHealthDetailFragment() {
+    public void showHealthDetailFragment(ClusterV1HealthData data) {
+        Bundle arg = new Bundle();
+        data.outBox(arg);
+
         setTitle("Health Detail");
         layout.topBar.setBackgroundColor(Color.parseColor("#CD2626"));
-        FragmentLauncher.goHealthDetailFragment(activity);
+        FragmentLauncher.goHealthDetailFragment(activity, arg);
         layout.bottomBar.setVisibility(View.GONE);
         layout.showBack(new View.OnClickListener() {
             @Override
@@ -118,9 +129,21 @@ public class MainActivity extends Activity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        CheckExitDialog.create(activity).show();
+    public void showOSDHealthDetailFragment(OsdBox data) {
+        Bundle arg = new Bundle();
+        ClusterV2OsdData osdData = data.osdData;
+        osdData.outBox(arg);
+
+        setTitle(data.value + "");
+        layout.topBar.setBackgroundColor(data.getColor());
+        FragmentLauncher.goOSDHealthDetailFragment(activity, arg);
+        layout.bottomBar.setVisibility(View.VISIBLE);
+        layout.showBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showOsdHealthFragment();
+            }
+        });
     }
 
 }

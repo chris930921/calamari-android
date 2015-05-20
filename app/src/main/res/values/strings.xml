@@ -72,4 +72,16 @@
     <string name="osd_health_great">Great !</string>
     <string name="osd_health_work_fine">All OSD work fine !</string>
 
+    //OsdDetailFragment
+    <string name="osd_detail_host_name">Hostname</string>
+    <string name="osd_detail_public_ip">Public IP</string>
+    <string name="osd_detail_cluster_ip">Cluster IP</string>
+    <string name="osd_detail_pools">Pools</string>
+    <string name="osd_detail_rbd">rbd</string>
+    <string name="osd_detail_images">images</string>
+    <string name="osd_detail_volume">volume</string>
+    <string name="osd_detail_re_weight">Reweight</string>
+    <string name="osd_detail_uuid">UUID</string>
+
+
 </resources>

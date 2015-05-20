@@ -9,10 +9,20 @@ import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.item.LeftImageRightTextItem;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HealthDetailFragment extends Fragment {
     private HealthDetailLayout layout;
+    private ClusterV1HealthData data;
+    private ArrayList<String> status;
+    private ArrayList<String> contents;
+    private HashMap<String, Integer> icons;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -23,30 +33,56 @@ public class HealthDetailFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        layout.list.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 3;
-            }
+        icons = new HashMap<>();
+        icons.put(ClusterV1HealthData.HEALTH_WARN, R.drawable.icon022);
+        icons.put(ClusterV1HealthData.HEALTH_ERR, R.drawable.icon023);
 
-            @Override
-            public Object getItem(int i) {
-                return null;
-            }
+        try {
+            data = new ClusterV1HealthData("{}");
+            data.inBox(getArguments());
+            status = data.getSummarySeverities();
+            contents = data.getSummaryDescriptions();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
 
-            @Override
-            public long getItemId(int i) {
-                return 0;
+        for (int i = status.size() - 1; i >= 0; i--) {
+            String statusText = status.get(i);
+            if (statusText.equals(ClusterV1HealthData.HEALTH_OK)) {
+                status.remove(i);
+                contents.remove(i);
             }
+        }
 
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                String[] contents = {"recovery 79/158 objects degraded (50.000%)", "no osds", "960 pgs stale"};
-                int[] images = {R.drawable.icon022, R.drawable.icon023, R.drawable.icon022};
-                LeftImageRightTextItem item = new LeftImageRightTextItem(getActivity());
-                item.setItemValue(images[i], contents[i]);
-                return item;
-            }
-        });
+        layout.list.setAdapter(getAdapter);
     }
+
+    private BaseAdapter getAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return status.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            String statusText = status.get(i);
+            int images = icons.get(statusText);
+            String content = contents.get(i);
+
+            LeftImageRightTextItem item = new LeftImageRightTextItem(getActivity());
+            item.setItemValue(images, content);
+            return item;
+        }
+    };
 }
