@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.MainActivity;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
 import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.logic.TimeUnit;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
@@ -281,35 +282,9 @@ public class HealthFragment extends Fragment {
         }
 
         long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
-        long period = (nowTimeStamp - healthCardLastUpdate) / 1000;
-        if (period < 0) period = -period; // FIXME 確認伺服器時間
-        if (period == 0) {
-            layout.healthCard.setCenterText("JUST NOW");
-        } else if (period > 31536000) {
-            int count = (int) (period / 31536000);
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " year" + plurality + " ago");
-        } else if (period > 259200) {
-            int count = (int) (period / 259200);
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " month" + plurality + " ago");
-        } else if (period > 86400) {
-            int count = (int) (period / 86400);
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " day" + plurality + " ago");
-        } else if (period > 3600) {
-            int count = (int) (period / 3600);
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " hour" + plurality + " ago");
-        } else if (period > 60) {
-            int count = (int) (period / 60);
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " min" + plurality + " ago");
-        } else {
-            int count = (int) period;
-            String plurality = (count > 1) ? "s" : "";
-            layout.healthCard.setCenterText(count + " second" + plurality + " ago");
-        }
+        long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
+        layout.healthCard.setCenterText(TimeUnit.change(period));
+
         layout.healthCard.setLeftValueText(healthCardWarningCount);
         layout.healthCard.setRightValueText(healthCardErrorCount);
 
