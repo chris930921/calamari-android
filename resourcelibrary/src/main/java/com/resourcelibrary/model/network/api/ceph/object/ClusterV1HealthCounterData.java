@@ -93,6 +93,20 @@ public class ClusterV1HealthCounterData extends PortableJsonObject {
         return critical.getInt("count");
     }
 
+    public int getPlacmentGroupsOkCount() throws JSONException {
+        JSONObject report = json.getJSONObject("pg");
+        JSONObject critical = report.getJSONObject("ok");
+        return critical.getInt("count");
+    }
+
+    public int getPlacmentGroupsTotalCount() throws JSONException {
+        JSONObject report = json.getJSONObject("pg");
+        JSONObject ok = report.getJSONObject("ok");
+        JSONObject critical = report.getJSONObject("critical");
+        JSONObject warn = report.getJSONObject("warn");
+        return ok.getInt("count") + critical.getInt("count") + warn.getInt("count");
+    }
+
     public int getPlacmentGroupsActiveCount() throws JSONException {
         JSONObject report = json.getJSONObject("pg");
         JSONObject ok = report.getJSONObject("ok");

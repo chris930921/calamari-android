@@ -35,7 +35,6 @@ public class HealthFragment extends Fragment {
     private ClusterV1HealthData healthData;
     private PoolV1ListData poolData;
 
-    public String healthCardStatus;
     public long healthCardLastUpdate;
     public int healthCardWarningCount;
     public int healthCardErrorCount;
@@ -56,8 +55,8 @@ public class HealthFragment extends Fragment {
     public int hostCardMonCount;
     public int hostCardOsdCount;
 
-    public int pgCardActiveCount;
-    public int pgCardCleanCount;
+    public int pgCardOkCount;
+    public int pgCardTotalCount;
     public int pgCardWorkingCount;
     public int pgCardDirtyCount;
 
@@ -70,7 +69,7 @@ public class HealthFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        healthCardStatus = "OK";
+        layout.healthCard.setCenterValueText("OK");
 
         monCardOkCount = 0;
         monCardTotalCount = 0;
@@ -173,7 +172,7 @@ public class HealthFragment extends Fragment {
 
     private void dealWithHealthStatus(String response) throws JSONException {
         healthData = new ClusterV1HealthData(response);
-        healthCardStatus = healthData.getOverallStatus();
+//        healthCardStatus = healthData.getOverallStatus();
         healthCardLastUpdate = healthData.getLastUpdateTimestamp();
         healthCardWarningCount = healthData.getWarningCount();
         healthCardErrorCount = healthData.getErrorCount();
@@ -212,8 +211,8 @@ public class HealthFragment extends Fragment {
         osdCardWarningCount = data.getOsdWarningCount();
         osdCardErrorCount = data.getOsdErrorCount();
 
-        pgCardActiveCount = data.getPlacmentGroupsActiveCount();
-        pgCardCleanCount = data.getPlacmentGroupsCleanCount();
+        pgCardOkCount = data.getPlacmentGroupsOkCount();
+        pgCardTotalCount = data.getPlacmentGroupsTotalCount();
         pgCardWorkingCount = data.getPlacmentGroupsWarningCount();
         pgCardDirtyCount = data.getPlacmentGroupsErrorCount();
     }
@@ -273,24 +272,21 @@ public class HealthFragment extends Fragment {
     }
 
     private void updateView() {
-
-        if (healthCardStatus.equals(ClusterV1HealthData.HEALTH_OK)) {
-            layout.healthCard.setCenterValueText("OK");
-            layout.healthCard.changeGreenBorder();
-        } else if (healthCardStatus.equals(ClusterV1HealthData.HEALTH_WARN)) {
-            layout.healthCard.setCenterValueText("WARNING");
-            layout.healthCard.changeOrangeBorder();
-        } else if (healthCardStatus.equals(ClusterV1HealthData.HEALTH_ERR)) {
+        if (healthCardErrorCount != 0) {
             layout.healthCard.setCenterValueText("ERROR");
             layout.healthCard.changeRedBorder();
+        } else if (healthCardWarningCount != 0) {
+            layout.healthCard.setCenterValueText("WARNING");
+            layout.healthCard.changeOrangeBorder();
         } else {
-            layout.healthCard.setCenterValueText(healthCardStatus);
-            layout.healthCard.changeRedBorder();
+            layout.healthCard.setCenterValueText("OK");
+            layout.healthCard.changeGreenBorder();
         }
 
         long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
         long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
         layout.healthCard.setCenterText(TimeUnit.change(period));
+
 
         layout.healthCard.setLeftValueText(healthCardWarningCount);
         layout.healthCard.setRightValueText(healthCardErrorCount);
@@ -313,7 +309,7 @@ public class HealthFragment extends Fragment {
 
         layout.pgStatusCard.setLeftValueText(pgCardWorkingCount);
         layout.pgStatusCard.setRightValueText(pgCardDirtyCount);
-        String pgStatus = pgCardActiveCount + " / " + pgCardCleanCount;
+        String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
         layout.pgStatusCard.setCenterValueText(pgStatus);
     }
 
@@ -322,7 +318,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void run() {
                 ShowLog.d("\n所有結果" + "\n" +
-                                "healthCardStatus:" + healthCardStatus + "\n" +
                                 "healthCardLastUpdate:" + healthCardLastUpdate + "\n" +
                                 "monCardOkCount:" + monCardOkCount + "\n" +
                                 "monCardStateCount:" + monCardTotalCount + "\n" +

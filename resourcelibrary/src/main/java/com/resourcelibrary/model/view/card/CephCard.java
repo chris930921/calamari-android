@@ -27,6 +27,7 @@ public class CephCard extends RelativeLayout {
     private boolean isCompare;
     private boolean isChangeLeftValueColor;
     private boolean isChangeRightValueColor;
+    private boolean isChangeCenterValueColor;
 
     public RelativeLayout contentContainer;
     public RelativeLayout topContainer;
@@ -77,6 +78,7 @@ public class CephCard extends RelativeLayout {
         isCompare = true;
         isChangeLeftValueColor = true;
         isChangeRightValueColor = true;
+        isChangeCenterValueColor = false;
 
         setBackgroundColor(Color.TRANSPARENT);
 
@@ -418,6 +420,10 @@ public class CephCard extends RelativeLayout {
         this.isCompare = isCompare;
     }
 
+    public void setChangeCenterValueColor(boolean isChnage) {
+        this.isChangeCenterValueColor = isChnage;
+    }
+
     public void setChangeTwoValueColor(boolean isChangeLeftValueColor, boolean isChangeRightValueColor) {
         this.isChangeLeftValueColor = isChangeLeftValueColor;
         this.isChangeRightValueColor = isChangeRightValueColor;
@@ -468,14 +474,23 @@ public class CephCard extends RelativeLayout {
 
     public void changeRedBorder() {
         setBorderColor(Color.parseColor("#e63742"));
+        if (isChangeCenterValueColor) {
+            centerValueText.setTextColor(Color.parseColor("#e63742"));
+        }
     }
 
     public void changeOrangeBorder() {
         setBorderColor(Color.parseColor("#f7b500"));
+        if (isChangeCenterValueColor) {
+            centerValueText.setTextColor(Color.parseColor("#f7b500"));
+        }
     }
 
     public void changeGreenBorder() {
         setBorderColor(Color.parseColor("#8dc41f"));
+        if (isChangeCenterValueColor) {
+            centerValueText.setTextColor(Color.parseColor("#8dc41f"));
+        }
     }
 
     public void setRadius(int radius) {

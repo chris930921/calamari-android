@@ -92,6 +92,7 @@ public class HealthLayout extends RelativeLayout {
         v.setRightValueText(0);
         v.setCenterValueText("OK");
         v.setCompareMode(false);
+        v.setChangeCenterValueColor(true);
 
         return v;
     }
