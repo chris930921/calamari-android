@@ -12,13 +12,12 @@ import android.widget.TextView;
 import com.cephmonitor.cephmonitor.R;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.resourcelibrary.model.view.button.RoundFillColorText;
+import com.resourcelibrary.model.view.textview.FloatLayoutLabel;
 
 public class OSDHealthDetailLayout extends ScrollView {
     private Context context;
     private WH ruler;
     private int dividerHeight;
-    private int buttonHorizonDivider;
 
     public RelativeLayout container;
 
@@ -29,9 +28,7 @@ public class OSDHealthDetailLayout extends ScrollView {
     public TextView clusterIpTitle;
     public TextView clusterIpContent;
     public TextView poolsTitle;
-    public RoundFillColorText rbd;
-    public RoundFillColorText images;
-    public RoundFillColorText volume;
+    public FloatLayoutLabel poolLabels;
     public TextView reweightTitle;
     public TextView reweightContent;
     public TextView uuidTitle;
@@ -42,7 +39,6 @@ public class OSDHealthDetailLayout extends ScrollView {
         this.context = context;
         this.ruler = new WH(context);
         this.dividerHeight = ruler.getW(5);
-        this.buttonHorizonDivider = dividerHeight / 4;
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -58,10 +54,8 @@ public class OSDHealthDetailLayout extends ScrollView {
         container.addView(clusterIpTitle = clusterIpTitle(publicIpContent));
         container.addView(clusterIpContent = clusterIpContent(clusterIpTitle));
         container.addView(poolsTitle = poolsTitle(clusterIpContent));
-        container.addView(rbd = rbd(poolsTitle));
-        container.addView(images = images(rbd));
-        container.addView(volume = volume(images));
-        container.addView(reweightTitle = reweightTitle(rbd));
+        container.addView(poolLabels = poolLabels(poolsTitle));
+        container.addView(reweightTitle = reweightTitle(poolLabels));
         container.addView(reweightContent = reweightContent(reweightTitle));
         container.addView(uuidTitle = uuidTitle(reweightContent));
         container.addView(uuidContent = uuidContent(uuidTitle));
@@ -151,36 +145,15 @@ public class OSDHealthDetailLayout extends ScrollView {
         return v;
     }
 
-    private RoundFillColorText rbd(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    private FloatLayoutLabel poolLabels(View topView) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
-        RoundFillColorText v = getPoolButton(R.string.osd_detail_rbd);
+        FloatLayoutLabel v = new FloatLayoutLabel(context);
+        v.setId(RandomId.get());
         v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private RoundFillColorText images(View leftView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_TOP, leftView.getId());
-        params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
-        params.setMargins(buttonHorizonDivider, 0, 0, 0);
-
-        RoundFillColorText v = getPoolButton(R.string.osd_detail_images);
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private RoundFillColorText volume(View leftView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_TOP, leftView.getId());
-        params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
-        params.setMargins(buttonHorizonDivider, 0, 0, 0);
-
-        RoundFillColorText v = getPoolButton(R.string.osd_detail_volume);
-        v.setLayoutParams(params);
+        v.setPadding(ruler.getW(3), ruler.getW(3));
+        v.setMargin(ruler.getW(3), ruler.getW(3));
 
         return v;
     }
@@ -246,19 +219,6 @@ public class OSDHealthDetailLayout extends ScrollView {
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTextColor(Color.parseColor("#666666"));
         v.setText(" ");
-
-        return v;
-    }
-
-    private RoundFillColorText getPoolButton(int stringResource) {
-        RoundFillColorText v = new RoundFillColorText(context);
-        v.setId(RandomId.get());
-        v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(Color.WHITE);
-        v.setGravity(Gravity.CENTER);
-        v.setPadding(dividerHeight, buttonHorizonDivider, dividerHeight, buttonHorizonDivider);
-        v.setFillAndPressColor(Color.parseColor("#39c0ed"), Color.parseColor("#39c0ed"));
-        v.setText(stringResource);
 
         return v;
     }

@@ -26,9 +26,10 @@ public abstract class ConditionNotification<T> {
             }
 
             if (msg != null) {
+                int id = (int) System.currentTimeMillis();
                 msg.defaults = Notification.DEFAULT_ALL;
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(hashCode(), msg);
+                notificationManager.notify(id, msg);
             }
         } catch (Exception e) {
             e.printStackTrace();

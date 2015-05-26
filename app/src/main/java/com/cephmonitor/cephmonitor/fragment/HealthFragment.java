@@ -33,6 +33,7 @@ public class HealthFragment extends Fragment {
     private HealthLayout layout;
     private LoginParams requestParams;
     private ClusterV1HealthData healthData;
+    private PoolV1ListData poolData;
 
     public String healthCardStatus;
     public long healthCardLastUpdate;
@@ -97,7 +98,9 @@ public class HealthFragment extends Fragment {
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (healthData == null) return;
+            if (healthData == null) {
+                return;
+            }
 
             MainActivity activity = (MainActivity) getActivity();
             activity.showHealthDetailFragment(healthData);
@@ -106,8 +109,12 @@ public class HealthFragment extends Fragment {
     private View.OnClickListener osdCardClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (poolData == null) {
+                return;
+            }
+
             MainActivity activity = (MainActivity) getActivity();
-            activity.showOsdHealthFragment();
+            activity.showOsdHealthFragment(poolData);
         }
     };
 
@@ -233,8 +240,8 @@ public class HealthFragment extends Fragment {
     }
 
     private void dealWithPoolStatus(String response) throws JSONException {
-        PoolV1ListData data = new PoolV1ListData(response);
-        poolCardStatus = data.getList().size();
+        poolData = new PoolV1ListData(response);
+        poolCardStatus = poolData.getList().size();
     }
 
     private void requestServerList() {

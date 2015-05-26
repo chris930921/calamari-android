@@ -9,6 +9,7 @@ public class TimeUnit {
     public static final long SECOND_OF_DAY = 86400;
     public static final long SECOND_OF_HOUR = 3600;
     public static final long SECOND_OF_MIN = 60;
+    public static final long SECOND = 1;
 
     public static final String UNIT_OF_YEAR = "year";
     public static final String UNIT_OF_MONTH = "month";
@@ -26,27 +27,27 @@ public class TimeUnit {
         if (millisTimeStampPeriod == 0) {
             result = NOW;
 
-        } else if (millisTimeStampPeriod > SECOND_OF_YEAR) {
+        } else if (millisTimeStampPeriod >= SECOND_OF_YEAR) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_YEAR);
             String plurality = checkPlurality(count);
             result = combineResult(count, UNIT_OF_YEAR, plurality);
 
-        } else if (millisTimeStampPeriod > SECOND_OF_MONTH) {
+        } else if (millisTimeStampPeriod >= SECOND_OF_MONTH) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_MONTH);
             String plurality = checkPlurality(count);
             result = combineResult(count, UNIT_OF_MONTH, plurality);
 
-        } else if (millisTimeStampPeriod > SECOND_OF_DAY) {
+        } else if (millisTimeStampPeriod >= SECOND_OF_DAY) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_DAY);
             String plurality = checkPlurality(count);
             result = combineResult(count, UNIT_OF_DAY, plurality);
 
-        } else if (millisTimeStampPeriod > SECOND_OF_HOUR) {
+        } else if (millisTimeStampPeriod >= SECOND_OF_HOUR) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_HOUR);
             String plurality = checkPlurality(count);
             result = combineResult(count, UNIT_OF_HOUR, plurality);
 
-        } else if (millisTimeStampPeriod > SECOND_OF_MIN) {
+        } else if (millisTimeStampPeriod >= SECOND_OF_MIN) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_MIN);
             String plurality = checkPlurality(count);
             result = combineResult(count, UNIT_OF_MIN, plurality);

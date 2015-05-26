@@ -2,7 +2,10 @@ package com.resourcelibrary.model.network.api.ceph.object;
 
 import com.resourcelibrary.model.logic.PortableJsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.ArrayList;
 
 /**
  * Created by User on 4/22/2015.
@@ -25,8 +28,8 @@ public class ClusterV2OsdData extends PortableJsonObject {
         return json.getString("uuid");
     }
 
-    public int getReweight() throws JSONException {
-        return json.getInt("reweight");
+    public double getReweight() throws JSONException {
+        return json.getDouble("reweight");
     }
 
     public String getPublicAddr() throws JSONException {
@@ -39,6 +42,15 @@ public class ClusterV2OsdData extends PortableJsonObject {
 
     public String getServer() throws JSONException {
         return json.getString("server");
+    }
+
+    public ArrayList<Integer> getPools() throws JSONException {
+        ArrayList<Integer> list = new ArrayList<>();
+        JSONArray pools = json.getJSONArray("pools");
+        for (int i = 0; i < pools.length(); i++) {
+            list.add(pools.getInt(i));
+        }
+        return list;
     }
 
     public int getStatus() throws JSONException {

@@ -17,6 +17,7 @@ import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdListData;
+import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2OsdListRequest;
 
@@ -54,8 +55,15 @@ public class OSDHealthFragment extends Fragment {
     private OnOsdBoxClickListener clickOsdBox = new OnOsdBoxClickListener() {
         @Override
         public void onClick(OsdHealthBoxes boxGroup, OsdBox box) {
-            MainActivity activity = (MainActivity) getActivity();
-            activity.showOSDHealthDetailFragment(box);
+            try {
+                PoolV1ListData poolData = new PoolV1ListData("[]");
+                poolData.inBox(getArguments());
+
+                MainActivity activity = (MainActivity) getActivity();
+                activity.showOSDHealthDetailFragment(poolData, box);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 

@@ -12,8 +12,8 @@ public class PoolV1Data extends PortableJsonObject {
         super(Json);
     }
 
-    public String getPoolId() throws JSONException {
-        return json.getString("pool_id");
+    public int getPoolId() throws JSONException {
+        return json.getInt("pool_id");
     }
 
     public String getName() throws JSONException {

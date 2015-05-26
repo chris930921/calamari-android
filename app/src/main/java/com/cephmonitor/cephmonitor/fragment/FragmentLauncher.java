@@ -53,11 +53,12 @@ public class FragmentLauncher {
         }
     }
 
-    public static void goOsdHealthFragment(Activity activity) {
+    public static void goOsdHealthFragment(Activity activity, Bundle arg) {
         String fragmentName = OSDHealthFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
             Fragment page = new OSDHealthFragment();
+            page.setArguments(arg);
             cleanAllPopFragment(activity);
             change(activity, MainLayout.CONTAINER_ID, page);
         }
