@@ -152,7 +152,7 @@ public class OSDHealthDetailLayout extends ScrollView {
         FloatLayoutLabel v = new FloatLayoutLabel(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(ruler.getW(3), ruler.getW(3));
+        v.setPadding(ruler.getW(3), ruler.getW(2));
         v.setMargin(ruler.getW(3), ruler.getW(3));
 
         return v;

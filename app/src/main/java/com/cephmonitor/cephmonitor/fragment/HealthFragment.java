@@ -34,6 +34,7 @@ public class HealthFragment extends Fragment {
     private LoginParams requestParams;
     private ClusterV1HealthData healthData;
     private PoolV1ListData poolData;
+    private int currentUpdateId;
 
     public long healthCardLastUpdate;
     public int healthCardWarningCount;
@@ -63,12 +64,39 @@ public class HealthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
             layout = new HealthLayout(getActivity());
+            init();
         }
+
         return layout;
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onResume() {
+        super.onResume();
+        layout.post(requestFlow(currentUpdateId));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        currentUpdateId = (currentUpdateId + 1) % 100000;
+    }
+
+    private Runnable requestFlow(final int updateId) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                if (currentUpdateId == updateId) {
+                    requestFirstClusterId();
+                    layout.postDelayed(this, 10 * 1000);
+                }
+                ShowLog.d("Health 頁面更新識別號: " + updateId + " 重新刷新: " + (currentUpdateId == updateId) + " 時間:" + Calendar.getInstance().getTime().toString() + " 。");
+            }
+        };
+    }
+
+    private void init() {
+        currentUpdateId = 0;
         layout.healthCard.setCenterValueText("OK");
 
         monCardOkCount = 0;
@@ -88,7 +116,6 @@ public class HealthFragment extends Fragment {
         hostCardOsdCount = 0;
 
         requestParams = new LoginParams(getActivity());
-        requestFirstClusterId();
 
         layout.healthCard.setTitleOnClickListener(healthCardClickEvent);
         layout.osdCard.setTitleOnClickListener(osdCardClickEvent);

@@ -31,11 +31,6 @@ public class MainActivity extends Activity {
         loginInfo = new LoginParams(this);
         activity = this;
         loadingDialog = new LoadingDialog(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         showHealthFragment();
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -112,6 +107,7 @@ public class MainActivity extends Activity {
         layout.showBack(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentLauncher.backFragment(activity);
                 showHealthFragment();
             }
         });
@@ -128,6 +124,7 @@ public class MainActivity extends Activity {
         layout.showBack(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentLauncher.backFragment(activity);
                 showHealthFragment();
             }
         });
@@ -146,6 +143,7 @@ public class MainActivity extends Activity {
         layout.showBack(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentLauncher.backFragment(activity);
                 showOsdHealthFragment(poolData);
             }
         });

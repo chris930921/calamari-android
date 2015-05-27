@@ -32,16 +32,15 @@ public class OSDHealthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
             layout = new OSDHealthLayout(getActivity());
+            init();
         }
         return layout;
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        requestParams = new LoginParams(getActivity());
+    public void init() {
+        ShowLog.d("OSDHealthFragment 更新資料");
 
-        layout.boxesContainer.setOnOsdBoxClickListener(clickOsdBox);
-        layout.boxesContainer.setOnStatusChangeListener(changeShowedBox);
+        requestParams = new LoginParams(getActivity());
 
         layout.leftButton.setOnClickListener(clickLeftButton);
         layout.rightButton.setOnClickListener(clickRightButton);
@@ -137,5 +136,7 @@ public class OSDHealthFragment extends Fragment {
             boxes.add(box);
         }
         layout.boxesContainer.setData(boxes);
+        layout.boxesContainer.setOnOsdBoxClickListener(clickOsdBox);
+        layout.boxesContainer.setOnStatusChangeListener(changeShowedBox);
     }
 }

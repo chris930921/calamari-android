@@ -47,7 +47,7 @@ public class LeftImageRightTextItem extends RelativeLayout {
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(0, ruler.getW(2.8), ruler.getW(5), ruler.getW(2.8));
+        v.setPadding(0, ruler.getW(5), ruler.getW(5), ruler.getW(5));
 
         return v;
     }
@@ -56,7 +56,7 @@ public class LeftImageRightTextItem extends RelativeLayout {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_VERTICAL);
         params.addRule(RIGHT_OF, leftView.getId());
-        params.setMargins(0, ruler.getW(2.8), 0, ruler.getW(2.8));
+        params.setMargins(0, ruler.getW(5), 0, ruler.getW(5));
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());

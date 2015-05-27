@@ -27,12 +27,12 @@ public class HealthDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
             layout = new HealthDetailLayout(getActivity());
+            init();
         }
         return layout;
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void init() {
         icons = new HashMap<>();
         icons.put(ClusterV1HealthData.HEALTH_WARN, R.drawable.icon022);
         icons.put(ClusterV1HealthData.HEALTH_ERR, R.drawable.icon023);

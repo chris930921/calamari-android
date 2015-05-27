@@ -31,7 +31,7 @@ public class HealthDetailLayout extends RelativeLayout {
 
     public ListView list() {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        params.setMargins(ruler.getW(5), 0, ruler.getW(5), ruler.getW(2.8));
+        params.setMargins(ruler.getW(5), 0, ruler.getW(5), ruler.getW(5));
 
         ListView v = new ListView(context);
         v.setId(RandomId.get());

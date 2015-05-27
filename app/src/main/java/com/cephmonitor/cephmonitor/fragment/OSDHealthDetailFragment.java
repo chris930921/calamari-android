@@ -24,13 +24,12 @@ public class OSDHealthDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
             layout = new OSDHealthDetailLayout(getActivity());
+            init();
         }
         return layout;
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    public void init() {
         try {
             Bundle arg = getArguments();
             osdData = new ClusterV2OsdData("{}");

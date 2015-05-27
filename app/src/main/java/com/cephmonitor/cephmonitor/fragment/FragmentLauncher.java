@@ -17,11 +17,15 @@ public class FragmentLauncher {
         return activity.getFragmentManager().findFragmentByTag(fragmentName) == null;
     }
 
-    private static void cleanAllPopFragment(Activity activity) {
+    public static void backFragment(Activity activity) {
+        activity.getFragmentManager().popBackStackImmediate();
+    }
+
+    private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
         FragmentManager manager = activity.getFragmentManager();
-        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
-            manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
+//        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
+        manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        }
     }
 
     private static void change(Activity activity, int containerId, Fragment fragment) {
@@ -32,12 +36,21 @@ public class FragmentLauncher {
         transaction.commit();
     }
 
+    private static void changeAndBack(Activity activity, int containerId, Fragment fragment) {
+        FragmentManager manager = activity.getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(containerId, fragment, fragment.getClass().getName());
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.commit();
+    }
+
     public static void goHealthFragment(Activity activity) {
         String fragmentName = HealthFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
             Fragment page = new HealthFragment();
-            cleanAllPopFragment(activity);
+            cleanAllPopFragment(activity, page);
             change(activity, MainLayout.CONTAINER_ID, page);
         }
     }
@@ -48,8 +61,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthDetailFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -59,8 +72,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -70,10 +83,9 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthDetailFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity);
-            change(activity, MainLayout.CONTAINER_ID, page);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
         }
     }
-
 
 }
