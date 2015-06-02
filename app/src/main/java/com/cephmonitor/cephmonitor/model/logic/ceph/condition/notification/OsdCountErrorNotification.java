@@ -2,10 +2,11 @@ package com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification;
 
 import android.app.Notification;
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.logic.CompareString;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
+import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 
 import org.json.JSONException;
@@ -21,12 +22,17 @@ public class OsdCountErrorNotification extends ConditionNotification<ClusterV1He
 
     @Override
     protected boolean decide(ClusterV1HealthCounterData data) {
+        Boolean check = true;
+        String previousStatus = getClassSelfStatus().loadStatus();
         try {
-            return data.getOsdErrorCount() > 0;
+            int compareValue = data.getOsdErrorCount();
+            check &= CompareString.notEqualInt(previousStatus, compareValue);
+            check &= compareValue > 0;
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            check = false;
         }
+        return check;
     }
 
     @Override
@@ -37,15 +43,8 @@ public class OsdCountErrorNotification extends ConditionNotification<ClusterV1He
                     getContext().getResources().getString(R.string.check_service_osd_count_error_content),
                     data.getOsdErrorCount()
             );
-
-            Notification msg = new NotificationCompat.Builder(getContext())
-                    .setContentIntent(null)
-                    .setTicker(content)
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .build();
-            return msg;
+            getClassSelfStatus().saveStatus(data.getOsdErrorCount() + "");
+            return CephDefaultNotification.get(getContext(), title, content);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

@@ -2,10 +2,12 @@ package com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification;
 
 import android.app.Notification;
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.logic.CompareString;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
+import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
+import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 
 import org.json.JSONException;
@@ -14,6 +16,7 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class PgCountWarnNotification extends ConditionNotification<ClusterV1HealthCounterData> {
+    private float percent;
 
     public PgCountWarnNotification(Context context) {
         super(context);
@@ -21,12 +24,22 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
 
     @Override
     protected boolean decide(ClusterV1HealthCounterData data) {
+        Boolean check = true;
+        String previousStatus = getClassSelfStatus().loadStatus();
         try {
-            return data.getPlacmentGroupsWarningCount() > 0;
+            float warnCount = data.getPlacmentGroupsWarningCount();
+            float totalCount = data.getPlacmentGroupsTotalCount();
+            percent = warnCount / totalCount;
+
+            int compareValue = data.getPlacmentGroupsWarningCount();
+            check &= CompareString.notEqualFloat(previousStatus, compareValue);
+            check &= percent > 0.2;
+            ShowLog.d(getClass().getName() + " 判斷比較:compareValue " + compareValue + " previousStatus " + previousStatus + " percent " + percent);
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            check = false;
         }
+        return check;
     }
 
     @Override
@@ -37,15 +50,8 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
                     getContext().getResources().getString(R.string.check_service_pg_count_warn_content),
                     data.getPlacmentGroupsWarningCount()
             );
-
-            Notification msg = new NotificationCompat.Builder(getContext())
-                    .setContentIntent(null)
-                    .setTicker(content)
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .build();
-            return msg;
+            getClassSelfStatus().saveStatus(data.getPlacmentGroupsWarningCount() + "");
+            return CephDefaultNotification.get(getContext(), title, content);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

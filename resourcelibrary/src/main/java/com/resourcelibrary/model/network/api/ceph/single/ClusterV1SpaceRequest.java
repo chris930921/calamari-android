@@ -29,6 +29,8 @@ public class ClusterV1SpaceRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "{ \"space\": { \"free_bytes\": 631986425856, \"used_bytes\": 477288345600, \"capacity_bytes\": 636384460800 } }";
+        String[] used_values = {"181830676480", "281830676480", "381830676480", "477288345600", "509107568640"};
+        int index = (int) (Math.random() * 5);
+        return "{ \"space\": { \"free_bytes\": 631986425856, \"used_bytes\": " + used_values[index] + ", \"capacity_bytes\": 636384460800 } }";
     }
 }

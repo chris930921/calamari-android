@@ -69,6 +69,10 @@ public class TestTimeUnit extends InstrumentationTestCase {
         assertEquals("2 seconds ago", TimeUnit.change(TimeUnit.SECOND + 1));
     }
 
+    public void testUsability() {
+        for (long i = 0; i < TimeUnit.SECOND_OF_YEAR * 10; i++) ;
+    }
+
     private void oneTest(String example, long time) {
         assertEquals(example, TimeUnit.change(time));
         assertEquals(example, TimeUnit.change(time * 2 - 1));
