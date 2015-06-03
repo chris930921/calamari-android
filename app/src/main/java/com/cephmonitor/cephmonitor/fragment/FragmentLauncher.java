@@ -88,4 +88,26 @@ public class FragmentLauncher {
         }
     }
 
+    public static void goMonHealthFragment(Activity activity, Bundle arg) {
+        String fragmentName = MonHealthFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new MonHealthFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goNotificationFragment(Activity activity, Bundle arg) {
+        String fragmentName = NotificationFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new NotificationFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
 }

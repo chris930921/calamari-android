@@ -17,7 +17,7 @@ import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
 public class MainLayout extends RelativeLayout {
-    public static final int CONTAINER_ID = RandomId.get();
+    public static final int CONTAINER_ID = MainLayout.class.hashCode();
     public RelativeLayout bottomBar;
     public RelativeLayout topBar;
     public LinearLayout bottomContainer;

@@ -42,6 +42,10 @@
     <string name="health_card_warnings">Warnings</string>
     <string name="health_card_errors">Errors</string>
 
+    //HealthFragment
+    <string name="health_detail_great">Great !</string>
+    <string name="health_detail_work_fine">System works fine !</string>
+
     //RequestAndCheckService
     <string name="check_service_mon_count_error_title">錯誤！Monitor 損毀</string>
     <string name="check_service_mon_count_error_content">有 %1$s 個 Monitor 損毀！</string>

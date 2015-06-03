@@ -15,11 +15,11 @@ public class ClusterV2MonListData extends PortableJsonArray {
         super(Json);
     }
 
-    public ArrayList<ClusterV2OsdData> getList() throws JSONException {
-        ArrayList<ClusterV2OsdData> list = new ArrayList<>();
+    public ArrayList<ClusterV2MonData> getList() throws JSONException {
+        ArrayList<ClusterV2MonData> list = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             String singleData = json.getJSONObject(i).toString();
-            list.add(new ClusterV2OsdData(singleData));
+            list.add(new ClusterV2MonData(singleData));
         }
         return list;
     }

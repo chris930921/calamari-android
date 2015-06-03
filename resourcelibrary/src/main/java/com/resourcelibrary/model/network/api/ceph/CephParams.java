@@ -63,4 +63,14 @@ public class CephParams {
     public void setClusterId(String value) {
         this.clusterId = value;
     }
+
+    private String monitorId;
+
+    public String getMonitorId() {
+        return monitorId;
+    }
+
+    public void setMonitorId(String value) {
+        this.monitorId = value;
+    }
 }

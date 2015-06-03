@@ -12,6 +12,7 @@ public class CompareString {
             return true;
         }
     }
+
     public static boolean notEqualFloat(String status, float compareValue) {
         try {
             return compareValue != Float.parseFloat(status);
@@ -19,4 +20,5 @@ public class CompareString {
             return true;
         }
     }
+
 }

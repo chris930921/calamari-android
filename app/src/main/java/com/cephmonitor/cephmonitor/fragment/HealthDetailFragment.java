@@ -55,7 +55,11 @@ public class HealthDetailFragment extends Fragment {
             }
         }
 
-        layout.list.setAdapter(getAdapter);
+        if (status.size() == 0) {
+            layout.showWorkFind();
+        } else {
+            layout.list.setAdapter(getAdapter);
+        }
     }
 
     private BaseAdapter getAdapter = new BaseAdapter() {

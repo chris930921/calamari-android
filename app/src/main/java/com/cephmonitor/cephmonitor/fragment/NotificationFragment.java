@@ -7,82 +7,49 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
-import com.resourcelibrary.model.view.item.LeftImageRightTextItem;
-
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.cephmonitor.cephmonitor.InitFragment;
+import com.cephmonitor.cephmonitor.layout.fragment.NotificationLayout;
+import com.cephmonitor.cephmonitor.layout.listitem.NotificationItem;
 
 public class NotificationFragment extends Fragment {
-    private HealthDetailLayout layout;
-    private ClusterV1HealthData data;
-    private ArrayList<String> status;
-    private ArrayList<String> contents;
-    private HashMap<String, Integer> icons;
+    private NotificationLayout layout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
-            layout = new HealthDetailLayout(getActivity());
+            layout = new NotificationLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 
     public void init() {
-        icons = new HashMap<>();
-        icons.put(ClusterV1HealthData.HEALTH_WARN, R.drawable.icon022);
-        icons.put(ClusterV1HealthData.HEALTH_ERR, R.drawable.icon023);
-
-        try {
-            data = new ClusterV1HealthData("{}");
-            data.inBox(getArguments());
-            status = data.getSummarySeverities();
-            contents = data.getSummaryDescriptions();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        for (int i = status.size() - 1; i >= 0; i--) {
-            String statusText = status.get(i);
-            if (statusText.equals(ClusterV1HealthData.HEALTH_OK)) {
-                status.remove(i);
-                contents.remove(i);
+        layout.list.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return 2;
             }
-        }
 
-        layout.list.setAdapter(getAdapter);
+            @Override
+            public Object getItem(int i) {
+                return i;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                NotificationItem item = new NotificationItem(getActivity());
+                if (i == 0) {
+                    item.setItemValue(NotificationItem.WARNING, "3 個 OSD 異常!", "2015/5/31 14:38");
+                } else {
+                    item.setItemValue(NotificationItem.ERROR, "1 個 OSD 損毀!", "2015/5/21 14:38");
+                }
+                return item;
+            }
+        });
     }
-
-    private BaseAdapter getAdapter = new BaseAdapter() {
-        @Override
-        public int getCount() {
-            return status.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return i;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            String statusText = status.get(i);
-            int images = icons.get(statusText);
-            String content = contents.get(i);
-
-            LeftImageRightTextItem item = new LeftImageRightTextItem(getActivity());
-            item.setItemValue(images, content);
-            return item;
-        }
-    };
 }

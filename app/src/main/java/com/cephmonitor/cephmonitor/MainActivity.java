@@ -1,11 +1,12 @@
 package com.cephmonitor.cephmonitor;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
+import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
@@ -16,8 +17,10 @@ import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
 import com.resourcelibrary.model.view.dialog.RoundSimpleSelectDialog;
 
+import java.util.HashMap;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends Activity implements InitFragment.Style {
     public MainLayout layout;
     public LoginParams loginInfo;
     public Activity activity;
@@ -65,6 +68,12 @@ public class MainActivity extends Activity {
                 RoundSimpleSelectDialog dialog = new RoundSimpleSelectDialog(activity);
                 dialog.setPosition(0, layout.bottomBar.getHeight());
 
+                dialog.addItem("Notifications", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentLauncher.goNotificationFragment(activity, null);
+                    }
+                });
                 dialog.addItem("Node List", null);
                 dialog.addItem("Pool List", null);
                 dialog.addItem("Logs", null);
@@ -90,7 +99,7 @@ public class MainActivity extends Activity {
 
     public void showHealthFragment() {
         setTitle("Health");
-        layout.topBar.setBackgroundColor(Color.parseColor("#e63427"));
+        layout.topBar.setBackgroundColor(getResources().getColor(R.color.light_red));
         FragmentLauncher.goHealthFragment(activity);
         layout.bottomBar.setVisibility(View.VISIBLE);
         layout.hideBack();
@@ -101,7 +110,7 @@ public class MainActivity extends Activity {
         data.outBox(arg);
 
         setTitle("Health Detail");
-        layout.topBar.setBackgroundColor(Color.parseColor("#CD2626"));
+        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
         FragmentLauncher.goHealthDetailFragment(activity, arg);
         layout.bottomBar.setVisibility(View.GONE);
         layout.showBack(new View.OnClickListener() {
@@ -117,8 +126,8 @@ public class MainActivity extends Activity {
         Bundle arg = new Bundle();
         data.outBox(arg);
 
-        setTitle("Osd Health");
-        layout.topBar.setBackgroundColor(Color.parseColor("#CD2626"));
+        setTitle("OSD Health");
+        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
         FragmentLauncher.goOsdHealthFragment(activity, arg);
         layout.bottomBar.setVisibility(View.VISIBLE);
         layout.showBack(new View.OnClickListener() {
@@ -147,6 +156,49 @@ public class MainActivity extends Activity {
                 showOsdHealthFragment(poolData);
             }
         });
+    }
+
+    public void showMonHealthFragment(ClusterV1HealthData data) {
+        Bundle arg = new Bundle();
+        data.outBox(arg);
+
+        setTitle("MON Health");
+        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+        FragmentLauncher.goMonHealthFragment(activity, arg);
+        layout.bottomBar.setVisibility(View.VISIBLE);
+        layout.showBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentLauncher.backFragment(activity);
+                showHealthFragment();
+            }
+        });
+    }
+
+    private HashMap<Class, Runnable> changeStyleTask;
+
+    private Runnable showNotificationFragment = new Runnable() {
+        @Override
+        public void run() {
+            setTitle("Notifications");
+            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    @Override
+    public void changeFragmentStyle(Fragment fragment) {
+        changeStyleTask = new HashMap<>();
+        changeStyleTask.put(NotificationFragment.class, showNotificationFragment);
+
+        Runnable task = changeStyleTask.get(fragment.getClass());
+        task.run();
     }
 
 }

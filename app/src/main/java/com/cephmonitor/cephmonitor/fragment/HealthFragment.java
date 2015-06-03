@@ -66,7 +66,6 @@ public class HealthFragment extends Fragment {
             layout = new HealthLayout(getActivity());
             init();
         }
-
         return layout;
     }
 
@@ -119,6 +118,7 @@ public class HealthFragment extends Fragment {
 
         layout.healthCard.setTitleOnClickListener(healthCardClickEvent);
         layout.osdCard.setTitleOnClickListener(osdCardClickEvent);
+        layout.monCard.setTitleOnClickListener(monCardClickEvent);
     }
 
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
@@ -141,6 +141,17 @@ public class HealthFragment extends Fragment {
 
             MainActivity activity = (MainActivity) getActivity();
             activity.showOsdHealthFragment(poolData);
+        }
+    };
+    private View.OnClickListener monCardClickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (poolData == null) {
+                return;
+            }
+
+            MainActivity activity = (MainActivity) getActivity();
+            activity.showMonHealthFragment(healthData);
         }
     };
 
@@ -199,7 +210,6 @@ public class HealthFragment extends Fragment {
 
     private void dealWithHealthStatus(String response) throws JSONException {
         healthData = new ClusterV1HealthData(response);
-//        healthCardStatus = healthData.getOverallStatus();
         healthCardLastUpdate = healthData.getLastUpdateTimestamp();
         healthCardWarningCount = healthData.getWarningCount();
         healthCardErrorCount = healthData.getErrorCount();

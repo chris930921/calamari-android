@@ -9,25 +9,31 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cephmonitor.cephmonitor.R;
 import com.resourcelibrary.model.logic.RandomId;
-import com.resourcelibrary.model.view.TextTypeface;
 import com.resourcelibrary.model.view.WH;
 
 
 public class NotificationItem extends RelativeLayout {
+    public static final int WARNING = 0;
+    public static final int ERROR = 1;
+
     private Context context;
-    private TextTypeface textType;
     private WH ruler;
 
+    public View topFillView;
+    public View bottomImageFillView;
+    public View bottomTextFillView;
     public ImageView leftImage;
-    public TextView rightText;
-
+    public ImageView rightImage;
+    public RelativeLayout textContainer;
+    public TextView centerTopText;
+    public TextView centerBottomText;
 
     public NotificationItem(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
-        this.textType = new TextTypeface(context);
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -35,43 +41,142 @@ public class NotificationItem extends RelativeLayout {
         setLayoutParams(params);
         setBackgroundColor(Color.WHITE);
 
-        addView(leftImage = leftImage());
-        addView(rightText = rightText(leftImage));
+        topFillView = topFillView();
+        leftImage = leftImage(topFillView);
+        rightImage = rightImage(leftImage);
+        bottomImageFillView = bottomImageFillView(leftImage);
+        textContainer = textContainer(leftImage, rightImage);
+        bottomTextFillView = bottomTextFillView(textContainer);
+        centerTopText = centerTopText();
+        centerBottomText = centerBottomText(centerTopText);
+
+        addView(topFillView);
+        addView(leftImage);
+        addView(bottomImageFillView);
+        addView(rightImage);
+        addView(textContainer);
+        addView(bottomTextFillView);
+        textContainer.addView(centerTopText);
+        textContainer.addView(centerBottomText);
     }
 
-    public ImageView leftImage() {
-        LayoutParams params = new LayoutParams(ruler.getW(17.66), ruler.getW(17.66));
+    private View topFillView() {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(ALIGN_PARENT_TOP);
 
-        ImageView v = new ImageView(context);
+        View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(0, ruler.getW(5), ruler.getW(5), ruler.getW(5));
 
         return v;
     }
 
-    public TextView rightText(View leftView) {
+    private View bottomImageFillView(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
+        params.addRule(ALIGN_PARENT_LEFT);
+        params.addRule(BELOW, topView.getId());
+
+        View v = new View(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private View bottomTextFillView(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
+        params.addRule(ALIGN_PARENT_LEFT);
+        params.addRule(BELOW, topView.getId());
+
+        View v = new View(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private ImageView leftImage(View topView) {
+        LayoutParams params = new LayoutParams(ruler.getW(10), ruler.getW(10));
+        params.addRule(ALIGN_PARENT_LEFT);
+        params.addRule(BELOW, topView.getId());
+
+        ImageView v = new ImageView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private ImageView rightImage(View alignView) {
+        LayoutParams params = new LayoutParams(ruler.getW(10), ruler.getW(10));
+        params.addRule(ALIGN_PARENT_RIGHT);
+        params.addRule(ALIGN_TOP, alignView.getId());
+        params.addRule(ALIGN_BOTTOM, alignView.getId());
+
+        ImageView v = new ImageView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setImageResource(R.drawable.icon027);
+
+        return v;
+    }
+
+    private RelativeLayout textContainer(View leftView, View rightView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_VERTICAL);
+        params.addRule(ALIGN_TOP, leftView.getId());
         params.addRule(RIGHT_OF, leftView.getId());
-        params.setMargins(0, ruler.getW(5), 0, ruler.getW(5));
+        params.addRule(LEFT_OF, rightView.getId());
+        params.setMargins(ruler.getW(3), 0, ruler.getW(3), 0);
+
+        RelativeLayout v = new RelativeLayout(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private TextView centerTopText() {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(ALIGN_TOP);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(14));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(getResources().getColor(R.color.text_color));
 
         return v;
     }
 
-    public void setItemValue(int imageResource, String content) {
-        leftImage.setImageResource(imageResource);
-        rightText.setText(content);
+    private TextView centerBottomText(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(BELOW, topView.getId());
+
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setTextSize(ruler.getTextSize(12));
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setTextColor(getResources().getColor(R.color.sub_text_color));
+
+        return v;
     }
 
+    public void setItemValue(int status, String topContent, String bottomContent) {
+        if (status == WARNING) {
+            leftImage.setImageResource(R.drawable.icon022);
+        } else if (status == ERROR) {
+            leftImage.setImageResource(R.drawable.icon023);
+        }
+        centerTopText.setText(topContent);
+        centerBottomText.setText(bottomContent);
+    }
+
+    public void setRightImageClickEvent(OnClickListener event) {
+        rightImage.setOnClickListener(event);
+    }
 
 }

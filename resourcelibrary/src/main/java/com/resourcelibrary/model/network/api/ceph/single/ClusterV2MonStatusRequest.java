@@ -20,7 +20,7 @@ public class ClusterV2MonStatusRequest extends RequestCephTask {
 
     @Override
     protected StringRequest taskFlow(final CephParams params, Response.Listener<String> success, Response.ErrorListener fail) {
-        String url = CephApiUrl.clusterV2MonList(params);
+        String url = CephApiUrl.clusterV2MonStatus(params);
         String session = params.getSession();
 
         CephGetRequest spider = new CephGetRequest(session, url, success, fail);
@@ -29,6 +29,6 @@ public class ClusterV2MonStatusRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "[ { \"name\": \"node-60\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" } ]";
+        return "{ \"election_epoch\": 1, \"name\": \"node-60\", \"monmap\": { \"epoch\": 1, \"mons\": [ { \"name\": \"node-60\", \"rank\": 0, \"addr\": \"192.168.0.8:6789/0\" } ], \"modified\": \"0.000000\", \"fsid\": \"7d0d620a-9365-471f-832c-2883d3ef20cb\", \"created\": \"0.000000\" }, \"rank\": 0, \"outside_quorum\": [], \"state\": \"leader\", \"extra_probe_peers\": [], \"sync_provider\": [], \"quorum\": [ 0 ] }";
     }
 }

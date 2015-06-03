@@ -42,4 +42,12 @@ public class CephApiUrl {
     public static String clusterV1Server(CephParams params) {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/server";
     }
+
+    public static String clusterV2MonList(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/mon";
+    }
+
+    public static String clusterV2MonStatus(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/mon/" + params.getMonitorId() + "/status";
+    }
 }
