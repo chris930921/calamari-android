@@ -2,6 +2,7 @@ package com.cephmonitor.cephmonitor;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -96,7 +97,12 @@ public class MainActivity extends Activity implements InitFragment.Style {
 
     @Override
     public void onBackPressed() {
-        CheckExitDialog.create(activity).show();
+        FragmentManager manager = getFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            manager.popBackStack();
+        } else {
+            CheckExitDialog.create(activity).show();
+        }
     }
 
 
