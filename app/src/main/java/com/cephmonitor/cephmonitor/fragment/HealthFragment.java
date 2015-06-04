@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
-import com.cephmonitor.cephmonitor.MainActivity;
+import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.TimeUnit;
@@ -66,6 +66,7 @@ public class HealthFragment extends Fragment {
             layout = new HealthLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 
@@ -128,8 +129,9 @@ public class HealthFragment extends Fragment {
                 return;
             }
 
-            MainActivity activity = (MainActivity) getActivity();
-            activity.showHealthDetailFragment(healthData);
+            Bundle arg = new Bundle();
+            healthData.outBox(arg);
+            FragmentLauncher.goHealthDetailFragment(getActivity(), arg);
         }
     };
     private View.OnClickListener osdCardClickEvent = new View.OnClickListener() {
@@ -139,8 +141,9 @@ public class HealthFragment extends Fragment {
                 return;
             }
 
-            MainActivity activity = (MainActivity) getActivity();
-            activity.showOsdHealthFragment(poolData);
+            Bundle arg = new Bundle();
+            poolData.outBox(arg);
+            FragmentLauncher.goOsdHealthFragment(getActivity(), arg);
         }
     };
     private View.OnClickListener monCardClickEvent = new View.OnClickListener() {
@@ -150,8 +153,9 @@ public class HealthFragment extends Fragment {
                 return;
             }
 
-            MainActivity activity = (MainActivity) getActivity();
-            activity.showMonHealthFragment(healthData);
+            Bundle arg = new Bundle();
+            healthData.outBox(arg);
+            FragmentLauncher.goMonHealthFragment(getActivity(), arg);
         }
     };
 

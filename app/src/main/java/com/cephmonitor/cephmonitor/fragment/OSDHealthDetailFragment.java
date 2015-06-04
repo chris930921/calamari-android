@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.OSDHealthDetailLayout;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
@@ -26,6 +27,7 @@ public class OSDHealthDetailFragment extends Fragment {
             layout = new OSDHealthDetailLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 

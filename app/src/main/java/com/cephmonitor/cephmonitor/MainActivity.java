@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
+import com.cephmonitor.cephmonitor.fragment.HealthDetailFragment;
+import com.cephmonitor.cephmonitor.fragment.HealthFragment;
+import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
+import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
+import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
-import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
-import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
-import com.resourcelibrary.model.view.dialog.LoadingDialog;
 import com.resourcelibrary.model.view.dialog.RoundSimpleSelectDialog;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     public MainLayout layout;
     public LoginParams loginInfo;
     public Activity activity;
-    private LoadingDialog loadingDialog;
+    private HashMap<Class, InitFragment.Task> changeStyleTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,16 @@ public class MainActivity extends Activity implements InitFragment.Style {
         setContentView(layout);
         loginInfo = new LoginParams(this);
         activity = this;
-        loadingDialog = new LoadingDialog(this);
 
-        showHealthFragment();
+        changeStyleTask = new HashMap<>();
+        changeStyleTask.put(HealthFragment.class, showHealthFragment);
+        changeStyleTask.put(HealthDetailFragment.class, showHealthDetailFragment);
+        changeStyleTask.put(MonHealthFragment.class, showMonHealthFragment);
+        changeStyleTask.put(OSDHealthDetailFragment.class, showOSDHealthDetailFragment);
+        changeStyleTask.put(OSDHealthFragment.class, showOsdHealthFragment);
+        changeStyleTask.put(NotificationFragment.class, showNotificationFragment);
+
+        FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
         layout.health.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,91 +103,41 @@ public class MainActivity extends Activity implements InitFragment.Style {
         layout.setTitle(title);
     }
 
-
-    public void showHealthFragment() {
-        setTitle("Health");
-        layout.topBar.setBackgroundColor(getResources().getColor(R.color.light_red));
-        FragmentLauncher.goHealthFragment(activity);
-        layout.bottomBar.setVisibility(View.VISIBLE);
-        layout.hideBack();
+    @Override
+    public void changeFragmentStyle(Fragment fragment) {
+        InitFragment.Task task = changeStyleTask.get(fragment.getClass());
+        task.action(fragment.getArguments());
     }
 
-    public void showHealthDetailFragment(ClusterV1HealthData data) {
-        Bundle arg = new Bundle();
-        data.outBox(arg);
-
-        setTitle("Health Detail");
-        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
-        FragmentLauncher.goHealthDetailFragment(activity, arg);
-        layout.bottomBar.setVisibility(View.GONE);
-        layout.showBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentLauncher.backFragment(activity);
-                showHealthFragment();
-            }
-        });
-    }
-
-    public void showOsdHealthFragment(PoolV1ListData data) {
-        Bundle arg = new Bundle();
-        data.outBox(arg);
-
-        setTitle("OSD Health");
-        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
-        FragmentLauncher.goOsdHealthFragment(activity, arg);
-        layout.bottomBar.setVisibility(View.VISIBLE);
-        layout.showBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentLauncher.backFragment(activity);
-                showHealthFragment();
-            }
-        });
-    }
-
-    public void showOSDHealthDetailFragment(final PoolV1ListData poolData, OsdBox data) {
-        Bundle arg = new Bundle();
-        ClusterV2OsdData osdData = data.osdData;
-        osdData.outBox(arg);
-        poolData.outBox(arg);
-
-        setTitle(data.value + "");
-        layout.topBar.setBackgroundColor(data.getColor());
-        FragmentLauncher.goOSDHealthDetailFragment(activity, arg);
-        layout.bottomBar.setVisibility(View.VISIBLE);
-        layout.showBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentLauncher.backFragment(activity);
-                showOsdHealthFragment(poolData);
-            }
-        });
-    }
-
-    public void showMonHealthFragment(ClusterV1HealthData data) {
-        Bundle arg = new Bundle();
-        data.outBox(arg);
-
-        setTitle("MON Health");
-        layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
-        FragmentLauncher.goMonHealthFragment(activity, arg);
-        layout.bottomBar.setVisibility(View.VISIBLE);
-        layout.showBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentLauncher.backFragment(activity);
-                showHealthFragment();
-            }
-        });
-    }
-
-    private HashMap<Class, Runnable> changeStyleTask;
-
-    private Runnable showNotificationFragment = new Runnable() {
+    private InitFragment.Task showHealthFragment = new InitFragment.Task() {
         @Override
-        public void run() {
-            setTitle("Notifications");
+        public void action(Bundle arg) {
+            setTitle("Health");
+            layout.topBar.setBackgroundColor(getResources().getColor(R.color.light_red));
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.hideBack();
+        }
+    };
+
+    private InitFragment.Task showHealthDetailFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("Health Detail");
+            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.bottomBar.setVisibility(View.GONE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showOsdHealthFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("OSD Health");
             layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
@@ -192,13 +149,53 @@ public class MainActivity extends Activity implements InitFragment.Style {
         }
     };
 
-    @Override
-    public void changeFragmentStyle(Fragment fragment) {
-        changeStyleTask = new HashMap<>();
-        changeStyleTask.put(NotificationFragment.class, showNotificationFragment);
+    private InitFragment.Task showOSDHealthDetailFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            int osdId = arg.getInt("0");
+            int titleColor = arg.getInt("1");
 
-        Runnable task = changeStyleTask.get(fragment.getClass());
-        task.run();
-    }
+            setTitle(osdId + "");
+            layout.topBar.setBackgroundColor(titleColor);
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showMonHealthFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("MON Health");
+            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+
+    private InitFragment.Task showNotificationFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("Notifications");
+            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
 
 }

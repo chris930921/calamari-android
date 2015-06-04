@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
-import com.cephmonitor.cephmonitor.MainActivity;
+import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OnOsdBoxClickListener;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OnStatusChangeListener;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
@@ -17,7 +17,6 @@ import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdListData;
-import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2OsdListRequest;
 
@@ -34,6 +33,7 @@ public class OSDHealthFragment extends Fragment {
             layout = new OSDHealthLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 
@@ -54,15 +54,14 @@ public class OSDHealthFragment extends Fragment {
     private OnOsdBoxClickListener clickOsdBox = new OnOsdBoxClickListener() {
         @Override
         public void onClick(OsdHealthBoxes boxGroup, OsdBox box) {
-            try {
-                PoolV1ListData poolData = new PoolV1ListData("[]");
-                poolData.inBox(getArguments());
+            Bundle arg = getArguments();
+            arg.putInt("0", box.value);
+            arg.putInt("1", box.getColor());
 
-                MainActivity activity = (MainActivity) getActivity();
-                activity.showOSDHealthDetailFragment(poolData, box);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            ClusterV2OsdData osdData = box.osdData;
+            osdData.outBox(arg);
+
+            FragmentLauncher.goOSDHealthDetailFragment(getActivity(), arg);
         }
     };
 

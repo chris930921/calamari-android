@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
@@ -29,6 +30,7 @@ public class HealthDetailFragment extends Fragment {
             layout = new HealthDetailLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 

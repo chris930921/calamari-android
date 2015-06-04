@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.volley.Response;
+import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.component.card.MonHealthCard;
 import com.cephmonitor.cephmonitor.layout.fragment.MonHealthLayout;
 import com.resourcelibrary.model.log.ShowLog;
@@ -35,6 +36,7 @@ public class MonHealthFragment extends Fragment {
             layout = new MonHealthLayout(getActivity());
             init();
         }
+        InitFragment.choiceActivity(getActivity(), this);
         return layout;
     }
 
@@ -87,9 +89,6 @@ public class MonHealthFragment extends Fragment {
                 for (int i = 0; i < mons.size(); i++) {
                     ClusterV2MonData data = mons.get(i);
                     ClusterV1HealthMonData monStatus = monsStatus.get(data.getName());
-                    ShowLog.d("陣列內容:" + data.json);
-                    ShowLog.d("陣列內容:" + monsStatus);
-                    ShowLog.d("陣列內容:" + monStatus.json);
                     if (monStatus == null) {
                         return 0;
                     }
