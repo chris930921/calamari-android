@@ -8,6 +8,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -67,9 +68,9 @@ public class OSDHealthLayout extends RelativeLayout {
         v.setLayoutParams(params);
         v.setImageResource(R.drawable.icon024);
         v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
-        v.setFillColor(Color.parseColor("#f3f3f3"));
-        v.setStrokeColor(Color.parseColor("#b7b7b7"));
-        v.setClickColor(Color.parseColor("#d9d9d9"));
+        v.setFillColor(ColorTable._F3F3F3);
+        v.setStrokeColor(ColorTable._B7B7B7);
+        v.setClickColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -84,10 +85,10 @@ public class OSDHealthLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.osd_health_all);
-        v.setTextColor(Color.parseColor("#666666"));
-        v.setFillColor(Color.parseColor("#f3f3f3"));
-        v.setStrokeColor(Color.parseColor("#b7b7b7"));
-        v.setClickColor(Color.parseColor("#d9d9d9"));
+        v.setTextColor(ColorTable._666666);
+        v.setFillColor(ColorTable._F3F3F3);
+        v.setStrokeColor(ColorTable._B7B7B7);
+        v.setClickColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -103,9 +104,9 @@ public class OSDHealthLayout extends RelativeLayout {
         v.setLayoutParams(params);
         v.setImageResource(R.drawable.icon025);
         v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
-        v.setFillColor(Color.parseColor("#f3f3f3"));
-        v.setStrokeColor(Color.parseColor("#b7b7b7"));
-        v.setClickColor(Color.parseColor("#d9d9d9"));
+        v.setFillColor(ColorTable._F3F3F3);
+        v.setStrokeColor(ColorTable._B7B7B7);
+        v.setClickColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -173,7 +174,7 @@ public class OSDHealthLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.osd_health_great);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setTextSize(14);
 
         return v;
@@ -188,7 +189,7 @@ public class OSDHealthLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.osd_health_work_fine);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setTextSize(14);
 
         return v;
@@ -215,7 +216,7 @@ public class OSDHealthLayout extends RelativeLayout {
     }
 
     public void recoverButtons() {
-        int color = Color.parseColor("#f3f3f3");
+        int color = ColorTable._F3F3F3;
         leftButton.setFillColor(color);
         rightButton.setFillColor(color);
         centerButton.setFillColor(color);

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.WH;
@@ -145,7 +146,7 @@ public class MonHealthCard extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(16));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(getResources().getColor(R.color.text_color));
+        v.setTextColor(ColorTable._666666);
 
         return v;
     }
@@ -159,18 +160,18 @@ public class MonHealthCard extends RelativeLayout {
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(14));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(getResources().getColor(R.color.text_color));
+        v.setTextColor(ColorTable._666666);
 
         return v;
     }
 
     public void setData(String status, String field, String value) {
         if (ClusterV1HealthData.HEALTH_OK.equals(status)) {
-            leftBorderPaint.setColor(getResources().getColor(R.color.green));
+            leftBorderPaint.setColor(ColorTable._8DC41F);
         } else if (ClusterV1HealthData.HEALTH_WARN.equals(status)) {
-            leftBorderPaint.setColor(getResources().getColor(R.color.yellow));
+            leftBorderPaint.setColor(ColorTable._F7B500);
         } else if (ClusterV1HealthData.HEALTH_ERR.equals(status)) {
-            leftBorderPaint.setColor(getResources().getColor(R.color.light_red));
+            leftBorderPaint.setColor(ColorTable._E63427);
         }
         fieldName.setText(field);
         FieldValue.setText(value);

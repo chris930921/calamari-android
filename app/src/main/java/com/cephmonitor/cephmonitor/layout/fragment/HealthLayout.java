@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 import com.cephmonitor.cephmonitor.R;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.resourcelibrary.model.view.card.CephCard;
+import com.cephmonitor.cephmonitor.layout.component.card.CephCard;
 
 public class HealthLayout extends RelativeLayout {
     public ScrollView cardContainer;
@@ -88,11 +88,10 @@ public class HealthLayout extends RelativeLayout {
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
         v.setCenterText(context.getResources().getString(R.string.health_card_ago));
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
         v.setCenterValueText("OK");
         v.setCompareMode(false);
         v.setChangeCenterValueColor(true);
+        v.setValue(0, 0);
 
         return v;
     }
@@ -110,9 +109,8 @@ public class HealthLayout extends RelativeLayout {
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
         v.setCenterText(context.getResources().getString(R.string.health_card_in_and_up));
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
         v.setCenterValueText("0 / 0");
+        v.setValue(0, 0);
 
         return v;
     }
@@ -130,8 +128,8 @@ public class HealthLayout extends RelativeLayout {
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
         v.setCenterText(context.getResources().getString(R.string.health_card_quorom));
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
+
+        v.setValue(0, 0);
         v.setCenterValueText("0 / 0");
 
         return v;
@@ -150,9 +148,8 @@ public class HealthLayout extends RelativeLayout {
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
         v.setCenterText(context.getResources().getString(R.string.health_card_active));
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
         v.setCenterValueText("0");
+        v.setValue(0, 0);
 
         return v;
     }
@@ -173,8 +170,7 @@ public class HealthLayout extends RelativeLayout {
         v.setCompareMode(false);
         v.setChangeTwoValueColor(false, false);
 
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
+        v.setValue(0, 0);
         v.setCenterValueText("0");
 
         return v;
@@ -194,9 +190,8 @@ public class HealthLayout extends RelativeLayout {
         v.setRightText(context.getResources().getString(R.string.health_card_Dirty));
         v.setCenterText(context.getResources().getString(R.string.health_card_clean));
 
-        v.setLeftValueText(0);
-        v.setRightValueText(0);
         v.setCenterValueText("0");
+        v.setValue(0, 0);
 
         return v;
     }

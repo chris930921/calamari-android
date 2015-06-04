@@ -10,9 +10,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.resourcelibrary.model.view.textview.FloatLayoutLabel;
+import com.cephmonitor.cephmonitor.layout.component.other.FloatLayoutLabel;
 
 public class OSDHealthDetailLayout extends ScrollView {
     private Context context;
@@ -206,7 +207,7 @@ public class OSDHealthDetailLayout extends ScrollView {
         v.setTextSize(ruler.getTextSize(16));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setText(stringResource);
 
         return v;
@@ -217,7 +218,7 @@ public class OSDHealthDetailLayout extends ScrollView {
         v.setId(RandomId.get());
         v.setTextSize(ruler.getTextSize(14));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setText(" ");
 
         return v;

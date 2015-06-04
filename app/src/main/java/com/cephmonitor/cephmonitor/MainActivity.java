@@ -12,6 +12,7 @@ import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
@@ -113,7 +114,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle("Health");
-            layout.topBar.setBackgroundColor(getResources().getColor(R.color.light_red));
+            layout.topBar.setBackgroundColor(ColorTable._E63427);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.hideBack();
         }
@@ -123,7 +124,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle("Health Detail");
-            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -138,7 +139,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle("OSD Health");
-            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -171,7 +172,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle("MON Health");
-            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -187,7 +188,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle("Notifications");
-            layout.topBar.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override

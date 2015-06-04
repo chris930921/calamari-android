@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 import com.resourcelibrary.model.view.button.RoundFillColorButton;
@@ -197,7 +198,7 @@ public class LoginLayout extends RelativeLayout {
         v.setTextColor(Color.argb(255, 255, 255, 255));
         v.setGravity(Gravity.CENTER);
         v.setPadding(0, 0, 0, 0);
-        v.setFillAndPressColor(Color.parseColor("#e63427"), Color.parseColor("#942119"));
+        v.setFillAndPressColor(ColorTable._E63427, ColorTable._942119);
         v.setText(R.string.login_sign_in);
 
         return v;
@@ -211,15 +212,15 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private void recoverInputStatus() {
-        String color = "#666666";
-        host.setBorderColor(Color.parseColor(color));
-        port.setBorderColor(Color.parseColor(color));
-        name.setBorderColor(Color.parseColor(color));
-        password.setBorderColor(Color.parseColor(color));
+        int color = ColorTable._666666;
+        host.setBorderColor(color);
+        port.setBorderColor(color);
+        name.setBorderColor(color);
+        password.setBorderColor(color);
     }
 
     public void setNoValueInput(View v) {
         recoverInputStatus();
-        ((RoundCornerEditText) v).setBorderColor(Color.parseColor("#e63427"));
+        ((RoundCornerEditText) v).setBorderColor(ColorTable._E63427);
     }
 }

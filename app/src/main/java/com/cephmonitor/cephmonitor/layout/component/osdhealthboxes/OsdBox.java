@@ -1,8 +1,8 @@
 package com.cephmonitor.cephmonitor.layout.component.osdhealthboxes;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 
 /**
@@ -25,11 +25,11 @@ public class OsdBox {
     public void setStatus(int status) {
         this.status = status;
         if (status == NORMAL_STATUS) {
-            color = Color.parseColor("#8dc41f");
+            color = ColorTable._8DC41F;
         } else if (status == WARN_STATUS) {
-            color = Color.parseColor("#f7b500");
+            color = ColorTable._F7B500;
         } else if (status == ERROR_STATUS) {
-            color = Color.parseColor("#e63427");
+            color = ColorTable._E63427;
         }
     }
 

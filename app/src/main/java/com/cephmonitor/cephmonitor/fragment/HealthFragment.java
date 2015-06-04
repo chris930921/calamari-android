@@ -328,28 +328,22 @@ public class HealthFragment extends Fragment {
         long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
         layout.healthCard.setCenterText(TimeUnit.change(period));
 
+        layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
 
-        layout.healthCard.setLeftValueText(healthCardWarningCount);
-        layout.healthCard.setRightValueText(healthCardErrorCount);
-
-        layout.osdCard.setLeftValueText(osdCardWarningCount);
-        layout.osdCard.setRightValueText(osdCardErrorCount);
+        layout.osdCard.setValue(osdCardWarningCount, osdCardErrorCount);
         String osdStatus = osdCardOkCount + " / " + oadCardTotalCount;
         layout.osdCard.setCenterValueText(osdStatus);
 
-        layout.monCard.setLeftValueText(monCardWarningCount);
-        layout.monCard.setRightValueText(monCardErrorCount);
+        layout.monCard.setValue(monCardWarningCount, monCardErrorCount);
         String monStatus = monCardOkCount + " / " + monCardTotalCount;
         layout.monCard.setCenterValueText(monStatus);
 
         layout.poolsCard.setCenterValueText(poolCardStatus + "");
 
-        layout.hostsCard.setLeftValueText(hostCardMonCount);
-        layout.hostsCard.setRightValueText(hostCardOsdCount);
+        layout.hostsCard.setValue(hostCardMonCount, hostCardOsdCount);
         layout.hostsCard.setCenterValueText(hostCardStatus + "");
 
-        layout.pgStatusCard.setLeftValueText(pgCardWorkingCount);
-        layout.pgStatusCard.setRightValueText(pgCardDirtyCount);
+        layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
         String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
         layout.pgStatusCard.setCenterValueText(pgStatus);
     }

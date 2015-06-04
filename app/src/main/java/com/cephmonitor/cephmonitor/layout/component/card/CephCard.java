@@ -1,4 +1,4 @@
-package com.resourcelibrary.model.view.card;
+package com.cephmonitor.cephmonitor.layout.component.card;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -70,7 +71,7 @@ public class CephCard extends RelativeLayout {
         bounds = new RectF();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#8dc41f"));
+        paint.setColor(ColorTable._8DC41F);
         radius = 10;
         borderWidth = 5;
         leftValue = 0;
@@ -186,7 +187,7 @@ public class CephCard extends RelativeLayout {
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#D9D9D9"));
+        v.setBackgroundColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -198,7 +199,7 @@ public class CephCard extends RelativeLayout {
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#F3F3F3"));
+        v.setBackgroundColor(ColorTable._F3F3F3);
 
         return v;
     }
@@ -211,7 +212,7 @@ public class CephCard extends RelativeLayout {
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#D9D9D9"));
+        v.setBackgroundColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -224,7 +225,7 @@ public class CephCard extends RelativeLayout {
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#D9D9D9"));
+        v.setBackgroundColor(ColorTable._D9D9D9);
 
         return v;
     }
@@ -274,7 +275,7 @@ public class CephCard extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.parseColor("#999999"));
+        v.setTextColor(ColorTable._999999);
 
         return v;
     }
@@ -289,7 +290,7 @@ public class CephCard extends RelativeLayout {
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(20));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(Color.parseColor("#999999"));
+        v.setTextColor(ColorTable._999999);
 
         return v;
     }
@@ -328,7 +329,7 @@ public class CephCard extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.parseColor("#999999"));
+        v.setTextColor(ColorTable._999999);
 
         return v;
     }
@@ -343,7 +344,7 @@ public class CephCard extends RelativeLayout {
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(20));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(Color.parseColor("#999999"));
+        v.setTextColor(ColorTable._999999);
 
         return v;
     }
@@ -384,7 +385,7 @@ public class CephCard extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.parseColor("#8dc41f"));
+        v.setTextColor(ColorTable._8DC41F);
 
         return v;
     }
@@ -399,7 +400,7 @@ public class CephCard extends RelativeLayout {
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(20));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(Color.parseColor("#999999"));
+        v.setTextColor(ColorTable._999999);
 
         return v;
     }
@@ -420,8 +421,8 @@ public class CephCard extends RelativeLayout {
         this.isCompare = isCompare;
     }
 
-    public void setChangeCenterValueColor(boolean isChnage) {
-        this.isChangeCenterValueColor = isChnage;
+    public void setChangeCenterValueColor(boolean isChange) {
+        this.isChangeCenterValueColor = isChange;
     }
 
     public void setChangeTwoValueColor(boolean isChangeLeftValueColor, boolean isChangeRightValueColor) {
@@ -429,32 +430,30 @@ public class CephCard extends RelativeLayout {
         this.isChangeRightValueColor = isChangeRightValueColor;
     }
 
-    public void setLeftValueText(int value) {
-        leftValue = value;
-
-        if (isChangeLeftValueColor && leftValue == 0) {
-            leftValueText.setTextColor(Color.parseColor("#999999"));
+    public void setValue(int leftValue, int rightValue) {
+        if (leftValue == 0) {
+            leftValueText.setTextColor(ColorTable._999999);
         } else if (isChangeLeftValueColor) {
-            leftValueText.setTextColor(Color.parseColor("#f7b500"));
+            leftValueText.setTextColor(ColorTable._F7B500);
         }
-        if (isCompare && leftValue > rightValue) {
+        leftValueText.setText(leftValue + "");
+
+        if (rightValue == 0) {
+            rightValueText.setTextColor(ColorTable._999999);
+        } else if (isChangeRightValueColor) {
+            rightValueText.setTextColor(ColorTable._E63427);
+        }
+        rightValueText.setText(rightValue + "");
+
+        if (isCompare && rightValue == 0 && leftValue == 0) {
+            changeGreenBorder();
+        } else if (isCompare && rightValue != 0) {
+            changeRedBorder();
+        } else if (isCompare) {
             changeOrangeBorder();
         }
-        leftValueText.setText(value + "");
     }
 
-    public void setRightValueText(int value) {
-        rightValue = value;
-        if (isChangeRightValueColor && rightValue == 0) {
-            rightValueText.setTextColor(Color.parseColor("#999999"));
-        } else if (isChangeRightValueColor) {
-            rightValueText.setTextColor(Color.parseColor("#e63742"));
-        }
-        if (isCompare && rightValue > leftValue) {
-            changeRedBorder();
-        }
-        rightValueText.setText(value + "");
-    }
 
     public void setCenterValueText(String text) {
         centerValueText.setText(text);
@@ -473,23 +472,23 @@ public class CephCard extends RelativeLayout {
     }
 
     public void changeRedBorder() {
-        setBorderColor(Color.parseColor("#e63742"));
+        setBorderColor(ColorTable._E63427);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(Color.parseColor("#e63742"));
+            centerValueText.setTextColor(ColorTable._E63427);
         }
     }
 
     public void changeOrangeBorder() {
-        setBorderColor(Color.parseColor("#f7b500"));
+        setBorderColor(ColorTable._F7B500);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(Color.parseColor("#f7b500"));
+            centerValueText.setTextColor(ColorTable._F7B500);
         }
     }
 
     public void changeGreenBorder() {
-        setBorderColor(Color.parseColor("#8dc41f"));
+        setBorderColor(ColorTable._8DC41F);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(Color.parseColor("#8dc41f"));
+            centerValueText.setTextColor(ColorTable._8DC41F);
         }
     }
 

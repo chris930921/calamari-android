@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -71,7 +72,7 @@ public class MainLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
-        v.setBackgroundColor(Color.parseColor("#e63427"));
+        v.setBackgroundColor(ColorTable._E63427);
 
         return v;
     }
@@ -188,7 +189,7 @@ public class MainLayout extends RelativeLayout {
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#D9D9D9"));
+        v.setBackgroundColor(ColorTable._D9D9D9);
 
         return v;
     }

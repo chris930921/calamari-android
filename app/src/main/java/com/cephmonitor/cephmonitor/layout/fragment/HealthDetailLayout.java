@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -94,7 +95,7 @@ public class HealthDetailLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.health_detail_great);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setTextSize(14);
 
         return v;
@@ -109,7 +110,7 @@ public class HealthDetailLayout extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.health_detail_work_fine);
-        v.setTextColor(Color.parseColor("#666666"));
+        v.setTextColor(ColorTable._666666);
         v.setTextSize(14);
 
         return v;
