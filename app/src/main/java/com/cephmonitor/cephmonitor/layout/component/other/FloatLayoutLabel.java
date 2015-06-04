@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by User on 5/26/2015.
  */
 public class FloatLayoutLabel extends View {
-    private int radius = 4;
+    private int radius = 10;
     private RectF boxBounds;
     private Rect textBounds;
     private Paint rectPaint;
