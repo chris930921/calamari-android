@@ -65,7 +65,9 @@ public class HealthDetailLayout extends RelativeLayout {
         params.addRule(CENTER_IN_PARENT);
 
         RelativeLayout v = new RelativeLayout(context);
+        v.setId(RandomId.get());
         v.setLayoutParams(params);
+        v.setVisibility(GONE);
 
         return v;
     }

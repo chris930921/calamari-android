@@ -56,7 +56,7 @@ public class HealthDetailFragment extends Fragment {
                 contents.remove(i);
             }
         }
-
+        
         if (status.size() == 0) {
             layout.showWorkFind();
         } else {
