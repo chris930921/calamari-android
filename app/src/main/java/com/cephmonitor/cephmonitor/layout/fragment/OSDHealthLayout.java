@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
+import com.cephmonitor.cephmonitor.layout.component.other.WorkFindView;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 import com.resourcelibrary.model.view.button.RoundStrokeFillButton;
@@ -26,6 +27,7 @@ public class OSDHealthLayout extends RelativeLayout {
     public View workFineImage;
     public TextView workFineLineOne;
     public TextView workFineLineTwo;
+    public WorkFindView workFine;
 
     public OsdHealthBoxes boxesContainer;
     public RoundStrokeFillButton leftButton;
@@ -49,10 +51,11 @@ public class OSDHealthLayout extends RelativeLayout {
         addView(scrollContainer = scrollContainer(centerButton));
         addView(workFineContainer = workFineContainer());
 
-        workFineContainer.addView(workFineCenterContainer = workFineCenterContainer());
-        workFineCenterContainer.addView(workFineImage = workFineImage());
-        workFineCenterContainer.addView(workFineLineOne = workFineLineOne(workFineImage));
-        workFineCenterContainer.addView(workFineLineTwo = workFineLineTwo(workFineLineOne));
+        workFineContainer.addView(workFine = workFine());
+//        workFineContainer.addView(workFineCenterContainer = workFineCenterContainer());
+//        workFineCenterContainer.addView(workFineImage = workFineImage());
+//        workFineCenterContainer.addView(workFineLineOne = workFineLineOne(workFineImage));
+//        workFineCenterContainer.addView(workFineLineTwo = workFineLineTwo(workFineLineOne));
 
         scrollContainer.addView(containerInnerScroll = containerInnerScroll());
         containerInnerScroll.addView(boxesContainer = boxesContainer());
@@ -137,60 +140,6 @@ public class OSDHealthLayout extends RelativeLayout {
 
         RelativeLayout v = new RelativeLayout(context);
         v.setLayoutParams(params);
-        v.setVisibility(INVISIBLE);
-
-        return v;
-    }
-
-    private RelativeLayout workFineCenterContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(CENTER_IN_PARENT);
-
-        RelativeLayout v = new RelativeLayout(context);
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    public View workFineImage() {
-        LayoutParams params = new LayoutParams(ruler.getW(30), ruler.getW(30));
-        params.addRule(CENTER_HORIZONTAL);
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setBackgroundResource(R.drawable.icon026);
-
-        return v;
-    }
-
-    public TextView workFineLineOne(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(CENTER_HORIZONTAL);
-        params.addRule(BELOW, topView.getId());
-        params.setMargins(0, ruler.getH(5), 0, 0);
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setText(R.string.osd_health_great);
-        v.setTextColor(ColorTable._666666);
-        v.setTextSize(14);
-
-        return v;
-    }
-
-    public TextView workFineLineTwo(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(CENTER_HORIZONTAL);
-        params.addRule(BELOW, topView.getId());
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setText(R.string.osd_health_work_fine);
-        v.setTextColor(ColorTable._666666);
-        v.setTextSize(14);
 
         return v;
     }
@@ -205,14 +154,28 @@ public class OSDHealthLayout extends RelativeLayout {
         return v;
     }
 
+    private WorkFindView workFine() {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(CENTER_IN_PARENT);
+
+        WorkFindView v = new WorkFindView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setVisibility(GONE);
+        v.setText(
+                getResources().getString(R.string.osd_health_great),
+                getResources().getString(R.string.osd_health_work_fine)
+        );
+
+        return v;
+    }
+
     public void showWorkFind() {
-        workFineContainer.setVisibility(VISIBLE);
-        boxesContainer.setVisibility(INVISIBLE);
+        workFine.showWorkFind(boxesContainer);
     }
 
     public void hideWorkFind() {
-        boxesContainer.setVisibility(VISIBLE);
-        workFineContainer.setVisibility(INVISIBLE);
+        workFine.hideWorkFind(boxesContainer);
     }
 
     public void recoverButtons() {

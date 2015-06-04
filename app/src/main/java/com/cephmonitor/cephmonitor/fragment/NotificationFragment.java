@@ -24,32 +24,37 @@ public class NotificationFragment extends Fragment {
     }
 
     public void init() {
-        layout.list.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-            @Override
-            public Object getItem(int i) {
-                return i;
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return i;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                NotificationItem item = new NotificationItem(getActivity());
-                if (i == 0) {
-                    item.setItemValue(NotificationItem.WARNING, "3 個 OSD 異常!", "2015/5/31 14:38");
-                } else {
-                    item.setItemValue(NotificationItem.ERROR, "1 個 OSD 損毀!", "2015/5/21 14:38");
+        final int size = 2; //FIXME
+        if (size == 0) {
+            layout.showWorkFind();
+        } else {
+            layout.list.setAdapter(new BaseAdapter() {
+                @Override
+                public int getCount() {
+                    return size;
                 }
-                return item;
-            }
-        });
+
+                @Override
+                public Object getItem(int i) {
+                    return i;
+                }
+
+                @Override
+                public long getItemId(int i) {
+                    return i;
+                }
+
+                @Override
+                public View getView(int i, View view, ViewGroup viewGroup) {
+                    NotificationItem item = new NotificationItem(getActivity());
+                    if (i == 0) {
+                        item.setItemValue(NotificationItem.WARNING, "3 個 OSD 異常!", "2015/5/31 14:38");
+                    } else {
+                        item.setItemValue(NotificationItem.ERROR, "1 個 OSD 損毀!", "2015/5/21 14:38");
+                    }
+                    return item;
+                }
+            });
+        }
     }
 }

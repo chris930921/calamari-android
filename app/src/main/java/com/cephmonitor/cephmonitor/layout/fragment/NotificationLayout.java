@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.component.other.WorkFindView;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -14,6 +16,7 @@ public class NotificationLayout extends RelativeLayout {
     private WH ruler;
 
     public ListView list;
+    public WorkFindView workFine;
 
     public NotificationLayout(Context context) {
         super(context);
@@ -27,6 +30,7 @@ public class NotificationLayout extends RelativeLayout {
         setBackgroundColor(Color.WHITE);
 
         addView(list = list());
+        addView(workFine = workFine());
     }
 
     public ListView list() {
@@ -40,5 +44,25 @@ public class NotificationLayout extends RelativeLayout {
         v.setDividerHeight(ruler.getH(0.36));
 
         return v;
+    }
+
+    private WorkFindView workFine() {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(CENTER_IN_PARENT);
+
+        WorkFindView v = new WorkFindView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setVisibility(GONE);
+        v.setText(
+                getResources().getString(R.string.notification_work_find_line_one),
+                getResources().getString(R.string.notification_work_find_line_two)
+        );
+
+        return v;
+    }
+
+    public void showWorkFind() {
+        workFine.showWorkFind(list);
     }
 }

@@ -134,8 +134,13 @@ public class OSDHealthFragment extends Fragment {
             box.osdData = osd;
             boxes.add(box);
         }
+
         layout.boxesContainer.setData(boxes);
         layout.boxesContainer.setOnOsdBoxClickListener(clickOsdBox);
         layout.boxesContainer.setOnStatusChangeListener(changeShowedBox);
+
+        if (boxes.size() == 0) {
+            layout.showWorkFind();
+        }
     }
 }

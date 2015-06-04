@@ -84,5 +84,8 @@
     <string name="osd_detail_re_weight">Reweight</string>
     <string name="osd_detail_uuid">UUID</string>
 
+    //NotificationFragment
+    <string name="notification_work_find_line_one">You don\'t have any</string>
+    <string name="notification_work_find_line_two">notifications right now!</string>
 
 </resources>
