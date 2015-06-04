@@ -82,6 +82,21 @@ public class MonHealthFragment extends Fragment {
     private BaseAdapter getAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
+            try {
+
+                for (int i = 0; i < mons.size(); i++) {
+                    ClusterV2MonData data = mons.get(i);
+                    ClusterV1HealthMonData monStatus = monsStatus.get(data.getName());
+                    ShowLog.d("陣列內容:" + data.json);
+                    ShowLog.d("陣列內容:" + monsStatus);
+                    ShowLog.d("陣列內容:" + monStatus.json);
+                    if (monStatus == null) {
+                        return 0;
+                    }
+                }
+            } catch (JSONException e) {
+                return 0;
+            }
             return mons.size();
         }
 

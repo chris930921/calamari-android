@@ -29,6 +29,6 @@ public class ClusterV2MonListRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "[ { \"name\": \"node-60\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" } ]";
+        return "[ { \"name\": \"node-60\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" },{ \"name\": \"node-61\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" },{ \"name\": \"node-62\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" } ]";
     }
 }
