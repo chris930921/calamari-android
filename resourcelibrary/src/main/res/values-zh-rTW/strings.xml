@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MonitorProject</string>
     <string name="login_message">帳號或密碼錯誤</string>
     <string name="login_success">登入成功</string>
     <string name="check_network">請檢查網路是否開啟，或是重新登入</string>

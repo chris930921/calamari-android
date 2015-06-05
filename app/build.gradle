@@ -10,13 +10,36 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        resValue "string", "gradle_app_name", "Ceph"
     }
+
+    productFlavors {
+        online {
+            applicationId "com.cephmonitor.cephmonitor"
+            minSdkVersion 14
+            targetSdkVersion 21
+            buildConfigField "boolean", "IS_LOCALHOST", "false"
+            resValue "string", "gradle_app_name", "Ceph Online"
+        }
+        localhost {
+            applicationId "com.cephmonitor.cephmonitor.localhost"
+            minSdkVersion 14
+            targetSdkVersion 21
+            buildConfigField "boolean", "IS_LOCALHOST", "true"
+            resValue "string", "gradle_app_name", "Ceph Debug"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            //applicationIdSuffix '.applicationIdSuffix'
+        }
     }
+
     lintOptions {
         abortOnError false
     }

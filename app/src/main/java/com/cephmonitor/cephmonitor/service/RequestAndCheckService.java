@@ -6,6 +6,7 @@ import android.os.IBinder;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.cephmonitor.cephmonitor.BuildConfig;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountErrorNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountWarnNotification;
@@ -17,6 +18,7 @@ import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.Usage
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.UsagePercentWarnNotification;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
+import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2Data;
@@ -38,6 +40,8 @@ public class RequestAndCheckService extends Service {
 
     @Override
     public void onCreate() {
+        RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
+
         healthCountCheckList = new ArrayList<>();
         healthCountCheckList.add(new MonCountErrorNotification(this));
         healthCountCheckList.add(new MonCountWarnNotification(this));
@@ -64,7 +68,8 @@ public class RequestAndCheckService extends Service {
     private void requestLoginPost() {
         LoginPostRequest spider = new LoginPostRequest(this);
         spider.setRequestParams(requestParams);
-        spider.request(successLoginPost, failLoginPost);
+//        spider.request(successLoginPost, failLoginPost);
+        spider.request(successLoginPost, GeneralError.callback(this));//FIXME
     }
 
     private Response.Listener<String> successLoginPost = new Response.Listener<String>() {
