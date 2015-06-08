@@ -20,7 +20,7 @@ import com.resourcelibrary.model.view.WH;
 /**
  * Created by User on 4/17/2015.
  */
-public class CephCard extends RelativeLayout {
+public class HealthBaseCard extends RelativeLayout {
     private WH ruler;
     private Context context;
     private int leftValue;
@@ -63,7 +63,7 @@ public class CephCard extends RelativeLayout {
     private Paint paint;
     private RectF bounds;
 
-    public CephCard(Context context) {
+    public HealthBaseCard(Context context) {
         super(context);
         this.context = context;
         ruler = new WH(context);

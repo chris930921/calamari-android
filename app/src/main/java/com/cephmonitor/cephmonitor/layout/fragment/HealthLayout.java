@@ -9,19 +9,24 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
+import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
+import com.cephmonitor.cephmonitor.layout.component.progress.UsageCardProgress;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.cephmonitor.cephmonitor.layout.component.card.CephCard;
 
 public class HealthLayout extends RelativeLayout {
     public ScrollView cardContainer;
     public LinearLayout cardList;
-    public CephCard healthCard;
-    public CephCard osdCard;
-    public CephCard monCard;
-    public CephCard poolsCard;
-    public CephCard hostsCard;
-    public CephCard pgStatusCard;
+    public HealthBaseCard healthCard;
+    public HealthBaseCard osdCard;
+    public HealthBaseCard monCard;
+    public HealthBaseCard poolsCard;
+    public HealthBaseCard hostsCard;
+    public HealthBaseCard pgStatusCard;
+    public HealthUsageCard usageCard;
+    public UsageCardProgress usageCardProgress;
 
     private Context context;
     private WH ruler;
@@ -49,6 +54,10 @@ public class HealthLayout extends RelativeLayout {
         cardList.addView(hostsCard = hostsCard());
         cardList.addView(cardDivider());
         cardList.addView(pgStatusCard = pgStatusCard());
+        cardList.addView(cardDivider());
+        cardList.addView(usageCard = usageCard());
+
+        usageCard.setCenterView(usageCardProgress = usageCardProgress());
     }
 
     private ScrollView cardContainer() {
@@ -75,11 +84,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard healthCard() {
+    private HealthBaseCard healthCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon013);
@@ -96,11 +105,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard osdCard() {
+    private HealthBaseCard osdCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon015);
@@ -115,11 +124,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard monCard() {
+    private HealthBaseCard monCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon016);
@@ -135,11 +144,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard poolsCard() {
+    private HealthBaseCard poolsCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon017);
@@ -154,11 +163,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard hostsCard() {
+    private HealthBaseCard hostsCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon018);
@@ -176,11 +185,11 @@ public class HealthLayout extends RelativeLayout {
         return v;
     }
 
-    private CephCard pgStatusCard() {
+    private HealthBaseCard pgStatusCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
         params.weight = 1;
 
-        CephCard v = new CephCard(context);
+        HealthBaseCard v = new HealthBaseCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon020);
@@ -192,6 +201,42 @@ public class HealthLayout extends RelativeLayout {
 
         v.setCenterValueText("0");
         v.setValue(0, 0);
+
+        return v;
+    }
+
+    private HealthUsageCard usageCard() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(60));
+        params.weight = 1;
+
+        HealthUsageCard v = new HealthUsageCard(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setIcon(R.drawable.icon028);
+        v.setTitle(context.getResources().getString(R.string.health_card_usage));
+        v.setLeftText(context.getResources().getString(R.string.health_card_used));
+        v.setRightText(context.getResources().getString(R.string.health_card_available));
+        v.setRightTextColor(ColorTable._8DC41F);
+        v.setCompareMode(false);
+
+        v.setValue(0, 0);
+        v.setValue(60, 40);
+
+        return v;
+    }
+
+    private UsageCardProgress usageCardProgress() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ruler.getW(50),
+                ruler.getW(50)
+        );
+        params.addRule(CENTER_IN_PARENT);
+
+        UsageCardProgress v = new UsageCardProgress(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setText(getResources().getString(R.string.health_card_used));
+        v.setPercent(85);
 
         return v;
     }

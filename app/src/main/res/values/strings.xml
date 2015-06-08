@@ -39,6 +39,10 @@
     <string name="health_card_Working">Working</string>
     <string name="health_card_Dirty">Dirty</string>
 
+    <string name="health_card_usage">Usage</string>
+    <string name="health_card_used">Used</string>
+    <string name="health_card_available">Available</string>
+
     <string name="health_card_warnings">Warnings</string>
     <string name="health_card_errors">Errors</string>
 
