@@ -12,7 +12,6 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
-import com.resourcelibrary.model.logic.ByteUnit;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -218,23 +217,8 @@ public class HealthLayout extends RelativeLayout {
 
         v.setLongValue(0, 0);
 
-        post(test);
-
         return v;
     }
-
-    private Runnable test = new Runnable() {
-        long leftValue;
-
-        @Override
-        public void run() {
-            long rightValue = ByteUnit.TB * 2;
-            leftValue = leftValue % rightValue;
-            leftValue += (long) (rightValue * 0.01);
-            usageCard.setLongValue(leftValue, rightValue);
-            postDelayed(test, 500);
-        }
-    };
 
     private View cardDivider() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(3));

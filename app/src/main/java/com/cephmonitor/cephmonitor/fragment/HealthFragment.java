@@ -14,6 +14,7 @@ import com.resourcelibrary.model.logic.TimeUnit;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2Data;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ServerListData;
@@ -22,6 +23,7 @@ import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1ServerRequest;
+import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.PoolV1ListRequest;
 
@@ -176,6 +178,7 @@ public class HealthFragment extends Fragment {
                     requestOsdMonStatus();
                     requestPoolStatus();
                     requestServerList();
+                    requestStoreSpace();
                     layout.postDelayed(showVar(), 2000);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -310,6 +313,34 @@ public class HealthFragment extends Fragment {
         hostCardStatus = data.getList().size();
         hostCardMonCount = data.getMonList().size();
         hostCardOsdCount = data.getOsdList().size();
+    }
+
+    private void requestStoreSpace() {
+        ClusterV1SpaceRequest spider = new ClusterV1SpaceRequest(getActivity());
+        spider.setRequestParams(requestParams);
+        spider.request(successStoreSpace(), GeneralError.callback(getActivity()));
+    }
+
+    private Response.Listener<String> successStoreSpace() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    ShowLog.d("ClusterV1SpaceRequest" + " 結果:" + s);
+                    dealWithStoreSpace(s);
+                    updateView();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    private void dealWithStoreSpace(String response) throws JSONException {
+        ClusterV1Space data = new ClusterV1Space(response);
+        long rightValue = data.getCapacityBytes();
+        long leftValue = data.getUsedBytes();
+        layout.usageCard.setLongValue(leftValue, rightValue);
     }
 
     private void updateView() {

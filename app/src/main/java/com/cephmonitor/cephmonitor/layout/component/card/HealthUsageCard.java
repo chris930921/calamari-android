@@ -43,12 +43,14 @@ public class HealthUsageCard extends HealthBaseCard {
     }
 
     public void setLongValue(double leftValue, double rightValue) {
-        int leftColor = (leftValue == 0) ? ColorTable._999999 : ColorTable._F7B500;
-        leftValueText.setTextColor(leftColor);
+        boolean isLeftMorThanKb = leftValue >= ByteUnit.KB;
+        leftValue = (isLeftMorThanKb) ? leftValue : ByteUnit.KB;
+        leftValueText.setTextColor(ColorTable._F7B500);
         leftValueText.setText(ByteUnit.change(leftValue));
 
-        int rightColor = (rightValue == 0) ? ColorTable._999999 : ColorTable._8DC41F;
-        rightValueText.setTextColor(rightColor);
+        boolean isRightMorThanKb = rightValue >= ByteUnit.KB;
+        rightValue = (isRightMorThanKb) ? rightValue : ByteUnit.KB;
+        rightValueText.setTextColor(ColorTable._8DC41F);
         rightValueText.setText(ByteUnit.change(rightValue));
 
         double percent = (rightValue != 0) ? (leftValue * 100) / rightValue : 0;
