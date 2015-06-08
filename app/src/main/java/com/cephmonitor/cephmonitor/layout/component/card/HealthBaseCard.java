@@ -174,6 +174,7 @@ public class HealthBaseCard extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
+        v.setTextColor(ColorTable._666666);
 
         return v;
     }
