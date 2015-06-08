@@ -43,17 +43,22 @@ public class HealthUsageCard extends HealthBaseCard {
     }
 
     public void setLongValue(double leftValue, double rightValue) {
-        boolean isLeftMorThanKb = leftValue >= ByteUnit.KB;
-        leftValue = (isLeftMorThanKb) ? leftValue : ByteUnit.KB;
-        leftValueText.setTextColor(ColorTable._F7B500);
+        boolean isLeftEqualsZero = leftValue == 0;
+        boolean isLeftJustByte = leftValue < ByteUnit.KB && !isLeftEqualsZero;
+        int leftColor = (isLeftEqualsZero) ? ColorTable._999999 : ColorTable._F7B500;
+        leftValue = (isLeftJustByte) ? ByteUnit.KB : leftValue;
+        leftValueText.setTextColor(leftColor);
         leftValueText.setText(ByteUnit.change(leftValue));
 
-        boolean isRightMorThanKb = rightValue >= ByteUnit.KB;
-        rightValue = (isRightMorThanKb) ? rightValue : ByteUnit.KB;
-        rightValueText.setTextColor(ColorTable._8DC41F);
+        boolean isRightEqualsZero = rightValue == 0;
+        boolean isRightJustByte = rightValue < ByteUnit.KB && !isRightEqualsZero;
+        int rightColor = (isRightEqualsZero) ? ColorTable._999999 : ColorTable._8DC41F;
+        rightValue = (isRightJustByte) ? ByteUnit.KB : rightValue;
+        rightValueText.setTextColor(rightColor);
         rightValueText.setText(ByteUnit.change(rightValue));
 
         double percent = (rightValue != 0) ? (leftValue * 100) / rightValue : 0;
+        percent = (percent < 1.0) ? Math.ceil(percent) : percent;
         usageCardProgress.setPercent((float) percent);
     }
 
