@@ -21,8 +21,8 @@ import com.resourcelibrary.model.view.WH;
  * Created by User on 4/17/2015.
  */
 public class HealthBaseCard extends RelativeLayout {
-    private WH ruler;
-    private Context context;
+    protected WH ruler;
+    protected Context context;
     private int leftValue;
     private int rightValue;
     private boolean isCompare;

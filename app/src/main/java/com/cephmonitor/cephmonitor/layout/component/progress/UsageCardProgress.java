@@ -3,9 +3,12 @@ package com.cephmonitor.cephmonitor.layout.component.progress;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -28,6 +31,7 @@ public class UsageCardProgress extends CompoundButton {
     private Paint usedTextPen;
     private Paint backgroundProgressPen;
     private Paint progressPen;
+    private Paint clearPen;
     private RectF progressBounds;
     private Rect textBounds;
     private float lineOneHeight;
@@ -39,6 +43,7 @@ public class UsageCardProgress extends CompoundButton {
         ruler = new WH(context);
         progressWidth = ruler.getW(5);
         textBounds = new Rect();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         TextView v = new TextView(context);
 
@@ -56,16 +61,23 @@ public class UsageCardProgress extends CompoundButton {
 
         backgroundProgressPen = new Paint();
         backgroundProgressPen.setAntiAlias(true);
-        backgroundProgressPen.setStrokeWidth(progressWidth);
+//        backgroundProgressPen.setStrokeWidth(progressWidth);
         backgroundProgressPen.setColor(ColorTable._8DC41F);
-        backgroundProgressPen.setStyle(Paint.Style.STROKE);
+//        backgroundProgressPen.setStyle(Paint.Style.STROKE);
         backgroundProgressPen.setStrokeCap(Paint.Cap.SQUARE);
 
         progressPen = new Paint();
         progressPen.setAntiAlias(true);
-        progressPen.setStrokeWidth(progressWidth);
-        progressPen.setStyle(Paint.Style.STROKE);
+//        progressPen.setStrokeWidth(progressWidth);
+//        progressPen.setStyle(Paint.Style.STROKE);
         progressPen.setStrokeCap(Paint.Cap.SQUARE);
+
+        clearPen = new Paint();
+        clearPen.setAntiAlias(true);
+        clearPen.setStrokeCap(Paint.Cap.SQUARE);
+        clearPen.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+
+
     }
 
     public void setPercent(float percent) {
@@ -140,7 +152,14 @@ public class UsageCardProgress extends CompoundButton {
         super.onDraw(canvas);
 
         canvas.drawArc(progressBounds, -90, 360, false, backgroundProgressPen);
-        canvas.drawArc(progressBounds, -90, 360 * (percent / 100), false, progressPen);
+        canvas.drawArc(progressBounds, -90, ((360 * percent) / 100), true, progressPen);
+
+        canvas.drawCircle(
+                (progressBounds.right + progressBounds.left) / 2,
+                (progressBounds.bottom + progressBounds.top) / 2,
+                (width / 2) - progressWidth,
+                clearPen
+        );
 
         drawCenterText(
                 canvas,

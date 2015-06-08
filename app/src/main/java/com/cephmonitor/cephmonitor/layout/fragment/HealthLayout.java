@@ -12,7 +12,7 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
-import com.cephmonitor.cephmonitor.layout.component.progress.UsageCardProgress;
+import com.resourcelibrary.model.logic.ByteUnit;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -26,7 +26,6 @@ public class HealthLayout extends RelativeLayout {
     public HealthBaseCard hostsCard;
     public HealthBaseCard pgStatusCard;
     public HealthUsageCard usageCard;
-    public UsageCardProgress usageCardProgress;
 
     private Context context;
     private WH ruler;
@@ -56,8 +55,6 @@ public class HealthLayout extends RelativeLayout {
         cardList.addView(pgStatusCard = pgStatusCard());
         cardList.addView(cardDivider());
         cardList.addView(usageCard = usageCard());
-
-        usageCard.setCenterView(usageCardProgress = usageCardProgress());
     }
 
     private ScrollView cardContainer() {
@@ -219,27 +216,25 @@ public class HealthLayout extends RelativeLayout {
         v.setRightTextColor(ColorTable._8DC41F);
         v.setCompareMode(false);
 
-        v.setValue(0, 0);
-        v.setValue(60, 40);
+        v.setLongValue(0, 0);
+
+        post(test);
 
         return v;
     }
 
-    private UsageCardProgress usageCardProgress() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                ruler.getW(50),
-                ruler.getW(50)
-        );
-        params.addRule(CENTER_IN_PARENT);
+    private Runnable test = new Runnable() {
+        long leftValue;
 
-        UsageCardProgress v = new UsageCardProgress(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setText(getResources().getString(R.string.health_card_used));
-        v.setPercent(85);
-
-        return v;
-    }
+        @Override
+        public void run() {
+            long rightValue = ByteUnit.TB * 2;
+            leftValue = leftValue % rightValue;
+            leftValue += (long) (rightValue * 0.01);
+            usageCard.setLongValue(leftValue, rightValue);
+            postDelayed(test, 500);
+        }
+    };
 
     private View cardDivider() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(3));
