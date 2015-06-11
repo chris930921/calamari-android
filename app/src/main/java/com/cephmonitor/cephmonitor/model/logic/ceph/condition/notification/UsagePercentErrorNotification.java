@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 
 import org.json.JSONException;
@@ -37,6 +38,8 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
         String title = getContext().getResources().getString(R.string.check_service_usage_percent_error_title);
         String content = getContext().getResources().getString(R.string.check_service_usage_percent_error_content);
 
+        String status = ClusterV1HealthData.HEALTH_ERR;
+        CephDefaultNotification.save(getContext(), title, content, status);
         return CephDefaultNotification.get(getContext(), title, content);
     }
 }

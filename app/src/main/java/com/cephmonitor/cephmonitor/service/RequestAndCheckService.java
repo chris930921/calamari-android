@@ -7,6 +7,7 @@ import android.os.IBinder;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.BuildConfig;
+import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountErrorNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountWarnNotification;
@@ -41,6 +42,9 @@ public class RequestAndCheckService extends Service {
     @Override
     public void onCreate() {
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
+        ShowLog.d("RequestAndCheckService Hash: " + RequestAndCheckService.class.hashCode());//FIXME
+        ShowLog.d(BuildConfig.IS_LOCALHOST + " :BuildConfig.IS_LOCALHOST");//FIXME
+
 
         healthCountCheckList = new ArrayList<>();
         healthCountCheckList.add(new MonCountErrorNotification(this));
@@ -146,6 +150,7 @@ public class RequestAndCheckService extends Service {
         for (ConditionNotification checker : healthCountCheckList) {
             checker.check(data);
         }
+        NotificationFragment.send(this);
     }
 
     private void requestClusterSpace() {
@@ -172,6 +177,7 @@ public class RequestAndCheckService extends Service {
         for (ConditionNotification checker : clusterSpaceCheckList) {
             checker.check(data);
         }
+        NotificationFragment.send(this);
     }
 
     public IBinder onBind(Intent intent) {

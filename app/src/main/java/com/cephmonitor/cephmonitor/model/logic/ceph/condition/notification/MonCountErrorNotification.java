@@ -8,6 +8,7 @@ import com.cephmonitor.cephmonitor.model.logic.CompareString;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 
 import org.json.JSONException;
 
@@ -43,6 +44,9 @@ public class MonCountErrorNotification extends ConditionNotification<ClusterV1He
                     getContext().getResources().getString(R.string.check_service_mon_count_error_content),
                     data.getMonErrorCount()
             );
+            String status = ClusterV1HealthData.HEALTH_ERR;
+            CephDefaultNotification.save(getContext(), title, content, status);
+
             getClassSelfStatus().saveStatus(data.getMonErrorCount() + "");
             return CephDefaultNotification.get(getContext(), title, content);
         } catch (JSONException e) {

@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.model.file.io;
+package com.cephmonitor.cephmonitor.deprecated;
 
 import android.content.Context;
 import android.content.SharedPreferences;

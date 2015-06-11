@@ -65,4 +65,8 @@ public class NotificationLayout extends RelativeLayout {
     public void showWorkFind() {
         workFine.showWorkFind(list);
     }
+
+    public void hideWorkFind() {
+        workFine.hideWorkFind(list);
+    }
 }

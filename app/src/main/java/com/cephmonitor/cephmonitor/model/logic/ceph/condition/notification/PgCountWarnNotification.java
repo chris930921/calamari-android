@@ -9,6 +9,7 @@ import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 
 import org.json.JSONException;
 
@@ -50,6 +51,9 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
                     getContext().getResources().getString(R.string.check_service_pg_count_warn_content),
                     data.getPlacmentGroupsWarningCount()
             );
+            String status = ClusterV1HealthData.HEALTH_WARN;
+            CephDefaultNotification.save(getContext(), title, content, status);
+
             getClassSelfStatus().saveStatus(data.getPlacmentGroupsWarningCount() + "");
             return CephDefaultNotification.get(getContext(), title, content);
         } catch (JSONException e) {

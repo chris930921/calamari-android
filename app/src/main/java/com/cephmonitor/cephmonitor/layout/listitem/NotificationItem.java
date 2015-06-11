@@ -3,6 +3,7 @@ package com.cephmonitor.cephmonitor.layout.listitem;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -10,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.resourcelibrary.model.logic.GestureAdapter;
 import com.resourcelibrary.model.logic.RandomId;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.WH;
 
 
@@ -122,6 +125,20 @@ public class NotificationItem extends RelativeLayout {
         return v;
     }
 
+    private View rightClickArea(View alignView) {
+        LayoutParams params = new LayoutParams(ruler.getW(10), 0);
+//        params.addRule(ALIGN_PARENT_RIGHT);
+//        params.addRule(ALIGN_PARENT_TOP);
+//        params.addRule(ALIGN_BOTTOM, alignView.getId());
+
+        View v = new View(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setBackgroundColor(Color.BLUE);
+
+        return v;
+    }
+
     private RelativeLayout textContainer(View leftView, View rightView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_VERTICAL);
@@ -165,18 +182,64 @@ public class NotificationItem extends RelativeLayout {
         return v;
     }
 
-    public void setItemValue(int status, String topContent, String bottomContent) {
+    public void setItemValue(Object tag, int status, String topContent, String bottomContent) {
         if (status == WARNING) {
             leftImage.setImageResource(R.drawable.icon022);
         } else if (status == ERROR) {
             leftImage.setImageResource(R.drawable.icon023);
         }
+        setTag(tag);
         centerTopText.setText(topContent);
         centerBottomText.setText(bottomContent);
     }
 
+    public void setItemValue(Object tag, String status, String topContent, String bottomContent) {
+        if (ClusterV1HealthData.HEALTH_WARN.equals(status)) {
+            setItemValue(tag, WARNING, topContent, bottomContent);
+        } else if (ClusterV1HealthData.HEALTH_ERR.equals(status)) {
+            setItemValue(tag, ERROR, topContent, bottomContent);
+        }
+    }
+
+    public OnClickListener rightImageClickEvent;
+    protected GestureAdapter guesture = new GestureAdapter() {
+        @Override
+        public void onDown(MotionEvent event) {
+
+        }
+
+        @Override
+        public void onMoveStart(MotionEvent event) {
+
+        }
+
+        @Override
+        public void onMoving(MotionEvent event) {
+
+        }
+
+        @Override
+        public void onClick(MotionEvent event) {
+            if (event.getX() > getMeasuredWidth() - ruler.getW(10)) {
+                if (rightImageClickEvent != null) {
+                    rightImageClickEvent.onClick(NotificationItem.this);
+                }
+            }
+        }
+
+        @Override
+        public void onMoveEnd(MotionEvent event) {
+
+        }
+    };
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return guesture.onTouchEvent(event, super.onTouchEvent(event));
+    }
+
     public void setRightImageClickEvent(OnClickListener event) {
-        rightImage.setOnClickListener(event);
+        rightImageClickEvent = event;
     }
 
 }

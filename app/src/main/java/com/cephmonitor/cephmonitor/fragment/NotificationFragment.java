@@ -1,18 +1,37 @@
 package com.cephmonitor.cephmonitor.fragment;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.NotificationLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.NotificationItem;
+import com.cephmonitor.cephmonitor.model.database.NotificationRow;
+import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
+import com.resourcelibrary.model.log.ShowLog;
+
+import java.util.ArrayList;
 
 public class NotificationFragment extends Fragment {
+    private static final String ACTION = NotificationFragment.class.getName();
+    private static final IntentFilter UPDATE_RECEIVER_FILTER = new IntentFilter(ACTION);
+    private static final Intent UPDATE_INTENT = new Intent(ACTION);
     private NotificationLayout layout;
+    protected ArrayList<NotificationRow> notifications;
+    protected StoreNotifications database;
+
+    public static void send(Context context) {
+        context.sendBroadcast(UPDATE_INTENT);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -24,37 +43,143 @@ public class NotificationFragment extends Fragment {
     }
 
     public void init() {
-        final int size = 2; //FIXME
-        if (size == 0) {
+        database = new StoreNotifications(getActivity());
+        notifications = new ArrayList<>();
+        layout.list.setAdapter(listAdapter);
+        layout.list.setOnScrollListener(scrollEvent);
+    }
+
+    public void reloadNotification() {
+        database = new StoreNotifications(getActivity());
+        notifications.clear();
+        notifications.addAll(database.findBeforeData());
+        checkEmpty();
+    }
+
+    public void loadNewNotifications() {
+        ArrayList<NotificationRow> updateNotifications = database.updateNewData();
+
+        for (int i = 0; i < updateNotifications.size(); i++) {
+            notifications.add(i, updateNotifications.get(i));
+        }
+        checkEmpty();
+    }
+
+    public void loadOldNotifications() {
+        notifications.addAll(database.findBeforeData());
+        checkEmpty();
+
+    }
+
+    public void checkEmpty() {
+        if (notifications.size() == 0) {
             layout.showWorkFind();
         } else {
-            layout.list.setAdapter(new BaseAdapter() {
-                @Override
-                public int getCount() {
-                    return size;
-                }
-
-                @Override
-                public Object getItem(int i) {
-                    return i;
-                }
-
-                @Override
-                public long getItemId(int i) {
-                    return i;
-                }
-
-                @Override
-                public View getView(int i, View view, ViewGroup viewGroup) {
-                    NotificationItem item = new NotificationItem(getActivity());
-                    if (i == 0) {
-                        item.setItemValue(NotificationItem.WARNING, "3 個 OSD 異常!", "2015/5/31 14:38");
-                    } else {
-                        item.setItemValue(NotificationItem.ERROR, "1 個 OSD 損毀!", "2015/5/21 14:38");
-                    }
-                    return item;
-                }
-            });
+            layout.hideWorkFind();
+            listAdapter.notifyDataSetChanged();
         }
     }
+
+    private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ACTION)) {
+                if (layout.list.getFirstVisiblePosition() == 0) {
+                    loadNewNotifications();
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(updateReceiver, UPDATE_RECEIVER_FILTER);
+        reloadNotification();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(updateReceiver);
+    }
+
+    private View.OnClickListener clickDelete = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NotificationRow row = (NotificationRow) view.getTag();
+            boolean isSuccessRemove = database.removeNotification(row.id);
+            if (isSuccessRemove) {
+                notifications.remove(row);
+                ShowLog.d(layout.list.getLastVisiblePosition() + "::" + (notifications.size() - 1));
+                if (layout.list.getLastVisiblePosition() == notifications.size() - 1) {
+                    loadOldNotifications();
+                }
+                checkEmpty();
+            }
+        }
+    };
+
+    private AbsListView.OnScrollListener scrollEvent = new AbsListView.OnScrollListener() {
+        private int prevFirstVisibleItem = -1;
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            if (firstVisibleItem == prevFirstVisibleItem) return;
+            ShowLog.d("onScroll,第一個View:" + firstVisibleItem);
+            ShowLog.d("onScroll,可見的View數量:" + visibleItemCount);
+            ShowLog.d("onScroll,總數:" + totalItemCount);
+            ShowLog.d("onScroll,上一個View:" + prevFirstVisibleItem);
+            if (database == null) {
+            } else if (totalItemCount == database.getCount()) {
+            } else if (firstVisibleItem == 0 && prevFirstVisibleItem > 0) {
+                loadNewNotifications();
+            } else if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0 && (prevFirstVisibleItem < firstVisibleItem)) {
+                loadOldNotifications();
+            }
+            prevFirstVisibleItem = firstVisibleItem;
+        }
+    };
+
+    private BaseAdapter listAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return notifications.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            NotificationItem item;
+            if (view != null) {
+                item = (NotificationItem) view;
+            } else {
+                item = new NotificationItem(getActivity());
+            }
+            NotificationRow row = notifications.get(i);
+            item.setItemValue(
+                    row,
+                    row.status,
+//                    row.content,
+                    "(" + row.id + ") " + row.content,//FIXME
+                    row.getCreatedDate()
+            );
+            item.setRightImageClickEvent(clickDelete);
+            return item;
+        }
+    };
 }

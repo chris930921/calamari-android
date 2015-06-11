@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
         dialog = new MessageDialog(activity);
 
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
-        ShowLog.d("BuildConfig.IS_LOCALHOST 內容: " + BuildConfig.IS_LOCALHOST);
+//        new StoreNotifications(this).removeDatabase(); //FIXME
     }
 
     @Override
