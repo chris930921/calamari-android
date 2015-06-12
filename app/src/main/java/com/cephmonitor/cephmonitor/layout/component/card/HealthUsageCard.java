@@ -60,6 +60,13 @@ public class HealthUsageCard extends HealthBaseCard {
         double percent = (rightValue != 0) ? (leftValue * 100) / rightValue : 0;
         percent = (percent < 1.0) ? Math.ceil(percent) : percent;
         usageCardProgress.setPercent((float) percent);
+        if (percent >= 85) {
+            changeRedBorder();
+        } else if (percent >= 75) {
+            changeOrangeBorder();
+        } else {
+            changeGreenBorder();
+        }
     }
 
     @Override

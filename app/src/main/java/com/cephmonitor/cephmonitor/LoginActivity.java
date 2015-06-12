@@ -11,7 +11,6 @@ import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
-import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
@@ -44,7 +43,7 @@ public class LoginActivity extends Activity {
         dialog = new MessageDialog(activity);
 
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
-//        new StoreNotifications(this).removeDatabase(); //FIXME
+//        deleteDatabase(StoreNotifications.DB_NAME);
     }
 
     @Override
@@ -81,10 +80,10 @@ public class LoginActivity extends Activity {
     }
 
     private void requestLoginPost() {
-        params.setHost(layout.host.getText().toString());
-        params.setPort(layout.port.getText().toString());
-        params.setName(layout.name.getText().toString());
-        params.setPassword(layout.password.getText().toString());
+        params.setHost(layout.host.getText().toString().trim());
+        params.setPort(layout.port.getText().toString().trim());
+        params.setName(layout.name.getText().toString().trim());
+        params.setPassword(layout.password.getText().toString().trim());
 
         LoginPostRequest spider = new LoginPostRequest(this);
         spider.setRequestParams(params);
@@ -109,11 +108,7 @@ public class LoginActivity extends Activity {
         public void onErrorResponse(VolleyError volleyError) {
             loadingDialog.cancel();
             params.failLogin();
-            if (volleyError.networkResponse == null) {
-                showLoginErrorDialog();
-            } else {
-                GeneralError.showStatusCode(activity, volleyError);
-            }
+            showLoginErrorDialog();
         }
     };
 
@@ -126,14 +121,14 @@ public class LoginActivity extends Activity {
     }
 
     private void showNoValueDialog(String noValueInputName) {
-        dialog.setOnConfirmClickListener(clickNovaValueConfirm);
+        dialog.setOnConfirmClickListener(clickNoValueConfirm);
         String title = getResources().getString(R.string.login_fail_title);
         String content = noValueInputName + getResources().getString(R.string.login_fail_content);
         String confirm = getResources().getString(R.string.login_fail_confirm);
         dialog.show(title, content, confirm);
     }
 
-    private View.OnClickListener clickNovaValueConfirm = new View.OnClickListener() {
+    private View.OnClickListener clickNoValueConfirm = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             emptyChecker.executeNoValueViewAction(0);

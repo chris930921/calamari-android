@@ -42,9 +42,6 @@ public class RequestAndCheckService extends Service {
     @Override
     public void onCreate() {
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
-        ShowLog.d("RequestAndCheckService Hash: " + RequestAndCheckService.class.hashCode());//FIXME
-        ShowLog.d(BuildConfig.IS_LOCALHOST + " :BuildConfig.IS_LOCALHOST");//FIXME
-
 
         healthCountCheckList = new ArrayList<>();
         healthCountCheckList.add(new MonCountErrorNotification(this));
@@ -66,14 +63,14 @@ public class RequestAndCheckService extends Service {
         ShowLog.d("名稱:" + requestParams.getName());
         ShowLog.d("密碼:" + requestParams.getPassword());
         requestLoginPost();
+
         return START_REDELIVER_INTENT;
     }
 
     private void requestLoginPost() {
         LoginPostRequest spider = new LoginPostRequest(this);
         spider.setRequestParams(requestParams);
-//        spider.request(successLoginPost, failLoginPost);
-        spider.request(successLoginPost, GeneralError.callback(this));//FIXME
+        spider.request(successLoginPost, failLoginPost);
     }
 
     private Response.Listener<String> successLoginPost = new Response.Listener<String>() {

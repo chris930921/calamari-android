@@ -10,7 +10,7 @@ import com.cephmonitor.cephmonitor.model.file.io.ClassSelfStatus;
  * Created by User on 5/13/2015.
  */
 public abstract class ConditionNotification<T> {
-    public static final int NOTIFICATION_ID = 721918; // 隨機定義的通知編號。
+    public static final int NOTIFICATION_ID = ConditionNotification.class.hashCode(); // 隨機定義的通知編號。
     private Context context;
     private ClassSelfStatus statusManager;
 

@@ -93,6 +93,17 @@ public class MainActivity extends Activity implements InitFragment.Style {
                 dialog.show();
             }
         });
+
+        choiceFragment();
+    }
+
+    private void choiceFragment() {
+        Bundle arg = getIntent().getExtras();
+        if (arg == null) return;
+        String initMode = arg.getString("init_mode");
+        if (initMode.equals("Notification Page")) {
+            FragmentLauncher.goNotificationFragment(activity, null);
+        }
     }
 
     @Override
@@ -199,7 +210,12 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    FragmentManager manager = getFragmentManager();
+//                    if (manager.getBackStackEntryCount() > 0) {
                     FragmentLauncher.backFragment(activity);
+//                    } else {
+//                        FragmentLauncher.goHealthFragment(activity);
+//                    }
                 }
             });
         }

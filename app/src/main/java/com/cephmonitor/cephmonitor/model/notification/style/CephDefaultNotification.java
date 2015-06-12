@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
+import com.cephmonitor.cephmonitor.ActivityLauncher;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.database.NotificationRow;
 import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
@@ -25,7 +26,7 @@ public class CephDefaultNotification {
         }
 
         Notification notification = new NotificationCompat.Builder(context)
-                .setContentIntent(null)
+                .setContentIntent(ActivityLauncher.goMainActivityNotificationPending(context))
                 .setTicker(title)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(title)

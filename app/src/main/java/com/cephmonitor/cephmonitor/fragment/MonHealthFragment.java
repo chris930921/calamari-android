@@ -24,12 +24,14 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MonHealthFragment extends Fragment {
     private MonHealthLayout layout;
     private LoginParams requestParams;
-    private ArrayList<ClusterV2MonData> mons;
-    private HashMap<String, ClusterV1HealthMonData> monsStatus;
+    private HashMap<String, ClusterV2MonData> mons;
+    private LinkedHashMap<String, ClusterV1HealthMonData> monsStatus;
+    private ArrayList<String> monsStatusKeys;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -45,7 +47,8 @@ public class MonHealthFragment extends Fragment {
         try {
             ClusterV1HealthData healthData = new ClusterV1HealthData("{}");
             healthData.inBox(arg);
-            monsStatus = healthData.getMonMap();
+            monsStatus = healthData.getOrderMonMap();
+            monsStatusKeys = new ArrayList<>(monsStatus.keySet());
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -77,26 +80,14 @@ public class MonHealthFragment extends Fragment {
 
     private void dealWithMonList(String response) throws JSONException {
         ClusterV2MonListData list = new ClusterV2MonListData(response);
-        mons = list.getList();
+        mons = list.getMap();
         layout.list.setAdapter(getAdapter);
     }
 
     private BaseAdapter getAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            try {
-
-                for (int i = 0; i < mons.size(); i++) {
-                    ClusterV2MonData data = mons.get(i);
-                    ClusterV1HealthMonData monStatus = monsStatus.get(data.getName());
-                    if (monStatus == null) {
-                        return 0;
-                    }
-                }
-            } catch (JSONException e) {
-                return 0;
-            }
-            return mons.size();
+            return monsStatusKeys.size();
         }
 
         @Override
@@ -111,7 +102,9 @@ public class MonHealthFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            ClusterV2MonData data = mons.get(i);
+            String key = monsStatusKeys.get(i);
+            ClusterV1HealthMonData monStatusData = monsStatus.get(key);
+            ClusterV2MonData monData = mons.get(key);
             MonHealthCard card;
             if (view == null) {
                 card = new MonHealthCard(getActivity());
@@ -119,13 +112,11 @@ public class MonHealthFragment extends Fragment {
                 card = (MonHealthCard) view;
             }
             try {
-                ClusterV1HealthMonData monStatus = monsStatus.get(data.getName());
-                card.setData(monStatus.getHealth(), data.getName(), data.getAddr());
+                card.setData(monStatusData.getHealth(), monData.getName(), monData.getAddr());
             } catch (JSONException e) {
                 card.setData(ClusterV1HealthData.HEALTH_OK, "", "");
             }
             return card;
         }
     };
-
 }

@@ -84,8 +84,10 @@ public class NotificationFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION)) {
-                if (layout.list.getFirstVisiblePosition() == 0) {
+                if (layout.list.getFirstVisiblePosition() == 0 && notifications.size() != 0) {
                     loadNewNotifications();
+                } else if (layout.list.getFirstVisiblePosition() == 0) {
+                    reloadNotification();
                 }
             }
         }
@@ -174,8 +176,7 @@ public class NotificationFragment extends Fragment {
             item.setItemValue(
                     row,
                     row.status,
-//                    row.content,
-                    "(" + row.id + ") " + row.content,//FIXME
+                    row.content,
                     row.getCreatedDate()
             );
             item.setRightImageClickEvent(clickDelete);

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by User on 4/22/2015.
@@ -96,6 +97,44 @@ public class ClusterV1HealthData extends PortableJsonObject {
             ClusterV1HealthMonData monData = new ClusterV1HealthMonData(singleData);
             list.put(monData.getName(), monData);
         }
+        return list;
+    }
+
+    public LinkedHashMap<String, ClusterV1HealthMonData> getOrderMonMap() throws JSONException {
+        LinkedHashMap<String, ClusterV1HealthMonData> list = new LinkedHashMap<>();
+
+        JSONObject report = json.getJSONObject("report");
+        JSONObject health = report.getJSONObject("health");
+        JSONArray healthServices = health.getJSONArray("health_services");
+
+        if (healthServices.length() == 0) {
+            return list;
+        }
+
+        JSONObject firstService = healthServices.getJSONObject(0);
+        JSONArray mons = firstService.getJSONArray("mons");
+        if (mons.length() == 0) {
+            return list;
+        }
+
+        HashMap<String, ClusterV1HealthMonData> error = new HashMap<>();
+        HashMap<String, ClusterV1HealthMonData> warn = new HashMap<>();
+        HashMap<String, ClusterV1HealthMonData> ok = new HashMap<>();
+
+        for (int i = 0; i < mons.length(); i++) {
+            String singleData = mons.getJSONObject(i).toString();
+            ClusterV1HealthMonData monData = new ClusterV1HealthMonData(singleData);
+            if (monData.getHealth().equals(HEALTH_ERR)) {
+                error.put(monData.getName(), monData);
+            } else if (monData.getHealth().equals(HEALTH_WARN)) {
+                warn.put(monData.getName(), monData);
+            } else if (monData.getHealth().equals(HEALTH_OK)) {
+                ok.put(monData.getName(), monData);
+            }
+        }
+        list.putAll(error);
+        list.putAll(warn);
+        list.putAll(ok);
         return list;
     }
 }

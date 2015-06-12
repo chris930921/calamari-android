@@ -5,6 +5,7 @@ import com.resourcelibrary.model.logic.PortableJsonArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by User on 4/22/2015.
@@ -24,4 +25,13 @@ public class ClusterV2MonListData extends PortableJsonArray {
         return list;
     }
 
+    public HashMap<String, ClusterV2MonData> getMap() throws JSONException {
+        HashMap<String, ClusterV2MonData> map = new HashMap<>();
+        for (int i = 0; i < json.length(); i++) {
+            String singleData = json.getJSONObject(i).toString();
+            ClusterV2MonData data = new ClusterV2MonData(singleData);
+            map.put(data.getName(), data);
+        }
+        return map;
+    }
 }
