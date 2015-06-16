@@ -12,6 +12,7 @@ public class ColorTable {
     public static final int _8DC41F = Color.parseColor("#8dc41f");
     public static final int _39C0ED = Color.parseColor("#39c0ed");
     public static final int _D9D9D9 = Color.parseColor("#d9d9d9");
+    public static final int _F9F9F9 = Color.parseColor("#f9f9f9");
     public static final int _F3F3F3 = Color.parseColor("#f3f3f3");
     public static final int _666666 = Color.parseColor("#666666");
     public static final int _999999 = Color.parseColor("#999999");

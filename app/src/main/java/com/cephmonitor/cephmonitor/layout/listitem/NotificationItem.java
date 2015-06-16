@@ -125,20 +125,6 @@ public class NotificationItem extends RelativeLayout {
         return v;
     }
 
-    private View rightClickArea(View alignView) {
-        LayoutParams params = new LayoutParams(ruler.getW(10), 0);
-//        params.addRule(ALIGN_PARENT_RIGHT);
-//        params.addRule(ALIGN_PARENT_TOP);
-//        params.addRule(ALIGN_BOTTOM, alignView.getId());
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setBackgroundColor(Color.BLUE);
-
-        return v;
-    }
-
     private RelativeLayout textContainer(View leftView, View rightView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_VERTICAL);

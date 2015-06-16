@@ -9,6 +9,7 @@ import android.view.View;
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.fragment.HealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.HealthFragment;
+import com.cephmonitor.cephmonitor.fragment.HostHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
@@ -43,6 +44,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(OSDHealthDetailFragment.class, showOSDHealthDetailFragment);
         changeStyleTask.put(OSDHealthFragment.class, showOsdHealthFragment);
         changeStyleTask.put(NotificationFragment.class, showNotificationFragment);
+        changeStyleTask.put(HostHealthFragment.class, showHostHealthFragment);
 
         FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -210,12 +212,22 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    FragmentManager manager = getFragmentManager();
-//                    if (manager.getBackStackEntryCount() > 0) {
                     FragmentLauncher.backFragment(activity);
-//                    } else {
-//                        FragmentLauncher.goHealthFragment(activity);
-//                    }
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showHostHealthFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("Host Health");
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
                 }
             });
         }

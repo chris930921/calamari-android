@@ -36,6 +36,7 @@ public class HealthFragment extends Fragment {
     private LoginParams requestParams;
     private ClusterV1HealthData healthData;
     private PoolV1ListData poolData;
+    private ClusterV2ServerListData hostData;
     private int currentUpdateId;
 
     public long healthCardLastUpdate;
@@ -92,7 +93,9 @@ public class HealthFragment extends Fragment {
                     requestFirstClusterId();
                     layout.postDelayed(this, 10 * 1000);
                 }
-                ShowLog.d("Health 頁面更新識別號: " + updateId + " 重新刷新: " + (currentUpdateId == updateId) + " 時間:" + Calendar.getInstance().getTime().toString() + " 。");
+                ShowLog.d("Health 頁面更新識別號: " + updateId +
+                        " 重新刷新: " + (currentUpdateId == updateId) +
+                        " 時間:" + Calendar.getInstance().getTime().toString() + " 。");
             }
         };
     }
@@ -122,6 +125,7 @@ public class HealthFragment extends Fragment {
         layout.healthCard.setTitleOnClickListener(healthCardClickEvent);
         layout.osdCard.setTitleOnClickListener(osdCardClickEvent);
         layout.monCard.setTitleOnClickListener(monCardClickEvent);
+        layout.hostsCard.setTitleOnClickListener(hostCardClickEvent);
     }
 
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
@@ -151,13 +155,26 @@ public class HealthFragment extends Fragment {
     private View.OnClickListener monCardClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (poolData == null) {
+            if (healthData == null) {
                 return;
             }
 
             Bundle arg = new Bundle();
             healthData.outBox(arg);
             FragmentLauncher.goMonHealthFragment(getActivity(), arg);
+        }
+    };
+
+    private View.OnClickListener hostCardClickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (hostData == null) {
+                return;
+            }
+
+            Bundle arg = new Bundle();
+            hostData.outBox(arg);
+            FragmentLauncher.goHostHealthFragment(getActivity(), arg);
         }
     };
 
@@ -179,7 +196,6 @@ public class HealthFragment extends Fragment {
                     requestPoolStatus();
                     requestServerList();
                     requestStoreSpace();
-                    layout.postDelayed(showVar(), 2000);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -309,10 +325,10 @@ public class HealthFragment extends Fragment {
     }
 
     private void dealWithServerCount(String response) throws JSONException {
-        ClusterV2ServerListData data = new ClusterV2ServerListData(response);
-        hostCardStatus = data.getList().size();
-        hostCardMonCount = data.getMonList().size();
-        hostCardOsdCount = data.getOsdList().size();
+        hostData = new ClusterV2ServerListData(response);
+        hostCardStatus = hostData.getList().size();
+        hostCardMonCount = hostData.getMonList().size();
+        hostCardOsdCount = hostData.getOsdList().size();
     }
 
     private void requestStoreSpace() {
@@ -377,29 +393,5 @@ public class HealthFragment extends Fragment {
         layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
         String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
         layout.pgStatusCard.setCenterValueText(pgStatus);
-    }
-
-    private Runnable showVar() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                ShowLog.d("\n所有結果" + "\n" +
-                                "healthCardLastUpdate:" + healthCardLastUpdate + "\n" +
-                                "monCardOkCount:" + monCardOkCount + "\n" +
-                                "monCardStateCount:" + monCardTotalCount + "\n" +
-                                "monCardWarningCount:" + monCardWarningCount + "\n" +
-                                "monCardErrorCount:" + monCardErrorCount + "\n" +
-                                "osdCardOkCount:" + osdCardOkCount + "\n" +
-                                "oadCardStateCount:" + oadCardTotalCount + "\n" +
-                                "osdCardWarningCount:" + osdCardWarningCount + "\n" +
-                                "osdCardErrorCount:" + osdCardErrorCount + "\n" +
-                                "poolCardStatus:" + poolCardStatus + "\n" +
-                                "hostCardStatus:" + hostCardStatus + "\n" +
-                                "hostCardMonCount:" + hostCardMonCount + "\n" +
-                                "hostCardOsdCount:" + hostCardOsdCount + "\n"
-                );
-                layout.postDelayed(showVar(), 2000);
-            }
-        };
     }
 }

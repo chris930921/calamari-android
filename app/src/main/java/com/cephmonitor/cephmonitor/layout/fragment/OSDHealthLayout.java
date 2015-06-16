@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
@@ -23,10 +22,6 @@ public class OSDHealthLayout extends RelativeLayout {
     public ScrollView scrollContainer;
     public RelativeLayout containerInnerScroll;
     public RelativeLayout workFineContainer;
-    public RelativeLayout workFineCenterContainer;
-    public View workFineImage;
-    public TextView workFineLineOne;
-    public TextView workFineLineTwo;
     public WorkFindView workFine;
 
     public OsdHealthBoxes boxesContainer;
@@ -52,10 +47,6 @@ public class OSDHealthLayout extends RelativeLayout {
         addView(workFineContainer = workFineContainer());
 
         workFineContainer.addView(workFine = workFine());
-//        workFineContainer.addView(workFineCenterContainer = workFineCenterContainer());
-//        workFineCenterContainer.addView(workFineImage = workFineImage());
-//        workFineCenterContainer.addView(workFineLineOne = workFineLineOne(workFineImage));
-//        workFineCenterContainer.addView(workFineLineTwo = workFineLineTwo(workFineLineOne));
 
         scrollContainer.addView(containerInnerScroll = containerInnerScroll());
         containerInnerScroll.addView(boxesContainer = boxesContainer());
