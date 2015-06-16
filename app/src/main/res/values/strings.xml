@@ -43,6 +43,9 @@
     <string name="health_card_used">Used</string>
     <string name="health_card_available">Available</string>
 
+    <string name="health_card_iops">IOPS</string>
+    <string name="health_card_read_write">- Read + Write</string>
+
     <string name="health_card_warnings">Warnings</string>
     <string name="health_card_errors">Errors</string>
 

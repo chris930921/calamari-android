@@ -18,6 +18,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2Data;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ServerListData;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteData;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
@@ -25,10 +26,12 @@ import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1ServerRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
+import com.resourcelibrary.model.network.api.ceph.single.Graphite24HoursReadWriteSumRequest;
 import com.resourcelibrary.model.network.api.ceph.single.PoolV1ListRequest;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HealthFragment extends Fragment {
@@ -196,6 +199,7 @@ public class HealthFragment extends Fragment {
                     requestPoolStatus();
                     requestServerList();
                     requestStoreSpace();
+                    requestIopsSum();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -358,6 +362,36 @@ public class HealthFragment extends Fragment {
         long leftValue = data.getUsedBytes();
         layout.usageCard.setLongValue(leftValue, rightValue);
     }
+
+    private void requestIopsSum() {
+        Graphite24HoursReadWriteSumRequest spider = new Graphite24HoursReadWriteSumRequest(getActivity());
+        spider.setRequestParams(requestParams);
+        spider.request(successIopsSum(), GeneralError.callback(getActivity()));
+    }
+
+    private Response.Listener<String> successIopsSum() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    ShowLog.d("Graphite24HoursReadWriteSumRequest" + " 結果:" + s);
+                    dealWithIopsSum(s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    private void dealWithIopsSum(String response) throws JSONException {
+        GraphiteData data = new GraphiteData(response);
+        ArrayList<Double> values = data.getValueArray();
+        ArrayList<Long> times = data.getTimestampArray();
+        ShowLog.d("Graphite24HoursReadWriteSumRequest" + " :" + values);
+        ShowLog.d("Graphite24HoursReadWriteSumRequest" + " :" + times);
+        layout.iopsCard.setChartData(Calendar.getInstance(), values, times);
+    }
+
 
     private void updateView() {
         if (healthCardErrorCount != 0) {

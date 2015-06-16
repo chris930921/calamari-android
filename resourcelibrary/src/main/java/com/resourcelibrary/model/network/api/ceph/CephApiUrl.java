@@ -1,10 +1,10 @@
 package com.resourcelibrary.model.network.api.ceph;
 
 public class CephApiUrl {
-    private String Url;
+    private String url;
 
     private CephApiUrl(String rootUrl) {
-        Url = rootUrl;
+        url = rootUrl;
     }
 
     public static String login(CephParams params) {
@@ -49,5 +49,29 @@ public class CephApiUrl {
 
     public static String clusterV2MonStatus(CephParams params) {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/mon/" + params.getMonitorId() + "/status";
+    }
+
+    public static CephApiUrl graphite(CephParams params) {
+        String url = "http://" + params.getHost() + ":" + params.getPort() + "/graphite/render/?";
+        return new CephApiUrl(url);
+    }
+
+    public CephApiUrl format(String value) {
+        url += "format=" + value + "&";
+        return this;
+    }
+
+    public CephApiUrl from(String value) {
+        url += "from=" + value + "&";
+        return this;
+    }
+
+    public CephApiUrl target(String value) {
+        url += "target=" + value + "&";
+        return this;
+    }
+
+    public String build() {
+        return url;
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
+import com.cephmonitor.cephmonitor.layout.component.card.HealthIopsCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -25,6 +26,7 @@ public class HealthLayout extends RelativeLayout {
     public HealthBaseCard hostsCard;
     public HealthBaseCard pgStatusCard;
     public HealthUsageCard usageCard;
+    public HealthIopsCard iopsCard;
 
     private Context context;
     private WH ruler;
@@ -54,6 +56,8 @@ public class HealthLayout extends RelativeLayout {
         cardList.addView(pgStatusCard = pgStatusCard());
         cardList.addView(cardDivider());
         cardList.addView(usageCard = usageCard());
+        cardList.addView(cardDivider());
+        cardList.addView(iopsCard = iopsCard());
     }
 
     private ScrollView cardContainer() {
@@ -216,6 +220,20 @@ public class HealthLayout extends RelativeLayout {
         v.setCompareMode(false);
 
         v.setLongValue(0, 0);
+
+        return v;
+    }
+
+    private HealthIopsCard iopsCard() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(45));
+        params.weight = 1;
+
+        HealthIopsCard v = new HealthIopsCard(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setIcon(R.drawable.icon029);
+        v.setTitle(context.getResources().getString(R.string.health_card_iops));
+        v.setCompareMode(false);
 
         return v;
     }

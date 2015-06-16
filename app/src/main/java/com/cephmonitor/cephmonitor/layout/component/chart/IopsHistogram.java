@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.view.WH;
 
 import java.text.DateFormat;
@@ -25,8 +26,8 @@ public class IopsHistogram extends View {
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private Calendar time;
 
-    private Double maxValue = 1.0;
-    private Double tableMaxValue = 1.0;
+    private Double maxValue;
+    private Double tableMaxValue;
     private String leftHalfValue;
 
     private float width;
@@ -65,9 +66,13 @@ public class IopsHistogram extends View {
         ruler = new WH(context);
         list = new ArrayList<>();
         textBounds = new Rect();
+        leftHalfValue = "1.0";
+        maxValue = 2.0;
+        tableMaxValue = 2.0;
+        time = Calendar.getInstance();
 
         backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        backgroundPaint.setColor(Color.parseColor("#E6E8E7"));
+        backgroundPaint.setColor(Color.WHITE);
 
         axisPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         axisPaint.setColor(ColorTable._666666);
@@ -96,6 +101,7 @@ public class IopsHistogram extends View {
         tableMinTimeStamp = time.getTimeInMillis() - tableTotalTimeStamp;
 
         updateMaxValue();
+        updateTableValue();
         invalidate();
     }
 
@@ -104,13 +110,17 @@ public class IopsHistogram extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
-        textPaint.setTextSize((w * 0.073f) / 2);
+        updateTableValue();
+    }
+
+    private void updateTableValue() {
+        textPaint.setTextSize((width * 0.073f) / 2);
         leftTextSpace = (int) textPaint.measureText(leftHalfValue, 0, leftHalfValue.length());
-        bottomTextSpace = h * 0.160f;
-        rightPadding = w * 0.024f;
-        topPadding = h * 0.080f;
-        tableWidth = w - leftTextSpace - rightPadding;
-        tableHeight = h - bottomTextSpace - topPadding;
+        bottomTextSpace = height * 0.160f;
+        rightPadding = width * 0.024f;
+        topPadding = height * 0.080f;
+        tableWidth = width - leftTextSpace - rightPadding;
+        tableHeight = height - bottomTextSpace - topPadding;
         xUnitWidth = tableWidth * (1f / xGridCount);
         yUnitHeight = tableHeight * 0.5f;
         xUnitOffset = getTimeOffset(getPreviousTime());
@@ -128,7 +138,6 @@ public class IopsHistogram extends View {
         double tenUnit = (int) Math.pow(10, integerMaxValue.toString().length() - 1);
         tableMaxValue = (((int) (integerMaxValue / tenUnit)) + 1) * tenUnit;
         leftHalfValue = String.format("%.1f", tableMaxValue / 2f) + "";
-        invalidate();
     }
 
     private long getPreviousTime() {
@@ -152,14 +161,17 @@ public class IopsHistogram extends View {
     protected void onDraw(Canvas canvas) {
         countXGridPosition();
         drawGrid(canvas, list);
-        drawData(canvas);
+        if (values != null && times != null) {
+            drawData(canvas);
+        }
         drawAxis(canvas);
         drawLeftText(canvas);
         drawBottomText(canvas, list);
     }
 
     private void drawData(Canvas canvas) {
-        for (int i = 0; i < values.size(); i++) {
+        int cout = (values.size() > times.size()) ? times.size() : values.size();
+        for (int i = 0; i < cout; i++) {
             double pointValue = values.get(i);
             long timeStamp = times.get(i);
             float top = topPadding + (float) ((1 - (pointValue / tableMaxValue)) * tableHeight);
@@ -204,9 +216,9 @@ public class IopsHistogram extends View {
         Calendar drawTime = Calendar.getInstance();
         drawTime.setTimeInMillis(getPreviousTime());
         drawTime.set(Calendar.MINUTE, 0);
-        String text = "";
+        String text;
         for (int i = 0; i < xGridPosition.size(); i++) {
-            drawTime.add(Calendar.HOUR_OF_DAY, (-timeUnit) * i);
+            ShowLog.d("小時:" + drawTime.get(Calendar.HOUR_OF_DAY));
             if (drawTime.get(Calendar.HOUR_OF_DAY) == 0) {
                 text = dateFormat.format(drawTime.getTime());
             } else {
@@ -214,6 +226,7 @@ public class IopsHistogram extends View {
             }
             float drawX = xGridPosition.get(i);
             drawTextByTopAndHorizonCenter(canvas, topPadding + tableHeight, drawX, text);
+            drawTime.add(Calendar.HOUR_OF_DAY, -timeUnit);
         }
 
     }
