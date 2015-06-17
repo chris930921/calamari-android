@@ -225,7 +225,7 @@ public class HealthLayout extends RelativeLayout {
     }
 
     private HealthIopsCard iopsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(45));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(40));
         params.weight = 1;
 
         HealthIopsCard v = new HealthIopsCard(context);

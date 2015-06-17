@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.resourcelibrary.R;
 import com.resourcelibrary.model.log.ShowLog;
@@ -13,21 +15,29 @@ import com.resourcelibrary.model.log.ShowLog;
  * Created by User on 2/9/2015.
  */
 public class GeneralError {
-    public static final Response.ErrorListener callback(final Context context) {
+    public static Response.ErrorListener callback(final Context context) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (volleyError.networkResponse == null) {
-                    ShowLog.d("volleyError.networkResponse 為空值，可能為錯誤碼: 401。");
-                    return;
-                }
-
-                try {
-                    String responseBody = new String(volleyError.networkResponse.data, "utf-8");
-                    ShowLog.d("狀態碼: " + volleyError.networkResponse.statusCode + " 訊息: " + responseBody);
-                    Toast.makeText(context, context.getResources().getString(R.string.check_network), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    if (TimeoutError.class.equals(volleyError.getClass())) {
+                        ShowLog.d("VolleyError: 時間太長。");
+                    } else if (NoConnectionError.class.equals(volleyError.getClass()) && volleyError.getMessage().contains("No authentication challenges found")) {
+                        ShowLog.d("VolleyError: 權限問題。");
+                    } else if (NoConnectionError.class.equals(volleyError.getClass())) {
+                        ShowLog.d("VolleyError: 網路問題");
+                    }
+                    ShowLog.d("VolleyError:" + volleyError.getMessage());
+                    ShowLog.d("VolleyError:" + volleyError.getLocalizedMessage());
+                    volleyError.printStackTrace();
+                } else {
+                    try {
+                        String responseBody = new String(volleyError.networkResponse.data, "utf-8");
+                        ShowLog.d("狀態碼: " + volleyError.networkResponse.statusCode + " 訊息: " + responseBody);
+                        Toast.makeText(context, context.getResources().getString(R.string.check_network), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };

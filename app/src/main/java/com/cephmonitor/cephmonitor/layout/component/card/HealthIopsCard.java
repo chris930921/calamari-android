@@ -1,7 +1,12 @@
 package com.cephmonitor.cephmonitor.layout.component.card;
 
 import android.content.Context;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 
+import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.IopsHistogram;
 import com.resourcelibrary.model.logic.RandomId;
 
@@ -13,14 +18,19 @@ import java.util.Calendar;
  */
 public class HealthIopsCard extends HealthBaseCard {
     public IopsHistogram histogram;
+    public TextView readWriteText;
 
     public HealthIopsCard(Context context) {
         super(context);
         histogram = histogram();
+        readWriteText = readWriteText(histogram);
+
         centerValueContainer.addView(histogram);
+        centerValueContainer.addView(readWriteText);
         centerCenterContainer.setVisibility(GONE);
         bottomContainer.setVisibility(GONE);
     }
+
 
     private IopsHistogram histogram() {
         LayoutParams params = new LayoutParams(
@@ -32,6 +42,23 @@ public class HealthIopsCard extends HealthBaseCard {
         IopsHistogram v = new IopsHistogram(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
+
+        return v;
+    }
+
+    public TextView readWriteText(View bottomView) {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(CENTER_VERTICAL);
+        params.addRule(ABOVE, bottomView.getId());
+        params.addRule(ALIGN_LEFT, bottomView.getId());
+
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setTextSize(ruler.getTextSize(14));
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setTextColor(ColorTable._8DC41F);
+        v.setText(R.string.health_card_read_write);
 
         return v;
     }

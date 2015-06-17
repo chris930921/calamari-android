@@ -4,13 +4,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 
+import com.cephmonitor.cephmonitor.BuildConfig;
 import com.cephmonitor.cephmonitor.model.file.io.ClassSelfStatus;
 
 /**
  * Created by User on 5/13/2015.
  */
 public abstract class ConditionNotification<T> {
-    public static final int NOTIFICATION_ID = ConditionNotification.class.hashCode(); // 隨機定義的通知編號。
+    public static final int NOTIFICATION_ID = (BuildConfig.IS_LOCALHOST) ? 9218 : 4937; // 隨機定義的通知編號，沒有特別意義。
     private Context context;
     private ClassSelfStatus statusManager;
 
