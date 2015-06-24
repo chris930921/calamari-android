@@ -121,4 +121,37 @@ public class FragmentLauncher {
         }
     }
 
+    public static void goPgStatusFragment(Activity activity, Bundle arg) {
+        String fragmentName = PgStatusFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new PgStatusFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goUsageStatusFragment(Activity activity, Bundle arg) {
+        String fragmentName = UsageStatusFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new UsageStatusFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
+    public static void goPoolIopsFragment(Activity activity, Bundle arg) {
+        String fragmentName = PoolIopsFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new PoolIopsFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
 }

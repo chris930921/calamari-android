@@ -14,6 +14,9 @@ import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
+import com.cephmonitor.cephmonitor.fragment.PgStatusFragment;
+import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
+import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
@@ -45,6 +48,9 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(OSDHealthFragment.class, showOsdHealthFragment);
         changeStyleTask.put(NotificationFragment.class, showNotificationFragment);
         changeStyleTask.put(HostHealthFragment.class, showHostHealthFragment);
+        changeStyleTask.put(PgStatusFragment.class, showPgStatusFragment);
+        changeStyleTask.put(UsageStatusFragment.class, showUsageStatusFragment);
+        changeStyleTask.put(PoolIopsFragment.class, showPoolIopsFragment);
 
         FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -192,7 +198,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle("MON Health");
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
-            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -223,7 +229,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle("Host Health");
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
-            layout.bottomBar.setVisibility(View.VISIBLE);
+            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -233,4 +239,47 @@ public class MainActivity extends Activity implements InitFragment.Style {
         }
     };
 
+    private InitFragment.Task showPgStatusFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("PG Status");
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.bottomBar.setVisibility(View.GONE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+    private InitFragment.Task showUsageStatusFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("Usage Status");
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.bottomBar.setVisibility(View.GONE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showPoolIopsFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle("Pool IOPS");
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.bottomBar.setVisibility(View.GONE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
 }

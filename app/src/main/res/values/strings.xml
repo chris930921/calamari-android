@@ -95,4 +95,13 @@
     <string name="notification_work_find_line_one">You don\'t have any</string>
     <string name="notification_work_find_line_two">notifications right now!</string>
 
+    //UsageStatusFragment
+    <string name="usage_status_disk_usage_statistics">Disk Usage Statistics</string>
+    <string name="usage_status_disk_usage_available">-Available</string>
+    <string name="usage_status_disk_usage_used">-Used</string>
+
+    //PoolIopsFragment
+    <string name="pool_iops_read">-Read</string>
+    <string name="pool_iops_write">-Write</string>
+
 </resources>
