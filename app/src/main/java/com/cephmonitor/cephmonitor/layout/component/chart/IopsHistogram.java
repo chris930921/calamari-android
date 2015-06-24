@@ -55,8 +55,8 @@ public class IopsHistogram extends View {
 
     private ArrayList<Float> list;
 
-    private int timeUnit = 6;
-    private float xGridCount = 4;
+    private int timeUnit = 1;
+    private float xGridCount = 6;
 
     private ArrayList<Double> values;
     private ArrayList<Long> times;
@@ -87,7 +87,7 @@ public class IopsHistogram extends View {
 
         valuePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         valuePaint.setColor(ColorTable._8DC41F);
-        valuePaint.setStrokeWidth(ruler.getW(0.5));
+        valuePaint.setStrokeWidth(ruler.getW(0.3));
 
         xUnitOffset = 0;
     }
@@ -97,7 +97,7 @@ public class IopsHistogram extends View {
         this.times = times;
         this.time = time;
 
-        tableTotalTimeStamp = 60f * 60f * 6f * xGridCount * 1000;
+        tableTotalTimeStamp = 60f * 60f * timeUnit * xGridCount * 1000;
         tableMinTimeStamp = time.getTimeInMillis() - tableTotalTimeStamp;
 
         updateMaxValue();
@@ -153,7 +153,7 @@ public class IopsHistogram extends View {
 
     private float getTimeOffset(long previousTimeStamp) {
         double deltaTime = time.getTimeInMillis() - previousTimeStamp;
-        float percent = (float) (deltaTime / (60d * 60d * 6d * 1000d));
+        float percent = (float) (deltaTime / (60d * 60d * timeUnit * 1000d));
         return xUnitWidth * percent;
     }
 

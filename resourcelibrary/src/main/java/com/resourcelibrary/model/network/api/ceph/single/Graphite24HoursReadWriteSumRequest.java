@@ -49,7 +49,7 @@ public class Graphite24HoursReadWriteSumRequest extends RequestCephTask {
 
             Calendar now = Calendar.getInstance();
             JSONArray datapoints = new JSONArray();
-            for (int i = 0; i < 1500; i++) {
+            for (int i = 0; i < 2000; i++) {
                 JSONArray point = new JSONArray();
                 point.put(now.getTimeInMillis() / 1000);
                 try {

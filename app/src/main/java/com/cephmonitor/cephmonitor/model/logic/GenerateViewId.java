@@ -3,7 +3,7 @@ package com.cephmonitor.cephmonitor.model.logic;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by User on 6/15/2015.
+ * Created by ChrisKe on 6/15/2015.
  */
 public class GenerateViewId {
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);

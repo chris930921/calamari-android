@@ -90,6 +90,7 @@ public class HostHealthItem extends RelativeLayout {
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
         v.setBackgroundColor(ColorTable._F9F9F9);
+        v.setPadding(0, ruler.getW(3), 0, ruler.getW(3));
 
         return v;
     }
