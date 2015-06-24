@@ -131,23 +131,28 @@ public class RequestAndCheckService extends Service {
 
     private Response.Listener<String> successOsdMonStatus = new Response.Listener<String>() {
         @Override
-        public void onResponse(String s) {
-            try {
-                dealWithStatusCount(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        public void onResponse(final String s) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        dealWithStatusCount(s);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
     };
 
 
-    private void dealWithStatusCount(String response) throws JSONException {
+    private void dealWithStatusCount(final String response) throws JSONException {
         ShowLog.d("背景服務 dealWithStatusCount:" + response);
         ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(response);
         for (ConditionNotification checker : healthCountCheckList) {
             checker.check(data);
         }
-        NotificationFragment.send(this);
+        NotificationFragment.send(RequestAndCheckService.this);
     }
 
     private void requestClusterSpace() {
@@ -158,23 +163,28 @@ public class RequestAndCheckService extends Service {
 
     private Response.Listener<String> successClusterSpace = new Response.Listener<String>() {
         @Override
-        public void onResponse(String s) {
-            try {
-                dealWithClusterSpace(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        public void onResponse(final String s) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        dealWithClusterSpace(s);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
     };
 
 
-    private void dealWithClusterSpace(String response) throws JSONException {
+    private void dealWithClusterSpace(final String response) throws JSONException {
         ShowLog.d("背景服務 dealWithClusterSpace:" + response);
         ClusterV1Space data = new ClusterV1Space(response);
         for (ConditionNotification checker : clusterSpaceCheckList) {
             checker.check(data);
         }
-        NotificationFragment.send(this);
+        NotificationFragment.send(RequestAndCheckService.this);
     }
 
     public IBinder onBind(Intent intent) {
