@@ -70,7 +70,7 @@ public class PoolIopsItem extends RelativeLayout {
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(ColorTable._F7B500);
+        v.setTextColor(ColorTable._8DC41F);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.pool_iops_read);
 
@@ -86,7 +86,7 @@ public class PoolIopsItem extends RelativeLayout {
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
         v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(ColorTable._8DC41F);
+        v.setTextColor(ColorTable._F7B500);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.pool_iops_write);
 
