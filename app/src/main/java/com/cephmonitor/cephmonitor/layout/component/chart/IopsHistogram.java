@@ -78,7 +78,7 @@ public class IopsHistogram extends View {
         axisPaint.setStrokeWidth(ruler.getW(0.5));
 
         gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        gridPaint.setColor(Color.parseColor("#CBCDCC"));
+        gridPaint.setColor(ColorTable._CBCDCC);
         gridPaint.setStrokeWidth(ruler.getW(0.3));
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

@@ -103,7 +103,7 @@ public class MainLayout extends RelativeLayout {
         v.setTextSize(ruler.getTextSize(30));
         v.setGravity(Gravity.CENTER);
         v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.parseColor("#ffffff"));
+        v.setTextColor(Color.WHITE);
 
         return v;
     }

@@ -97,7 +97,7 @@ public class MonHealthCard extends RelativeLayout {
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.parseColor("#EFEFEF"));
+        v.setBackgroundColor(ColorTable._EFEFEF);
 
         return v;
     }
