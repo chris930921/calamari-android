@@ -36,7 +36,7 @@ public class HostHealthFragment extends Fragment {
         try {
             healthData = new ClusterV2ServerListData("[]");
             healthData.inBox(arg);
-            osdList = healthData.getOsdList();
+            osdList = healthData.getOsdServers();
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -74,8 +74,7 @@ public class HostHealthFragment extends Fragment {
             try {
                 item.setData(
                         data.getHostName(),
-                        data.getServiceId(),
-                        data.getType()
+                        data.getOsdServices().size() + ""
                 );
             } catch (JSONException e) {
                 e.printStackTrace();

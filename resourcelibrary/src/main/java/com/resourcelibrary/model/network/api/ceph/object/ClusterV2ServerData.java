@@ -4,7 +4,8 @@ import com.resourcelibrary.model.logic.PortableJsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by User on 4/22/2015.
@@ -22,15 +23,26 @@ public class ClusterV2ServerData extends PortableJsonObject {
         return json.getString("hostname");
     }
 
-    public String getType() throws JSONException {
-        JSONArray services = json.getJSONArray("services");
-        JSONObject first = services.getJSONObject(0);
-        return first.getString("type");
+    public ArrayList<ClusterV2ServerServicesData> getOsdServices() throws JSONException {
+        return choiceType("osd");
     }
 
-    public String getServiceId() throws JSONException {
+    public ArrayList<ClusterV2ServerServicesData> getMonServices() throws JSONException {
+        return choiceType("mon");
+    }
+
+    public ArrayList<ClusterV2ServerServicesData> choiceType(String type) throws JSONException {
+        ArrayList<ClusterV2ServerServicesData> result = new ArrayList<>();
         JSONArray services = json.getJSONArray("services");
-        JSONObject first = services.getJSONObject(0);
-        return first.getString("service_id");
+        for (int i = 0; i < services.length(); i++) {
+            ClusterV2ServerServicesData service = new ClusterV2ServerServicesData(services
+                    .getJSONObject(i)
+                    .toString()
+            );
+            if (service.getType().equals(type)) {
+                result.add(service);
+            }
+        }
+        return result;
     }
 }

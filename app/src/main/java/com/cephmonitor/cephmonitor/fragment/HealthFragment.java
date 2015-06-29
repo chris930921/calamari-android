@@ -360,8 +360,8 @@ public class HealthFragment extends Fragment {
     private void dealWithServerCount(String response) throws JSONException {
         hostData = new ClusterV2ServerListData(response);
         hostCardStatus = hostData.getList().size();
-        hostCardMonCount = hostData.getMonList().size();
-        hostCardOsdCount = hostData.getOsdList().size();
+        hostCardMonCount = hostData.getMonServers().size();
+        hostCardOsdCount = hostData.getOsdServers().size();
     }
 
     private void requestStoreSpace() {

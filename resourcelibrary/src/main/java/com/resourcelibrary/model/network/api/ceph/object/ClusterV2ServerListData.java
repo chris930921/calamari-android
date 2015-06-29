@@ -2,9 +2,7 @@ package com.resourcelibrary.model.network.api.ceph.object;
 
 import com.resourcelibrary.model.logic.PortableJsonArray;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,27 +23,29 @@ public class ClusterV2ServerListData extends PortableJsonArray {
         return list;
     }
 
-    public ArrayList<ClusterV2ServerData> getOsdList() throws JSONException {
-        return choiceTypeList("osd");
-    }
-
-    public ArrayList<ClusterV2ServerData> getMonList() throws JSONException {
-        return choiceTypeList("mon");
-    }
-
-
-    public ArrayList<ClusterV2ServerData> choiceTypeList(String targetYype) throws JSONException {
-        ArrayList<ClusterV2ServerData> list = new ArrayList<>();
-        for (int i = 0; i < json.length(); i++) {
-            JSONObject object = json.getJSONObject(i);
-            JSONArray services = object.getJSONArray("services");
-            JSONObject service = services.getJSONObject(0);
-            String type = service.getString("type");
-            if (type.equals(targetYype)) {
-                String singleData = object.toString();
-                list.add(new ClusterV2ServerData(singleData));
+    public ArrayList<ClusterV2ServerData> getOsdServers() throws JSONException {
+        ArrayList<ClusterV2ServerData> result = new ArrayList<>();
+        ArrayList<ClusterV2ServerData> servers = getList();
+        for (int i = 0; i < servers.size(); i++) {
+            ClusterV2ServerData server = servers.get(i);
+            ArrayList<ClusterV2ServerServicesData> services = server.getOsdServices();
+            if (services.size() != 0) {
+                result.add(server);
             }
         }
-        return list;
+        return result;
+    }
+
+    public ArrayList<ClusterV2ServerData> getMonServers() throws JSONException {
+        ArrayList<ClusterV2ServerData> result = new ArrayList<>();
+        ArrayList<ClusterV2ServerData> servers = getList();
+        for (int i = 0; i < servers.size(); i++) {
+            ClusterV2ServerData server = servers.get(i);
+            ArrayList<ClusterV2ServerServicesData> services = server.getMonServices();
+            if (services.size() != 0) {
+                result.add(server);
+            }
+        }
+        return result;
     }
 }

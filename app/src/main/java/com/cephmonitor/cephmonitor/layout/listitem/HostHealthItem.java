@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
@@ -154,6 +155,7 @@ public class HostHealthItem extends RelativeLayout {
         v.setTextColor(ColorTable._999999);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setSingleLine(true);
+        v.setText(R.string.host_health_osd);
 
         return v;
     }
@@ -170,9 +172,8 @@ public class HostHealthItem extends RelativeLayout {
     }
 
 
-    public void setData(String hostName, String id, String type) {
+    public void setData(String hostName, String id) {
         this.hostName.setText(hostName);
         this.fieldValue.setText(id);
-        this.fieldUnit.setText(type.toUpperCase());
     }
 }

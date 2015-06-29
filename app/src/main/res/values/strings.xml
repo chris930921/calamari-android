@@ -104,4 +104,7 @@
     <string name="pool_iops_read">-Read</string>
     <string name="pool_iops_write">-Write</string>
 
+    //HostHealthFragment
+    <string name="host_health_osd">OSD</string>
+
 </resources>
