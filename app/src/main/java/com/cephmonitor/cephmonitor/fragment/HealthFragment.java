@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.InitFragment;
+import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.TimeUnit;
@@ -105,7 +106,7 @@ public class HealthFragment extends Fragment {
 
     private void init() {
         currentUpdateId = 0;
-        layout.healthCard.setCenterValueText("OK");
+        layout.healthCard.setCenterValueText(getResources().getString(R.string.health_card_status_ok));
 
         monCardOkCount = 0;
         monCardTotalCount = 0;
@@ -415,13 +416,13 @@ public class HealthFragment extends Fragment {
 
     private void updateView() {
         if (healthCardErrorCount != 0) {
-            layout.healthCard.setCenterValueText("ERROR");
+            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_error));
             layout.healthCard.changeRedBorder();
         } else if (healthCardWarningCount != 0) {
-            layout.healthCard.setCenterValueText("WARNING");
+            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_warning));
             layout.healthCard.changeOrangeBorder();
         } else {
-            layout.healthCard.setCenterValueText("OK");
+            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_ok));
             layout.healthCard.changeGreenBorder();
         }
 

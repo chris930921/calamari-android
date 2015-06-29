@@ -29,7 +29,7 @@ public class MessageList {
         messages = new ArrayList<>();
         int size = loadMessageSize();
         for (int i = 0; i < size; i++) {
-            String index = i + "";
+            String index = String.valueOf(i);
             String value = settings.getString(index, EMPTY_MESSAGE);
             messages.add(value);
         }
@@ -47,7 +47,7 @@ public class MessageList {
         SharedPreferences.Editor editor = settings.edit();
 
         for (int i = 0; i < messages.size(); i++) {
-            String index = i + "";
+            String index = String.valueOf(i);
             String value = messages.get(i);
             editor.putString(index, value);
         }

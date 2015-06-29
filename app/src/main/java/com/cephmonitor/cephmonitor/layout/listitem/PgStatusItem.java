@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 
 public class PgStatusItem extends RelativeLayout {
     private static final HashMap<String, Integer> choiceColor = new HashMap<>();
-    private static final HashMap<String, String> choiceTitle = new HashMap<>();
+    private static final HashMap<String, Integer> choiceTitle = new HashMap<>();
 
     private Context context;
     private WH ruler;
@@ -60,23 +61,23 @@ public class PgStatusItem extends RelativeLayout {
         choiceColor.put("Clean", ColorTable._8DC41F);
         choiceColor.put("Active", ColorTable._8DC41F);
 
-        choiceTitle.put("Down", "Down");
-        choiceTitle.put("Stale", "Down");
-        choiceTitle.put("Peering", "Down");
-        choiceTitle.put("Incomplete", "Down");
-        choiceTitle.put("Inconsistent", "Down");
-        choiceTitle.put("Creating", "Degraded");
-        choiceTitle.put("Replaying", "Degraded");
-        choiceTitle.put("Splitting", "Degraded");
-        choiceTitle.put("Scrubbing", "Degraded");
-        choiceTitle.put("Degraded", "Degraded");
-        choiceTitle.put("Repair", "Degraded");
-        choiceTitle.put("Recovering", "Degraded");
-        choiceTitle.put("Backfill", "Degraded");
-        choiceTitle.put("Wait-Backfill", "Degraded");
-        choiceTitle.put("Remapped", "Degraded");
-        choiceTitle.put("Clean", "Clean");
-        choiceTitle.put("Active", "Clean");
+        choiceTitle.put("Down", R.string.pg_status_down);
+        choiceTitle.put("Stale", R.string.pg_status_down);
+        choiceTitle.put("Peering", R.string.pg_status_down);
+        choiceTitle.put("Incomplete", R.string.pg_status_down);
+        choiceTitle.put("Inconsistent", R.string.pg_status_down);
+        choiceTitle.put("Creating", R.string.pg_status_degraded);
+        choiceTitle.put("Replaying", R.string.pg_status_degraded);
+        choiceTitle.put("Splitting", R.string.pg_status_degraded);
+        choiceTitle.put("Scrubbing", R.string.pg_status_degraded);
+        choiceTitle.put("Degraded", R.string.pg_status_degraded);
+        choiceTitle.put("Repair", R.string.pg_status_degraded);
+        choiceTitle.put("Recovering", R.string.pg_status_degraded);
+        choiceTitle.put("Backfill", R.string.pg_status_degraded);
+        choiceTitle.put("Wait-Backfill", R.string.pg_status_degraded);
+        choiceTitle.put("Remapped", R.string.pg_status_degraded);
+        choiceTitle.put("Clean", R.string.pg_status_clean);
+        choiceTitle.put("Active", R.string.pg_status_clean);
     }
 
     public PgStatusItem(Context context) {

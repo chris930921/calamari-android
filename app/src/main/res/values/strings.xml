@@ -17,8 +17,30 @@
     <string name="login_fail_sing_in">Incorrect username or password.</string>
     <string name="login_sign_in">Sign in</string>
 
+    //MainActivity
+    <string name="main_activity_option_notification">Notifications</string>
+    <string name="main_activity_option_node_list">Node List</string>
+    <string name="main_activity_option_pool_list">Pool List</string>
+    <string name="main_activity_option_logs">Logs</string>
+    <string name="main_activity_option_alert">Alert</string>
+    <string name="main_activity_option_setting">Setting</string>
+    <string name="main_activity_option_logout">Logout</string>
+
+    <string name="main_activity_fragment_health">Health</string>
+    <string name="main_activity_fragment_health_detail">Health Detail</string>
+    <string name="main_activity_fragment_osd_health">OSD Health</string>
+    <string name="main_activity_fragment_mon_health">MON Health</string>
+    <string name="main_activity_fragment_notification">Notifications</string>
+    <string name="main_activity_fragment_host_health">Host Health</string>
+    <string name="main_activity_fragment_pg_status">PG Status</string>
+    <string name="main_activity_fragment_usage_status">Usage Status</string>
+    <string name="main_activity_fragment_pool_iops">Pool IOPS</string>
 
     //HealthFragment
+    <string name="health_card_status_ok">OK</string>
+    <string name="health_card_status_warning">WARNING</string>
+    <string name="health_card_status_error">ERROR</string>
+
     <string name="health_card_health">HEALTH</string>
     <string name="health_card_ago">ago</string>
 
@@ -106,5 +128,12 @@
 
     //HostHealthFragment
     <string name="host_health_osd">OSD</string>
+
+    //PgStatusFragment
+    <string name="pg_status_down">Down</string>
+    <string name="pg_status_degraded">Degraded</string>
+    <string name="pg_status_clean">Clean</string>
+    <string name="pg_status__osd">OSD</string>
+
 
 </resources>

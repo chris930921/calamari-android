@@ -85,18 +85,18 @@ public class MainActivity extends Activity implements InitFragment.Style {
                 RoundSimpleSelectDialog dialog = new RoundSimpleSelectDialog(activity);
                 dialog.setPosition(0, layout.bottomBar.getHeight());
 
-                dialog.addItem("Notifications", new View.OnClickListener() {
+                dialog.addItem(getResources().getString(R.string.main_activity_option_notification), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         FragmentLauncher.goNotificationFragment(activity, null);
                     }
                 });
-                dialog.addItem("Node List", null);
-                dialog.addItem("Pool List", null);
-                dialog.addItem("Logs", null);
-                dialog.addItem("Alert", null);
-                dialog.addItem("Setting", null);
-                dialog.addItem("Logout", null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_node_list), null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_pool_list), null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_logs), null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_alert), null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_setting), null);
+                dialog.addItem(getResources().getString(R.string.main_activity_option_logout), null);
 
                 dialog.show();
             }
@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Health");
+            setTitle(getResources().getString(R.string.main_activity_fragment_health));
             layout.topBar.setBackgroundColor(ColorTable._E63427);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.hideBack();
@@ -148,7 +148,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHealthDetailFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Health Detail");
+            setTitle(getResources().getString(R.string.main_activity_fragment_health_detail));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showOsdHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("OSD Health");
+            setTitle(getResources().getString(R.string.main_activity_fragment_osd_health));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
@@ -196,7 +196,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showMonHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("MON Health");
+            setTitle(getResources().getString(R.string.main_activity_fragment_mon_health));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
@@ -212,7 +212,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showNotificationFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Notifications");
+            setTitle(getResources().getString(R.string.main_activity_fragment_notification));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
@@ -227,7 +227,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHostHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Host Health");
+            setTitle(getResources().getString(R.string.main_activity_fragment_host_health));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
@@ -242,7 +242,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showPgStatusFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("PG Status");
+            setTitle(getResources().getString(R.string.main_activity_fragment_pg_status));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
@@ -256,7 +256,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showUsageStatusFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Usage Status");
+            setTitle(getResources().getString(R.string.main_activity_fragment_usage_status));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showPoolIopsFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle("Pool IOPS");
+            setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {

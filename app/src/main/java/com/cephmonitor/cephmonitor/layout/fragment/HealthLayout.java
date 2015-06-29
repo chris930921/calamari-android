@@ -97,7 +97,7 @@ public class HealthLayout extends RelativeLayout {
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
         v.setCenterText(context.getResources().getString(R.string.health_card_ago));
-        v.setCenterValueText("OK");
+        v.setCenterValueText(getResources().getString(R.string.health_card_status_ok));
         v.setCompareMode(false);
         v.setChangeCenterValueColor(true);
         v.setValue(0, 0);
