@@ -7,7 +7,6 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.logic.CompareString;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
-import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 
@@ -35,7 +34,6 @@ public class PgCountErrorNotification extends ConditionNotification<ClusterV1Hea
             int compareValue = data.getPlacmentGroupsErrorCount();
             check &= CompareString.notEqualInt(previousStatus, compareValue);
             check &= percent > 0.2;
-            ShowLog.d(getClass().getName() + " 判斷比較:compareValue " + compareValue + " previousStatus " + previousStatus + " percent " + percent);
         } catch (JSONException e) {
             e.printStackTrace();
             check = false;

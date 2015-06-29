@@ -9,9 +9,8 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.InitFragment;
-import com.cephmonitor.cephmonitor.layout.listitem.MonHealthCard;
 import com.cephmonitor.cephmonitor.layout.fragment.MonHealthLayout;
-import com.resourcelibrary.model.log.ShowLog;
+import com.cephmonitor.cephmonitor.layout.listitem.MonHealthCard;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthMonData;
@@ -69,7 +68,6 @@ public class MonHealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("requestFirstClusterId" + " 結果:" + s);
                     dealWithMonList(s);
                 } catch (JSONException e) {
                     e.printStackTrace();

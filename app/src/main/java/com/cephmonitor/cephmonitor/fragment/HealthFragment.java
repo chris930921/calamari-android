@@ -221,7 +221,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV2FindAllRequest" + " 結果:" + s);
                     dealWithFirstClusterExists(s);
                     requestHealth();
                     requestOsdMonStatus();
@@ -254,7 +253,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV1HealthRequest" + " 結果:" + s);
                     dealWithHealthStatus(s);
                     updateView();
                 } catch (JSONException e) {
@@ -282,7 +280,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV1HealthCounterRequest" + " 結果:" + s);
                     dealWithStatusCount(s);
                     updateView();
                 } catch (JSONException e) {
@@ -321,7 +318,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("PoolV1ListRequest" + " 結果:" + s);
                     dealWithPoolStatus(s);
                     updateView();
                 } catch (JSONException e) {
@@ -347,7 +343,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV1ServerRequest" + " 結果:" + s);
                     dealWithServerCount(s);
                     updateView();
                 } catch (JSONException e) {
@@ -375,7 +370,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV1SpaceRequest" + " 結果:" + s);
                     dealWithStoreSpace(s);
                     updateView();
                 } catch (JSONException e) {
@@ -403,7 +397,6 @@ public class HealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("Graphite24HoursReadWriteSumRequest" + " 結果:" + s);
                     dealWithIopsSum(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -416,8 +409,6 @@ public class HealthFragment extends Fragment {
         GraphiteData data = new GraphiteData(response);
         ArrayList<Double> values = data.getValueArray();
         ArrayList<Long> times = data.getTimestampArray();
-        ShowLog.d("Graphite24HoursReadWriteSumRequest" + " :" + values);
-        ShowLog.d("Graphite24HoursReadWriteSumRequest" + " :" + times);
         layout.iopsCard.setChartData(Calendar.getInstance(), values, times);
     }
 

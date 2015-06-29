@@ -17,7 +17,6 @@ import com.cephmonitor.cephmonitor.layout.fragment.NotificationLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.NotificationItem;
 import com.cephmonitor.cephmonitor.model.database.NotificationRow;
 import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
-import com.resourcelibrary.model.log.ShowLog;
 
 import java.util.ArrayList;
 
@@ -113,7 +112,6 @@ public class NotificationFragment extends Fragment {
             boolean isSuccessRemove = database.removeNotification(row.id);
             if (isSuccessRemove) {
                 notifications.remove(row);
-                ShowLog.d(layout.list.getLastVisiblePosition() + "::" + (notifications.size() - 1));
                 if (layout.list.getLastVisiblePosition() == notifications.size() - 1) {
                     loadOldNotifications();
                 }
@@ -133,10 +131,7 @@ public class NotificationFragment extends Fragment {
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             if (firstVisibleItem == prevFirstVisibleItem) return;
-            ShowLog.d("onScroll,第一個View:" + firstVisibleItem);
-            ShowLog.d("onScroll,可見的View數量:" + visibleItemCount);
-            ShowLog.d("onScroll,總數:" + totalItemCount);
-            ShowLog.d("onScroll,上一個View:" + prevFirstVisibleItem);
+
             if (database == null) {
             } else if (totalItemCount == database.getCount()) {
             } else if (firstVisibleItem == 0 && prevFirstVisibleItem > 0) {

@@ -147,7 +147,6 @@ public class RequestAndCheckService extends Service {
 
 
     private void dealWithStatusCount(final String response) throws JSONException {
-        ShowLog.d("背景服務 dealWithStatusCount:" + response);
         ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(response);
         for (ConditionNotification checker : healthCountCheckList) {
             checker.check(data);
@@ -179,7 +178,6 @@ public class RequestAndCheckService extends Service {
 
 
     private void dealWithClusterSpace(final String response) throws JSONException {
-        ShowLog.d("背景服務 dealWithClusterSpace:" + response);
         ClusterV1Space data = new ClusterV1Space(response);
         for (ConditionNotification checker : clusterSpaceCheckList) {
             checker.check(data);

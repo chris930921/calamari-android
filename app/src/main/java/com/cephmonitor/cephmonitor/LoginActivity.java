@@ -8,7 +8,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
-import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
 import com.resourcelibrary.model.network.api.RequestVolleyTask;
@@ -95,8 +94,6 @@ public class LoginActivity extends Activity {
     private Response.Listener<String> successLoginPost = new Response.Listener<String>() {
         @Override
         public void onResponse(String s) {
-            ShowLog.d("登入結果為: " + s);
-            ShowLog.d("Session為: " + params.getSession());
             ActivityLauncher.goMainActivity(activity);
             loadingDialog.cancel();
             activity.finish();

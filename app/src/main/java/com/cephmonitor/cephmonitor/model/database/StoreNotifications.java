@@ -136,7 +136,6 @@ public class StoreNotifications extends SQLiteOpenHelper {
             result.add(item);
         }
         cursor.close();
-        ShowLog.d("readOldDataStart" + readOldDataStart);
         readOldDataStart += StoreNotifications.FETCH_COUNT;
 
         return result;
@@ -184,7 +183,6 @@ public class StoreNotifications extends SQLiteOpenHelper {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            ShowLog.d("delete row fail", e);
             return false;
         } finally {
             db.close();

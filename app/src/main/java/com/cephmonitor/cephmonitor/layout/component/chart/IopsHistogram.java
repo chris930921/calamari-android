@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.view.WH;
 
 import java.text.DateFormat;
@@ -218,7 +217,6 @@ public class IopsHistogram extends View {
         drawTime.set(Calendar.MINUTE, 0);
         String text;
         for (int i = 0; i < xGridPosition.size(); i++) {
-            ShowLog.d("小時:" + drawTime.get(Calendar.HOUR_OF_DAY));
             if (drawTime.get(Calendar.HOUR_OF_DAY) == 0) {
                 text = dateFormat.format(drawTime.getTime());
             } else {

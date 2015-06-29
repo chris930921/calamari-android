@@ -13,7 +13,6 @@ import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OnStatusChang
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdBox;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
 import com.cephmonitor.cephmonitor.layout.fragment.OSDHealthLayout;
-import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdListData;
@@ -38,8 +37,6 @@ public class OSDHealthFragment extends Fragment {
     }
 
     public void init() {
-        ShowLog.d("OSDHealthFragment 更新資料");
-
         requestParams = new LoginParams(getActivity());
 
         layout.leftButton.setOnClickListener(clickLeftButton);
@@ -111,7 +108,6 @@ public class OSDHealthFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 try {
-                    ShowLog.d("ClusterV2OsdListRequest" + " 結果:" + s);
                     dealWithOsdList(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
