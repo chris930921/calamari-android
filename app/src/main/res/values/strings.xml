@@ -71,7 +71,7 @@
     <string name="health_card_warnings">Warnings</string>
     <string name="health_card_errors">Errors</string>
 
-    //HealthFragment
+    //HealthDetailFragment
     <string name="health_detail_great">Great !</string>
     <string name="health_detail_work_fine">System works fine !</string>
 
