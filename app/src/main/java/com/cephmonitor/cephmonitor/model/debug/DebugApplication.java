@@ -33,7 +33,7 @@ public class DebugApplication extends Application {
         customUncaughtExceptionHandler = new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
-                writeToSdcardFile(e);
+                writeToSdcardFile(DebugApplication.this, e);
                 postToGoogleDoc(e);
                 defaultUncaughtExceptionHandler.uncaughtException(t, e);
             }
@@ -41,10 +41,9 @@ public class DebugApplication extends Application {
         Thread.setDefaultUncaughtExceptionHandler(customUncaughtExceptionHandler);
     }
 
-    private void writeToSdcardFile(Throwable e) {
+    public static void writeToSdcardFile(Application app, Throwable e) {
         try {
-
-            File sdCardDir = new File(Environment.getExternalStorageDirectory() + "/" + getApplicationContext().getPackageName());
+            File sdCardDir = new File(Environment.getExternalStorageDirectory() + "/" + app.getApplicationContext().getPackageName());
             sdCardDir.mkdirs();
 
             Calendar time = Calendar.getInstance();
