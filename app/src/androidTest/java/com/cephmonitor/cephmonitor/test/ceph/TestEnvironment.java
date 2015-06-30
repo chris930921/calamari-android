@@ -4,9 +4,11 @@ import android.test.AndroidTestCase;
 
 import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.CephStaticValue;
+import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
+import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1OsdListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
@@ -102,5 +104,31 @@ public class TestEnvironment extends AndroidTestCase {
             assertNotNull(pgStateCount.get(state));
         }
         WriteApiResult.write(getContext(), "api_v1_cluster_id_osd_get", returnVar.get());
+    }
+
+    public void test_4_HealthCount() throws JSONException, InterruptedException {
+        final CountDownLatch lock = new CountDownLatch(1);
+        final Value<String> returnVar = new Value<>();
+        final Value<Boolean> isFail = new Value<>();
+        returnVar.set(null);
+        isFail.set(true);
+
+        ClusterV1HealthCounterRequest spider = new ClusterV1HealthCounterRequest(getContext());
+        spider.setRequestParams(params);
+        spider.request(
+                DefaultResponse.success(lock, returnVar),
+                DefaultResponse.fail(lock, isFail)
+        );
+
+        lock.await(10, TimeUnit.SECONDS);
+        assertTrue(isFail.get());
+        assertNotNull(returnVar.get());
+
+        ClusterV1HealthCounterData listData = new ClusterV1HealthCounterData(returnVar.get());
+        HashMap<String, Integer> pgStateCount = listData.getPgStateCounts();
+        for (String state : CephStaticValue.PG_STATUS) {
+            assertNotNull(pgStateCount.get(state));
+        }
+        WriteApiResult.write(getContext(), "api_v1_cluster_id_health_counters_get", returnVar.get());
     }
 }

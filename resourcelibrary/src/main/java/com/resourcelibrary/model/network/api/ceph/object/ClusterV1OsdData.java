@@ -5,7 +5,7 @@ import com.resourcelibrary.model.logic.PortableJsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by User on 4/22/2015.
@@ -16,28 +16,24 @@ public class ClusterV1OsdData extends PortableJsonObject {
         super(Json);
     }
 
-    public HashMap<String, Integer> getPgStateCounts() {
+    public LinkedHashMap<String, Integer> getPgStateCounts() {
         JSONObject pgStateCounts;
-        HashMap<String, Integer> result = new HashMap<>();
-
-        for (String state : CephStaticValue.PG_STATUS) {
-            result.put(state, 0);
-        }
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
 
         try {
-            pgStateCounts = new JSONObject("pg_state_counts");
+            pgStateCounts = json.getJSONObject("pg_state_counts");
         } catch (JSONException e) {
             e.printStackTrace();
             return result;
         }
 
-        for (String state : CephStaticValue.PG_STATUS) {
+        for (int i = CephStaticValue.PG_STATUS.length - 1; i >= 0; i--) {
+            String state = CephStaticValue.PG_STATUS[i];
             try {
                 int count = pgStateCounts.getInt(state);
                 result.put(state, count);
             } catch (JSONException e) {
                 e.printStackTrace();
-                result.put(state, 0);
             }
         }
         return result;

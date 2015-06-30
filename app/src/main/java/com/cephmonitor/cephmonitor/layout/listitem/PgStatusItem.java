@@ -15,14 +15,14 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
+import com.resourcelibrary.model.network.api.ceph.object.CephStaticValue;
 import com.resourcelibrary.model.view.WH;
 
 import java.util.HashMap;
 
 
 public class PgStatusItem extends RelativeLayout {
-    private static final HashMap<String, Integer> choiceColor = new HashMap<>();
-    private static final HashMap<String, Integer> choiceTitle = new HashMap<>();
+    private static final HashMap<String, Integer> choiceColor;
 
     private Context context;
     private WH ruler;
@@ -43,41 +43,16 @@ public class PgStatusItem extends RelativeLayout {
     public RelativeLayout rightTextContainer;
 
     static {
-        choiceColor.put("Down", ColorTable._E63427);
-        choiceColor.put("Stale", ColorTable._E63427);
-        choiceColor.put("Peering", ColorTable._E63427);
-        choiceColor.put("Incomplete", ColorTable._E63427);
-        choiceColor.put("Inconsistent", ColorTable._E63427);
-        choiceColor.put("Creating", ColorTable._F7B500);
-        choiceColor.put("Replaying", ColorTable._F7B500);
-        choiceColor.put("Splitting", ColorTable._F7B500);
-        choiceColor.put("Scrubbing", ColorTable._F7B500);
-        choiceColor.put("Degraded", ColorTable._F7B500);
-        choiceColor.put("Repair", ColorTable._F7B500);
-        choiceColor.put("Recovering", ColorTable._F7B500);
-        choiceColor.put("Backfill", ColorTable._F7B500);
-        choiceColor.put("Wait-Backfill", ColorTable._F7B500);
-        choiceColor.put("Remapped", ColorTable._F7B500);
-        choiceColor.put("Clean", ColorTable._8DC41F);
-        choiceColor.put("Active", ColorTable._8DC41F);
-
-        choiceTitle.put("Down", R.string.pg_status_down);
-        choiceTitle.put("Stale", R.string.pg_status_down);
-        choiceTitle.put("Peering", R.string.pg_status_down);
-        choiceTitle.put("Incomplete", R.string.pg_status_down);
-        choiceTitle.put("Inconsistent", R.string.pg_status_down);
-        choiceTitle.put("Creating", R.string.pg_status_degraded);
-        choiceTitle.put("Replaying", R.string.pg_status_degraded);
-        choiceTitle.put("Splitting", R.string.pg_status_degraded);
-        choiceTitle.put("Scrubbing", R.string.pg_status_degraded);
-        choiceTitle.put("Degraded", R.string.pg_status_degraded);
-        choiceTitle.put("Repair", R.string.pg_status_degraded);
-        choiceTitle.put("Recovering", R.string.pg_status_degraded);
-        choiceTitle.put("Backfill", R.string.pg_status_degraded);
-        choiceTitle.put("Wait-Backfill", R.string.pg_status_degraded);
-        choiceTitle.put("Remapped", R.string.pg_status_degraded);
-        choiceTitle.put("Clean", R.string.pg_status_clean);
-        choiceTitle.put("Active", R.string.pg_status_clean);
+        choiceColor = new HashMap<>();
+        for (String state : CephStaticValue.PG_STATUS_CRITICAL) {
+            choiceColor.put(state, ColorTable._E63427);
+        }
+        for (String state : CephStaticValue.PG_STATUS_WARN) {
+            choiceColor.put(state, ColorTable._F7B500);
+        }
+        for (String state : CephStaticValue.PG_STATUS_OK) {
+            choiceColor.put(state, ColorTable._8DC41F);
+        }
     }
 
     public PgStatusItem(Context context) {
@@ -242,6 +217,7 @@ public class PgStatusItem extends RelativeLayout {
         v.setTextColor(ColorTable._999999);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setSingleLine(true);
+        v.setText(R.string.pg_status__osd);
 
         return v;
     }
@@ -258,11 +234,13 @@ public class PgStatusItem extends RelativeLayout {
     }
 
 
-    public void setData(String pgStatus, float pgValue, String id, String type) {
-        this.pgStatus.setText(choiceTitle.get(pgStatus));
+    public void setData(String pgStatus, int pgValue, int osdCount) {
+        char firstCharUpCase = Character.toUpperCase(pgStatus.charAt(0));
+        String shoeText = firstCharUpCase + pgStatus.substring(1);
+
+        this.pgStatus.setText(shoeText);
         this.pgValue.setText(changeValue(pgValue) + " pgs");
-        this.fieldValue.setText(id);
-        this.fieldUnit.setText(type.toUpperCase());
+        this.fieldValue.setText(String.valueOf(osdCount));
         leftBorderPaint.setColor(choiceColor.get(pgStatus));
         invalidate();
     }

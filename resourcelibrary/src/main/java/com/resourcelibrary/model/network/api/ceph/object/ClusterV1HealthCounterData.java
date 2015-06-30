@@ -5,7 +5,7 @@ import com.resourcelibrary.model.logic.PortableJsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by User on 4/22/2015.
@@ -131,11 +131,12 @@ public class ClusterV1HealthCounterData extends PortableJsonObject {
         }
     }
 
-    public HashMap<String, Integer> getPgStateCounts() {
+    public LinkedHashMap<String, Integer> getPgStateCounts() {
         JSONObject pg, ok, warn, critical, states;
-        HashMap<String, Integer> result = new HashMap<>();
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
 
-        for (String state : CephStaticValue.PG_STATUS) {
+        for (int i = CephStaticValue.PG_STATUS.length - 1; i >= 0; i--) {
+            String state = CephStaticValue.PG_STATUS[i];
             result.put(state, 0);
         }
 
@@ -153,12 +154,12 @@ public class ClusterV1HealthCounterData extends PortableJsonObject {
             e.printStackTrace();
             states = new JSONObject();
         }
-        for (String state : CephStaticValue.PG_STATUS_OK) {
+        for (int i = CephStaticValue.PG_STATUS_OK.length - 1; i >= 0; i--) {
+            String state = CephStaticValue.PG_STATUS_OK[i];
             try {
                 result.put(state, states.getInt(state));
             } catch (JSONException e) {
                 e.printStackTrace();
-                result.put(state, 0);
             }
         }
 
@@ -169,28 +170,28 @@ public class ClusterV1HealthCounterData extends PortableJsonObject {
             e.printStackTrace();
             states = new JSONObject();
         }
-        for (String state : CephStaticValue.PG_STATUS_WARN) {
+        for (int i = CephStaticValue.PG_STATUS_WARN.length - 1; i >= 0; i--) {
+            String state = CephStaticValue.PG_STATUS_WARN[i];
             try {
                 result.put(state, states.getInt(state));
             } catch (JSONException e) {
                 e.printStackTrace();
-                result.put(state, 0);
             }
         }
 
         try {
-            critical = pg.getJSONObject("warn");
+            critical = pg.getJSONObject("critical");
             states = critical.getJSONObject("states");
         } catch (JSONException e) {
             e.printStackTrace();
             states = new JSONObject();
         }
-        for (String state : CephStaticValue.PG_STATUS_CRITICAL) {
+        for (int i = CephStaticValue.PG_STATUS_CRITICAL.length - 1; i >= 0; i--) {
+            String state = CephStaticValue.PG_STATUS_CRITICAL[i];
             try {
                 result.put(state, states.getInt(state));
             } catch (JSONException e) {
                 e.printStackTrace();
-                result.put(state, 0);
             }
         }
 
