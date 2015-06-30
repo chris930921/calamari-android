@@ -19,7 +19,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2Data;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ServerListData;
-import com.resourcelibrary.model.network.api.ceph.object.GraphiteData;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
@@ -27,7 +27,7 @@ import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1ServerRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
-import com.resourcelibrary.model.network.api.ceph.single.Graphite24HoursReadWriteSumRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteIopsReadWriteSumRequest;
 import com.resourcelibrary.model.network.api.ceph.single.PoolV1ListRequest;
 
 import org.json.JSONException;
@@ -388,7 +388,9 @@ public class HealthFragment extends Fragment {
     }
 
     private void requestIopsSum() {
-        Graphite24HoursReadWriteSumRequest spider = new Graphite24HoursReadWriteSumRequest(getActivity());
+        requestParams.setGraphitePeriod("-1d");
+
+        GraphiteIopsReadWriteSumRequest spider = new GraphiteIopsReadWriteSumRequest(getActivity());
         spider.setRequestParams(requestParams);
         spider.request(successIopsSum(), GeneralError.callback(getActivity()));
     }
@@ -407,7 +409,7 @@ public class HealthFragment extends Fragment {
     }
 
     private void dealWithIopsSum(String response) throws JSONException {
-        GraphiteData data = new GraphiteData(response);
+        GraphiteRenderData data = new GraphiteRenderData(response);
         ArrayList<Double> values = data.getValueArray();
         ArrayList<Long> times = data.getTimestampArray();
         layout.iopsCard.setChartData(Calendar.getInstance(), values, times);

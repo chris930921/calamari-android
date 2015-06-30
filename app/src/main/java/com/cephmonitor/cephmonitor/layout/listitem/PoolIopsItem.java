@@ -11,9 +11,14 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.LineAdapter;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PoolIopsItem extends RelativeLayout {
     private Context context;
@@ -22,6 +27,7 @@ public class PoolIopsItem extends RelativeLayout {
     public TextView title;
     public TextView read;
     public TextView write;
+    public ChartTable table;
 
     public PoolIopsItem(Context context) {
         super(context);
@@ -33,15 +39,17 @@ public class PoolIopsItem extends RelativeLayout {
         setId(RandomId.get());
         setLayoutParams(params);
         setBackgroundColor(Color.WHITE);
-        setPadding(0, ruler.getW(5), 0, ruler.getW(50));
+        setPadding(0, ruler.getW(5), 0, 0);
 
         title = title();
         read = read(title);
         write = write(read);
+        table = table(read);
 
         addView(title);
         addView(read);
         addView(write);
+        addView(table);
     }
 
     private TextView title() {
@@ -93,7 +101,24 @@ public class PoolIopsItem extends RelativeLayout {
         return v;
     }
 
-    public void setData(String titleText) {
+    private ChartTable table(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(50));
+        params.addRule(ALIGN_LEFT, topView.getId());
+        params.addRule(BELOW, topView.getId());
+
+        ChartTable v = new ChartTable(context);
+        v.setId(GenerateViewId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    public void setData(String titleText, ArrayList<LineAdapter> dataGroup) {
         title.setText(titleText);
+        table.setMaxTime(Calendar.getInstance());
+        for (LineAdapter adapter : dataGroup) {
+            table.addAdapter(adapter);
+        }
+        invalidate();
     }
 }

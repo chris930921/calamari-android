@@ -10,8 +10,8 @@ import java.util.ArrayList;
 /**
  * Created by User on 4/22/2015.
  */
-public class GraphiteData extends PortableJsonObject {
-    public GraphiteData(String Json) throws JSONException {
+public class GraphiteRenderData extends PortableJsonObject {
+    public GraphiteRenderData(String Json) throws JSONException {
         super(Json);
     }
 

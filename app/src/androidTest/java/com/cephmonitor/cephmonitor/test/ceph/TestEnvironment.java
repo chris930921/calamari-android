@@ -7,14 +7,19 @@ import com.resourcelibrary.model.network.api.ceph.object.CephStaticValue;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ListData;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindData;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1OsdListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
+import com.resourcelibrary.model.network.api.ceph.single.GraphitePoolReadWriteRequest;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +28,8 @@ import java.util.concurrent.TimeUnit;
  * Created by User on 2015/6/28.
  */
 public class TestEnvironment extends AndroidTestCase {
-    private LoginParams params;
+    private static LoginParams params;
+    private static ArrayList<GraphiteFindData> findPools;
 
     @Override
     protected void setUp() throws Exception {
@@ -100,7 +106,7 @@ public class TestEnvironment extends AndroidTestCase {
 
         ClusterV1OsdData listData = new ClusterV1OsdData(returnVar.get());
         HashMap<String, Integer> pgStateCount = listData.getPgStateCounts();
-        for (String state : CephStaticValue.PG_STATUS) {
+        for (String state : pgStateCount.keySet()) {
             assertNotNull(pgStateCount.get(state));
         }
         WriteApiResult.write(getContext(), "api_v1_cluster_id_osd_get", returnVar.get());
@@ -130,5 +136,55 @@ public class TestEnvironment extends AndroidTestCase {
             assertNotNull(pgStateCount.get(state));
         }
         WriteApiResult.write(getContext(), "api_v1_cluster_id_health_counters_get", returnVar.get());
+    }
+
+    public void test_5_GraphiteFindPools() throws JSONException, InterruptedException {
+        final CountDownLatch lock = new CountDownLatch(1);
+        final Value<String> returnVar = new Value<>();
+        final Value<Boolean> isFail = new Value<>();
+        returnVar.set(null);
+        isFail.set(true);
+
+        GraphiteMetricsFindPools spider = new GraphiteMetricsFindPools(getContext());
+        spider.setRequestParams(params);
+        spider.request(
+                DefaultResponse.success(lock, returnVar),
+                DefaultResponse.fail(lock, isFail)
+        );
+
+        lock.await(10, TimeUnit.SECONDS);
+        assertTrue(isFail.get());
+        assertNotNull(returnVar.get());
+        WriteApiResult.write(getContext(), "graphite_find_pools_get", returnVar.get());
+        findPools = new GraphiteFindListData(returnVar.get()).getList();
+    }
+
+    public void test_6_GraphitePoolReadWrite() throws JSONException, InterruptedException {
+        final CountDownLatch lock = new CountDownLatch(1);
+        final Value<String> returnVar = new Value<>();
+        final Value<Boolean> isFail = new Value<>();
+        returnVar.set(null);
+        isFail.set(true);
+
+
+        ArrayList<String> targets = new ArrayList<>();
+        for (GraphiteFindData findData : findPools) {
+            targets.add(findData.getId() + ".num_read");
+            targets.add(findData.getId() + ".num_write");
+
+            params.setGraphitePeriod("-1d");
+            params.setGraphiteTargets(targets);
+            GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getContext());
+            spider.setRequestParams(params);
+            spider.request(
+                    DefaultResponse.success(lock, returnVar),
+                    DefaultResponse.fail(lock, isFail)
+            );
+
+            lock.await(10, TimeUnit.SECONDS);
+            assertTrue(isFail.get());
+            assertNotNull(returnVar.get());
+            WriteApiResult.write(getContext(), "graphite_render_" + findData.getId() + "_pool_read_write_get", returnVar.get());
+        }
     }
 }

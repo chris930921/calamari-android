@@ -19,17 +19,17 @@ import java.util.Calendar;
 /**
  * Created by User on 4/16/2015.
  */
-public class Graphite24HoursReadWriteSumRequest extends RequestCephTask {
+public class GraphiteIopsReadWriteSumRequest extends RequestCephTask {
 
-    public Graphite24HoursReadWriteSumRequest(Context context) {
+    public GraphiteIopsReadWriteSumRequest(Context context) {
         super(context);
     }
 
     @Override
     protected StringRequest taskFlow(final CephParams params, Response.Listener<String> success, Response.ErrorListener fail) {
-        String url = CephApiUrl.graphite(params)
+        String url = CephApiUrl.graphiteRender(params)
                 .format("json-array")
-                .from("-1d")
+                .format(params.getGraphitePeriod())
                 .target("sumSeries(ceph.cluster." + params.getClusterId() + ".pool.all.num_read,ceph.cluster." + params.getClusterId() + ".pool.all.num_write)")
                 .build();
         ShowLog.d("Graphite24HoursReadWriteSumRequest" + " 結果:" + url);

@@ -1,5 +1,7 @@
 package com.resourcelibrary.model.network.api.ceph;
 
+import java.util.ArrayList;
+
 public class CephApiUrl {
     private String url;
 
@@ -55,8 +57,13 @@ public class CephApiUrl {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/mon/" + params.getMonitorId() + "/status";
     }
 
-    public static CephApiUrl graphite(CephParams params) {
+    public static CephApiUrl graphiteRender(CephParams params) {
         String url = "http://" + params.getHost() + ":" + params.getPort() + "/graphite/render/?";
+        return new CephApiUrl(url);
+    }
+
+    public static CephApiUrl graphiteMetricsFind(CephParams params) {
+        String url = "http://" + params.getHost() + ":" + params.getPort() + "/graphite/metrics/find?";
         return new CephApiUrl(url);
     }
 
@@ -72,6 +79,18 @@ public class CephApiUrl {
 
     public CephApiUrl target(String value) {
         url += "target=" + value + "&";
+        return this;
+    }
+
+    public CephApiUrl query(String value) {
+        url += "query=" + value + "&";
+        return this;
+    }
+
+    public CephApiUrl targets(ArrayList<String> targets) {
+        for (String target : targets) {
+            url += "target=" + target + "&";
+        }
         return this;
     }
 
