@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -147,7 +148,7 @@ public class OSDHealthDetailLayout extends ScrollView {
     }
 
     private FloatLayoutLabel poolLabels(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
         FloatLayoutLabel v = new FloatLayoutLabel(context);

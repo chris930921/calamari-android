@@ -45,6 +45,11 @@ public class OSDHealthFragment extends Fragment {
 
         layout.leftButton.changeClickColor();
 
+        layout.boxesContainer.setData(new ArrayList<OsdBox>());
+        layout.boxesContainer.setOnOsdBoxClickListener(clickOsdBox);
+        layout.boxesContainer.setOnStatusChangeListener(changeShowedBox);
+        layout.showWorkFind();
+
         requestOsdList();
     }
 
@@ -137,6 +142,8 @@ public class OSDHealthFragment extends Fragment {
 
         if (boxes.size() == 0) {
             layout.showWorkFind();
+        } else {
+            layout.hideWorkFind();
         }
     }
 }

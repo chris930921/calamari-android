@@ -113,10 +113,15 @@ public class PoolIopsItem extends RelativeLayout {
         return v;
     }
 
-    public void setData(String titleText, ArrayList<LineAdapter> dataGroup) {
+    public void setName(String titleText) {
         title.setText(titleText);
+    }
+
+    public void setData(ArrayList<LineAdapter> dataGroup) {
+        table.cleanData();
         table.setMaxTime(Calendar.getInstance());
-        for (LineAdapter adapter : dataGroup) {
+        ArrayList<LineAdapter> newDataGroup = new ArrayList<>(dataGroup);
+        for (LineAdapter adapter : newDataGroup) {
             table.addAdapter(adapter);
         }
         invalidate();

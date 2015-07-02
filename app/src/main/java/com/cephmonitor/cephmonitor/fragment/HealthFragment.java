@@ -410,7 +410,7 @@ public class HealthFragment extends Fragment {
 
     private void dealWithIopsSum(String response) throws JSONException {
         GraphiteRenderData data = new GraphiteRenderData(response);
-        ArrayList<Double> values = data.getValueArray();
+        ArrayList<Double> values = data.getValueArray(1);
         ArrayList<Long> times = data.getTimestampArray();
         layout.iopsCard.setChartData(Calendar.getInstance(), values, times);
     }

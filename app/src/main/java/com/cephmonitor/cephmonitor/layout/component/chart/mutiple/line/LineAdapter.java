@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
@@ -15,6 +16,10 @@ public class LineAdapter implements ChartLine {
     private ArrayList<Double> values = new ArrayList<>();
     private ArrayList<Long> times = new ArrayList<>();
     private Path path = new Path();
+
+    public LineAdapter() {
+        color = Color.BLACK;
+    }
 
     public void setData(ArrayList<Double> values, ArrayList<Long> times) {
         this.values = values;

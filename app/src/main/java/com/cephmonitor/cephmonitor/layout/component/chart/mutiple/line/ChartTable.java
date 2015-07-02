@@ -30,6 +30,7 @@ public class ChartTable extends View {
     private Double maxValue;
     private Double tableMaxValue;
     private String leftHalfValue;
+    private String leftMaxValue;
 
     private float width;
     private float height;
@@ -55,8 +56,8 @@ public class ChartTable extends View {
 
     private ArrayList<Float> list;
 
-    private int timeUnit = 6;
-    private float xGridCount = 4;
+    private int timeUnit = 1;
+    private float xGridCount = 6;
 
     private ArrayList<ChartLine> lineAdapters;
 
@@ -154,6 +155,7 @@ public class ChartTable extends View {
     private void drawLeftText(Canvas canvas) {
         String zeroValue = 0 + "";
 
+        drawTextByRightAndVerticalCenter(canvas, leftTextSpace, topPadding, leftMaxValue);
         drawTextByRightAndVerticalCenter(canvas, leftTextSpace, topPadding + yUnitHeight, leftHalfValue);
         drawTextByRightAndVerticalCenter(canvas, leftTextSpace, topPadding + tableHeight, zeroValue);
     }
@@ -216,10 +218,16 @@ public class ChartTable extends View {
                 gridPaint
         );
 
+        canvas.drawLine(
+                leftTextSpace, topPadding,
+                leftTextSpace + tableWidth, topPadding,
+                gridPaint
+        );
+
         for (int i = 0; i < xGridPosition.size(); i++) {
             float drawX = xGridPosition.get(i);
             canvas.drawLine(
-                    drawX, topPadding,
+                    drawX, 0,
                     drawX, topPadding + tableHeight,
                     gridPaint
             );
@@ -228,7 +236,7 @@ public class ChartTable extends View {
 
     private void drawAxis(Canvas canvas) {
         canvas.drawLine(
-                leftTextSpace, topPadding,
+                leftTextSpace, 0,
                 leftTextSpace, topPadding + tableHeight,
                 axisPaint
         );
@@ -260,10 +268,12 @@ public class ChartTable extends View {
     }
 
     public void updateMax() {
-        Integer integerMaxValue = maxValue.intValue();
-        double tenUnit = (int) Math.pow(10, integerMaxValue.toString().length() - 1);
-        tableMaxValue = (((int) (integerMaxValue / tenUnit)) + 1) * tenUnit;
-        leftHalfValue = String.format("%.1f", tableMaxValue / 2f) + "";
+//        Integer integerMaxValue = maxValue.intValue();
+//        double tenUnit = (int) Math.pow(10, integerMaxValue.toString().length() - 1);
+//        tableMaxValue = (((int) (integerMaxValue / tenUnit)) + 1) * tenUnit;
+        tableMaxValue = Math.ceil(maxValue / 20) * 10;
+        leftHalfValue = NuberUnit.change(tableMaxValue);
+        leftMaxValue = NuberUnit.change(tableMaxValue * 2);
         reCaleConst();
     }
 
@@ -287,5 +297,12 @@ public class ChartTable extends View {
             adapter.draw(this, canvas);
         }
         Log.d("TestRunTime", "繪製資料總共耗時:" + (SystemClock.elapsedRealtime() - startTime));
+    }
+
+    public void cleanData() {
+        lineAdapters.clear();
+        maxValue = 1.0;
+        updateMax();
+        invalidate();
     }
 }

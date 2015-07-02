@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -21,6 +22,7 @@ public class UsageStatusLayout extends RelativeLayout {
     public TextView diskUsageStatisticsTitle;
     public TextView diskUsageStatisticsAvailable;
     public TextView diskUsageStatisticsUsed;
+    public ChartTable table;
 
     public UsageStatusLayout(Context context) {
         super(context);
@@ -36,10 +38,12 @@ public class UsageStatusLayout extends RelativeLayout {
         diskUsageStatisticsTitle = diskUsageStatisticsTitle();
         diskUsageStatisticsAvailable = diskUsageStatisticsAvailable(diskUsageStatisticsTitle);
         diskUsageStatisticsUsed = diskUsageStatisticsUsed(diskUsageStatisticsAvailable);
+        table = table(diskUsageStatisticsAvailable);
 
         addView(diskUsageStatisticsTitle);
         addView(diskUsageStatisticsAvailable);
         addView(diskUsageStatisticsUsed);
+        addView(table);
     }
 
     private TextView diskUsageStatisticsTitle() {
@@ -92,4 +96,18 @@ public class UsageStatusLayout extends RelativeLayout {
 
         return v;
     }
+
+    private ChartTable table(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(50));
+        params.addRule(ALIGN_LEFT, topView.getId());
+        params.addRule(BELOW, topView.getId());
+        params.setMargins(0, ruler.getW(3), 0, ruler.getW(3));
+
+        ChartTable v = new ChartTable(context);
+        v.setId(GenerateViewId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
 }

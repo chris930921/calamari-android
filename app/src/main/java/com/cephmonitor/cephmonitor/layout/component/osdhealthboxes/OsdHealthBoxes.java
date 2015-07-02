@@ -86,6 +86,7 @@ public class OsdHealthBoxes extends View {
         drawBoxes = boxes;
         rowCount = getRow(drawBoxes);
         changeHeight(rowCount);
+        invalidate();
     }
 
     @Override

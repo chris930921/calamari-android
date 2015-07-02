@@ -3,6 +3,7 @@ package com.resourcelibrary.model.network.api.ceph;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.log.ShowLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class CephGetRequest extends StringRequest {
     public CephGetRequest(String session, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.GET, url, listener, errorListener);
         this.session = session;
+        ShowLog.d("網址: " + url);
     }
 
     @Override

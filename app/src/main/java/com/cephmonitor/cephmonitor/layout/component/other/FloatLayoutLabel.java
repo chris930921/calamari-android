@@ -77,6 +77,7 @@ public class FloatLayoutLabel extends View {
 
         int left = 0;
         int top = 0;
+        int bottom = 0;
 
         for (int i = 0; i < texts.size(); i++) {
             String text = texts.get(i);
@@ -86,15 +87,13 @@ public class FloatLayoutLabel extends View {
             int textHeight = textBounds.height();
 
             int right = left + textWidth + horizonPadding * 2;
-            int bottom = top + textHeight + verticalPadding * 2;
+            bottom = top + textHeight + verticalPadding * 2;
 
             if (right > width) {
                 left = 0;
                 top = bottom + topMargin;
                 right = left + textWidth + horizonPadding * 2;
                 bottom = top + textHeight + verticalPadding * 2;
-
-                updateHeight(bottom);
             }
 
             boxBounds.set(left, top, right, bottom);
@@ -106,6 +105,9 @@ public class FloatLayoutLabel extends View {
 
             left = right + leftMargin;
         }
+        if (bottom > height) {
+            updateHeight(bottom);
+        }
     }
 
     private void updateHeight(final int newHeight) {
@@ -113,6 +115,7 @@ public class FloatLayoutLabel extends View {
             @Override
             public void run() {
                 ViewGroup.LayoutParams params = getLayoutParams();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 params.height = newHeight;
                 setLayoutParams(params);
             }
