@@ -35,6 +35,7 @@
     <string name="main_activity_fragment_pg_status">PG Status</string>
     <string name="main_activity_fragment_usage_status">Usage Status</string>
     <string name="main_activity_fragment_pool_iops">Pool IOPS</string>
+    <string name="main_activity_fragment_pool_list">Pool List</string>
 
     //HealthFragment
     <string name="health_card_status_ok">OK</string>
@@ -135,5 +136,9 @@
     <string name="pg_status_clean">Clean</string>
     <string name="pg_status__osd">OSD</string>
 
+    //PoolListFragment
+    <string name="pool_list_id_ahead"># </string>
+    <string name="pool_list_id_replicas">Replicas</string>
+    <string name="pool_list_id_pgs">PGs</string>
 
 </resources>

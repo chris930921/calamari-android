@@ -15,15 +15,24 @@ public abstract class AnalyzeListener<T> implements Response.Listener<T> {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean isSuccess = doInBackground(o);
+                final boolean isSuccess = doInBackground(o);
                 if (isSuccess) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             onPostExecute();
+                            requestFinish(isSuccess);
+                        }
+                    });
+                } else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            requestFinish(isSuccess);
                         }
                     });
                 }
+
             }
         }).start();
     }
@@ -31,4 +40,8 @@ public abstract class AnalyzeListener<T> implements Response.Listener<T> {
     public abstract boolean doInBackground(T o);
 
     public abstract void onPostExecute();
+
+    public void requestFinish(boolean isAnalyzeSuccess) {
+
+    }
 }

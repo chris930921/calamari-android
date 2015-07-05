@@ -16,6 +16,7 @@ import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.PgStatusFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
+import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
@@ -51,6 +52,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(PgStatusFragment.class, showPgStatusFragment);
         changeStyleTask.put(UsageStatusFragment.class, showUsageStatusFragment);
         changeStyleTask.put(PoolIopsFragment.class, showPoolIopsFragment);
+        changeStyleTask.put(PoolListFragment.class, showPoolListFragment);
 
         FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -272,6 +274,21 @@ public class MainActivity extends Activity implements InitFragment.Style {
         @Override
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
+            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.bottomBar.setVisibility(View.GONE);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showPoolListFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            setTitle(getResources().getString(R.string.main_activity_fragment_pool_list));
             layout.topBar.setBackgroundColor(ColorTable._CD2626);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {

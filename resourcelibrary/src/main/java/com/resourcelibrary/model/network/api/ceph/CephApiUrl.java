@@ -45,6 +45,10 @@ public class CephApiUrl {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/pool";
     }
 
+    public static String apiV2ClusterIdPool(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/pool";
+    }
+
     public static String clusterV1Server(CephParams params) {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/cluster/" + params.getClusterId() + "/server";
     }

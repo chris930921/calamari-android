@@ -133,6 +133,7 @@ public class HealthFragment extends Fragment {
         layout.pgStatusCard.setTitleOnClickListener(pgStatusCardClickEvent);
         layout.usageCard.setTitleOnClickListener(pgUsageStatusClickEvent);
         layout.iopsCard.setTitleOnClickListener(iopsClickEvent);
+        layout.poolsCard.setTitleOnClickListener(poolsClickEvent);
     }
 
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
@@ -208,6 +209,19 @@ public class HealthFragment extends Fragment {
             Bundle arg = new Bundle();
             poolData.outBox(arg);
             FragmentLauncher.goPoolIopsFragment(getActivity(), arg);
+        }
+    };
+
+    private View.OnClickListener poolsClickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (poolData == null) {
+                return;
+            }
+
+            Bundle arg = new Bundle();
+            poolData.outBox(arg);
+            FragmentLauncher.goPoolListFragment(getActivity(), arg);
         }
     };
 
