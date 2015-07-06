@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.util.Log;
@@ -70,8 +72,11 @@ public class ChartTable extends View {
         lineAdapters = new ArrayList<>();
         tableMaxValue = 1.0;
 
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
         backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         backgroundPaint.setColor(Color.WHITE);
+        backgroundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
 
         axisPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         axisPaint.setColor(ColorTable._666666);
@@ -80,6 +85,7 @@ public class ChartTable extends View {
         gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         gridPaint.setColor(ColorTable._CBCDCC);
         gridPaint.setStrokeWidth(ruler.getW(0.3));
+        gridPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(ColorTable._666666);
@@ -133,9 +139,9 @@ public class ChartTable extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        drawData(canvas);
         countXGridPosition();
         drawGrid(canvas, list);
-        drawData(canvas);
         drawAxis(canvas);
         drawLeftText(canvas);
         drawBottomText(canvas, list);
@@ -210,20 +216,6 @@ public class ChartTable extends View {
     }
 
     private void drawGrid(Canvas canvas, ArrayList<Float> xGridPosition) {
-        canvas.drawRect(0, 0, width, height, backgroundPaint);
-
-        canvas.drawLine(
-                leftTextSpace, topPadding + yUnitHeight,
-                leftTextSpace + tableWidth, topPadding + yUnitHeight,
-                gridPaint
-        );
-
-        canvas.drawLine(
-                leftTextSpace, topPadding,
-                leftTextSpace + tableWidth, topPadding,
-                gridPaint
-        );
-
         for (int i = 0; i < xGridPosition.size(); i++) {
             float drawX = xGridPosition.get(i);
             canvas.drawLine(
@@ -232,6 +224,19 @@ public class ChartTable extends View {
                     gridPaint
             );
         }
+
+        canvas.drawLine(
+                leftTextSpace, topPadding,
+                leftTextSpace + tableWidth, topPadding,
+                gridPaint
+        );
+        canvas.drawLine(
+                leftTextSpace, topPadding + yUnitHeight,
+                leftTextSpace + tableWidth, topPadding + yUnitHeight,
+                gridPaint
+        );
+
+        canvas.drawRect(0, 0, width, height, backgroundPaint);
     }
 
     private void drawAxis(Canvas canvas) {
@@ -259,6 +264,11 @@ public class ChartTable extends View {
         return topPadding;
     }
 
+    public float getTableBottom() {
+        return topPadding + tableHeight;
+    }
+
+
     public boolean isOverY(float y) {
         return y < topPadding;
     }
@@ -268,12 +278,9 @@ public class ChartTable extends View {
     }
 
     public void updateMax() {
-//        Integer integerMaxValue = maxValue.intValue();
-//        double tenUnit = (int) Math.pow(10, integerMaxValue.toString().length() - 1);
-//        tableMaxValue = (((int) (integerMaxValue / tenUnit)) + 1) * tenUnit;
-        tableMaxValue = Math.ceil(maxValue / 20) * 10;
-        leftHalfValue = NuberUnit.change(tableMaxValue);
-        leftMaxValue = NuberUnit.change(tableMaxValue * 2);
+        tableMaxValue = Math.ceil(maxValue / 20) * 20;
+        leftMaxValue = NuberUnit.change(tableMaxValue);
+        leftHalfValue = NuberUnit.change(tableMaxValue / 2);
         reCaleConst();
     }
 

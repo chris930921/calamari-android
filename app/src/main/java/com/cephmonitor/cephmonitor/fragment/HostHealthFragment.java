@@ -64,7 +64,7 @@ public class HostHealthFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            ClusterV2ServerData data = osdList.get(i);
+            final ClusterV2ServerData data = osdList.get(i);
             HostHealthItem item;
             if (view == null) {
                 item = new HostHealthItem(getActivity());
@@ -72,10 +72,19 @@ public class HostHealthFragment extends Fragment {
                 item = (HostHealthItem) view;
             }
             try {
+                final String hostName = data.getHostName();
                 item.setData(
-                        data.getHostName(),
+                        hostName,
                         data.getOsdServices().size() + ""
                 );
+                item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle arg = new Bundle();
+                        arg.putString("0", hostName);
+                        FragmentLauncher.goHostDetailSummaryFragment(getActivity(), arg);
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

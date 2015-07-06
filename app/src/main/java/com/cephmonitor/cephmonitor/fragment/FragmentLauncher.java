@@ -165,4 +165,15 @@ public class FragmentLauncher {
         }
     }
 
+    public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
+        String fragmentName = HostDetailSummaryFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new HostDetailSummaryFragment();
+            page.setArguments(arg);
+            cleanAllPopFragment(activity, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        }
+    }
+
 }

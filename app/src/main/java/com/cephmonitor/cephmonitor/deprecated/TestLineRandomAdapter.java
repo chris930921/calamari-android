@@ -9,10 +9,10 @@ import java.util.Calendar;
 /**
  * Created by User on 2015/7/1.
  */
-public class TestLineAdapter extends ArrayList<LineAdapter> {
+public class TestLineRandomAdapter extends ArrayList<LineAdapter> {
     ArrayList<LineAdapter> lines;
 
-    public TestLineAdapter() {
+    public TestLineRandomAdapter() {
         lines = new ArrayList<>();
 
         ArrayList<Long> times = new ArrayList<>();
@@ -24,10 +24,10 @@ public class TestLineAdapter extends ArrayList<LineAdapter> {
         Calendar time = Calendar.getInstance();
         for (int i = 0; i < 2000; i++) {
             time.add(Calendar.MINUTE, -10);
-            valuesOne.add(100.0);
-            valuesTwo.add(80.0);
-            valuesThree.add(60.0);
-            valuesFour.add(40.0);
+            valuesOne.add(Math.random() * 1000);
+            valuesTwo.add(Math.random() * 1500);
+            valuesThree.add(Math.random() * 500);
+            valuesFour.add(Math.random() * 500 + 1500);
             times.add(time.getTimeInMillis());
         }
 

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
+import com.cephmonitor.cephmonitor.layout.component.tab.SimpleTabView;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -21,6 +23,7 @@ public class MainLayout extends RelativeLayout {
     public static final int CONTAINER_ID = MainLayout.class.hashCode();
     public RelativeLayout bottomBar;
     public RelativeLayout topBar;
+    public SimpleTabView tabGroup;
     public LinearLayout bottomContainer;
     public Button health;
     public Button usage;
@@ -60,7 +63,8 @@ public class MainLayout extends RelativeLayout {
         bottomContainer.addView(divider());
         bottomContainer.addView(more = more());
 
-        addView(fragment = fragment(topBar, bottomBar));
+        addView(tabGroup = tabGroup(topBar));
+        addView(fragment = fragment(tabGroup, bottomBar));
     }
 
     private RelativeLayout topBar() {
@@ -108,6 +112,18 @@ public class MainLayout extends RelativeLayout {
         return v;
     }
 
+    private SimpleTabView tabGroup(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(BELOW, topView.getId());
+
+        SimpleTabView v = new SimpleTabView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setTextSize(18);
+        v.setBackgroundColor(ColorTable._CD2626);
+
+        return v;
+    }
 
     private RelativeLayout bottomBar() {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.04));
@@ -224,5 +240,20 @@ public class MainLayout extends RelativeLayout {
     public void hideBack() {
         back.setVisibility(INVISIBLE);
         back.setOnClickListener(null);
+    }
+
+    public void hideAllComponent() {
+        back.setVisibility(GONE);
+        back.setOnClickListener(null);
+        bottomBar.setVisibility(GONE);
+        tabGroup.setVisibility(GONE);
+    }
+
+    public void showTab() {
+        tabGroup.setVisibility(VISIBLE);
+    }
+
+    public void addTab(String name, Object tag, OnTabChangeListener listener) {
+        tabGroup.add(name, tag, listener);
     }
 }

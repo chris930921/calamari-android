@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.deprecated;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 
 import java.util.ArrayList;
@@ -9,10 +10,10 @@ import java.util.Calendar;
 /**
  * Created by User on 2015/7/1.
  */
-public class TestLineAdapter extends ArrayList<LineAdapter> {
+public class TestAreaLineAdapter extends ArrayList<AreaLineAdapter> {
     ArrayList<LineAdapter> lines;
 
-    public TestLineAdapter() {
+    public TestAreaLineAdapter() {
         lines = new ArrayList<>();
 
         ArrayList<Long> times = new ArrayList<>();
@@ -31,10 +32,10 @@ public class TestLineAdapter extends ArrayList<LineAdapter> {
             times.add(time.getTimeInMillis());
         }
 
-        LineAdapter lineOne = new LineAdapter();
-        LineAdapter lineTwo = new LineAdapter();
-        LineAdapter lineThree = new LineAdapter();
-        LineAdapter lineFour = new LineAdapter();
+        AreaLineAdapter lineOne = new AreaLineAdapter();
+        AreaLineAdapter lineTwo = new AreaLineAdapter();
+        AreaLineAdapter lineThree = new AreaLineAdapter();
+        AreaLineAdapter lineFour = new AreaLineAdapter();
 
         lineOne.setData(valuesOne, times);
         lineTwo.setData(valuesTwo, times);
