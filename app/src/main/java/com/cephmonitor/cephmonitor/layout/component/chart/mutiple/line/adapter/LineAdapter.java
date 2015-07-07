@@ -24,11 +24,13 @@ public class LineAdapter implements ChartLine {
         color = Color.BLACK;
     }
 
+    @Override
     public void setData(ArrayList<Double> values, ArrayList<Long> times) {
         this.values = values;
         this.times = times;
     }
 
+    @Override
     public void setColor(int color) {
         this.color = color;
     }

@@ -15,6 +15,7 @@ import com.resourcelibrary.model.view.WH;
 
 public class HostDetailSummaryLayout extends RelativeLayout {
     private WH ruler;
+
     private int[] summaryTextGroup = {R.string.host_detail_summary_system, R.string.host_detail_summary_user, R.string.host_detail_summary_Idle};
     private int[] summaryTextColorGroup = {ColorTable._8DC41F, ColorTable._39C0ED, ColorTable._F7B500};
 

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,12 @@ public class SimpleTabView extends View {
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(Color.WHITE);
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setTextSize(30);
 
         unSelectedTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         unSelectedTextPaint.setColor(ColorTable._D9D9D9);
+        unSelectedTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
         unSelectedTextPaint.setTextSize(30);
 
         setBackgroundColor(Color.BLACK);
@@ -81,7 +84,7 @@ public class SimpleTabView extends View {
         tabGroup.clear();
         for (int i = 0; i < dataTabGroup.size(); i++) {
             SimpleTab tab = dataTabGroup.get(i);
-            tab.tabGroupIndex = i;
+            tab.tabGroupIndex = i + 2;
             tab.leftPositionLeft = (tab.width > leftTextRightSide) ? leftTextRightSide - tab.width : 0;
             tab.centerPositionLeft = center - (tab.width / 2);
             tab.rightPositionLeft = (tab.width > ruler.getW(15)) ? rightTextLeftSide : width - tab.width;

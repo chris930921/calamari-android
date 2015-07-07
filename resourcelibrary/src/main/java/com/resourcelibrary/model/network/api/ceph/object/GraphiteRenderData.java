@@ -36,32 +36,70 @@ public class GraphiteRenderData extends PortableJsonObject {
         return result;
     }
 
-    public ArrayList<Double> getValueArray(int dataPointindex) throws JSONException {
+    public ArrayList<Double> getValueArray(int dataPointIndex) {
         ArrayList<Double> value = new ArrayList<>();
 
-        JSONArray datapoints = json.getJSONArray("datapoints");
+        JSONArray datapoints = null;
+        try {
+            datapoints = json.getJSONArray("datapoints");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return value;
+        }
         for (int i = 0; i < datapoints.length(); i++) {
             try {
                 JSONArray point = datapoints.getJSONArray(i);
-                value.add(point.getDouble(dataPointindex));
+                value.add(point.getDouble(dataPointIndex));
             } catch (JSONException e) {
-//                e.printStackTrace(); //FIXME
+                e.printStackTrace();
                 value.add(0.0);
             }
         }
         return value;
     }
 
-    public ArrayList<Long> getTimestampArray() throws JSONException {
+    public ArrayList<Double> getSumValueArray(int dataPointIndex) {
+        ArrayList<Double> value = new ArrayList<>();
+
+        JSONArray datapoints = null;
+        try {
+            datapoints = json.getJSONArray("datapoints");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return value;
+        }
+        for (int i = 0; i < datapoints.length(); i++) {
+            double sum = 0;
+            try {
+                JSONArray point = datapoints.getJSONArray(i);
+                for (int j = dataPointIndex; j < point.length(); j++) {
+                    sum += point.getDouble(j);
+                }
+                value.add(sum);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                value.add(sum);
+            }
+        }
+        return value;
+    }
+
+    public ArrayList<Long> getTimestampArray() {
         ArrayList<Long> value = new ArrayList<>();
 
-        JSONArray datapoints = json.getJSONArray("datapoints");
+        JSONArray datapoints = null;
+        try {
+            datapoints = json.getJSONArray("datapoints");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return value;
+        }
         for (int i = 0; i < datapoints.length(); i++) {
             try {
                 JSONArray point = datapoints.getJSONArray(i);
                 value.add(point.getLong(0) * 1000L);
             } catch (JSONException e) {
-//                e.printStackTrace(); //FIXME
+                e.printStackTrace();
             }
         }
         return value;
