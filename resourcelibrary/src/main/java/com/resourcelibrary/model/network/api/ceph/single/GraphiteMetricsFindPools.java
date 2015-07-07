@@ -21,7 +21,7 @@ public class GraphiteMetricsFindPools extends RequestCephTask {
     @Override
     protected StringRequest taskFlow(final CephParams params, Response.Listener<String> success, Response.ErrorListener fail) {
         String url = CephApiUrl.graphiteMetricsFind(params)
-                .query("ceph.cluster." + params.getClusterId() + ".pool.*")
+                .query(params.getGraphiteQuery())
                 .build();
         String session = params.getSession();
 

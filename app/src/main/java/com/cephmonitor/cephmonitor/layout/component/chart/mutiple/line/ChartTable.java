@@ -287,7 +287,7 @@ public class ChartTable extends View {
 
     public void reCaleConst() {
         textPaint.setTextSize((width * 0.073f) / 2);
-        leftTextSpace = (int) textPaint.measureText(leftHalfValue, 0, leftHalfValue.length());
+        leftTextSpace = (int) textPaint.measureText(leftMaxValue, 0, leftMaxValue.length());
         bottomTextSpace = height * 0.160f;
         rightPadding = width * 0.024f;
         topPadding = height * 0.080f;

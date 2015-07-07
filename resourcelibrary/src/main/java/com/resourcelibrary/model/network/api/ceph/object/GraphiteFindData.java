@@ -20,4 +20,13 @@ public class GraphiteFindData extends PortableJsonObject {
             return "";
         }
     }
+
+    public String getName() {
+        try {
+            return json.getString("text");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }

@@ -35,7 +35,6 @@ public class HostDetailSummaryFragment extends Fragment {
     private ArrayList<ArrayList<String>> targetListGroup;
     private HashMap<Integer, HostDetailItem> itemGroup;
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
-    private LoginParams requestParams;
     private SequenceTask taskGroup;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +52,6 @@ public class HostDetailSummaryFragment extends Fragment {
         memoryTargetGroup = new ArrayList<>();
         itemGroup = new HashMap<>();
         adapterListGroup = new HashMap<>();
-        requestParams = new LoginParams(getActivity());
 
         Bundle arg = getArguments();
         String hostName = arg.getString("0");

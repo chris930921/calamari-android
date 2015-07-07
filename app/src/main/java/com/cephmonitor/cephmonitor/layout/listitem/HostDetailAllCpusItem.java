@@ -14,6 +14,7 @@ import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
 import com.cephmonitor.cephmonitor.layout.component.other.HorizonFloatContainer;
+import com.cephmonitor.cephmonitor.layout.fragment.HostDetailAllCpusLayout;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -24,17 +25,6 @@ import java.util.Calendar;
 public class HostDetailAllCpusItem extends RelativeLayout {
     private Context context;
     private WH ruler;
-
-    private int[] lineTextGroup = {
-            R.string.host_detail_all_cpus_system, R.string.host_detail_all_cpus_user,
-            R.string.host_detail_all_cpus_nice, R.string.host_detail_all_cpus_idle,
-            R.string.host_detail_all_cpus_io_wait, R.string.host_detail_all_cpus_irq,
-            R.string.host_detail_all_cpus_soft_irq, R.string.host_detail_all_cpus_steal,
-    };
-    private int[] textColorGroup = {
-            ColorTable._8DC41F, ColorTable._8D81C2, ColorTable._39C0ED, ColorTable._F7B500,
-            ColorTable._E63427, ColorTable._45818E, ColorTable._D5A6BD, ColorTable._B45F06,
-    };
 
     public TextView title;
     public HorizonFloatContainer floatContainer;
@@ -60,7 +50,7 @@ public class HostDetailAllCpusItem extends RelativeLayout {
         addView(floatContainer);
         addView(table);
 
-        setLineText(lineTextGroup, textColorGroup);
+        setLineText(HostDetailAllCpusLayout.textGroup, HostDetailAllCpusLayout.textColorGroup);
     }
 
     private TextView title() {
@@ -125,8 +115,8 @@ public class HostDetailAllCpusItem extends RelativeLayout {
         }
     }
 
-    public void setName(int textId) {
-        title.setText(textId);
+    public void setName(String text) {
+        title.setText(text + getContext().getString(R.string.host_detail_all_cpus_title_cpu_detail));
     }
 
     public void setData(ArrayList<ChartLine> dataGroup) {
