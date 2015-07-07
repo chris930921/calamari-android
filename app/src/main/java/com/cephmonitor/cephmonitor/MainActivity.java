@@ -129,6 +129,10 @@ public class MainActivity extends Activity implements InitFragment.Style {
     @Override
     public void onBackPressed() {
         FragmentManager manager = getFragmentManager();
+        if (layout.isBackListener()) {
+            layout.executeBackListener();
+            return;
+        }
         if (manager.getBackStackEntryCount() > 0) {
             manager.popBackStack();
         } else {
@@ -154,7 +158,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(ColorTable._E63427);
             layout.bottomBar.setVisibility(View.VISIBLE);
-            layout.hideBack();
         }
     };
 

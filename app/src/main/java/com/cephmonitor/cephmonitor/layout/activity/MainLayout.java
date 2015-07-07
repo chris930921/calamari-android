@@ -21,6 +21,9 @@ import com.resourcelibrary.model.view.WH;
 
 public class MainLayout extends RelativeLayout {
     public static final int CONTAINER_ID = MainLayout.class.hashCode();
+
+    private OnClickListener backClickEvent;
+
     public RelativeLayout bottomBar;
     public RelativeLayout topBar;
     public SimpleTabView tabGroup;
@@ -235,19 +238,24 @@ public class MainLayout extends RelativeLayout {
     public void showBack(OnClickListener event) {
         back.setVisibility(VISIBLE);
         back.setOnClickListener(event);
-    }
-
-    public void hideBack() {
-        back.setVisibility(INVISIBLE);
-        back.setOnClickListener(null);
+        backClickEvent = event;
     }
 
     public void hideAllComponent() {
-        back.setVisibility(GONE);
+        back.setVisibility(INVISIBLE);
         back.setOnClickListener(null);
+        backClickEvent = null;
         bottomBar.setVisibility(GONE);
         tabGroup.setVisibility(GONE);
         tabGroup.clear();
+    }
+
+    public boolean isBackListener() {
+        return backClickEvent != null;
+    }
+
+    public void executeBackListener() {
+        backClickEvent.onClick(back);
     }
 
     public void showTab() {

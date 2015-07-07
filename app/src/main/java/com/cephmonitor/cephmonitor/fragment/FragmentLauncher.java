@@ -30,9 +30,7 @@ public class FragmentLauncher {
 
     private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
         FragmentManager manager = activity.getFragmentManager();
-//        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
         manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        }
     }
 
     private static void printBackStack(Activity activity) {
@@ -67,7 +65,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthFragment();
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            change(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
