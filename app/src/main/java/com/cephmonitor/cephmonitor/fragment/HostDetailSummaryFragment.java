@@ -20,7 +20,7 @@ import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
-import com.resourcelibrary.model.network.api.ceph.single.GraphitePoolReadWriteRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 
 import org.json.JSONException;
 
@@ -148,7 +148,7 @@ public class HostDetailSummaryFragment extends Fragment {
         requestParams.setGraphitePeriod("-1d");
         requestParams.setGraphiteTargets(targetGroup);
 
-        GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getActivity());
+        GraphiteRenderRequest spider = new GraphiteRenderRequest(getActivity());
         spider.setRequestParams(requestParams);
         taskGroup.add(spider, success, fail);
     }

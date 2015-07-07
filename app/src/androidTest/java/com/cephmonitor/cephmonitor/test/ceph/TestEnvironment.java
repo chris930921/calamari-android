@@ -14,7 +14,7 @@ import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterR
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1OsdListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
-import com.resourcelibrary.model.network.api.ceph.single.GraphitePoolReadWriteRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
 
 import org.json.JSONException;
@@ -174,7 +174,7 @@ public class TestEnvironment extends AndroidTestCase {
 
             params.setGraphitePeriod("-1d");
             params.setGraphiteTargets(targets);
-            GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getContext());
+            GraphiteRenderRequest spider = new GraphiteRenderRequest(getContext());
             spider.setRequestParams(params);
             spider.request(
                     DefaultResponse.success(lock, returnVar),

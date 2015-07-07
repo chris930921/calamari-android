@@ -22,7 +22,7 @@ import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
-import com.resourcelibrary.model.network.api.ceph.single.GraphitePoolReadWriteRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 
 import org.json.JSONException;
 
@@ -72,7 +72,7 @@ public class HostDetailAllCpusFragment extends Fragment {
             public synchronized boolean doInBackground(String s) {
                 try {
                     GraphiteFindListData data = new GraphiteFindListData(s);
-                    metricsGroup = data.getList();
+                    metricsGroup = data.getOrderNumberBehindNameList();
 
                     for (int i = 0; i < metricsGroup.size(); i++) {
                         GraphiteFindData metrics = metricsGroup.get(i);
@@ -178,7 +178,7 @@ public class HostDetailAllCpusFragment extends Fragment {
         requestParams.setGraphitePeriod("-1d");
         requestParams.setGraphiteTargets(targetGroup);
 
-        GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getActivity());
+        GraphiteRenderRequest spider = new GraphiteRenderRequest(getActivity());
         spider.setRequestParams(requestParams);
         taskGroup.add(spider, success, fail);
     }

@@ -12,9 +12,9 @@ import com.resourcelibrary.model.network.api.ceph.RequestCephTask;
 /**
  * Created by User on 4/16/2015.
  */
-public class GraphitePoolReadWriteRequest extends RequestCephTask {
+public class GraphiteRenderRequest extends RequestCephTask {
 
-    public GraphitePoolReadWriteRequest(Context context) {
+    public GraphiteRenderRequest(Context context) {
         super(context);
     }
 
