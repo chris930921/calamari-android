@@ -9,11 +9,11 @@ import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
 import com.cephmonitor.cephmonitor.layout.component.other.HorizonFloatContainer;
+import com.cephmonitor.cephmonitor.layout.fragment.HostDetailIopsLayout;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -25,12 +25,6 @@ public class HostDetailIopsItem extends RelativeLayout {
     private Context context;
     private WH ruler;
 
-    private int[] lineTextGroup = {
-            R.string.host_detail_iops,
-    };
-    private int[] textColorGroup = {
-            ColorTable._8DC41F,
-    };
 
     public TextView title;
     public HorizonFloatContainer floatContainer;
@@ -56,7 +50,7 @@ public class HostDetailIopsItem extends RelativeLayout {
         addView(floatContainer);
         addView(table);
 
-        setLineText(lineTextGroup, textColorGroup);
+        setLineText(HostDetailIopsLayout.textGroup, HostDetailIopsLayout.textColorGroup);
     }
 
     private TextView title() {
@@ -121,8 +115,8 @@ public class HostDetailIopsItem extends RelativeLayout {
         }
     }
 
-    public void setName(int textId) {
-        title.setText(textId);
+    public void setName(String text) {
+        title.setText(text);
     }
 
     public void setData(ArrayList<ChartLine> dataGroup) {

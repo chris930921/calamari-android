@@ -56,10 +56,14 @@ public class HostDetailAllCpusFragment extends Fragment {
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
 
-
-        Bundle arg = getArguments();
-        String hostName = arg.getString("0");
-        requestTargetGroups("servers." + hostName + ".cpu.*");
+        layout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bundle arg = getArguments();
+                String hostName = arg.getString("0");
+                requestTargetGroups("servers." + hostName + ".cpu.*");
+            }
+        }, 300);
     }
 
     private void requestTargetGroups(String query) {

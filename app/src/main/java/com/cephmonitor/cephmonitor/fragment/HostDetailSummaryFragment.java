@@ -77,11 +77,17 @@ public class HostDetailSummaryFragment extends Fragment {
         targetListGroup.add(loadAverageTargetGroup);
         targetListGroup.add(memoryTargetGroup);
 
-        for (int i = 0; i < targetListGroup.size(); i++) {
-            request(i);
-        }
 
-        taskGroup.start();
+        layout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < targetListGroup.size(); i++) {
+                    request(i);
+                }
+                taskGroup.start();
+            }
+        }, 300);
+
         layout.list.setAdapter(adapter);
     }
 

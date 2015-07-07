@@ -33,4 +33,14 @@ public class PoolV1ListData extends PortableJsonArray {
         }
         return map;
     }
+
+    public HashMap<String, String> getIdStringMapName() throws JSONException {
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < json.length(); i++) {
+            String singleData = json.getJSONObject(i).toString();
+            PoolV1Data pool = new PoolV1Data(singleData);
+            map.put(String.valueOf(pool.getPoolId()), pool.getName());
+        }
+        return map;
+    }
 }

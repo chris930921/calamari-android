@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
-import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -117,11 +117,11 @@ public class PoolIopsItem extends RelativeLayout {
         title.setText(titleText);
     }
 
-    public void setData(ArrayList<LineAdapter> dataGroup) {
+    public void setData(ArrayList<ChartLine> dataGroup) {
         table.cleanData();
         table.setMaxTime(Calendar.getInstance());
-        ArrayList<LineAdapter> newDataGroup = new ArrayList<>(dataGroup);
-        for (LineAdapter adapter : newDataGroup) {
+        ArrayList<ChartLine> newDataGroup = new ArrayList<>(dataGroup);
+        for (ChartLine adapter : newDataGroup) {
             table.addAdapter(adapter);
         }
         invalidate();

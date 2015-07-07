@@ -22,4 +22,17 @@ public class GraphiteFindListData extends PortableJsonArray {
         }
         return list;
     }
+
+    public ArrayList<GraphiteFindData> getNoNumberInTextList() throws JSONException {
+        ArrayList<GraphiteFindData> list = new ArrayList<>();
+        for (int i = 0; i < json.length(); i++) {
+            String singleData = json.getJSONObject(i).toString();
+            GraphiteFindData findData = new GraphiteFindData(singleData);
+
+            if (findData.getName().matches(".*[0-9].*")) continue;
+
+            list.add(findData);
+        }
+        return list;
+    }
 }

@@ -8,12 +8,21 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
 public class HostDetailIopsLayout extends RelativeLayout {
     private WH ruler;
     public ListView list;
+
+    public static int[] textGroup = {
+            R.string.host_detail_iops,
+    };
+    public static int[] textColorGroup = {
+            ColorTable._8DC41F,
+    };
 
     public HostDetailIopsLayout(Context context) {
         super(context);

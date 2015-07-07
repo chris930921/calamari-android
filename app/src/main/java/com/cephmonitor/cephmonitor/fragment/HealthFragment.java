@@ -202,11 +202,15 @@ public class HealthFragment extends Fragment {
     private View.OnClickListener iopsClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (requestParams.getClusterId().equals("")) {
+                return;
+            }
             if (poolData == null) {
                 return;
             }
 
             Bundle arg = new Bundle();
+            arg.putString("0", requestParams.getClusterId());
             poolData.outBox(arg);
             FragmentLauncher.goPoolIopsFragment(getActivity(), arg);
         }

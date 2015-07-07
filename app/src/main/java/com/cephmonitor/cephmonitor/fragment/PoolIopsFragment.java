@@ -11,15 +11,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.PoolIopsLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.PoolIopsItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
+import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindData;
+import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
-import com.resourcelibrary.model.network.api.ceph.object.PoolV1Data;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
 import com.resourcelibrary.model.network.api.ceph.single.GraphitePoolReadWriteRequest;
 
 import org.json.JSONException;
@@ -29,11 +33,14 @@ import java.util.HashMap;
 
 public class PoolIopsFragment extends Fragment {
     private PoolIopsLayout layout;
-    private ArrayList<PoolV1Data> pools;
-    private HashMap<Integer, PoolIopsItem> poolIopsItemGroup;
-    private LoginParams requestParams;
-    final int[] colorGroup = {ColorTable._8DC41F, ColorTable._F7B500};
-    private HashMap<Integer, ArrayList<LineAdapter>> adapterListGroup;
+    private ArrayList<ArrayList<String>> targetListGroup;
+    private ArrayList<GraphiteFindData> metricsGroup;
+    private HashMap<Integer, PoolIopsItem> itemGroup;
+    private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
+    private SequenceTask taskGroup;
+    private HashMap<String, String> pools;
+
+    final int[] lineTextColorGroup = {ColorTable._8DC41F, ColorTable._F7B500};
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -45,99 +52,148 @@ public class PoolIopsFragment extends Fragment {
     }
 
     public void init() {
-        poolIopsItemGroup = new HashMap<>();
+        taskGroup = new SequenceTask();
+        metricsGroup = new ArrayList<>();
+        targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
-        requestParams = new LoginParams(getActivity());
+        itemGroup = new HashMap<>();
+        pools = new HashMap<>();
+
         try {
             Bundle arg = getArguments();
             PoolV1ListData poolData = new PoolV1ListData("[]");
             poolData.inBox(arg);
-            pools = poolData.getList();
+            pools = poolData.getIdStringMapName();
+            pools.put("all", "Aggregate");
+
+            layout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Bundle arg = getArguments();
+                    String clusterId = arg.getString("0");
+                    requestTargetGroups("ceph.cluster." + clusterId + ".pool.*");
+                }
+            }, 300);
         } catch (JSONException e) {
             e.printStackTrace();
-            pools = new ArrayList<>();
-        }
-        layout.list.setAdapter(getAdapter);
-
-        if (pools.size() != 0) {
-            requestPoolReadWrite(0);
         }
     }
 
-    private void requestPoolReadWrite(final int index) {
-        try {
-            final int poolId = pools.get(index).getPoolId();
-            final ArrayList<String> targetGroup = new ArrayList<>();
-            targetGroup.add("ceph.cluster." + requestParams.getClusterId() + ".pool." + poolId + ".num_read");
-            targetGroup.add("ceph.cluster." + requestParams.getClusterId() + ".pool." + poolId + ".num_write");
+    private void requestTargetGroups(String query) {
+        AnalyzeListener<String> success = new AnalyzeListener<String>() {
+            @Override
+            public synchronized boolean doInBackground(String s) {
+                try {
+                    GraphiteFindListData data = new GraphiteFindListData(s);
+                    metricsGroup = data.getList();
 
-            requestParams.setGraphitePeriod("-1d");
-            requestParams.setGraphiteTargets(targetGroup);
+                    for (int i = 0; i < metricsGroup.size(); i++) {
+                        GraphiteFindData metrics = metricsGroup.get(i);
+                        String target = metrics.getId();
 
-            AnalyzeListener<String> success = new AnalyzeListener<String>() {
-                @Override
-                public synchronized boolean doInBackground(String s) {
-                    ArrayList<LineAdapter> adapterGroup = new ArrayList<>();
-                    try {
-                        GraphiteRenderData renderData = new GraphiteRenderData(s);
-                        HashMap<String, Integer> targetIndexGroup = renderData.getTargets();
-                        ArrayList<Long> timeGroup = renderData.getTimestampArray();
-                        ShowLog.d(targetGroup + "");
+                        ArrayList<String> targetGroup = new ArrayList<>();
+                        targetGroup.add(target + ".num_read");
+                        targetGroup.add(target + ".num_write");
 
-                        for (int i = 0; i < targetGroup.size(); i++) {
-                            String target = targetGroup.get(i);
-                            int color = colorGroup[i];
-                            if (targetIndexGroup.get(target) == null) continue;
+                        targetListGroup.add(targetGroup);
+                    }
+                    return true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
 
-                            int dataPointIndex = targetIndexGroup.get(target);
-                            LineAdapter adapter = new LineAdapter();
-                            adapter.setColor(color);
-                            ArrayList<Double> valueGroup = renderData.getValueArray(dataPointIndex);
-                            adapter.setData(valueGroup, timeGroup);
-                            ShowLog.d("資料: 數值" + valueGroup);
-                            ShowLog.d("資料: 時間" + timeGroup);
-                            adapterGroup.add(adapter);
-                        }
+            @Override
+            public void onPostExecute() {
+                for (int i = 0; i < targetListGroup.size(); i++) {
+                    request(i);
+                }
+                taskGroup.start();
+                layout.list.setAdapter(adapter);
+            }
+        };
+
+        Response.ErrorListener fail = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        };
+
+        LoginParams requestParams = new LoginParams(getActivity());
+        requestParams.setGraphiteQuery(query);
+
+        GraphiteMetricsFindPools spider = new GraphiteMetricsFindPools(getActivity());
+        spider.setRequestParams(requestParams);
+        spider.request(success, fail);
+
+    }
+
+    private void request(final int index) {
+        final ArrayList<String> targetGroup = targetListGroup.get(index);
+
+        AnalyzeListener<String> success = new AnalyzeListener<String>() {
+            @Override
+            public synchronized boolean doInBackground(String s) {
+                ArrayList<ChartLine> adapterGroup = new ArrayList<>();
+                try {
+                    GraphiteRenderData renderData = new GraphiteRenderData(s);
+                    ArrayList<Long> timeGroup = renderData.getTimestampArray();
+
+                    for (int i = 0; i < targetGroup.size(); i++) {
+                        int color = lineTextColorGroup[i];
+
+                        int dataPointIndex = i + 1;
+                        ArrayList<Double> valueGroup = renderData.getValueArray(dataPointIndex);
+
+                        ChartLine adapter = new LineAdapter();
+                        adapter.setColor(color);
+                        adapter.setData(valueGroup, timeGroup);
+
+                        ShowLog.d("資料: 數值" + valueGroup);
+                        ShowLog.d("資料: 時間" + timeGroup);
+
+                        adapterGroup.add(adapter);
+                    }
 //                        adapterListGroup.put(poolId, new TestLineAdapter());
-                        adapterListGroup.put(poolId, adapterGroup);
-                        return true;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return false;
-                    }
+                    adapterListGroup.put(index, adapterGroup);
+                    return true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return false;
                 }
+            }
 
-                @Override
-                public void onPostExecute() {
-                    PoolIopsItem item = poolIopsItemGroup.get(poolId);
-                    if ((index + 1) < pools.size()) {
-                        requestPoolReadWrite(index + 1);
-                    }
-                    if (item == null) return;
-                    if (item.getTag().equals(poolId)) {
-                        item.setData(adapterListGroup.get(poolId));
-                    }
+            @Override
+            public void onPostExecute() {
+                PoolIopsItem item = itemGroup.get(index);
+
+                if (item == null) return;
+                if (item.getTag().equals(index)) {
+                    item.setData(adapterListGroup.get(index));
                 }
-            };
+            }
+        };
 
-            Response.ErrorListener fail = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                }
-            };
+        Response.ErrorListener fail = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        };
 
-            GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getActivity());
-            spider.setRequestParams(requestParams);
-            spider.request(success, fail);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        LoginParams requestParams = new LoginParams(getActivity());
+        requestParams.setGraphitePeriod("-1d");
+        requestParams.setGraphiteTargets(targetGroup);
+
+        GraphitePoolReadWriteRequest spider = new GraphitePoolReadWriteRequest(getActivity());
+        spider.setRequestParams(requestParams);
+        taskGroup.add(spider, success, fail);
     }
 
-    private BaseAdapter getAdapter = new BaseAdapter() {
+    private BaseAdapter adapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            return pools.size();
+            return targetListGroup.size();
         }
 
         @Override
@@ -158,18 +214,12 @@ public class PoolIopsFragment extends Fragment {
             } else {
                 item = (PoolIopsItem) view;
             }
-            try {
-                String name = pools.get(i).getName();
-                int poolId = pools.get(i).getPoolId();
-                poolIopsItemGroup.put(poolId, item);
-                item.setTag(poolId);
-                item.setName(name);
-                ArrayList<LineAdapter> adapterGroup = adapterListGroup.get(poolId);
-                if (adapterGroup != null) {
-                    item.setData(adapterGroup);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            String poolName = pools.get(metricsGroup.get(i).getName());
+            item.setTag(i);
+            itemGroup.put(i, item);
+            item.setName(poolName);
+            if (adapterListGroup.get(i) != null) {
+                item.setData(adapterListGroup.get(i));
             }
             return item;
         }
