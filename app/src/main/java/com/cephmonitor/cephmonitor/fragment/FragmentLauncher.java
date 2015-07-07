@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
+import com.resourcelibrary.model.log.ShowLog;
 
 /**
  * Created by User on 4/17/2015.
@@ -19,6 +20,12 @@ public class FragmentLauncher {
 
     public static void backFragment(Activity activity) {
         activity.getFragmentManager().popBackStackImmediate();
+        printBackStack(activity);
+    }
+
+    public static void backFragment(Activity activity, Class fragmentClass) {
+        activity.getFragmentManager().popBackStackImmediate(fragmentClass.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        printBackStack(activity);
     }
 
     private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
@@ -26,6 +33,15 @@ public class FragmentLauncher {
 //        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
         manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //        }
+    }
+
+    private static void printBackStack(Activity activity) {
+        FragmentManager manager = activity.getFragmentManager();
+        ShowLog.d("print back stack:===========================================");
+        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
+            ShowLog.d("print back stack:" + manager.getBackStackEntryAt(i).getName());
+        }
+        ShowLog.d("print back stack:===========================================");
     }
 
     private static void change(Activity activity, int containerId, Fragment fragment) {
@@ -51,7 +67,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthFragment();
             cleanAllPopFragment(activity, page);
-            change(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -165,15 +181,33 @@ public class FragmentLauncher {
         }
     }
 
-    public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
-        String fragmentName = HostDetailSummaryFragment.class.getName();
+    public static void goHostDetailFragment(Activity activity, Bundle arg) {
+        String fragmentName = HostDetailFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
-            Fragment page = new HostDetailSummaryFragment();
+            Fragment page = new HostDetailFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
             changeAndBack(activity, MainLayout.CONTAINER_ID, page);
         }
+        printBackStack(activity);
     }
 
+    public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
+        Fragment page = new HostDetailSummaryFragment();
+        page.setArguments(arg);
+        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+    }
+
+    public static void goHostDetailAllCpusFragment(Activity activity, Bundle arg) {
+        Fragment page = new HostDetailAllCpusFragment();
+        page.setArguments(arg);
+        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+    }
+
+    public static void goHostDetailIopsFragment(Activity activity, Bundle arg) {
+        Fragment page = new HostDetailIopsFragment();
+        page.setArguments(arg);
+        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+    }
 }

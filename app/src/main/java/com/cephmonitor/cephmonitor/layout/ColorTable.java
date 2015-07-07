@@ -20,4 +20,8 @@ public class ColorTable {
     public static final int _B7B7B7 = Color.parseColor("#b7b7b7");
     public static final int _CBCDCC = Color.parseColor("#CBCDCC");
     public static final int _EFEFEF = Color.parseColor("#EFEFEF");
+    public static final int _8D81C2 = Color.parseColor("#8D81C2");
+    public static final int _45818E = Color.parseColor("#45818E");
+    public static final int _D5A6BD = Color.parseColor("#D5A6BD");
+    public static final int _B45F06 = Color.parseColor("#b45f06");
 }

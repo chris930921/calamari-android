@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.InitFragment;
-import com.cephmonitor.cephmonitor.layout.fragment.HostDetailSummaryLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
+import com.cephmonitor.cephmonitor.layout.fragment.HostDetailIopsLayout;
+import com.cephmonitor.cephmonitor.layout.listitem.HostDetailIopsItem;
 
 import java.util.ArrayList;
 
-public class HostDetailSummaryFragment extends Fragment {
-    private HostDetailSummaryLayout layout;
+public class HostDetailIopsFragment extends Fragment {
+    private HostDetailIopsLayout layout;
     private ArrayList<String> targetGroup;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
-            layout = new HostDetailSummaryLayout(getActivity());
+            layout = new HostDetailIopsLayout(getActivity());
             init();
         }
         InitFragment.choiceActivity(getActivity(), this);
@@ -57,15 +57,12 @@ public class HostDetailSummaryFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            HostDetailItem item;
+            HostDetailIopsItem item;
             if (view == null) {
-                item = new HostDetailItem(getActivity());
+                item = new HostDetailIopsItem(getActivity());
             } else {
-                item = (HostDetailItem) view;
+                item = (HostDetailIopsItem) view;
             }
-
-            item.setName(layout.titleGroup[i]);
-            item.setLineText(layout.lineTextGroup[i], layout.colorGroup[i]);
             return item;
         }
     };

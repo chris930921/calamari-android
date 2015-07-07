@@ -20,8 +20,7 @@ import java.util.ArrayList;
  */
 public class SimpleTabView extends View {
     private ArrayList<SimpleTab> tabGroup;
-    private ArrayList<String> tabTextGroup;
-    private OnTabChangeListener onTabChangeListener;
+    private ArrayList<SimpleTab> dataTabGroup;
     private SimpleTab leftHideTab;
     private SimpleTab leftTab;
     private SimpleTab centerTab;
@@ -53,15 +52,10 @@ public class SimpleTabView extends View {
     public SimpleTabView(Context context) {
         super(context);
         this.tabGroup = new ArrayList<>();
-        this.tabTextGroup = new ArrayList<>();
+        this.dataTabGroup = new ArrayList<>();
         this.index = 2;
         this.textBounds = new Rect();
         this.ruler = new WH(getContext());
-        this.onTabChangeListener = new OnTabChangeListener() {
-            @Override
-            public void onChange(int index, String name, Object tag) {
-            }
-        };
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(Color.WHITE);
@@ -72,6 +66,47 @@ public class SimpleTabView extends View {
         unSelectedTextPaint.setTextSize(30);
 
         setBackgroundColor(Color.BLACK);
+        clear();
+    }
+
+    public void clear() {
+        dataTabGroup.clear();
+        this.index = 2;
+    }
+
+    public void update() {
+        if (width == 0 && height == 0) return;
+        if (dataTabGroup.size() == 0) return;
+
+        tabGroup.clear();
+        for (int i = 0; i < dataTabGroup.size(); i++) {
+            SimpleTab tab = dataTabGroup.get(i);
+            tab.tabGroupIndex = i;
+            tab.leftPositionLeft = (tab.width > leftTextRightSide) ? leftTextRightSide - tab.width : 0;
+            tab.centerPositionLeft = center - (tab.width / 2);
+            tab.rightPositionLeft = (tab.width > ruler.getW(15)) ? rightTextLeftSide : width - tab.width;
+            tabGroup.add(tab);
+        }
+
+        tabGroup.add(0, new SimpleTab());
+        tabGroup.add(0, new SimpleTab());
+        tabGroup.add(new SimpleTab());
+        tabGroup.add(new SimpleTab());
+
+        leftHideTab = tabGroup.get(index - 2);
+        leftTab = tabGroup.get(index - 1);
+        centerTab = tabGroup.get(index);
+        rightTab = tabGroup.get(index + 1);
+        rightHideTab = tabGroup.get(index + 2);
+
+        leftTab.left = leftTab.leftPositionLeft;
+        centerTab.left = centerTab.centerPositionLeft;
+        rightTab.left = rightTab.rightPositionLeft;
+
+        leftHideTab.left = 0 - leftHideTab.width;
+        rightHideTab.left = width + rightHideTab.width;
+
+        invalidate();
     }
 
     public void add(String name, Object tag, OnTabChangeListener onTabChangeListener) {
@@ -81,7 +116,9 @@ public class SimpleTabView extends View {
         tab.index = tabGroup.size();
         tab.listener = onTabChangeListener;
         tab.width = (int) textPaint.measureText(tab.name, 0, tab.name.length());
-        tabGroup.add(tab);
+        dataTabGroup.add(tab);
+
+        update();
     }
 
     public void setTextSize(int size) {
@@ -98,16 +135,13 @@ public class SimpleTabView extends View {
         params.height = textHeight + ruler.getW(2) * 2;
         setLayoutParams(params);
 
-        invalidate();
-    }
-
-    public void setOnTabChangeListener(OnTabChangeListener onTabChangeListener) {
-        this.onTabChangeListener = onTabChangeListener;
+        update();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (tabGroup.size() < 5) return false;
             if (moveCount != 0) return false;
 
             if (event.getX() > center) {
@@ -186,36 +220,14 @@ public class SimpleTabView extends View {
         leftTextRightSide = ruler.getW(15);
         rightTextLeftSide = w - ruler.getW(15);
 
-        tabGroup.add(0, new SimpleTab());
-        tabGroup.add(1, new SimpleTab());
-        tabGroup.add(new SimpleTab());
-        tabGroup.add(new SimpleTab());
-
-        for (int i = 0; i < tabGroup.size(); i++) {
-            SimpleTab tab = tabGroup.get(i);
-            tab.tabGroupIndex = i;
-            tab.leftPositionLeft = (tab.width > leftTextRightSide) ? leftTextRightSide - tab.width : 0;
-            tab.centerPositionLeft = center - (tab.width / 2);
-            tab.rightPositionLeft = (tab.width > ruler.getW(15)) ? rightTextLeftSide : w - tab.width;
-        }
-
-        leftHideTab = tabGroup.get(index - 2);
-        leftTab = tabGroup.get(index - 1);
-        centerTab = tabGroup.get(index);
-        rightTab = tabGroup.get(index + 1);
-        rightHideTab = tabGroup.get(index + 2);
-
-        leftTab.left = leftTab.leftPositionLeft;
-        centerTab.left = centerTab.centerPositionLeft;
-        rightTab.left = rightTab.rightPositionLeft;
-
-        leftHideTab.left = 0 - leftHideTab.width;
-        rightHideTab.left = width + rightHideTab.width;
+        update();
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (tabGroup.size() < 5) return;
+
         drawTextByRightAndVerticalCenter(canvas, leftHideTab.left, height / 2, leftHideTab.name, unSelectedTextPaint);
         drawTextByRightAndVerticalCenter(canvas, leftTab.left, height / 2, leftTab.name, (leftTab.tabGroupIndex == index) ? textPaint : unSelectedTextPaint);
         drawTextByRightAndVerticalCenter(canvas, centerTab.left, height / 2, centerTab.name, (centerTab.tabGroupIndex == index) ? textPaint : unSelectedTextPaint);

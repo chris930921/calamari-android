@@ -82,7 +82,7 @@ public class HostHealthFragment extends Fragment {
                     public void onClick(View view) {
                         Bundle arg = new Bundle();
                         arg.putString("0", hostName);
-                        FragmentLauncher.goHostDetailSummaryFragment(getActivity(), arg);
+                        FragmentLauncher.goHostDetailFragment(getActivity(), arg);
                     }
                 });
             } catch (JSONException e) {

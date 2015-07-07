@@ -247,6 +247,7 @@ public class MainLayout extends RelativeLayout {
         back.setOnClickListener(null);
         bottomBar.setVisibility(GONE);
         tabGroup.setVisibility(GONE);
+        tabGroup.clear();
     }
 
     public void showTab() {

@@ -5,11 +5,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.fragment.HealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.HealthFragment;
+import com.cephmonitor.cephmonitor.fragment.HostDetailAllCpusFragment;
+import com.cephmonitor.cephmonitor.fragment.HostDetailFragment;
+import com.cephmonitor.cephmonitor.fragment.HostDetailIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.HostDetailSummaryFragment;
 import com.cephmonitor.cephmonitor.fragment.HostHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
@@ -56,7 +58,10 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(UsageStatusFragment.class, showUsageStatusFragment);
         changeStyleTask.put(PoolIopsFragment.class, showPoolIopsFragment);
         changeStyleTask.put(PoolListFragment.class, showPoolListFragment);
+        changeStyleTask.put(HostDetailFragment.class, showHostDetailFragment);
         changeStyleTask.put(HostDetailSummaryFragment.class, showHostDetailSummaryFragment);
+        changeStyleTask.put(HostDetailAllCpusFragment.class, showHostDetailAllCpusFragment);
+        changeStyleTask.put(HostDetailIopsFragment.class, showHostDetailIopsFragment);
 
         FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -108,24 +113,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             }
         });
 
-        layout.addTab("Summary", null, new OnTabChangeListener() {
-            @Override
-            public void onChange(int index, String name, Object tag) {
-                FragmentLauncher.goHostDetailSummaryFragment(MainActivity.this, null);
-            }
-        });
-        layout.addTab("All CPUs", null, new OnTabChangeListener() {
-            @Override
-            public void onChange(int index, String name, Object tag) {
-                Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
-            }
-        });
-        layout.addTab("IOPS", null, new OnTabChangeListener() {
-            @Override
-            public void onChange(int index, String name, Object tag) {
-                Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         choiceFragment();
     }
@@ -334,9 +321,9 @@ public class MainActivity extends Activity implements InitFragment.Style {
         }
     };
 
-    private InitFragment.Task showHostDetailSummaryFragment = new InitFragment.Task() {
+    private InitFragment.Task showHostDetailFragment = new InitFragment.Task() {
         @Override
-        public void action(Bundle arg) {
+        public void action(final Bundle arg) {
             String hostName = arg.getString("0");
 
             setTitle(hostName);
@@ -346,9 +333,46 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentLauncher.backFragment(activity);
+                    FragmentLauncher.backFragment(activity, HostDetailFragment.class);
                 }
             });
+
+            layout.addTab(getString(R.string.main_activity_fragment_tab_summary), null, new OnTabChangeListener() {
+                @Override
+                public void onChange(int index, String name, Object tag) {
+                    FragmentLauncher.goHostDetailSummaryFragment(MainActivity.this, arg);
+                }
+            });
+            layout.addTab(getString(R.string.main_activity_fragment_tab_all_cpus), null, new OnTabChangeListener() {
+                @Override
+                public void onChange(int index, String name, Object tag) {
+                    FragmentLauncher.goHostDetailAllCpusFragment(MainActivity.this, arg);
+                }
+            });
+            layout.addTab(getString(R.string.main_activity_fragment_tab_iops), null, new OnTabChangeListener() {
+                @Override
+                public void onChange(int index, String name, Object tag) {
+                    FragmentLauncher.goHostDetailIopsFragment(MainActivity.this, arg);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showHostDetailSummaryFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+        }
+    };
+
+    private InitFragment.Task showHostDetailAllCpusFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+        }
+    };
+
+    private InitFragment.Task showHostDetailIopsFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
         }
     };
 }

@@ -8,29 +8,14 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class HostDetailSummaryLayout extends RelativeLayout {
+public class HostDetailAllCpusLayout extends RelativeLayout {
     private WH ruler;
-    private int[] summaryTextGroup = {R.string.host_detail_summary_system, R.string.host_detail_summary_user, R.string.host_detail_summary_Idle};
-    private int[] summaryTextColorGroup = {ColorTable._8DC41F, ColorTable._39C0ED, ColorTable._F7B500};
-
-    private int[] averageTextGroup = {R.string.host_detail_summary_one_min, R.string.host_detail_summary_five_min, R.string.host_detail_summary_fifteen_min};
-    private int[] averageTextColorGroup = {ColorTable._8DC41F, ColorTable._39C0ED, ColorTable._F7B500};
-
-    private int[] memoryTextGroup = {R.string.host_detail_summary_active, R.string.host_detail_summary_buffers, R.string.host_detail_summary_free, R.string.host_detail_summary_cached};
-    private int[] memoryTextColorGroup = {ColorTable._8DC41F, ColorTable._8D81C2, ColorTable._39C0ED, ColorTable._F7B500};
-
-    public int[] titleGroup = {R.string.host_detail_title_cpu_summary, R.string.host_detail_title_load_average, R.string.host_detail_title_memory};
-    public int[][] lineTextGroup = {summaryTextGroup, averageTextGroup, memoryTextGroup};
-    public int[][] colorGroup = {summaryTextColorGroup, averageTextColorGroup, memoryTextColorGroup};
-
     public ListView list;
 
-    public HostDetailSummaryLayout(Context context) {
+    public HostDetailAllCpusLayout(Context context) {
         super(context);
         this.ruler = new WH(context);
 

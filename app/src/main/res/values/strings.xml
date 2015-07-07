@@ -37,6 +37,10 @@
     <string name="main_activity_fragment_pool_iops">Pool IOPS</string>
     <string name="main_activity_fragment_pool_list">Pool List</string>
 
+    <string name="main_activity_fragment_tab_summary">Summary</string>
+    <string name="main_activity_fragment_tab_all_cpus">All CPUs</string>
+    <string name="main_activity_fragment_tab_iops">IOPS</string>
+
     //HealthFragment
     <string name="health_card_status_ok">OK</string>
     <string name="health_card_status_warning">WARNING</string>
@@ -140,5 +144,35 @@
     <string name="pool_list_id_ahead"># </string>
     <string name="pool_list_id_replicas">Replicas</string>
     <string name="pool_list_id_pgs">PGs</string>
+
+    //HostDetailSummaryFragment
+    <string name="host_detail_title_cpu_summary">CPU Summary</string>
+    <string name="host_detail_title_load_average">Load Average</string>
+    <string name="host_detail_title_memory">Memory</string>
+    <string name="host_detail_summary_system">- System\u0020</string>
+    <string name="host_detail_summary_user">- User\u0020</string>
+    <string name="host_detail_summary_Idle">- Idle\u0020</string>
+    <string name="host_detail_summary_one_min">- 1 Min\u0020</string>
+    <string name="host_detail_summary_five_min">- 5 Min\u0020</string>
+    <string name="host_detail_summary_fifteen_min">- 15 Min\u0020</string>
+    <string name="host_detail_summary_active">- Active\u0020</string>
+    <string name="host_detail_summary_buffers">- Buffers\u0020</string>
+    <string name="host_detail_summary_free">- Free\u0020</string>
+    <string name="host_detail_summary_cached">- cached\u0020</string>
+
+    //HostDetailAllCPUsFragment
+    <string name="host_detail_all_cpus_title_cpu_detail">\u0020CPU Detail</string>
+    <string name="host_detail_all_cpus_system">- System\u0020</string>
+    <string name="host_detail_all_cpus_user">- User\u0020</string>
+    <string name="host_detail_all_cpus_nice">- Nice\u0020</string>
+    <string name="host_detail_all_cpus_idle">- Idle\u0020</string>
+    <string name="host_detail_all_cpus_io_wait">- IOWait\u0020</string>
+    <string name="host_detail_all_cpus_irq">- IRQ\u0020</string>
+    <string name="host_detail_all_cpus_soft_irq">- Soft IRQ\u0020</string>
+    <string name="host_detail_all_cpus_steal">- Steal\u0020</string>
+
+
+    //HostDetailIopsFragment
+    <string name="host_detail_iops">- IOPS\u0020</string>
 
 </resources>
