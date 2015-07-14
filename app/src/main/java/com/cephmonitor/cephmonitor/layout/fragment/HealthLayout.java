@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.cephmonitor.cephmonitor.R;
@@ -13,10 +12,11 @@ import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthIopsCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class HealthLayout extends RelativeLayout {
+public class HealthLayout extends FractionAbleRelativeLayout {
     public ScrollView cardContainer;
     public LinearLayout cardList;
     public HealthBaseCard healthCard;

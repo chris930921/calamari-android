@@ -14,6 +14,7 @@ import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.HostDetailIopsLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.HostDetailIopsItem;
+import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
@@ -50,12 +51,12 @@ public class HostDetailIopsFragment extends Fragment {
     }
 
     public void init() {
-        taskGroup = new SequenceTask();
         metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
 
+        layout.list.setAdapter(defaultAdapter);
         layout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -63,7 +64,7 @@ public class HostDetailIopsFragment extends Fragment {
                 String hostName = arg.getString("0");
                 requestTargetGroups("servers." + hostName + ".iostat.*");
             }
-        },300);
+        }, 300);
     }
 
     private void requestTargetGroups(String query) {
@@ -92,6 +93,7 @@ public class HostDetailIopsFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
+                taskGroup = new SequenceTask();
                 for (int i = 0; i < targetListGroup.size(); i++) {
                     request(i);
                 }
@@ -207,6 +209,28 @@ public class HostDetailIopsFragment extends Fragment {
             if (adapterListGroup.get(i) != null) {
                 item.setData(adapterListGroup.get(i));
             }
+            return item;
+        }
+    };
+    private BaseAdapter defaultAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            HostDetailItem item = new HostDetailItem(getActivity());
             return item;
         }
     };

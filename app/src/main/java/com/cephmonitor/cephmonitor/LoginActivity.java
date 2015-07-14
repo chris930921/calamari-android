@@ -7,6 +7,7 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
+import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
@@ -91,9 +92,19 @@ public class LoginActivity extends Activity {
         loadingDialog.show();
     }
 
-    private Response.Listener<String> successLoginPost = new Response.Listener<String>() {
+    private AnalyzeListener<String> successLoginPost = new AnalyzeListener<String>() {
         @Override
-        public void onResponse(String s) {
+        public boolean doInBackground(String o) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        @Override
+        public void onPostExecute() {
             ActivityLauncher.goMainActivity(activity);
             loadingDialog.cancel();
             activity.finish();

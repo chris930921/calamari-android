@@ -7,17 +7,17 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.cephmonitor.cephmonitor.layout.component.chart.IopsHistogram;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
 import com.resourcelibrary.model.logic.RandomId;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * Created by User on 4/17/2015.
  */
 public class HealthIopsCard extends HealthBaseCard {
-    public IopsHistogram histogram;
+    public ChartTable histogram;
     public TextView readWriteText;
 
     public HealthIopsCard(Context context) {
@@ -32,16 +32,17 @@ public class HealthIopsCard extends HealthBaseCard {
     }
 
 
-    private IopsHistogram histogram() {
+    private ChartTable histogram() {
         LayoutParams params = new LayoutParams(
                 ruler.getW(90),
                 ruler.getW(45)
         );
         params.addRule(CENTER_IN_PARENT);
 
-        IopsHistogram v = new IopsHistogram(context);
+        ChartTable v = new ChartTable(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
+        v.setMaxTime(Calendar.getInstance());
 
         return v;
     }
@@ -63,9 +64,9 @@ public class HealthIopsCard extends HealthBaseCard {
         return v;
     }
 
-    public void setChartData(Calendar time, ArrayList<Double> values, ArrayList<Long> times) {
+    public void setChartData(ChartLine adapter) {
         if (histogram == null) return;
-        histogram.setData(time, values, times);
+        histogram.addAdapter(adapter);
     }
 
     @Override

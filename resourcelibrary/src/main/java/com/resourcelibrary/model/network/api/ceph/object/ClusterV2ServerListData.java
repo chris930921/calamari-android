@@ -5,6 +5,8 @@ import com.resourcelibrary.model.logic.PortableJsonArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by User on 4/22/2015.
@@ -33,6 +35,15 @@ public class ClusterV2ServerListData extends PortableJsonArray {
                 result.add(server);
             }
         }
+        Collections.sort(result, new Comparator<ClusterV2ServerData>() {
+            public int compare(ClusterV2ServerData one, ClusterV2ServerData other) {
+                try {
+                    return one.getHostName().compareTo(other.getHostName());
+                } catch (JSONException e) {
+                    return -1;
+                }
+            }
+        });
         return result;
     }
 

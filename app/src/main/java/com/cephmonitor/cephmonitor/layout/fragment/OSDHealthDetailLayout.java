@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleScrollView;
+import com.cephmonitor.cephmonitor.layout.component.other.FloatLayoutLabel;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.cephmonitor.cephmonitor.layout.component.other.FloatLayoutLabel;
 
-public class OSDHealthDetailLayout extends ScrollView {
+public class OSDHealthDetailLayout extends FractionAbleScrollView {
     private Context context;
     private WH ruler;
     private int dividerHeight;

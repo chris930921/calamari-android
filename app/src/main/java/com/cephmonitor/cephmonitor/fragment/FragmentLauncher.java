@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.resourcelibrary.model.log.ShowLog;
 
@@ -50,11 +51,22 @@ public class FragmentLauncher {
         transaction.commit();
     }
 
-    private static void changeAndBack(Activity activity, int containerId, Fragment fragment) {
+    private static void changeAndBackFadeSlide(Activity activity, int containerId, Fragment fragment) {
         FragmentManager manager = activity.getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(containerId, fragment, fragment.getClass().getName());
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.setCustomAnimations(R.anim.fade_slide_left_in, R.anim.slide_left_out, R.anim.slide_right_in, R.anim.slide_right_out);
+        transaction.replace(containerId, fragment, fragment.getClass().getName());
+        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.commit();
+    }
+
+    private static void changeAndBackFade(Activity activity, int containerId, Fragment fragment) {
+        FragmentManager manager = activity.getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.hide_out, R.anim.fade_in, R.anim.hide_out);
+        transaction.replace(containerId, fragment, fragment.getClass().getName());
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
@@ -76,7 +88,7 @@ public class FragmentLauncher {
             Fragment page = new HealthDetailFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -87,7 +99,7 @@ public class FragmentLauncher {
             Fragment page = new OSDHealthFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -98,7 +110,7 @@ public class FragmentLauncher {
             Fragment page = new OSDHealthDetailFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -109,7 +121,7 @@ public class FragmentLauncher {
             Fragment page = new MonHealthFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -120,7 +132,7 @@ public class FragmentLauncher {
             Fragment page = new NotificationFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -131,7 +143,7 @@ public class FragmentLauncher {
             Fragment page = new HostHealthFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -142,7 +154,7 @@ public class FragmentLauncher {
             Fragment page = new PgStatusFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -153,7 +165,7 @@ public class FragmentLauncher {
             Fragment page = new UsageStatusFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -164,7 +176,7 @@ public class FragmentLauncher {
             Fragment page = new PoolIopsFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -175,7 +187,7 @@ public class FragmentLauncher {
             Fragment page = new PoolListFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 
@@ -186,7 +198,7 @@ public class FragmentLauncher {
             Fragment page = new HostDetailFragment();
             page.setArguments(arg);
             cleanAllPopFragment(activity, page);
-            changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
         }
         printBackStack(activity);
     }
@@ -194,18 +206,18 @@ public class FragmentLauncher {
     public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailSummaryFragment();
         page.setArguments(arg);
-        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
     }
 
     public static void goHostDetailAllCpusFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailAllCpusFragment();
         page.setArguments(arg);
-        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
     }
 
     public static void goHostDetailIopsFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailIopsFragment();
         page.setArguments(arg);
-        changeAndBack(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
     }
 }

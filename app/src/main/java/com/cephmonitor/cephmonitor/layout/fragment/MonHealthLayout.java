@@ -5,12 +5,12 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class MonHealthLayout extends RelativeLayout {
+public class MonHealthLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 

@@ -5,17 +5,17 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class UsageStatusLayout extends RelativeLayout {
+public class UsageStatusLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 
@@ -99,9 +99,8 @@ public class UsageStatusLayout extends RelativeLayout {
 
     private ChartTable table(View topView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(50));
-        params.addRule(ALIGN_LEFT, topView.getId());
         params.addRule(BELOW, topView.getId());
-        params.setMargins(0, ruler.getW(3), 0, ruler.getW(3));
+        params.setMargins(ruler.getW(5), ruler.getW(3), ruler.getW(5), ruler.getW(3));
 
         ChartTable v = new ChartTable(context);
         v.setId(GenerateViewId.get());

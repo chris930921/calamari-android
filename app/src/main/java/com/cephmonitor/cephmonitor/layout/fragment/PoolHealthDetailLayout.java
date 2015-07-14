@@ -2,12 +2,12 @@ package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class PoolHealthDetailLayout extends RelativeLayout {
+public class PoolHealthDetailLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 

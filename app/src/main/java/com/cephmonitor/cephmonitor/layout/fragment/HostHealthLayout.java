@@ -6,12 +6,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class HostHealthLayout extends RelativeLayout {
+public class HostHealthLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 

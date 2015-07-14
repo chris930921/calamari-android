@@ -37,6 +37,8 @@ public class ChartTable extends View {
     private float width;
     private float height;
     private float leftTextSpace;
+    private float leftMaxTextSpace;
+    private float leftHalfTextSpace;
     private float bottomTextSpace;
     private float rightPadding;
     private float topPadding;
@@ -91,6 +93,7 @@ public class ChartTable extends View {
         textPaint.setColor(ColorTable._666666);
 
         tableTotalTimeStamp = 60f * 60f * timeUnit * xGridCount * 1000;
+        tableMinTimeStamp = time.getTimeInMillis() - tableTotalTimeStamp;
         xUnitOffset = 0;
         maxValue = 1.0;
         updateMax();
@@ -117,7 +120,7 @@ public class ChartTable extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
-        reCaleConst();
+        updateMax();
     }
 
     private long getPreviousTime() {
@@ -278,16 +281,22 @@ public class ChartTable extends View {
     }
 
     public void updateMax() {
-        tableMaxValue = Math.ceil(maxValue / 20) * 20;
-        leftMaxValue = NuberUnit.change(tableMaxValue);
-        leftHalfValue = NuberUnit.change(tableMaxValue / 2);
+        if (maxValue > 20) {
+            tableMaxValue = Math.ceil(maxValue / 20) * 20;
+        } else {
+            tableMaxValue = maxValue;
+        }
+        leftMaxValue = NumberUnit.change(tableMaxValue);
+        leftHalfValue = NumberUnit.change(tableMaxValue / 2);
         reCaleConst();
     }
 
 
     public void reCaleConst() {
         textPaint.setTextSize((width * 0.073f) / 2);
-        leftTextSpace = (int) textPaint.measureText(leftMaxValue, 0, leftMaxValue.length());
+        leftMaxTextSpace = (int) textPaint.measureText(leftMaxValue);
+        leftHalfTextSpace = (int) textPaint.measureText(leftHalfValue);
+        leftTextSpace = (leftMaxTextSpace > leftHalfTextSpace) ? leftMaxTextSpace : leftHalfTextSpace;
         bottomTextSpace = height * 0.160f;
         rightPadding = width * 0.024f;
         topPadding = height * 0.080f;

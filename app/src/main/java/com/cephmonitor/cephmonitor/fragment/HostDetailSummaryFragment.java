@@ -47,48 +47,48 @@ public class HostDetailSummaryFragment extends Fragment {
     }
 
     public void init() {
-        taskGroup = new SequenceTask();
         loadAverageTargetGroup = new ArrayList<>();
         memoryTargetGroup = new ArrayList<>();
         itemGroup = new HashMap<>();
         adapterListGroup = new HashMap<>();
 
-        Bundle arg = getArguments();
-        String hostName = arg.getString("0");
-
-        summaryTargetGroup = new ArrayList<>();
-        summaryTargetGroup.add("servers." + hostName + ".cpu.total.system");
-        summaryTargetGroup.add("servers." + hostName + ".cpu.total.user");
-        summaryTargetGroup.add("servers." + hostName + ".cpu.total.idle");
-
-        loadAverageTargetGroup = new ArrayList<>();
-        loadAverageTargetGroup.add("servers." + hostName + ".loadavg.01");
-        loadAverageTargetGroup.add("servers." + hostName + ".loadavg.05");
-        loadAverageTargetGroup.add("servers." + hostName + ".loadavg.15");
-
-        memoryTargetGroup = new ArrayList<>();
-        memoryTargetGroup.add("servers." + hostName + ".memory.Active");
-        memoryTargetGroup.add("servers." + hostName + ".memory.Buffers");
-        memoryTargetGroup.add("servers." + hostName + ".memory.Cached");
-        memoryTargetGroup.add("servers." + hostName + ".memory.MemFree");
-
-        targetListGroup = new ArrayList<>();
-        targetListGroup.add(summaryTargetGroup);
-        targetListGroup.add(loadAverageTargetGroup);
-        targetListGroup.add(memoryTargetGroup);
-
-
+        layout.list.setAdapter(defaultAdapter);
         layout.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Bundle arg = getArguments();
+                String hostName = arg.getString("0");
+
+                summaryTargetGroup = new ArrayList<>();
+                summaryTargetGroup.add("servers." + hostName + ".cpu.total.system");
+                summaryTargetGroup.add("servers." + hostName + ".cpu.total.user");
+                summaryTargetGroup.add("servers." + hostName + ".cpu.total.idle");
+
+                loadAverageTargetGroup = new ArrayList<>();
+                loadAverageTargetGroup.add("servers." + hostName + ".loadavg.01");
+                loadAverageTargetGroup.add("servers." + hostName + ".loadavg.05");
+                loadAverageTargetGroup.add("servers." + hostName + ".loadavg.15");
+
+                memoryTargetGroup = new ArrayList<>();
+                memoryTargetGroup.add("servers." + hostName + ".memory.Active");
+                memoryTargetGroup.add("servers." + hostName + ".memory.Buffers");
+                memoryTargetGroup.add("servers." + hostName + ".memory.Cached");
+                memoryTargetGroup.add("servers." + hostName + ".memory.MemFree");
+
+                targetListGroup = new ArrayList<>();
+                targetListGroup.add(summaryTargetGroup);
+                targetListGroup.add(loadAverageTargetGroup);
+                targetListGroup.add(memoryTargetGroup);
+
+                taskGroup = new SequenceTask();
                 for (int i = 0; i < targetListGroup.size(); i++) {
                     request(i);
                 }
                 taskGroup.start();
+
+                layout.list.setAdapter(adapter);
             }
         }, 300);
-
-        layout.list.setAdapter(adapter);
     }
 
     private void request(final int index) {
@@ -205,6 +205,29 @@ public class HostDetailSummaryFragment extends Fragment {
             if (adapterListGroup.get(i) != null) {
                 item.setData(adapterListGroup.get(i));
             }
+            return item;
+        }
+    };
+
+    private BaseAdapter defaultAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            HostDetailItem item = new HostDetailItem(getActivity());
             return item;
         }
     };

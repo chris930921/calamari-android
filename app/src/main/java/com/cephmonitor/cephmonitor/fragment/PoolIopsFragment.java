@@ -12,8 +12,9 @@ import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
-import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.PoolIopsLayout;
+import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
 import com.cephmonitor.cephmonitor.layout.listitem.PoolIopsItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
@@ -52,7 +53,6 @@ public class PoolIopsFragment extends Fragment {
     }
 
     public void init() {
-        taskGroup = new SequenceTask();
         metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
@@ -66,6 +66,7 @@ public class PoolIopsFragment extends Fragment {
             pools = poolData.getIdStringMapName();
             pools.put("all", "Aggregate");
 
+            layout.list.setAdapter(defaultAdapter);
             layout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -106,6 +107,7 @@ public class PoolIopsFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
+                taskGroup = new SequenceTask();
                 for (int i = 0; i < targetListGroup.size(); i++) {
                     request(i);
                 }
@@ -146,7 +148,7 @@ public class PoolIopsFragment extends Fragment {
                         int dataPointIndex = i + 1;
                         ArrayList<Double> valueGroup = renderData.getValueArray(dataPointIndex);
 
-                        ChartLine adapter = new LineAdapter();
+                        ChartLine adapter = new AreaLineAdapter();
                         adapter.setColor(color);
                         adapter.setData(valueGroup, timeGroup);
 
@@ -221,6 +223,29 @@ public class PoolIopsFragment extends Fragment {
             if (adapterListGroup.get(i) != null) {
                 item.setData(adapterListGroup.get(i));
             }
+            return item;
+        }
+    };
+
+    private BaseAdapter defaultAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            HostDetailItem item = new HostDetailItem(getActivity());
             return item;
         }
     };

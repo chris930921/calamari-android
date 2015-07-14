@@ -50,12 +50,12 @@ public class HostDetailAllCpusFragment extends Fragment {
     }
 
     public void init() {
-        taskGroup = new SequenceTask();
         metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
 
+        layout.list.setAdapter(defaultAdapter);
         layout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -99,6 +99,7 @@ public class HostDetailAllCpusFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
+                taskGroup = new SequenceTask();
                 for (int i = 0; i < metricsGroup.size(); i++) {
                     request(i);
                 }
@@ -214,6 +215,29 @@ public class HostDetailAllCpusFragment extends Fragment {
             if (adapterListGroup.get(i) != null) {
                 item.setData(adapterListGroup.get(i));
             }
+            return item;
+        }
+    };
+
+    private BaseAdapter defaultAdapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            HostDetailAllCpusItem item = new HostDetailAllCpusItem(getActivity());
             return item;
         }
     };

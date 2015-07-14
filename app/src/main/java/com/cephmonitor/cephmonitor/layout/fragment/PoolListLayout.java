@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class PoolListLayout extends RelativeLayout {
+public class PoolListLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 

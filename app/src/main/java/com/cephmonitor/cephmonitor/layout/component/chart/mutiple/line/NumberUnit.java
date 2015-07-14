@@ -3,7 +3,7 @@ package com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line;
 /**
  * Created by User on 5/26/2015.
  */
-public class NuberUnit {
+public class NumberUnit {
     public static final long EB = (long) Math.pow(1000, 6);
     public static final long PB = (long) Math.pow(1000, 5);
     public static final long TB = (long) Math.pow(1000, 4);
@@ -46,9 +46,11 @@ public class NuberUnit {
             double count = value / KB;
             result = combineResult(count, TEXT_KB);
 
-        } else {
-            result = value + "";
+        } else if (value <= 20) {
+            result = String.format("%.2f", value);
 
+        } else {
+            result = String.valueOf((int) value);
         }
 
         return result;

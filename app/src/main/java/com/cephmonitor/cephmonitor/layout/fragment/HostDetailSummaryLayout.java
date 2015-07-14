@@ -6,14 +6,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class HostDetailSummaryLayout extends RelativeLayout {
+public class HostDetailSummaryLayout extends FractionAbleRelativeLayout {
     private WH ruler;
 
     private int[] summaryTextGroup = {R.string.host_detail_summary_system, R.string.host_detail_summary_user, R.string.host_detail_summary_Idle};

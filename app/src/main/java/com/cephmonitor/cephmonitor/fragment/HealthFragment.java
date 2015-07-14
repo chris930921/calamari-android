@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
+import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.TimeUnit;
 import com.resourcelibrary.model.network.GeneralError;
@@ -27,7 +31,7 @@ import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1ServerRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
-import com.resourcelibrary.model.network.api.ceph.single.GraphiteIopsReadWriteSumRequest;
+import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 import com.resourcelibrary.model.network.api.ceph.single.PoolV1ListRequest;
 
 import org.json.JSONException;
@@ -264,209 +268,232 @@ public class HealthFragment extends Fragment {
     private void requestHealth() {
         ClusterV1HealthRequest spider = new ClusterV1HealthRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successHealth(), GeneralError.callback(getActivity()));
+        spider.request(successHealth, GeneralError.callback(getActivity()));
     }
 
-    private Response.Listener<String> successHealth() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithHealthStatus(s);
-                    updateView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    private AnalyzeListener<String> successHealth = new AnalyzeListener<String>() {
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                healthData = new ClusterV1HealthData(s);
+                healthCardLastUpdate = healthData.getLastUpdateTimestamp();
+                healthCardWarningCount = healthData.getWarningCount();
+                healthCardErrorCount = healthData.getErrorCount();
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
             }
-        };
-    }
+        }
 
-    private void dealWithHealthStatus(String response) throws JSONException {
-        healthData = new ClusterV1HealthData(response);
-        healthCardLastUpdate = healthData.getLastUpdateTimestamp();
-        healthCardWarningCount = healthData.getWarningCount();
-        healthCardErrorCount = healthData.getErrorCount();
-    }
+        @Override
+        public void onPostExecute() {
+            layout.removeCallbacks(updateViewTask);
+            layout.post(updateViewTask);
+        }
+    };
 
     private void requestOsdMonStatus() {
         ClusterV1HealthCounterRequest spider = new ClusterV1HealthCounterRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successOsdMonStatus(), GeneralError.callback(getActivity()));
+        spider.request(successOsdMonStatus, GeneralError.callback(getActivity()));
     }
 
-    private Response.Listener<String> successOsdMonStatus() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithStatusCount(s);
-                    updateView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    private AnalyzeListener<String> successOsdMonStatus = new AnalyzeListener<String>() {
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(s);
+                monCardOkCount = data.getMonOkCount();
+                monCardTotalCount = data.getMonTotalCount();
+                monCardWarningCount = data.getMonWarningCount();
+                monCardErrorCount = data.getMonErrorCount();
+
+                osdCardOkCount = data.getOsdOkCount();
+                oadCardTotalCount = data.getOsdTotalCount();
+                osdCardWarningCount = data.getOsdWarningCount();
+                osdCardErrorCount = data.getOsdErrorCount();
+
+                pgCardOkCount = data.getPlacmentGroupsOkCount();
+                pgCardTotalCount = data.getPlacmentGroupsTotalCount();
+                pgCardWorkingCount = data.getPlacmentGroupsWarningCount();
+                pgCardDirtyCount = data.getPlacmentGroupsErrorCount();
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
             }
-        };
-    }
+        }
 
-    private void dealWithStatusCount(String response) throws JSONException {
-        ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(response);
-        monCardOkCount = data.getMonOkCount();
-        monCardTotalCount = data.getMonTotalCount();
-        monCardWarningCount = data.getMonWarningCount();
-        monCardErrorCount = data.getMonErrorCount();
-
-        osdCardOkCount = data.getOsdOkCount();
-        oadCardTotalCount = data.getOsdTotalCount();
-        osdCardWarningCount = data.getOsdWarningCount();
-        osdCardErrorCount = data.getOsdErrorCount();
-
-        pgCardOkCount = data.getPlacmentGroupsOkCount();
-        pgCardTotalCount = data.getPlacmentGroupsTotalCount();
-        pgCardWorkingCount = data.getPlacmentGroupsWarningCount();
-        pgCardDirtyCount = data.getPlacmentGroupsErrorCount();
-    }
+        @Override
+        public void onPostExecute() {
+            layout.removeCallbacks(updateViewTask);
+            layout.post(updateViewTask);
+        }
+    };
 
     private void requestPoolStatus() {
         PoolV1ListRequest spider = new PoolV1ListRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successPoolStatus(), GeneralError.callback(getActivity()));
+        spider.request(successPoolStatus, GeneralError.callback(getActivity()));
     }
 
-    private Response.Listener<String> successPoolStatus() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithPoolStatus(s);
-                    updateView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    private AnalyzeListener<String> successPoolStatus = new AnalyzeListener<String>() {
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                poolData = new PoolV1ListData(s);
+                poolCardStatus = poolData.getList().size();
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
             }
-        };
-    }
+        }
 
-    private void dealWithPoolStatus(String response) throws JSONException {
-        poolData = new PoolV1ListData(response);
-        poolCardStatus = poolData.getList().size();
-    }
+        @Override
+        public void onPostExecute() {
+            layout.removeCallbacks(updateViewTask);
+            layout.post(updateViewTask);
+        }
+    };
 
     private void requestServerList() {
         ClusterV1ServerRequest spider = new ClusterV1ServerRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successServerList(), GeneralError.callback(getActivity()));
+        spider.request(successServerList, GeneralError.callback(getActivity()));
     }
 
-    private Response.Listener<String> successServerList() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithServerCount(s);
-                    updateView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    private AnalyzeListener<String> successServerList = new AnalyzeListener<String>() {
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                hostData = new ClusterV2ServerListData(s);
+                hostCardStatus = hostData.getList().size();
+                hostCardMonCount = hostData.getMonServers().size();
+                hostCardOsdCount = hostData.getOsdServers().size();
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
             }
-        };
-    }
+        }
 
-    private void dealWithServerCount(String response) throws JSONException {
-        hostData = new ClusterV2ServerListData(response);
-        hostCardStatus = hostData.getList().size();
-        hostCardMonCount = hostData.getMonServers().size();
-        hostCardOsdCount = hostData.getOsdServers().size();
-    }
+        @Override
+        public void onPostExecute() {
+            layout.removeCallbacks(updateViewTask);
+            layout.post(updateViewTask);
+        }
+    };
 
     private void requestStoreSpace() {
         ClusterV1SpaceRequest spider = new ClusterV1SpaceRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successStoreSpace(), GeneralError.callback(getActivity()));
+        spider.request(successStoreSpace, GeneralError.callback(getActivity()));
     }
 
-    private Response.Listener<String> successStoreSpace() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithStoreSpace(s);
-                    updateView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    private AnalyzeListener<String> successStoreSpace = new AnalyzeListener<String>() {
+        private long rightValue;
+        private long leftValue;
+
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                ClusterV1Space data = new ClusterV1Space(s);
+                rightValue = data.getCapacityBytes();
+                leftValue = data.getUsedBytes();
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
             }
-        };
-    }
-
-    private void dealWithStoreSpace(String response) throws JSONException {
-        ClusterV1Space data = new ClusterV1Space(response);
-        long rightValue = data.getCapacityBytes();
-        long leftValue = data.getUsedBytes();
-        layout.usageCard.setLongValue(leftValue, rightValue);
-    }
-
-    private void requestIopsSum() {
-        requestParams.setGraphitePeriod("-1d");
-
-        GraphiteIopsReadWriteSumRequest spider = new GraphiteIopsReadWriteSumRequest(getActivity());
-        spider.setRequestParams(requestParams);
-        spider.request(successIopsSum(), GeneralError.callback(getActivity()));
-    }
-
-    private Response.Listener<String> successIopsSum() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    dealWithIopsSum(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-    }
-
-    private void dealWithIopsSum(String response) throws JSONException {
-        GraphiteRenderData data = new GraphiteRenderData(response);
-        ArrayList<Double> values = data.getValueArray(1);
-        ArrayList<Long> times = data.getTimestampArray();
-        layout.iopsCard.setChartData(Calendar.getInstance(), values, times);
-    }
-
-
-    private void updateView() {
-        if (healthCardErrorCount != 0) {
-            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_error));
-            layout.healthCard.changeRedBorder();
-        } else if (healthCardWarningCount != 0) {
-            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_warning));
-            layout.healthCard.changeOrangeBorder();
-        } else {
-            layout.healthCard.setCenterValueText(getString(R.string.health_card_status_ok));
-            layout.healthCard.changeGreenBorder();
         }
 
-        long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
-        long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
-        layout.healthCard.setCenterText(TimeUnit.change(period));
+        @Override
+        public void onPostExecute() {
+            layout.usageCard.setLongValue(leftValue, rightValue);
+            layout.removeCallbacks(updateViewTask);
+            layout.post(updateViewTask);
+        }
+    };
 
-        layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
+    private void requestIopsSum() {
+        ArrayList<String> targetGroup = new ArrayList<>();
+        targetGroup.add("sumSeries(" +
+                "ceph.cluster." + requestParams.getClusterId() + ".pool.all.num_read" + "," +
+                "ceph.cluster." + requestParams.getClusterId() + ".pool.all.num_write" +
+                ")");
 
-        layout.osdCard.setValue(osdCardWarningCount, osdCardErrorCount);
-        String osdStatus = osdCardOkCount + " / " + oadCardTotalCount;
-        layout.osdCard.setCenterValueText(osdStatus);
-
-        layout.monCard.setValue(monCardWarningCount, monCardErrorCount);
-        String monStatus = monCardOkCount + " / " + monCardTotalCount;
-        layout.monCard.setCenterValueText(monStatus);
-
-        layout.poolsCard.setCenterValueText(poolCardStatus + "");
-
-        layout.hostsCard.setValue(hostCardMonCount, hostCardOsdCount);
-        layout.hostsCard.setCenterValueText(hostCardStatus + "");
-
-        layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
-        String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
-        layout.pgStatusCard.setCenterValueText(pgStatus);
+        requestParams.setGraphiteTargets(targetGroup);
+        requestParams.setGraphitePeriod("-1d");
+        GraphiteRenderRequest spider = new GraphiteRenderRequest(getActivity());
+        spider.setRequestParams(requestParams);
+        spider.request(successIopsSum, GeneralError.callback(getActivity()));
     }
+
+    private AnalyzeListener<String> successIopsSum = new AnalyzeListener<String>() {
+        private ChartLine adapter;
+
+        @Override
+        public boolean doInBackground(String s) {
+            try {
+                GraphiteRenderData data = new GraphiteRenderData(s);
+                ArrayList<Double> values = data.getValueArray(1);
+                ArrayList<Long> times = data.getTimestampArray();
+
+                adapter = new LineAdapter();
+                adapter.setColor(ColorTable._8DC41F);
+                adapter.setData(values, times);
+
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        public void onPostExecute() {
+            layout.iopsCard.setChartData(adapter);
+        }
+    };
+
+    private Runnable updateViewTask = new Runnable() {
+        @Override
+        public void run() {
+            if (healthCardErrorCount != 0) {
+                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_error));
+                layout.healthCard.changeRedBorder();
+            } else if (healthCardWarningCount != 0) {
+                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_warning));
+                layout.healthCard.changeOrangeBorder();
+            } else {
+                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_ok));
+                layout.healthCard.changeGreenBorder();
+            }
+
+            long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
+            long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
+            layout.healthCard.setCenterText(TimeUnit.change(period));
+
+            layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
+
+            layout.osdCard.setValue(osdCardWarningCount, osdCardErrorCount);
+            String osdStatus = osdCardOkCount + " / " + oadCardTotalCount;
+            layout.osdCard.setCenterValueText(osdStatus);
+
+            layout.monCard.setValue(monCardWarningCount, monCardErrorCount);
+            String monStatus = monCardOkCount + " / " + monCardTotalCount;
+            layout.monCard.setCenterValueText(monStatus);
+
+            layout.poolsCard.setCenterValueText(poolCardStatus + "");
+
+            layout.hostsCard.setValue(hostCardMonCount, hostCardOsdCount);
+            layout.hostsCard.setCenterValueText(hostCardStatus + "");
+
+            layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
+            String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
+            layout.pgStatusCard.setCenterValueText(pgStatus);
+        }
+    };
 }

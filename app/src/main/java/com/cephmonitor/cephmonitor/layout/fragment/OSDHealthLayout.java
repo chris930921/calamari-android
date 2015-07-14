@@ -8,6 +8,7 @@ import android.widget.ScrollView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
 import com.cephmonitor.cephmonitor.layout.component.other.WorkFindView;
 import com.resourcelibrary.model.logic.RandomId;
@@ -15,7 +16,7 @@ import com.resourcelibrary.model.view.WH;
 import com.resourcelibrary.model.view.button.RoundStrokeFillButton;
 import com.resourcelibrary.model.view.button.RoundStrokeFillImage;
 
-public class OSDHealthLayout extends RelativeLayout {
+public class OSDHealthLayout extends FractionAbleRelativeLayout {
     private Context context;
     private WH ruler;
 
