@@ -16,6 +16,7 @@ import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -26,6 +27,7 @@ import java.util.HashMap;
 public class UsageStatusFragment extends Fragment {
     private UsageStatusLayout layout;
     private LoginParams requestParams;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -37,9 +39,10 @@ public class UsageStatusFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         requestParams = new LoginParams(getActivity());
         requestUsageStatus();
-
+        loadingDialog.show();
     }
 
     private void requestUsageStatus() {
@@ -88,11 +91,18 @@ public class UsageStatusFragment extends Fragment {
                     layout.table.addAdapter(adapter);
                 }
             }
+
+            @Override
+            public void requestFinish(boolean isAnalyzeSuccess) {
+                super.requestFinish(isAnalyzeSuccess);
+                LoadingDialog.delayCancel(layout, loadingDialog);
+            }
         };
 
         Response.ErrorListener fail = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.delayCancel(layout, loadingDialog);
             }
         };
 

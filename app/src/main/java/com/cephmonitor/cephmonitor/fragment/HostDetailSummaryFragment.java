@@ -18,9 +18,11 @@ import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -36,6 +38,7 @@ public class HostDetailSummaryFragment extends Fragment {
     private HashMap<Integer, HostDetailItem> itemGroup;
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
     private SequenceTask taskGroup;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -47,12 +50,31 @@ public class HostDetailSummaryFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         loadAverageTargetGroup = new ArrayList<>();
         memoryTargetGroup = new ArrayList<>();
         itemGroup = new HashMap<>();
         adapterListGroup = new HashMap<>();
+        taskGroup = new SequenceTask();
+        taskGroup.setOnEveryTaskFinish(new SequenceTask.CallBack() {
+            @Override
+            public void onTotalStart() {
+
+            }
+
+            @Override
+            public void onEveryTaskFinish(RequestVolleyTask task, int taskIndex, boolean isTaskSuccess) {
+
+            }
+
+            @Override
+            public void onTotalFinish(int taskSize, boolean isTotalSuccess) {
+                LoadingDialog.delayCancel(layout, loadingDialog);
+            }
+        });
 
         layout.list.setAdapter(defaultAdapter);
+        loadingDialog.show();
         layout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -80,7 +102,7 @@ public class HostDetailSummaryFragment extends Fragment {
                 targetListGroup.add(loadAverageTargetGroup);
                 targetListGroup.add(memoryTargetGroup);
 
-                taskGroup = new SequenceTask();
+
                 for (int i = 0; i < targetListGroup.size(); i++) {
                     request(i);
                 }

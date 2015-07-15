@@ -3,6 +3,7 @@ package com.resourcelibrary.model.view.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -51,5 +52,14 @@ public class LoadingDialog extends RelativeLayout {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    public static void delayCancel(View v, final LoadingDialog dialog) {
+        v.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.cancel();
+            }
+        }, 600);
     }
 }

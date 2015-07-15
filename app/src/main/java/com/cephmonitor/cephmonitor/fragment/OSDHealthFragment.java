@@ -18,6 +18,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2OsdListRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class OSDHealthFragment extends Fragment {
     private OSDHealthLayout layout;
     private LoginParams requestParams;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -37,6 +39,7 @@ public class OSDHealthFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         requestParams = new LoginParams(getActivity());
 
         layout.leftButton.setOnClickListener(clickLeftButton);
@@ -51,6 +54,7 @@ public class OSDHealthFragment extends Fragment {
         layout.showWorkFind();
 
         requestOsdList();
+        loadingDialog.show();
     }
 
     private OnOsdBoxClickListener clickOsdBox = new OnOsdBoxClickListener() {
@@ -105,7 +109,7 @@ public class OSDHealthFragment extends Fragment {
     private void requestOsdList() {
         ClusterV2OsdListRequest spider = new ClusterV2OsdListRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successOsdList(), GeneralError.callback(getActivity()));
+        spider.request(successOsdList(), GeneralError.callback(getActivity(), layout, loadingDialog));
     }
 
     private Response.Listener<String> successOsdList() {
@@ -114,6 +118,7 @@ public class OSDHealthFragment extends Fragment {
             public void onResponse(String s) {
                 try {
                     dealWithOsdList(s);
+                    LoadingDialog.delayCancel(layout,loadingDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

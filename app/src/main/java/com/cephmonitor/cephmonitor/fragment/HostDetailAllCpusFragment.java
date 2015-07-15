@@ -17,12 +17,14 @@ import com.cephmonitor.cephmonitor.layout.listitem.HostDetailAllCpusItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -36,6 +38,7 @@ public class HostDetailAllCpusFragment extends Fragment {
     private HashMap<Integer, HostDetailAllCpusItem> itemGroup;
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
     private SequenceTask taskGroup;
+    private LoadingDialog loadingDialog;
 
     final int[] lineTextGroup = HostDetailAllCpusLayout.textGroup;
     final int[] lineTextColorGroup = HostDetailAllCpusLayout.textColorGroup;
@@ -50,10 +53,28 @@ public class HostDetailAllCpusFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
+        taskGroup = new SequenceTask();
+        taskGroup = new SequenceTask();
+        taskGroup.setOnEveryTaskFinish(new SequenceTask.CallBack() {
+            @Override
+            public void onTotalStart() {
+            }
+
+            @Override
+            public void onEveryTaskFinish(RequestVolleyTask task, int taskIndex, boolean isTaskSuccess) {
+
+            }
+
+            @Override
+            public void onTotalFinish(int taskSize, boolean isTotalSuccess) {
+                LoadingDialog.delayCancel(layout, loadingDialog);
+            }
+        });
 
         layout.list.setAdapter(defaultAdapter);
         layout.postDelayed(new Runnable() {
@@ -62,6 +83,7 @@ public class HostDetailAllCpusFragment extends Fragment {
                 Bundle arg = getArguments();
                 String hostName = arg.getString("0");
                 requestTargetGroups("servers." + hostName + ".cpu.*");
+                loadingDialog.show();
             }
         }, 300);
     }
@@ -99,7 +121,6 @@ public class HostDetailAllCpusFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
-                taskGroup = new SequenceTask();
                 for (int i = 0; i < metricsGroup.size(); i++) {
                     request(i);
                 }
@@ -120,7 +141,6 @@ public class HostDetailAllCpusFragment extends Fragment {
         GraphiteMetricsFindPools spider = new GraphiteMetricsFindPools(getActivity());
         spider.setRequestParams(requestParams);
         spider.request(success, fail);
-
     }
 
     private void request(final int index) {

@@ -19,6 +19,7 @@ import com.cephmonitor.cephmonitor.layout.listitem.PoolIopsItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
+import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
@@ -26,6 +27,7 @@ import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -40,6 +42,7 @@ public class PoolIopsFragment extends Fragment {
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
     private SequenceTask taskGroup;
     private HashMap<String, String> pools;
+    private LoadingDialog loadingDialog;
 
     final int[] lineTextColorGroup = {ColorTable._8DC41F, ColorTable._F7B500};
 
@@ -53,11 +56,29 @@ public class PoolIopsFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
         pools = new HashMap<>();
+        taskGroup = new SequenceTask();
+        taskGroup = new SequenceTask();
+        taskGroup.setOnEveryTaskFinish(new SequenceTask.CallBack() {
+            @Override
+            public void onTotalStart() {
+            }
+
+            @Override
+            public void onEveryTaskFinish(RequestVolleyTask task, int taskIndex, boolean isTaskSuccess) {
+
+            }
+
+            @Override
+            public void onTotalFinish(int taskSize, boolean isTotalSuccess) {
+                LoadingDialog.delayCancel(layout, loadingDialog);
+            }
+        });
 
         try {
             Bundle arg = getArguments();
@@ -72,21 +93,26 @@ public class PoolIopsFragment extends Fragment {
                 public void run() {
                     Bundle arg = getArguments();
                     String clusterId = arg.getString("0");
-                    requestTargetGroups("ceph.cluster." + clusterId + ".pool.*");
+                    requestTargetGroups(clusterId);
                 }
             }, 300);
+            loadingDialog.show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void requestTargetGroups(String query) {
+    private void requestTargetGroups(String clusterId) {
+        final String query = "ceph.cluster." + clusterId + ".pool.*";
+        final ArrayList<String> orderTargetList = new ArrayList<>();
+        orderTargetList.add("ceph.cluster." + clusterId + ".pool.all");
+
         AnalyzeListener<String> success = new AnalyzeListener<String>() {
             @Override
             public synchronized boolean doInBackground(String s) {
                 try {
                     GraphiteFindListData data = new GraphiteFindListData(s);
-                    metricsGroup = data.getList();
+                    metricsGroup = data.getOrderList(orderTargetList);
 
                     for (int i = 0; i < metricsGroup.size(); i++) {
                         GraphiteFindData metrics = metricsGroup.get(i);
@@ -107,7 +133,6 @@ public class PoolIopsFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
-                taskGroup = new SequenceTask();
                 for (int i = 0; i < targetListGroup.size(); i++) {
                     request(i);
                 }
@@ -119,6 +144,7 @@ public class PoolIopsFragment extends Fragment {
         Response.ErrorListener fail = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.delayCancel(layout, loadingDialog);
             }
         };
 
@@ -128,7 +154,6 @@ public class PoolIopsFragment extends Fragment {
         GraphiteMetricsFindPools spider = new GraphiteMetricsFindPools(getActivity());
         spider.setRequestParams(requestParams);
         spider.request(success, fail);
-
     }
 
     private void request(final int index) {

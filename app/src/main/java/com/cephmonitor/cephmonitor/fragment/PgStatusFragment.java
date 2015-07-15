@@ -18,6 +18,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ClusterV1OsdData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1HealthCounterRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV1OsdListRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -30,6 +31,7 @@ public class PgStatusFragment extends Fragment {
     private LinkedHashMap<String, Integer> pgStateCount;
     private LinkedHashMap<String, Integer> healthCounts;
     private ArrayList<String> stateKeys;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -42,8 +44,10 @@ public class PgStatusFragment extends Fragment {
 
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         requestParams = new LoginParams(getActivity());
         requestPgStatus();
+        loadingDialog.show();
     }
 
     private void requestPgStatus() {
@@ -103,6 +107,12 @@ public class PgStatusFragment extends Fragment {
             @Override
             public void onPostExecute() {
                 layout.list.setAdapter(getAdapter);
+            }
+
+            @Override
+            public void requestFinish(boolean isAnalyzeSuccess) {
+                super.requestFinish(isAnalyzeSuccess);
+                LoadingDialog.delayCancel(layout, loadingDialog);
             }
         };
 

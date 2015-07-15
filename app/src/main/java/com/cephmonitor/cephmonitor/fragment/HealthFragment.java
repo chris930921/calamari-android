@@ -33,6 +33,7 @@ import com.resourcelibrary.model.network.api.ceph.single.ClusterV1SpaceRequest;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2ListRequest;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 import com.resourcelibrary.model.network.api.ceph.single.PoolV1ListRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -72,6 +73,8 @@ public class HealthFragment extends Fragment {
     public int pgCardWorkingCount;
     public int pgCardDirtyCount;
 
+    private LoadingDialog loadingDialog;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
             layout = new HealthLayout(getActivity());
@@ -84,7 +87,8 @@ public class HealthFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        layout.post(requestFlow(currentUpdateId));
+        layout.postDelayed(requestFlow(currentUpdateId), 700);
+        loadingDialog.show();
     }
 
     @Override
@@ -109,6 +113,8 @@ public class HealthFragment extends Fragment {
     }
 
     private void init() {
+        loadingDialog = new LoadingDialog(getActivity());
+
         currentUpdateId = 0;
         layout.healthCard.setCenterValueText(getResources().getString(R.string.health_card_status_ok));
 
@@ -236,7 +242,7 @@ public class HealthFragment extends Fragment {
     private void requestFirstClusterId() {
         ClusterV2ListRequest spider = new ClusterV2ListRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successFirstClusterId(), GeneralError.callback(getActivity()));
+        spider.request(successFirstClusterId(), GeneralError.callback(getActivity(),  layout, loadingDialog));
     }
 
     private Response.Listener<String> successFirstClusterId() {
@@ -251,6 +257,7 @@ public class HealthFragment extends Fragment {
                     requestServerList();
                     requestStoreSpace();
                     requestIopsSum();
+                    LoadingDialog.delayCancel(layout,loadingDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

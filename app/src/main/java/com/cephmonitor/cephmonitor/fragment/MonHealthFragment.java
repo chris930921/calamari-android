@@ -18,6 +18,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ClusterV2MonData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2MonListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ClusterV2MonListRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -31,6 +32,7 @@ public class MonHealthFragment extends Fragment {
     private HashMap<String, ClusterV2MonData> mons;
     private LinkedHashMap<String, ClusterV1HealthMonData> monsStatus;
     private ArrayList<String> monsStatusKeys;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -42,6 +44,7 @@ public class MonHealthFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         Bundle arg = getArguments();
         try {
             ClusterV1HealthData healthData = new ClusterV1HealthData("{}");
@@ -55,12 +58,13 @@ public class MonHealthFragment extends Fragment {
 
         requestParams = new LoginParams(getActivity());
         requestMonList();
+        loadingDialog.show();
     }
 
     private void requestMonList() {
         ClusterV2MonListRequest spider = new ClusterV2MonListRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successMonList(), GeneralError.callback(getActivity()));
+        spider.request(successMonList(), GeneralError.callback(getActivity(), layout, loadingDialog));
     }
 
     private Response.Listener<String> successMonList() {
@@ -69,6 +73,7 @@ public class MonHealthFragment extends Fragment {
             public void onResponse(String s) {
                 try {
                     dealWithMonList(s);
+                    LoadingDialog.delayCancel(layout,loadingDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -18,6 +18,7 @@ import com.resourcelibrary.model.network.api.ceph.object.ApiV2ClusterIdPoolData;
 import com.resourcelibrary.model.network.api.ceph.object.ApiV2ClusterIdPoolListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.ApiV2ClusterIdPoolRequest;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import org.json.JSONException;
 
@@ -27,6 +28,7 @@ public class PoolListFragment extends Fragment {
     private PoolListLayout layout;
     private LoginParams requestParams;
     private ArrayList<ApiV2ClusterIdPoolData> poolGroup;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -38,8 +40,10 @@ public class PoolListFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         requestParams = new LoginParams(getActivity());
         requestPoolList();
+        loadingDialog.show();
     }
 
     public void requestPoolList() {
@@ -61,12 +65,18 @@ public class PoolListFragment extends Fragment {
             public void onPostExecute() {
                 layout.setData(adapter);
             }
+
+            @Override
+            public void requestFinish(boolean isAnalyzeSuccess) {
+                super.requestFinish(isAnalyzeSuccess);
+                LoadingDialog.delayCancel(layout,loadingDialog);
+            }
         };
 
         Response.ErrorListener fail = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LoadingDialog.delayCancel(layout,loadingDialog);
             }
         };
 

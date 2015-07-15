@@ -51,11 +51,20 @@ public class FragmentLauncher {
         transaction.commit();
     }
 
+    private static void changeFadeIn(Activity activity, int containerId, Fragment fragment) {
+        FragmentManager manager = activity.getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.replace(containerId, fragment, fragment.getClass().getName());
+        transaction.commit();
+    }
+
     private static void changeAndBackFadeSlide(Activity activity, int containerId, Fragment fragment) {
         FragmentManager manager = activity.getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.setCustomAnimations(R.anim.fade_slide_left_in, R.anim.slide_left_out, R.anim.slide_right_in, R.anim.slide_right_out);
+        transaction.setCustomAnimations(R.anim.fade_slide_left_in, R.anim.slide_left_out, R.anim.fade_slide_right_in, R.anim.slide_right_out);
         transaction.replace(containerId, fragment, fragment.getClass().getName());
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
@@ -77,7 +86,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthFragment();
             cleanAllPopFragment(activity, page);
-            change(activity, MainLayout.CONTAINER_ID, page);
+            changeFadeIn(activity, MainLayout.CONTAINER_ID, page);
         }
     }
 

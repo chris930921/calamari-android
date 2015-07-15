@@ -11,6 +11,7 @@ import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
+import com.resourcelibrary.model.view.dialog.LoadingDialog;
 import com.resourcelibrary.model.view.item.LeftImageRightTextItem;
 
 import org.json.JSONException;
@@ -24,6 +25,7 @@ public class HealthDetailFragment extends Fragment {
     private ArrayList<String> status;
     private ArrayList<String> contents;
     private HashMap<String, Integer> icons;
+    private LoadingDialog loadingDialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -35,6 +37,7 @@ public class HealthDetailFragment extends Fragment {
     }
 
     public void init() {
+        loadingDialog = new LoadingDialog(getActivity());
         icons = new HashMap<>();
         icons.put(ClusterV1HealthData.HEALTH_WARN, R.drawable.icon022);
         icons.put(ClusterV1HealthData.HEALTH_ERR, R.drawable.icon023);

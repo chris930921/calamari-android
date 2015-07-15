@@ -52,7 +52,6 @@ public class GraphiteRenderData extends PortableJsonObject {
                 value.add(point.getDouble(dataPointIndex));
             } catch (JSONException e) {
                 e.printStackTrace();
-                value.add(0.0);
             }
         }
         return value;
@@ -78,7 +77,6 @@ public class GraphiteRenderData extends PortableJsonObject {
                 value.add(sum);
             } catch (JSONException e) {
                 e.printStackTrace();
-                value.add(sum);
             }
         }
         return value;
@@ -97,6 +95,7 @@ public class GraphiteRenderData extends PortableJsonObject {
         for (int i = 0; i < datapoints.length(); i++) {
             try {
                 JSONArray point = datapoints.getJSONArray(i);
+                double checkNull = point.getLong(1);
                 value.add(point.getLong(0) * 1000L);
             } catch (JSONException e) {
                 e.printStackTrace();

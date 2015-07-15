@@ -117,7 +117,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             }
         });
 
-
         choiceFragment();
     }
 
