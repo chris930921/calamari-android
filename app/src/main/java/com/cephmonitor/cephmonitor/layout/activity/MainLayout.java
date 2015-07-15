@@ -2,7 +2,6 @@ package com.cephmonitor.cephmonitor.layout.activity;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,8 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.layout.component.tab.SimpleTabView;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -40,11 +41,13 @@ public class MainLayout extends RelativeLayout {
 
     private Context context;
     private WH ruler;
+    private DesignSpec designSpec;
 
     public MainLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        designSpec = ThemeManager.getStyle(context);
 
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -71,28 +74,29 @@ public class MainLayout extends RelativeLayout {
     }
 
     private RelativeLayout topBar() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.04));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(ALIGN_PARENT_TOP);
-
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
-        v.setBackgroundColor(ColorTable._E63427);
+        v.setBackgroundColor(designSpec.getPrimaryColors().getPrimary());
 
         return v;
     }
 
     private ImageView back() {
-        LayoutParams params = new LayoutParams(ruler.getH(12.04), LayoutParams.MATCH_PARENT);
-        params.addRule(ALIGN_PARENT_TOP);
+        LayoutParams params = new LayoutParams(
+                ruler.getW(designSpec.getIconSize().getTitle()),
+                ruler.getW(designSpec.getIconSize().getTitle())
+        );
+        params.addRule(CENTER_VERTICAL);
         params.addRule(ALIGN_PARENT_LEFT);
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(ruler.getW(5), ruler.getW(5), ruler.getW(5), ruler.getW(5));
         v.setImageResource(R.drawable.icon021);
         v.setVisibility(INVISIBLE);
 
@@ -102,28 +106,32 @@ public class MainLayout extends RelativeLayout {
     private TextView title(View leftView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         params.addRule(RIGHT_OF, leftView.getId());
-        params.setMargins(0, 0, ruler.getH(12.04), 0);
+        params.setMargins(0, 0, ruler.getW(designSpec.getIconSize().getTitle()), 0);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
+        v.setTextSize(designSpec.getStyle().getTitle().getSize());
+        v.setTypeface(null, designSpec.getStyle().getTitle().getTypeface());
+        v.setTextColor(designSpec.getStyle().getTitle().getColor());
+
         v.setGravity(Gravity.CENTER);
-        v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(Color.WHITE);
 
         return v;
     }
 
     private SimpleTabView tabGroup(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ruler.getW(13));
         params.addRule(BELOW, topView.getId());
 
         SimpleTabView v = new SimpleTabView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(18);
-        v.setBackgroundColor(ColorTable._CD2626);
+        v.setTextSize(designSpec.getStyle().getBodyTwo().getSize());
+        v.setBackgroundColor(designSpec.getPrimaryColors().getSecondary());
+        v.setColor(Color.WHITE, Color.parseColor("#d9d9d9"));
 
         return v;
     }

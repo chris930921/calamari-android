@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.resourcelibrary.model.view.WH;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class SimpleTabView extends View {
         textPaint.setTextSize(30);
 
         unSelectedTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        unSelectedTextPaint.setColor(ColorTable._D9D9D9);
+        unSelectedTextPaint.setColor(Color.parseColor("#d9d9d9"));
         unSelectedTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
         unSelectedTextPaint.setTextSize(30);
 
@@ -122,6 +121,13 @@ public class SimpleTabView extends View {
         dataTabGroup.add(tab);
 
         update();
+    }
+
+    public void setColor(int selected, int unSelected) {
+        textPaint.setColor(selected);
+        unSelectedTextPaint.setColor(unSelected);
+
+        invalidate();
     }
 
     public void setTextSize(int size) {

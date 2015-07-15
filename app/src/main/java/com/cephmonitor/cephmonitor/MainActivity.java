@@ -25,6 +25,8 @@ import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import com.resourcelibrary.model.view.dialog.RoundSimpleSelectDialog;
@@ -37,6 +39,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
     public LoginParams loginInfo;
     public Activity activity;
     private HashMap<Class, InitFragment.Task> changeStyleTask;
+    private DesignSpec designSpec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         setContentView(layout);
         loginInfo = new LoginParams(this);
         activity = this;
+        designSpec = ThemeManager.getStyle(this);
 
         changeStyleTask = new HashMap<>();
         changeStyleTask.put(HealthFragment.class, showHealthFragment);
@@ -156,7 +160,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_health));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._E63427);
+            layout.topBar.setBackgroundColor(designSpec.getPrimaryColors().getPrimary());
             layout.bottomBar.setVisibility(View.VISIBLE);
         }
     };
