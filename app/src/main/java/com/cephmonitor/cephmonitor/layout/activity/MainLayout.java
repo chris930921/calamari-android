@@ -93,6 +93,7 @@ public class MainLayout extends RelativeLayout {
         );
         params.addRule(CENTER_VERTICAL);
         params.addRule(ALIGN_PARENT_LEFT);
+        params.leftMargin = ruler.getW(3);
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());

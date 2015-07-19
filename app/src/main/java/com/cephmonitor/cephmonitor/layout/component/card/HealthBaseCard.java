@@ -4,16 +4,22 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -23,6 +29,8 @@ import com.resourcelibrary.model.view.WH;
 public class HealthBaseCard extends RelativeLayout {
     protected WH ruler;
     protected Context context;
+    private DesignSpec designSpec;
+
     private int leftValue;
     private int rightValue;
     private boolean isCompare;
@@ -41,7 +49,6 @@ public class HealthBaseCard extends RelativeLayout {
 
     public View titleBottomLine;
     public View twoValuesTopLine;
-    public View twoValueCenterLine;
 
     public RelativeLayout centerValueContainer;
     public RelativeLayout centerCenterContainer;
@@ -60,26 +67,59 @@ public class HealthBaseCard extends RelativeLayout {
 
     private int radius;
     private int borderWidth;
-    private Paint paint;
+    private Paint borderPaint;
     private RectF bounds;
+
+    private int activeColor;
+    private int warningColor;
+    private int errorColor;
+    private int backgroundTwoColor;
+    private int backgroundThreeColor;
+    private int horizontalTwoColor;
+    private int subheadFontSize;
+    private int bodyTwoFontSize;
+    private int noteFontSize;
+    private int noteFontColor;
+    private float subheadIconSize;
+    private float leftRightPaddingOne;
+    private float topBottomPaddingOne;
+    private float topBottomPaddingTwo;
 
     public HealthBaseCard(Context context) {
         super(context);
         this.context = context;
         ruler = new WH(context);
-        paint = new Paint();
-        bounds = new RectF();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(ColorTable._8DC41F);
+        designSpec = ThemeManager.getStyle(context);
         radius = 10;
-        borderWidth = 5;
+        borderWidth = 1;
         leftValue = 0;
         rightValue = 0;
         isCompare = true;
         isChangeLeftValueColor = true;
         isChangeRightValueColor = true;
         isChangeCenterValueColor = false;
+
+        activeColor = designSpec.getAccentColors().getActive();
+        warningColor = designSpec.getAccentColors().getWarning();
+        errorColor = designSpec.getAccentColors().getError();
+        backgroundTwoColor = designSpec.getPrimaryColors().getBackgroundTwo();
+        backgroundThreeColor = designSpec.getPrimaryColors().getBackgroundThree();
+        horizontalTwoColor = designSpec.getPrimaryColors().getHorizontalTwo();
+        subheadIconSize = designSpec.getIconSize().getSubhead();
+        subheadFontSize = designSpec.getStyle().getSubhead().getSize();
+        bodyTwoFontSize = designSpec.getStyle().getBodyTwo().getSize();
+        noteFontSize = designSpec.getStyle().getNote().getSize();
+        noteFontColor = designSpec.getStyle().getNote().getColor();
+        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+        topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
+        topBottomPaddingTwo = designSpec.getPadding().getTopBottomTwo();
+
+        bounds = new RectF();
+        borderPaint = new Paint();
+        borderPaint.setAntiAlias(true);
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setColor(activeColor);
+        borderPaint.setStrokeWidth(borderWidth);
 
         setBackgroundColor(Color.TRANSPARENT);
 
@@ -89,10 +129,14 @@ public class HealthBaseCard extends RelativeLayout {
         topContainer.addView(arrow = arrow());
         topContainer.addView(title = title(icon, arrow));
 
+        contentContainer.addView(centerValueContainer = centerValueContainer(topContainer));
+        centerValueContainer.addView(centerCenterContainer = centerCenterContainer());
+        centerCenterContainer.addView(centerValueText = centerValueText());
+        centerCenterContainer.addView(centerText = centerText(centerValueText));
+
         contentContainer.addView(titleBottomLine = titleBottomLine(topContainer));
-        contentContainer.addView(bottomContainer = bottomContainer());
-        bottomContainer.addView(twoValuesTopLine = twoValueTopLine());
-        bottomContainer.addView(twoValueCenterLine = twoValueCenterLine());
+        contentContainer.addView(bottomContainer = bottomContainer(centerValueContainer));
+        contentContainer.addView(twoValuesTopLine = twoValueTopLine(bottomContainer));
         bottomContainer.addView(twoValueContainer = twoValueContainer());
 
         twoValueContainer.addView(leftValueContainer = leftValueContainer());
@@ -104,44 +148,95 @@ public class HealthBaseCard extends RelativeLayout {
         rightValueContainer.addView(rightCenterContainer = rightCenterContainer());
         rightCenterContainer.addView(rightValueText = rightValue());
         rightCenterContainer.addView(rightText = rightText(rightValueText));
-
-        contentContainer.addView(centerValueContainer = centerValueContainer(topContainer, bottomContainer));
-        centerValueContainer.addView(centerCenterContainer = centerCenterContainer());
-        centerCenterContainer.addView(centerValueText = centerValueText());
-        centerCenterContainer.addView(centerText = centerText(centerValueText));
     }
-
 
     public RelativeLayout contentContainer() {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         params.addRule(CENTER_IN_PARENT);
-        params.setMargins(borderWidth, borderWidth, borderWidth, borderWidth);
 
-        RelativeLayout v = new RelativeLayout(context);
+        final Paint roundPaint = new Paint();
+        final Path path = new Path();
+        roundPaint.setAntiAlias(true);
+        roundPaint.setStyle(Paint.Style.FILL);
+        roundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+
+        final Paint backgroundPaint = new Paint();
+        final RectF backgroundBounds = new RectF();
+        backgroundPaint.setAntiAlias(true);
+        backgroundPaint.setColor(backgroundThreeColor);
+        backgroundPaint.setStyle(Paint.Style.FILL);
+
+        RelativeLayout v = new RelativeLayout(context) {
+
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                int width = canvas.getWidth();
+                int height = canvas.getHeight();
+                float halfBorder = borderWidth / 2F;
+                float containBorderRadius = radius + halfBorder;
+
+                backgroundBounds.set(0, 0, width, height);
+                canvas.drawRect(backgroundBounds, backgroundPaint);
+
+                super.dispatchDraw(canvas);
+
+                path.moveTo(0, 0);
+                path.lineTo(containBorderRadius, 0);
+                path.quadTo(0, 0, 0, containBorderRadius);
+                path.lineTo(0, 0);
+
+                path.moveTo(width, 0);
+                path.lineTo(width - containBorderRadius, 0);
+                path.quadTo(width, 0, width, containBorderRadius);
+                path.lineTo(width, 0);
+
+                path.moveTo(width, height);
+                path.lineTo(width, height - containBorderRadius);
+                path.quadTo(width, height, width - containBorderRadius, height);
+                path.lineTo(width, height);
+
+                path.moveTo(0, height);
+                path.lineTo(0, height - containBorderRadius);
+                path.quadTo(0, height, containBorderRadius, height);
+                path.lineTo(0, height);
+
+                canvas.drawPath(path, roundPaint);
+
+                bounds.set(halfBorder, halfBorder, width - halfBorder, height - halfBorder);
+                canvas.drawRoundRect(backgroundBounds, radius, radius, borderPaint);
+            }
+        };
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.WHITE);
+        v.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         return v;
     }
 
     public RelativeLayout topContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(10.84));
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(ALIGN_PARENT_TOP);
-        params.setMargins(borderWidth, borderWidth, borderWidth, borderWidth);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
+        v.setPadding(
+                ruler.getW(topBottomPaddingOne),
+                ruler.getW(leftRightPaddingOne),
+                ruler.getW(topBottomPaddingOne),
+                ruler.getW(leftRightPaddingOne));
 
         return v;
     }
 
     public ImageView icon() {
-        LayoutParams params = new LayoutParams(ruler.getW(10.45), ruler.getW(10.45));
+        LayoutParams params = new LayoutParams(
+                ruler.getW(subheadIconSize),
+                ruler.getW(subheadIconSize));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(CENTER_IN_PARENT);
-        params.setMargins(ruler.getW(4.08), 0, 0, 0);
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
@@ -150,10 +245,11 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public ImageView arrow() {
-        LayoutParams params = new LayoutParams(ruler.getW(10.45), ruler.getW(10.45));
+        LayoutParams params = new LayoutParams(
+                ruler.getW(subheadIconSize),
+                ruler.getW(subheadIconSize));
         params.addRule(ALIGN_PARENT_RIGHT);
         params.addRule(CENTER_IN_PARENT);
-        params.setMargins(0, 0, ruler.getW(4.08), 0);
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
@@ -162,7 +258,9 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView title(View leftView, View rightView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(RIGHT_OF, leftView.getId());
         params.addRule(LEFT_OF, rightView.getId());
         params.addRule(CENTER_VERTICAL);
@@ -171,7 +269,7 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
+        v.setTextSize(subheadFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._666666);
@@ -180,48 +278,46 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public View titleBottomLine(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(0.36));
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ruler.getH(0.36));
         params.addRule(ALIGN_BOTTOM, topView.getId());
         params.addRule(CENTER_HORIZONTAL);
-        params.setMargins(ruler.getW(5.10), 0, ruler.getW(5.10), 0);
+        params.setMargins(
+                ruler.getW(leftRightPaddingOne), 0,
+                ruler.getW(leftRightPaddingOne), 0);
 
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._D9D9D9);
+        v.setBackgroundColor(horizontalTwoColor);
 
         return v;
     }
 
-    public RelativeLayout bottomContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.65));
-        params.addRule(ALIGN_PARENT_BOTTOM);
+    public RelativeLayout bottomContainer(View topView) {
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+        params.addRule(BELOW, topView.getId());
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._F3F3F3);
+        v.setBackgroundColor(backgroundTwoColor);
+        v.setPadding(
+                0, ruler.getW(topBottomPaddingOne),
+                0, ruler.getW(topBottomPaddingOne));
 
         return v;
     }
 
-    public View twoValueTopLine() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(0.36));
-        params.addRule(ALIGN_PARENT_TOP);
+    public View twoValueTopLine(View alignTop) {
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                1);
+        params.addRule(ALIGN_TOP, alignTop.getId());
         params.addRule(CENTER_HORIZONTAL);
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._D9D9D9);
-
-        return v;
-    }
-
-    public View twoValueCenterLine() {
-        LayoutParams params = new LayoutParams(ruler.getH(0.36), LayoutParams.MATCH_PARENT);
-        params.addRule(CENTER_IN_PARENT);
-        params.setMargins(0, ruler.getH(3.61), 0, ruler.getH(3.61));
 
         View v = new View(context);
         v.setId(RandomId.get());
@@ -232,9 +328,27 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public LinearLayout twoValueContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
 
-        LinearLayout v = new LinearLayout(context);
+        final Paint linePaint = new Paint();
+        linePaint.setAntiAlias(true);
+        linePaint.setColor(ColorTable._D9D9D9);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(ruler.getH(0.36));
+
+        LinearLayout v = new LinearLayout(context) {
+
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                super.dispatchDraw(canvas);
+                int height = canvas.getHeight();
+                int width = canvas.getWidth();
+
+                canvas.drawLine(width / 2, 0, width / 2, height, linePaint);
+            }
+        };
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setOrientation(LinearLayout.HORIZONTAL);
@@ -245,7 +359,9 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public RelativeLayout leftValueContainer() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         RelativeLayout v = new RelativeLayout(context);
@@ -256,7 +372,9 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public RelativeLayout leftCenterContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_IN_PARENT);
 
         RelativeLayout v = new RelativeLayout(context);
@@ -267,13 +385,15 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView leftValue() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
+        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._999999);
@@ -282,23 +402,27 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView leftText(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(BELOW, topView.getId());
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
+        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(ColorTable._999999);
+        v.setTextColor(noteFontColor);
 
         return v;
     }
 
 
     public RelativeLayout rightValueContainer() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         RelativeLayout v = new RelativeLayout(context);
@@ -309,7 +433,9 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public RelativeLayout rightCenterContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_IN_PARENT);
 
         RelativeLayout v = new RelativeLayout(context);
@@ -320,14 +446,16 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView rightValue() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
 
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
+        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._999999);
@@ -336,36 +464,42 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView rightText(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(BELOW, topView.getId());
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
+        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(ColorTable._999999);
+        v.setTextColor(noteFontColor);
 
         return v;
     }
 
-    public RelativeLayout centerValueContainer(View topView, View bottomView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    public RelativeLayout centerValueContainer(View topView) {
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(BELOW, topView.getId());
-        params.addRule(ABOVE, bottomView.getId());
-        params.setMargins(ruler.getW(5.10), 0, ruler.getW(5.10), 0);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(Color.WHITE);
+        v.setPadding(
+                0, ruler.getW(topBottomPaddingTwo),
+                0, ruler.getW(topBottomPaddingTwo));
 
         return v;
     }
 
     public RelativeLayout centerCenterContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_IN_PARENT);
 
         RelativeLayout v = new RelativeLayout(context);
@@ -376,14 +510,16 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView centerValueText() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
 
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
+        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._8DC41F);
@@ -392,16 +528,18 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public TextView centerText(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(BELOW, topView.getId());
         params.addRule(CENTER_HORIZONTAL);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
+        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(ColorTable._999999);
+        v.setTextColor(noteFontColor);
 
         return v;
     }
@@ -435,14 +573,14 @@ public class HealthBaseCard extends RelativeLayout {
         if (leftValue == 0) {
             leftValueText.setTextColor(ColorTable._999999);
         } else if (isChangeLeftValueColor) {
-            leftValueText.setTextColor(ColorTable._F7B500);
+            leftValueText.setTextColor(warningColor);
         }
         leftValueText.setText(leftValue + "");
 
         if (rightValue == 0) {
             rightValueText.setTextColor(ColorTable._999999);
         } else if (isChangeRightValueColor) {
-            rightValueText.setTextColor(ColorTable._E63427);
+            rightValueText.setTextColor(errorColor);
         }
         rightValueText.setText(rightValue + "");
 
@@ -454,7 +592,6 @@ public class HealthBaseCard extends RelativeLayout {
             changeOrangeBorder();
         }
     }
-
 
     public void setCenterValueText(String text) {
         centerValueText.setText(text);
@@ -473,23 +610,23 @@ public class HealthBaseCard extends RelativeLayout {
     }
 
     public void changeRedBorder() {
-        setBorderColor(ColorTable._E63427);
+        setBorderColor(errorColor);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(ColorTable._E63427);
+            centerValueText.setTextColor(errorColor);
         }
     }
 
     public void changeOrangeBorder() {
-        setBorderColor(ColorTable._F7B500);
+        setBorderColor(warningColor);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(ColorTable._F7B500);
+            centerValueText.setTextColor(warningColor);
         }
     }
 
     public void changeGreenBorder() {
-        setBorderColor(ColorTable._8DC41F);
+        setBorderColor(activeColor);
         if (isChangeCenterValueColor) {
-            centerValueText.setTextColor(ColorTable._8DC41F);
+            centerValueText.setTextColor(activeColor);
         }
     }
 
@@ -500,22 +637,13 @@ public class HealthBaseCard extends RelativeLayout {
 
     public void setBorderWidth(int borderWidth) {
         this.borderWidth = borderWidth;
+        borderPaint.setStrokeWidth(borderWidth);
         invalidate();
     }
 
     public void setBorderColor(int color) {
-        paint.setColor(color);
+        borderPaint.setColor(color);
         invalidate();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
-
-        bounds.set(0, 0, width, height);
-        canvas.drawRoundRect(bounds, radius, radius, paint);
-        super.onDraw(canvas);
     }
 
     public void setTitleOnClickListener(OnClickListener event) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -85,7 +86,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard healthCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -106,7 +107,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard osdCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -125,7 +126,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard monCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -145,7 +146,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard poolsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -164,7 +165,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard hostsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -186,7 +187,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard pgStatusCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(46.98));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -206,7 +207,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthUsageCard usageCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(60));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthUsageCard v = new HealthUsageCard(context);
@@ -225,7 +226,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthIopsCard iopsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(24.98) + ruler.getW(40));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthIopsCard v = new HealthIopsCard(context);

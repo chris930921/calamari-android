@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.component.card;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class HealthIopsCard extends HealthBaseCard {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setMaxTime(Calendar.getInstance());
+        v.setBackgroundColor(Color.TRANSPARENT);
 
         return v;
     }

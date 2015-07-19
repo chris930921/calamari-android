@@ -116,6 +116,11 @@ public class ChartTable extends View {
     }
 
     @Override
+    public void setBackgroundColor(int color) {
+        backgroundPaint.setColor(color);
+    }
+
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
