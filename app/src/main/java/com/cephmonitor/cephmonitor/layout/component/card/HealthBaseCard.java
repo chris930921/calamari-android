@@ -8,7 +8,6 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
@@ -76,14 +76,14 @@ public class HealthBaseCard extends RelativeLayout {
     private int backgroundTwoColor;
     private int backgroundThreeColor;
     private int horizontalTwoColor;
-    private int subheadFontSize;
-    private int bodyTwoFontSize;
-    private int noteFontSize;
-    private int noteFontColor;
     private float subheadIconSize;
     private float leftRightPaddingOne;
     private float topBottomPaddingOne;
     private float topBottomPaddingTwo;
+
+    private TextViewStyle subhead;
+    private TextViewStyle bodyTwo;
+    private TextViewStyle note;
 
     public HealthBaseCard(Context context) {
         super(context);
@@ -106,10 +106,11 @@ public class HealthBaseCard extends RelativeLayout {
         backgroundThreeColor = designSpec.getPrimaryColors().getBackgroundThree();
         horizontalTwoColor = designSpec.getPrimaryColors().getHorizontalTwo();
         subheadIconSize = designSpec.getIconSize().getSubhead();
-        subheadFontSize = designSpec.getStyle().getSubhead().getSize();
-        bodyTwoFontSize = designSpec.getStyle().getBodyTwo().getSize();
-        noteFontSize = designSpec.getStyle().getNote().getSize();
-        noteFontColor = designSpec.getStyle().getNote().getColor();
+
+        subhead = new TextViewStyle(designSpec.getStyle().getSubhead());
+        bodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
+        note = new TextViewStyle(designSpec.getStyle().getNote());
+
         leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
         topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
         topBottomPaddingTwo = designSpec.getPadding().getTopBottomTwo();
@@ -269,10 +270,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(subheadFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(ColorTable._666666);
+        subhead.style(v);
 
         return v;
     }
@@ -393,10 +392,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(ColorTable._999999);
+        bodyTwo.style(v);
 
         return v;
     }
@@ -411,9 +408,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(noteFontColor);
+        note.style(v);
 
         return v;
     }
@@ -455,10 +451,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTypeface(null, Typeface.BOLD);
-        v.setTextColor(ColorTable._999999);
+        bodyTwo.style(v);
 
         return v;
     }
@@ -473,9 +467,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(noteFontColor);
+        note.style(v);
 
         return v;
     }
@@ -519,9 +512,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(bodyTwoFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTypeface(null, Typeface.BOLD);
+        bodyTwo.style(v);
         v.setTextColor(ColorTable._8DC41F);
 
         return v;
@@ -537,9 +529,8 @@ public class HealthBaseCard extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(noteFontSize);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(noteFontColor);
+        note.style(v);
 
         return v;
     }

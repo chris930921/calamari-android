@@ -105,8 +105,8 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
-                        return Color.parseColor("#000000");
+                    public Integer getColor() {
+                        return FontStyle.NO_DEFAULT_COLOR;
                     }
 
                     @Override
@@ -125,8 +125,8 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
-                        return Color.parseColor("#000000");
+                    public Integer getColor() {
+                        return FontStyle.NO_DEFAULT_COLOR;
                     }
 
                     @Override
@@ -145,7 +145,7 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
+                    public Integer getColor() {
                         return Color.parseColor("#ffffff");
                     }
 
@@ -165,7 +165,7 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
+                    public Integer getColor() {
                         return Color.parseColor("#666666");
                     }
 
@@ -185,7 +185,7 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
+                    public Integer getColor() {
                         return Color.parseColor("#666666");
                     }
 
@@ -205,7 +205,7 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
+                    public Integer getColor() {
                         return Color.parseColor("#666666");
                     }
 
@@ -225,7 +225,7 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
+                    public Integer getColor() {
                         return Color.parseColor("#999999");
                     }
 
@@ -245,8 +245,8 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
-                        return Color.parseColor("#000000");
+                    public Integer getColor() {
+                        return FontStyle.NO_DEFAULT_COLOR;
                     }
 
                     @Override
@@ -265,8 +265,8 @@ public class Ocean extends DesignSpec {
                     }
 
                     @Override
-                    public int getColor() {
-                        return Color.parseColor("#000000");
+                    public Integer getColor() {
+                        return FontStyle.NO_DEFAULT_COLOR;
                     }
 
                     @Override
