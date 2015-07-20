@@ -30,8 +30,8 @@ public class LoadingDialog extends RelativeLayout {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
     }
 
     public ProgressBar progress() {

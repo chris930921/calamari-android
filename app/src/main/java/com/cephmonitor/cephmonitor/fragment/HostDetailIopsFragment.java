@@ -13,8 +13,7 @@ import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.HostDetailIopsLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailIopsItem;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.HostDetailIopsItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
@@ -251,7 +250,7 @@ public class HostDetailIopsFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            HostDetailItem item = new HostDetailItem(getActivity());
+            HostDetailIopsItem item = new HostDetailIopsItem(getActivity());
             return item;
         }
     };

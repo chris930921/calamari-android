@@ -11,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.PoolListLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.PoolListItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.PoolListItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ApiV2ClusterIdPoolData;

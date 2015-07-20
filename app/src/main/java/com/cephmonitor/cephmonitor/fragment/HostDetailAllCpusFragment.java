@@ -13,7 +13,7 @@ import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.HostDetailAllCpusLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailAllCpusItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.HostDetailAllCpusItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;

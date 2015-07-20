@@ -1,18 +1,21 @@
-package com.cephmonitor.cephmonitor.layout.listitem;
+package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.network.api.ceph.object.CephStaticValue;
@@ -27,9 +30,10 @@ public class PgStatusItem extends RelativeLayout {
     private Context context;
     private WH ruler;
     private RectF bounds;
-    private int strokeWidth = 1;
+    private int borderWidth = 1;
     private int radius = 10;
     private Paint strokePaint;
+    private Paint backgroundPaint;
     private Paint leftBorderPaint;
 
     public View topFillView;
@@ -41,6 +45,16 @@ public class PgStatusItem extends RelativeLayout {
     public RelativeLayout contentContainer;
     public RelativeLayout leftTextContainer;
     public RelativeLayout rightTextContainer;
+
+    private int statusBarWidth;
+
+    private DesignSpec designSpec;
+    private TextViewStyle bodyTwo;
+    private TextViewStyle bodyOne;
+    private TextViewStyle subhead;
+    private int backgroundThreeColor;
+    private float topBottomPaddingOne;
+    private float leftRightPaddingOne;
 
     static {
         choiceColor = new HashMap<>();
@@ -60,6 +74,15 @@ public class PgStatusItem extends RelativeLayout {
         this.context = context;
         this.ruler = new WH(context);
         this.bounds = new RectF();
+        this.designSpec = ThemeManager.getStyle(context);
+        bodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
+        bodyOne = new TextViewStyle(designSpec.getStyle().getBodyOne());
+        subhead = new TextViewStyle(designSpec.getStyle().getSubhead());
+        backgroundThreeColor = designSpec.getPrimaryColors().getBackgroundThree();
+        topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
+        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+
+        statusBarWidth = ruler.getW(3);
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -70,7 +93,11 @@ public class PgStatusItem extends RelativeLayout {
         strokePaint.setColor(ColorTable._D9D9D9);
         strokePaint.setAntiAlias(true);
         strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setStrokeWidth(strokeWidth);
+        strokePaint.setStrokeWidth(borderWidth);
+
+        backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        backgroundPaint.setColor(backgroundThreeColor);
+        backgroundPaint.setStyle(Paint.Style.FILL);
 
         leftBorderPaint = new Paint();
         leftBorderPaint.setAntiAlias(true);
@@ -78,12 +105,13 @@ public class PgStatusItem extends RelativeLayout {
 
         topFillView = topFillView();
         contentContainer = contentContainer(topFillView);
-        leftTextContainer = leftTextContainer();
-        pgStatus = pgStatus();
-        pgValue = pgValue(pgStatus);
         rightTextContainer = rightTextContainer();
         fieldValue = fieldValue();
         fieldUnit = fieldUnit(fieldValue);
+        leftTextContainer = leftTextContainer(rightTextContainer);
+        pgStatus = pgStatus();
+        pgValue = pgValue(pgStatus);
+
 
         addView(topFillView);
         addView(contentContainer);
@@ -101,39 +129,44 @@ public class PgStatusItem extends RelativeLayout {
         params.addRule(BELOW, topView.getId());
 
         RelativeLayout v = new RelativeLayout(context) {
+
             @Override
-            protected void onDraw(Canvas canvas) {
+            protected void dispatchDraw(Canvas canvas) {
                 int width = canvas.getWidth();
                 int height = canvas.getHeight();
 
-                bounds.set(0, 0, ruler.getW(3), height);
-                canvas.drawRoundRect(bounds, radius, radius, leftBorderPaint);
-
-                bounds.set(ruler.getW(1.5), 0, ruler.getW(3), height);
-                canvas.drawRect(bounds, leftBorderPaint);
-
-                int left = strokeWidth;
-                int top = strokeWidth;
+                int left = borderWidth;
+                int top = borderWidth;
                 int right = width - left;
                 int bottom = height - top;
                 bounds.set(left, top, right, bottom);
+
+                canvas.drawRoundRect(bounds, radius, radius, backgroundPaint);
                 canvas.drawRoundRect(bounds, radius, radius, strokePaint);
 
-                super.onDraw(canvas);
+                bounds.set(0, 0, statusBarWidth, height);
+                canvas.drawRoundRect(bounds, radius, radius, leftBorderPaint);
+
+                bounds.set(statusBarWidth / 2, 0, statusBarWidth, height);
+                canvas.drawRect(bounds, leftBorderPaint);
+
+                super.dispatchDraw(canvas);
             }
         };
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._F9F9F9);
+        v.setPadding(
+                statusBarWidth + ruler.getW(leftRightPaddingOne), ruler.getW(topBottomPaddingOne),
+                ruler.getW(leftRightPaddingOne), ruler.getW(topBottomPaddingOne));
 
         return v;
     }
 
-    private RelativeLayout leftTextContainer() {
-        LayoutParams params = new LayoutParams(ruler.getW(63), LayoutParams.WRAP_CONTENT);
+    private RelativeLayout leftTextContainer(View rightView) {
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(CENTER_VERTICAL);
-        params.setMargins(ruler.getW(6), 0, ruler.getW(3), 0);
+        params.addRule(RIGHT_OF, rightView.getId());
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(GenerateViewId.get());
@@ -149,10 +182,8 @@ public class PgStatusItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
-        v.setTextColor(ColorTable._666666);
-        v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER_VERTICAL);
+        subhead.style(v);
 
         return v;
     }
@@ -166,18 +197,17 @@ public class PgStatusItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(ColorTable._666666);
         v.setGravity(Gravity.CENTER_VERTICAL);
+        bodyOne.style(v);
 
         return v;
     }
 
     private RelativeLayout rightTextContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(ruler.getW(15), LayoutParams.WRAP_CONTENT);
         params.addRule(ALIGN_PARENT_RIGHT);
         params.addRule(CENTER_VERTICAL);
-        params.setMargins(0, 0, ruler.getW(3), 0);
+        params.setMargins(ruler.getW(leftRightPaddingOne), 0, 0, 0);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(GenerateViewId.get());
@@ -195,11 +225,9 @@ public class PgStatusItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(ColorTable._666666);
-        v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setSingleLine(true);
+        bodyTwo.style(v);
 
         return v;
     }
@@ -213,11 +241,10 @@ public class PgStatusItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
-        v.setTextColor(ColorTable._999999);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setSingleLine(true);
         v.setText(R.string.pg_status__osd);
+        bodyOne.style(v);
 
         return v;
     }

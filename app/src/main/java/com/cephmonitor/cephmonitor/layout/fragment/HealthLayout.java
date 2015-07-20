@@ -214,6 +214,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon028);
+        v.setArrow(R.drawable.icon014);
         v.setTitle(context.getResources().getString(R.string.health_card_usage));
         v.setLeftText(context.getResources().getString(R.string.health_card_used));
         v.setRightText(context.getResources().getString(R.string.health_card_available));
@@ -233,6 +234,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon029);
+        v.setArrow(R.drawable.icon014);
         v.setTitle(context.getResources().getString(R.string.health_card_iops));
         v.setCompareMode(false);
 

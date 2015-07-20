@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.listitem;
+package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
 import android.graphics.Canvas;

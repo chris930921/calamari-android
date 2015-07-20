@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.NotificationLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.NotificationItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.NotificationItem;
 import com.cephmonitor.cephmonitor.model.database.NotificationRow;
 import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
 

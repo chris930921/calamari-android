@@ -61,29 +61,47 @@ public class UsageCardProgress extends CompoundButton {
 
         backgroundProgressPen = new Paint();
         backgroundProgressPen.setAntiAlias(true);
-//        backgroundProgressPen.setStrokeWidth(progressWidth);
         backgroundProgressPen.setColor(ColorTable._8DC41F);
-//        backgroundProgressPen.setStyle(Paint.Style.STROKE);
         backgroundProgressPen.setStrokeCap(Paint.Cap.SQUARE);
 
         progressPen = new Paint();
         progressPen.setAntiAlias(true);
-//        progressPen.setStrokeWidth(progressWidth);
-//        progressPen.setStyle(Paint.Style.STROKE);
         progressPen.setStrokeCap(Paint.Cap.SQUARE);
 
         clearPen = new Paint();
         clearPen.setAntiAlias(true);
         clearPen.setStrokeCap(Paint.Cap.SQUARE);
         clearPen.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-
-
     }
 
     public void setPercent(float percent) {
         this.percent = checkPercent(percent);
         this.percentText = ((int) this.percent) + "%";
         choiceStatus();
+        invalidate();
+    }
+
+    public void setPercentTextStyle(int size, int typeFace) {
+        TextView v = new TextView(getContext());
+        v.setTextSize(size);
+        percentageTextPen.setTextSize(v.getTextSize());
+        if (typeFace == Typeface.BOLD) {
+            percentageTextPen.setTypeface(Typeface.DEFAULT_BOLD);
+        } else if (typeFace == Typeface.NORMAL) {
+            percentageTextPen.setTypeface(Typeface.DEFAULT);
+        }
+        invalidate();
+    }
+
+    public void setBottomTextStyle(int size, int typeFace) {
+        TextView v = new TextView(getContext());
+        v.setTextSize(size);
+        usedTextPen.setTextSize(v.getTextSize());
+        if (typeFace == Typeface.BOLD) {
+            usedTextPen.setTypeface(Typeface.DEFAULT_BOLD);
+        } else if (typeFace == Typeface.NORMAL) {
+            usedTextPen.setTypeface(Typeface.DEFAULT);
+        }
         invalidate();
     }
 

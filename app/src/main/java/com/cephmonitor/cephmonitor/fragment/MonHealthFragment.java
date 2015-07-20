@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.MonHealthLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.MonHealthCard;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.MonHealthCard;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthMonData;

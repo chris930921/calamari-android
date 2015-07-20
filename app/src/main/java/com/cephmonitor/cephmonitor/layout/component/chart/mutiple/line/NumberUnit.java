@@ -46,8 +46,8 @@ public class NumberUnit {
             double count = value / KB;
             result = combineResult(count, TEXT_KB);
 
-        } else if (value <= 20) {
-            result = String.format("%.2f", value);
+        } else if (value < 10) {
+            result = String.format("%.1f", value);
 
         } else {
             result = String.valueOf((int) value);

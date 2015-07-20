@@ -87,7 +87,7 @@ public class HealthFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        layout.postDelayed(requestFlow(currentUpdateId), 700);
+        layout.postDelayed(requestFlow(currentUpdateId), 1500);
         loadingDialog.show();
     }
 
@@ -242,7 +242,7 @@ public class HealthFragment extends Fragment {
     private void requestFirstClusterId() {
         ClusterV2ListRequest spider = new ClusterV2ListRequest(getActivity());
         spider.setRequestParams(requestParams);
-        spider.request(successFirstClusterId(), GeneralError.callback(getActivity(),  layout, loadingDialog));
+        spider.request(successFirstClusterId(), GeneralError.callback(getActivity(), layout, loadingDialog));
     }
 
     private Response.Listener<String> successFirstClusterId() {
@@ -257,7 +257,7 @@ public class HealthFragment extends Fragment {
                     requestServerList();
                     requestStoreSpace();
                     requestIopsSum();
-                    LoadingDialog.delayCancel(layout,loadingDialog);
+                    LoadingDialog.delayCancel(layout, loadingDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

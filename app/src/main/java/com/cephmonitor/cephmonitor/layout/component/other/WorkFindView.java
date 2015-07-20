@@ -1,12 +1,17 @@
 package com.cephmonitor.cephmonitor.layout.component.other;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -17,14 +22,25 @@ public class WorkFindView extends RelativeLayout {
     private Context context;
     private WH ruler;
 
-    public View workFineImage;
+    public ImageView workFineImage;
     public TextView workFineLineOne;
     public TextView workFineLineTwo;
+
+    private DesignSpec designSpec;
+    private float messageIconSize;
+    private float leftRightPaddingOne;
+    private float topBottomPaddingOne;
+    private TextViewStyle message;
 
     public WorkFindView(Context context) {
         super(context);
         this.context = context;
-        ruler = new WH(context);
+        this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(context);
+        message = new TextViewStyle(designSpec.getStyle().getSubhead());
+        messageIconSize = designSpec.getIconSize().getMessage();
+        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+        topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
 
         workFineImage = workFineImage();
         workFineLineOne = workFineLineOne(workFineImage);
@@ -35,11 +51,13 @@ public class WorkFindView extends RelativeLayout {
         addView(workFineLineTwo);
     }
 
-    private View workFineImage() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ruler.getW(30), ruler.getW(30));
+    private ImageView workFineImage() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ruler.getW(messageIconSize), ruler.getW(messageIconSize));
         params.addRule(CENTER_HORIZONTAL);
+        params.leftMargin = ruler.getW(leftRightPaddingOne);
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
 
-        View v = new View(context);
+        ImageView v = new ImageView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setBackgroundResource(R.drawable.icon026);
@@ -48,30 +66,34 @@ public class WorkFindView extends RelativeLayout {
     }
 
     private TextView workFineLineOne(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, topView.getId());
-        params.setMargins(0, ruler.getH(5), 0, 0);
+        params.leftMargin = ruler.getW(leftRightPaddingOne);
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
+        params.topMargin = ruler.getW(topBottomPaddingOne);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextColor(ColorTable._666666);
-        v.setTextSize(14);
+        v.setGravity(Gravity.CENTER);
+        message.style(v);
 
         return v;
     }
 
     private TextView workFineLineTwo(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, topView.getId());
+        params.leftMargin = ruler.getW(leftRightPaddingOne);
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
 
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextColor(ColorTable._666666);
-        v.setTextSize(14);
+        v.setGravity(Gravity.CENTER);
+        message.style(v);
 
         return v;
     }

@@ -14,7 +14,7 @@ import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.HostDetailSummaryLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.HostDetailSummaryItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
@@ -35,7 +35,7 @@ public class HostDetailSummaryFragment extends Fragment {
     private ArrayList<String> loadAverageTargetGroup;
     private ArrayList<String> memoryTargetGroup;
     private ArrayList<ArrayList<String>> targetListGroup;
-    private HashMap<Integer, HostDetailItem> itemGroup;
+    private HashMap<Integer, HostDetailSummaryItem> itemGroup;
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
     private SequenceTask taskGroup;
     private LoadingDialog loadingDialog;
@@ -151,7 +151,7 @@ public class HostDetailSummaryFragment extends Fragment {
 
             @Override
             public void onPostExecute() {
-                HostDetailItem item = itemGroup.get(index);
+                HostDetailSummaryItem item = itemGroup.get(index);
 
                 if (item == null) return;
                 if (item.getTag().equals(index)) {
@@ -213,12 +213,12 @@ public class HostDetailSummaryFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            HostDetailItem item;
+            HostDetailSummaryItem item;
 
             if (view == null) {
-                item = new HostDetailItem(getActivity());
+                item = new HostDetailSummaryItem(getActivity());
             } else {
-                item = (HostDetailItem) view;
+                item = (HostDetailSummaryItem) view;
             }
             item.setTag(i);
             itemGroup.put(i, item);
@@ -249,7 +249,7 @@ public class HostDetailSummaryFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            HostDetailItem item = new HostDetailItem(getActivity());
+            HostDetailSummaryItem item = new HostDetailSummaryItem(getActivity());
             return item;
         }
     };

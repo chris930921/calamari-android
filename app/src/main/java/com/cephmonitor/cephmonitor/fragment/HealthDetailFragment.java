@@ -10,9 +10,9 @@ import android.widget.BaseAdapter;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthDetailLayout;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.HealthDetailItem;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
-import com.resourcelibrary.model.view.item.LeftImageRightTextItem;
 
 import org.json.JSONException;
 
@@ -89,7 +89,7 @@ public class HealthDetailFragment extends Fragment {
             int images = icons.get(statusText);
             String content = contents.get(i);
 
-            LeftImageRightTextItem item = new LeftImageRightTextItem(getActivity());
+            HealthDetailItem item = new HealthDetailItem(getActivity());
             item.setItemValue(images, content);
             return item;
         }

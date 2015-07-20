@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.listitem;
+package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.GestureAdapter;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
@@ -33,10 +36,25 @@ public class NotificationItem extends RelativeLayout {
     public TextView centerTopText;
     public TextView centerBottomText;
 
+    private DesignSpec designSpec;
+    private TextViewStyle bodyOne;
+    private TextViewStyle subhead;
+    private float bodyIconSize;
+    private float subheadIconSize;
+    private float topBottomMarginOne;
+    private float leftRightPaddingOne;
+
     public NotificationItem(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(context);
+        bodyOne = new TextViewStyle(designSpec.getStyle().getBodyOne());
+        subhead = new TextViewStyle(designSpec.getStyle().getSubhead());
+        bodyIconSize = designSpec.getIconSize().getBody();
+        subheadIconSize = designSpec.getIconSize().getSubhead();
+        topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
+        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -64,7 +82,7 @@ public class NotificationItem extends RelativeLayout {
     }
 
     private View topFillView() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(ALIGN_PARENT_TOP);
 
@@ -76,7 +94,7 @@ public class NotificationItem extends RelativeLayout {
     }
 
     private View bottomImageFillView(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(BELOW, topView.getId());
 
@@ -88,7 +106,7 @@ public class NotificationItem extends RelativeLayout {
     }
 
     private View bottomTextFillView(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(BELOW, topView.getId());
 
@@ -100,9 +118,10 @@ public class NotificationItem extends RelativeLayout {
     }
 
     private ImageView leftImage(View topView) {
-        LayoutParams params = new LayoutParams(ruler.getW(10), ruler.getW(10));
+        LayoutParams params = new LayoutParams(ruler.getW(bodyIconSize), ruler.getW(bodyIconSize));
         params.addRule(ALIGN_PARENT_LEFT);
         params.addRule(BELOW, topView.getId());
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
@@ -112,7 +131,7 @@ public class NotificationItem extends RelativeLayout {
     }
 
     private ImageView rightImage(View alignView) {
-        LayoutParams params = new LayoutParams(ruler.getW(10), ruler.getW(10));
+        LayoutParams params = new LayoutParams(ruler.getW(subheadIconSize), ruler.getW(subheadIconSize));
         params.addRule(ALIGN_PARENT_RIGHT);
         params.addRule(ALIGN_TOP, alignView.getId());
         params.addRule(ALIGN_BOTTOM, alignView.getId());
@@ -131,7 +150,7 @@ public class NotificationItem extends RelativeLayout {
         params.addRule(ALIGN_TOP, leftView.getId());
         params.addRule(RIGHT_OF, leftView.getId());
         params.addRule(LEFT_OF, rightView.getId());
-        params.setMargins(ruler.getW(3), 0, ruler.getW(3), 0);
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
@@ -147,9 +166,8 @@ public class NotificationItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(getResources().getColor(R.color.text_color));
+        bodyOne.style(v);
 
         return v;
     }
@@ -161,9 +179,8 @@ public class NotificationItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(12));
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(getResources().getColor(R.color.sub_text_color));
+        subhead.style(v);
 
         return v;
     }

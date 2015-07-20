@@ -14,8 +14,7 @@ import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.PoolIopsLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostDetailItem;
-import com.cephmonitor.cephmonitor.layout.listitem.PoolIopsItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.PoolIopsItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
@@ -270,7 +269,7 @@ public class PoolIopsFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            HostDetailItem item = new HostDetailItem(getActivity());
+            PoolIopsItem item = new PoolIopsItem(getActivity());
             return item;
         }
     };

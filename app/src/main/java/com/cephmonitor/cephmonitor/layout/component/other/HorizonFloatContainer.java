@@ -8,9 +8,16 @@ import android.view.ViewGroup;
  * Created by User on 2015/6/30.
  */
 public class HorizonFloatContainer extends ViewGroup {
+    private int viewLeftMargin;
 
     public HorizonFloatContainer(Context context) {
         super(context);
+        viewLeftMargin = 0;
+    }
+
+    public void setViewLeftMargin(int viewLeftMargin) {
+        this.viewLeftMargin = viewLeftMargin;
+        requestLayout();
     }
 
     @Override
@@ -31,11 +38,12 @@ public class HorizonFloatContainer extends ViewGroup {
             }
 
             int childWidth = child.getMeasuredWidth();
-            if (widthSum + childWidth >= width) {
+            int nextWidthSum = widthSum + viewLeftMargin + childWidth;
+            if (nextWidthSum >= width) {
                 heightSum += height;
                 widthSum = childWidth;
             } else {
-                widthSum += childWidth;
+                widthSum = nextWidthSum;
             }
         }
         heightSum += height;
@@ -58,13 +66,14 @@ public class HorizonFloatContainer extends ViewGroup {
             }
 
             int childWidth = child.getMeasuredWidth();
-            if (widthSum + childWidth >= getMeasuredWidth()) {
+            int nextWidthSum = widthSum + viewLeftMargin + childWidth;
+            if (nextWidthSum >= getMeasuredWidth()) {
                 heightSum += height;
                 child.layout(0, heightSum, childWidth, heightSum + childHeight);
                 widthSum = childWidth;
             } else {
                 child.layout(widthSum, heightSum, widthSum + childWidth, heightSum + childHeight);
-                widthSum += childWidth;
+                widthSum = nextWidthSum;
             }
         }
     }

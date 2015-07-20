@@ -11,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.PgStatusLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.PgStatusItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.PgStatusItem;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1OsdData;

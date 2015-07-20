@@ -1,21 +1,12 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
-import com.resourcelibrary.model.logic.RandomId;
-import com.resourcelibrary.model.view.WH;
+import com.cephmonitor.cephmonitor.layout.component.list.DefaultListLayout;
 
-public class HostDetailAllCpusLayout extends FractionAbleRelativeLayout {
-    private WH ruler;
-    public ListView list;
+public class HostDetailAllCpusLayout extends DefaultListLayout {
 
     public static int[] textGroup = {
             R.string.host_detail_all_cpus_system, R.string.host_detail_all_cpus_user, R.string.host_detail_all_cpus_nice,
@@ -30,40 +21,5 @@ public class HostDetailAllCpusLayout extends FractionAbleRelativeLayout {
 
     public HostDetailAllCpusLayout(Context context) {
         super(context);
-        this.ruler = new WH(context);
-
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-        setId(RandomId.get());
-        setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
-
-        list = list();
-        addView(list);
-    }
-
-    public ListView list() {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        params.setMargins(ruler.getW(5), 0, ruler.getW(5), 0);
-
-        ListView v = new ListView(getContext());
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.addFooterView(fillView());
-        v.setDivider(new ColorDrawable(Color.TRANSPARENT));
-        v.setFooterDividersEnabled(false);
-        v.setClickable(false);
-
-        return v;
-    }
-
-    private View fillView() {
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(5));
-
-        View v = new View(getContext());
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
     }
 }

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.HostHealthLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.HostHealthItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.HostHealthItem;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ServerData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2ServerListData;
 
