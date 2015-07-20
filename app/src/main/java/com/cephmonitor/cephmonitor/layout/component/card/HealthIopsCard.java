@@ -4,12 +4,16 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 
 import java.util.Calendar;
@@ -20,11 +24,20 @@ import java.util.Calendar;
 public class HealthIopsCard extends HealthBaseCard {
     public ChartTable histogram;
     public TextView readWriteText;
+    private DesignSpec designSpec;
+    private TextViewStyle bodyTwo;
+    private float topBottomPaddingOne;
+    private float leftRightPaddingOne;
 
     public HealthIopsCard(Context context) {
         super(context);
-        histogram = histogram();
-        readWriteText = readWriteText(histogram);
+        this.designSpec = ThemeManager.getStyle(context);
+        bodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
+        topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
+        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+
+        readWriteText = readWriteText();
+        histogram = histogram(readWriteText);
 
         centerValueContainer.addView(histogram);
         centerValueContainer.addView(readWriteText);
@@ -32,13 +45,33 @@ public class HealthIopsCard extends HealthBaseCard {
         bottomContainer.setVisibility(GONE);
     }
 
+    public TextView readWriteText() {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(ALIGN_PARENT_TOP);
+        params.addRule(ALIGN_PARENT_LEFT);
+        params.leftMargin = ruler.getW(leftRightPaddingOne);
 
-    private ChartTable histogram() {
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setText(R.string.health_card_read_write);
+        bodyTwo.style(v);
+        v.setTextColor(ColorTable._8DC41F);
+
+        return v;
+    }
+
+    private ChartTable histogram(View topView) {
         LayoutParams params = new LayoutParams(
-                ruler.getW(90),
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ruler.getW(45)
         );
-        params.addRule(CENTER_IN_PARENT);
+        params.addRule(CENTER_HORIZONTAL);
+        params.addRule(BELOW, topView.getId());
+        params.leftMargin = ruler.getW(leftRightPaddingOne);
+        params.rightMargin = ruler.getW(leftRightPaddingOne);
+        params.topMargin = ruler.getW(topBottomPaddingOne);
 
         ChartTable v = new ChartTable(context);
         v.setId(RandomId.get());
@@ -49,22 +82,6 @@ public class HealthIopsCard extends HealthBaseCard {
         return v;
     }
 
-    public TextView readWriteText(View bottomView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(CENTER_VERTICAL);
-        params.addRule(ABOVE, bottomView.getId());
-        params.addRule(ALIGN_LEFT, bottomView.getId());
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTextColor(ColorTable._8DC41F);
-        v.setText(R.string.health_card_read_write);
-
-        return v;
-    }
 
     public void setChartData(ChartLine adapter) {
         if (histogram == null) return;
