@@ -7,8 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by User on 4/22/2015.
@@ -132,9 +135,39 @@ public class ClusterV1HealthData extends PortableJsonObject {
                 ok.put(monData.getName(), monData);
             }
         }
-        list.putAll(error);
-        list.putAll(warn);
-        list.putAll(ok);
+        list.putAll(orderBehindNumber(error));
+        list.putAll(orderBehindNumber(warn));
+        list.putAll(orderBehindNumber(ok));
         return list;
+    }
+
+    public LinkedHashMap<String, ClusterV1HealthMonData> orderBehindNumber(HashMap<String, ClusterV1HealthMonData> map) {
+        ArrayList<String> keys = new ArrayList<>(map.keySet());
+        LinkedHashMap<Integer, ClusterV1HealthMonData> orderGroups = new LinkedHashMap<>();
+        LinkedHashMap<String, ClusterV1HealthMonData> noNumberKeyGroup = new LinkedHashMap<>();
+        LinkedHashMap<ClusterV1HealthMonData, String> objectMapKeyGroup = new LinkedHashMap<>();
+
+        Pattern pattern = Pattern.compile("[\\d]+$");
+        for (String key : keys) {
+            ClusterV1HealthMonData data = map.get(key);
+            Matcher matcher = pattern.matcher(key);
+            if (matcher.find()) {
+                int index = Integer.parseInt(matcher.group());
+                orderGroups.put(index, data);
+            } else {
+                noNumberKeyGroup.put(key, data);
+            }
+            objectMapKeyGroup.put(data, key);
+        }
+        ArrayList<Integer> indexGroup = new ArrayList<>(orderGroups.keySet());
+        Collections.sort(indexGroup);
+        LinkedHashMap<String, ClusterV1HealthMonData> result = new LinkedHashMap<>();
+        for (Integer index : indexGroup) {
+            ClusterV1HealthMonData data = orderGroups.get(index);
+            String key = objectMapKeyGroup.get(data);
+            result.put(key, data);
+        }
+        result.putAll(noNumberKeyGroup);
+        return result;
     }
 }

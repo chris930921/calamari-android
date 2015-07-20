@@ -286,11 +286,7 @@ public class ChartTable extends View {
     }
 
     public void updateMax() {
-        if (maxValue > 20) {
-            tableMaxValue = Math.ceil(maxValue / 20) * 20;
-        } else {
-            tableMaxValue = maxValue;
-        }
+        tableMaxValue = Math.ceil(maxValue / 20) * 20;
         leftMaxValue = NumberUnit.change(tableMaxValue);
         leftHalfValue = NumberUnit.change(tableMaxValue / 2);
         reCaleConst();

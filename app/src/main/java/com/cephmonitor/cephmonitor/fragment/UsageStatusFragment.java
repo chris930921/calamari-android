@@ -10,7 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
+import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.AreaLineAdapter;
 import com.cephmonitor.cephmonitor.layout.fragment.UsageStatusLayout;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
@@ -54,7 +55,7 @@ public class UsageStatusFragment extends Fragment {
         AnalyzeListener<String> success = new AnalyzeListener<String>() {
             ArrayList<Long> timeGroup;
             HashMap<String, Integer> targetIndexGroup;
-            ArrayList<LineAdapter> adapterGroup;
+            ArrayList<ChartLine> adapterGroup;
 
             @Override
             public synchronized boolean doInBackground(String s) {
@@ -69,9 +70,9 @@ public class UsageStatusFragment extends Fragment {
                         if (targetIndexGroup.get(target) == null) continue;
 
                         int dataPointIndex = targetIndexGroup.get(target);
-                        LineAdapter adapter = new LineAdapter();
+                        AreaLineAdapter adapter = new AreaLineAdapter();
                         adapter.setColor(color);
-                        ArrayList<Double> valueGroup = renderData.getValueArray(dataPointIndex);
+                        ArrayList<Double> valueGroup = renderData.getSumValueArray(dataPointIndex);
                         adapter.setData(valueGroup, timeGroup);
                         adapterGroup.add(adapter);
                     }
@@ -87,7 +88,7 @@ public class UsageStatusFragment extends Fragment {
                 layout.table.cleanData();
                 layout.table.setMaxTime(Calendar.getInstance());
                 for (int i = 0; i < adapterGroup.size(); i++) {
-                    LineAdapter adapter = adapterGroup.get(i);
+                    ChartLine adapter = adapterGroup.get(i);
                     layout.table.addAdapter(adapter);
                 }
             }
