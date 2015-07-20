@@ -22,7 +22,6 @@ import com.cephmonitor.cephmonitor.fragment.PgStatusFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
-import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
@@ -40,6 +39,8 @@ public class MainActivity extends Activity implements InitFragment.Style {
     public Activity activity;
     private HashMap<Class, InitFragment.Task> changeStyleTask;
     private DesignSpec designSpec;
+    private int primary;
+    private int secondary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class MainActivity extends Activity implements InitFragment.Style {
         loginInfo = new LoginParams(this);
         activity = this;
         designSpec = ThemeManager.getStyle(this);
+        primary = designSpec.getPrimaryColors().getPrimary();
+        secondary = designSpec.getPrimaryColors().getSecondary();
 
         changeStyleTask = new HashMap<>();
         changeStyleTask.put(HealthFragment.class, showHealthFragment);
@@ -120,6 +123,11 @@ public class MainActivity extends Activity implements InitFragment.Style {
         choiceFragment();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void choiceFragment() {
         Bundle arg = getIntent().getExtras();
         if (arg == null) return;
@@ -159,7 +167,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_health));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(designSpec.getPrimaryColors().getPrimary());
+            layout.topBar.setBackgroundColor(primary);
             layout.bottomBar.setVisibility(View.VISIBLE);
         }
     };
@@ -169,7 +177,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_health_detail));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -185,7 +193,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_osd_health));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -220,7 +228,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_mon_health));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -237,7 +245,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_notification));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -253,7 +261,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_host_health));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -269,7 +277,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_pg_status));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -284,7 +292,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_usage_status));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -300,7 +308,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -316,7 +324,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_list));
             layout.hideAllComponent();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
@@ -335,7 +343,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(hostName);
             layout.hideAllComponent();
             layout.showTab();
-            layout.topBar.setBackgroundColor(ColorTable._CD2626);
+            layout.topBar.setBackgroundColor(secondary);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

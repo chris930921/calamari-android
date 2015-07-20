@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ public class MainLayout extends RelativeLayout {
     public Button more;
     public View bottomBarLine;
     public ImageView back;
+    public View realBackButton;
 
     public TextView title;
     public FrameLayout fragment;
@@ -56,6 +58,7 @@ public class MainLayout extends RelativeLayout {
 
         addView(topBar = topBar());
         topBar.addView(back = back());
+        topBar.addView(realBackButton = realBackButton());
         topBar.addView(title = title(back));
 
         addView(bottomBar = bottomBar());
@@ -100,6 +103,22 @@ public class MainLayout extends RelativeLayout {
         v.setLayoutParams(params);
         v.setImageResource(R.drawable.icon021);
         v.setVisibility(INVISIBLE);
+
+        return v;
+    }
+
+    private View realBackButton() {
+        LayoutParams params = new LayoutParams(
+                ruler.getW(20),
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+        params.addRule(CENTER_VERTICAL);
+        params.addRule(ALIGN_PARENT_LEFT);
+
+        View v = new View(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
 
         return v;
     }
@@ -246,13 +265,13 @@ public class MainLayout extends RelativeLayout {
 
     public void showBack(OnClickListener event) {
         back.setVisibility(VISIBLE);
-        back.setOnClickListener(event);
+        realBackButton.setOnClickListener(event);
         backClickEvent = event;
     }
 
     public void hideAllComponent() {
         back.setVisibility(INVISIBLE);
-        back.setOnClickListener(null);
+        realBackButton.setOnClickListener(null);
         backClickEvent = null;
         bottomBar.setVisibility(GONE);
         tabGroup.setVisibility(GONE);
@@ -264,7 +283,7 @@ public class MainLayout extends RelativeLayout {
     }
 
     public void executeBackListener() {
-        backClickEvent.onClick(back);
+        backClickEvent.onClick(realBackButton);
     }
 
     public void showTab() {
