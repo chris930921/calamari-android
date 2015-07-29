@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -32,10 +34,17 @@ public class PoolListItem extends RelativeLayout {
     private View bottomFillView;
     private View bottomLine;
 
+    private DesignSpec designSpec;
+    private int horizontalSize;
+    private int horizontalColor;
+
     public PoolListItem(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(context);
+        horizontalSize = (int) designSpec.getHorizontal().getHorizontalOneHeight();
+        horizontalColor = designSpec.getPrimaryColors().getHorizontalOne();
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -246,13 +255,13 @@ public class PoolListItem extends RelativeLayout {
     }
 
     private View bottomLine(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, ruler.getW(0.36));
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, horizontalSize);
         params.addRule(BELOW, topView.getId());
 
         View v = new View(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._EFEFEF);
+        v.setBackgroundColor(horizontalColor);
 
         return v;
     }

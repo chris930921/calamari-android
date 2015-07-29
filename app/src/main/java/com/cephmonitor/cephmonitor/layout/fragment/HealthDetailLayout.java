@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.cephmonitor.cephmonitor.layout.component.other.WorkFindView;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
@@ -23,6 +22,8 @@ public class HealthDetailLayout extends FractionAbleRelativeLayout {
     private DesignSpec designSpec;
     private float leftRightMarginOne;
     private float topBottomMarginOne;
+    private int horizontalSize;
+    private int horizontalColor;
 
     public HealthDetailLayout(Context context) {
         super(context);
@@ -31,6 +32,8 @@ public class HealthDetailLayout extends FractionAbleRelativeLayout {
         this.designSpec = ThemeManager.getStyle(context);
         leftRightMarginOne = designSpec.getMargin().getLeftRightOne();
         topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
+        horizontalSize = (int) designSpec.getHorizontal().getHorizontalOneHeight();
+        horizontalColor = designSpec.getPrimaryColors().getHorizontalOne();
 
         LayoutParams params = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
@@ -53,8 +56,8 @@ public class HealthDetailLayout extends FractionAbleRelativeLayout {
         ListView v = new ListView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setDivider(new ColorDrawable(ColorTable._EFEFEF));
-        v.setDividerHeight(ruler.getH(0.36));
+        v.setDivider(new ColorDrawable(horizontalColor));
+        v.setDividerHeight(horizontalSize);
         v.setPadding(0, 0, 0, ruler.getW(topBottomMarginOne));
 
         return v;

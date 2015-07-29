@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.MonHealthLayout;
-import com.cephmonitor.cephmonitor.layout.listitem.fixed.MonHealthCard;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.MonHealthCardItem;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthMonData;
@@ -108,11 +108,11 @@ public class MonHealthFragment extends Fragment {
             String key = monsStatusKeys.get(i);
             ClusterV1HealthMonData monStatusData = monsStatus.get(key);
             ClusterV2MonData monData = mons.get(key);
-            MonHealthCard card;
+            MonHealthCardItem card;
             if (view == null) {
-                card = new MonHealthCard(getActivity());
+                card = new MonHealthCardItem(getActivity());
             } else {
-                card = (MonHealthCard) view;
+                card = (MonHealthCardItem) view;
             }
             try {
                 card.setData(monStatusData.getHealth(), monData.getName(), monData.getAddr());

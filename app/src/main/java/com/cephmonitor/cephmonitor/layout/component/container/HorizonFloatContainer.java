@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.component.other;
+package com.cephmonitor.cephmonitor.layout.component.container;
 
 import android.content.Context;
 import android.view.View;
@@ -41,7 +41,7 @@ public class HorizonFloatContainer extends ViewGroup {
             int nextWidthSum = widthSum + viewLeftMargin + childWidth;
             if (nextWidthSum >= width) {
                 heightSum += height;
-                widthSum = childWidth;
+                widthSum = childWidth + viewLeftMargin;
             } else {
                 widthSum = nextWidthSum;
             }
@@ -70,7 +70,7 @@ public class HorizonFloatContainer extends ViewGroup {
             if (nextWidthSum >= getMeasuredWidth()) {
                 heightSum += height;
                 child.layout(0, heightSum, childWidth, heightSum + childHeight);
-                widthSum = childWidth;
+                widthSum = childWidth + viewLeftMargin;
             } else {
                 child.layout(widthSum, heightSum, widthSum + childWidth, heightSum + childHeight);
                 widthSum = nextWidthSum;

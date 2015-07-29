@@ -348,22 +348,22 @@ public class Ocean extends DesignSpec {
         return new IconSize(this, getContext()) {
             @Override
             public float getTitle() {
-                return 4.4F;
+                return 6F;
             }
 
             @Override
             public float getSubhead() {
-                return 3F;
+                return 4.4F;
             }
 
             @Override
             public float getBody() {
-                return 2.8F;
+                return 3F;
             }
 
             @Override
             public float getNote() {
-                return 2.6F;
+                return 2.8F;
             }
 
             @Override

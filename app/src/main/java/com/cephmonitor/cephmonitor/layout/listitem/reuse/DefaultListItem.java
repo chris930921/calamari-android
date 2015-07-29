@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.listitem.reuse;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartTable;
-import com.cephmonitor.cephmonitor.layout.component.other.HorizonFloatContainer;
+import com.cephmonitor.cephmonitor.layout.component.container.HorizonFloatContainer;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -29,7 +30,6 @@ public class DefaultListItem extends RelativeLayout {
     private float topBottomMarginOne;
     private float topBottomPaddingOne;
     private float leftRightPaddingOne;
-    private int backgroundThree;
 
     public TextView title;
     public HorizonFloatContainer floatContainer;
@@ -45,7 +45,6 @@ public class DefaultListItem extends RelativeLayout {
         topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
         topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
         leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
-        backgroundThree = designSpec.getPrimaryColors().getBackgroundThree();
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -111,9 +110,9 @@ public class DefaultListItem extends RelativeLayout {
         params.setMargins(0, ruler.getW(topBottomPaddingOne), 0, 0);
 
         ChartTable v = new ChartTable(context);
+        v.setBackgroundColor(Color.TRANSPARENT);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(backgroundThree);
 
         return v;
     }

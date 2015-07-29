@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
@@ -43,7 +42,6 @@ public class HealthDetailItem extends RelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(leftImage = leftImage());
         addView(rightText = rightText(leftImage));

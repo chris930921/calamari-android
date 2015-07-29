@@ -1,6 +1,8 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -35,6 +37,7 @@ public class MonHealthLayout extends FractionAbleRelativeLayout {
         ListView v = new ListView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
+        v.setDivider(new ColorDrawable(Color.TRANSPARENT));
         v.addFooterView(bottomFillView());
         v.setFooterDividersEnabled(false);
         v.setClickable(false);

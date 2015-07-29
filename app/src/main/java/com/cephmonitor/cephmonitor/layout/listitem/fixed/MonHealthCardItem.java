@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.WH;
@@ -21,7 +23,7 @@ import com.resourcelibrary.model.view.WH;
 /**
  * Created by User on 6/3/2015.
  */
-public class MonHealthCard extends RelativeLayout {
+public class MonHealthCardItem extends RelativeLayout {
     private Context context;
     private WH ruler;
     private Rect bounds;
@@ -35,12 +37,18 @@ public class MonHealthCard extends RelativeLayout {
     public TextView fieldName;
     public TextView FieldValue;
 
+    private DesignSpec designSpec;
+    private int horizontalSize;
+    private int horizontalColor;
 
-    public MonHealthCard(Context context) {
+    public MonHealthCardItem(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
         this.bounds = new Rect();
+        this.designSpec = ThemeManager.getStyle(context);
+        horizontalSize = (int) designSpec.getHorizontal().getHorizontalOneHeight();
+        horizontalColor = designSpec.getPrimaryColors().getHorizontalOne();
 
         leftBorderPaint = new Paint();
         leftBorderPaint.setAntiAlias(true);
@@ -91,13 +99,13 @@ public class MonHealthCard extends RelativeLayout {
     }
 
     private View bottomLine(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(0.36));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, horizontalSize);
         params.addRule(BELOW, topView.getId());
 
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(ColorTable._EFEFEF);
+        v.setBackgroundColor(horizontalColor);
 
         return v;
     }

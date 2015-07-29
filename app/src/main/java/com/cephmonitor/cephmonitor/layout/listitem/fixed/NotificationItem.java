@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,7 +59,6 @@ public class NotificationItem extends RelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         topFillView = topFillView();
         leftImage = leftImage(topFillView);

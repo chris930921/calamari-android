@@ -8,6 +8,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -16,16 +18,21 @@ public class HostHealthLayout extends FractionAbleRelativeLayout {
     private WH ruler;
 
     public ListView list;
+    public DesignSpec designSpec;
+    public int backgroundColor;
 
     public HostHealthLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(getContext());
+        backgroundColor = designSpec.getPrimaryColors().getBackgroundOne();
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         setId(RandomId.get());
         setLayoutParams(params);
+        setBackgroundColor(backgroundColor);
 
         addView(list = list());
     }
