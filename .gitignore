@@ -9,7 +9,6 @@ Thumbs.db
 .DS_Store
 .classpath
 .project
-.idea
 .gradle
 build/
 *.log
