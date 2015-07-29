@@ -1,8 +1,8 @@
 *.apk
 *.ap_
 *.dex
-*.class
 *.iml
+*.class
 bin/
 gen/
 local.properties
