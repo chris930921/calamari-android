@@ -42,6 +42,12 @@ public class LoginActivity extends Activity {
         loadingDialog = new LoadingDialog(this);
         dialog = new MessageDialog(activity);
 
+        if (loginInfo.isLogin()) {
+            ActivityLauncher.goMainActivity(activity);
+            loadingDialog.cancel();
+            activity.finish();
+        }
+
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
 //        deleteDatabase(StoreNotifications.DB_NAME);
     }
@@ -106,6 +112,7 @@ public class LoginActivity extends Activity {
         @Override
         public void onPostExecute() {
             ActivityLauncher.goMainActivity(activity);
+            loginInfo.setIsLogin(true);
             loadingDialog.cancel();
             activity.finish();
         }

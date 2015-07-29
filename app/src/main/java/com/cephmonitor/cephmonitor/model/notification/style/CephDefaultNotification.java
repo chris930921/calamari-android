@@ -28,7 +28,7 @@ public class CephDefaultNotification {
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentIntent(ActivityLauncher.goMainActivityNotificationPending(context))
                 .setTicker(title)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.icon01)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setStyle(style)

@@ -89,4 +89,14 @@ public class LoginParams extends CephParams {
     protected String get(String key, String defaultValue) {
         return settings.getString(key, defaultValue);
     }
+
+    public boolean isLogin() {
+        return settings.getBoolean("isLogin", false);
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("isLogin", isLogin);
+        editor.commit();
+    }
 }

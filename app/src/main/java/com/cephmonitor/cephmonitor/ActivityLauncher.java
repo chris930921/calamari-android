@@ -26,6 +26,7 @@ public class ActivityLauncher {
 
         Intent nextPage = new Intent(context, MainActivity.class);
         nextPage.putExtras(arg);
+        nextPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         return PendingIntent.getActivity(context, 0, nextPage, 0);
     }
