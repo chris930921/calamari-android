@@ -2,6 +2,7 @@
 *.ap_
 *.dex
 *.class
+*.iml
 bin/
 gen/
 local.properties
