@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
@@ -47,7 +46,6 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(container = container());
         container.addView(hostNameTitle = hostNameTitle());

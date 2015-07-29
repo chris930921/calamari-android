@@ -39,7 +39,6 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(centerButton = centerButton());
         addView(leftButton = leftButton(centerButton));

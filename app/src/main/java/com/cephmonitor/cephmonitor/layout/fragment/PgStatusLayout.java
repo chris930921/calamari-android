@@ -26,7 +26,6 @@ public class PgStatusLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(list = list());
     }

@@ -26,12 +26,12 @@
     <string name="main_activity_option_setting">Setting</string>
     <string name="main_activity_option_logout">Logout</string>
 
-    <string name="main_activity_fragment_health">Health</string>
+    <string name="main_activity_fragment_health">Dashboard</string>
     <string name="main_activity_fragment_health_detail">Health Detail</string>
     <string name="main_activity_fragment_osd_health">OSD Health</string>
     <string name="main_activity_fragment_mon_health">MON Health</string>
     <string name="main_activity_fragment_notification">Notifications</string>
-    <string name="main_activity_fragment_host_health">Host Health</string>
+    <string name="main_activity_fragment_host_health">Host List</string>
     <string name="main_activity_fragment_pg_status">PG Status</string>
     <string name="main_activity_fragment_usage_status">Usage Status</string>
     <string name="main_activity_fragment_pool_iops">Pool IOPS</string>
@@ -52,7 +52,7 @@
     <string name="health_card_osd">OSD</string>
     <string name="health_card_in_and_up">In \u0026 Up</string>
 
-    <string name="health_card_mon">MON</string>
+    <string name="health_card_mon">MONITOR</string>
     <string name="health_card_quorom">Quorom</string>
 
     <string name="health_card_pools">POOLS</string>

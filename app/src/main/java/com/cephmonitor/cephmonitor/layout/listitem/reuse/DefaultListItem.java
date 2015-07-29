@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.listitem.reuse;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
@@ -30,6 +29,7 @@ public class DefaultListItem extends RelativeLayout {
     private float topBottomMarginOne;
     private float topBottomPaddingOne;
     private float leftRightPaddingOne;
+    private int backgroundThree;
 
     public TextView title;
     public HorizonFloatContainer floatContainer;
@@ -45,12 +45,12 @@ public class DefaultListItem extends RelativeLayout {
         topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
         topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
         leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+        backgroundThree = designSpec.getPrimaryColors().getBackgroundThree();
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
         setPadding(0, ruler.getW(topBottomMarginOne), 0, ruler.getW(topBottomPaddingOne));
 
         title = title();
@@ -113,6 +113,7 @@ public class DefaultListItem extends RelativeLayout {
         ChartTable v = new ChartTable(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
+        v.setBackgroundColor(backgroundThree);
 
         return v;
     }

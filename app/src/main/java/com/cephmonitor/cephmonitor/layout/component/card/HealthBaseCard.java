@@ -80,9 +80,12 @@ public class HealthBaseCard extends RelativeLayout {
     private float leftRightPaddingOne;
     private float topBottomPaddingOne;
     private float topBottomPaddingTwo;
+    private float horizontalTwoHeight;
 
     private TextViewStyle subhead;
+    private TextViewStyle headline;
     private TextViewStyle bodyTwo;
+    private TextViewStyle bodyOne;
     private TextViewStyle note;
 
     public HealthBaseCard(Context context) {
@@ -91,7 +94,7 @@ public class HealthBaseCard extends RelativeLayout {
         ruler = new WH(context);
         designSpec = ThemeManager.getStyle(context);
         radius = 10;
-        borderWidth = 1;
+        borderWidth = 3;
         leftValue = 0;
         rightValue = 0;
         isCompare = true;
@@ -105,9 +108,12 @@ public class HealthBaseCard extends RelativeLayout {
         backgroundTwoColor = designSpec.getPrimaryColors().getBackgroundTwo();
         backgroundThreeColor = designSpec.getPrimaryColors().getBackgroundThree();
         horizontalTwoColor = designSpec.getPrimaryColors().getHorizontalTwo();
+        horizontalTwoHeight = designSpec.getHorizontal().getHorizontalTwoHeight();
         subheadIconSize = designSpec.getIconSize().getSubhead();
 
         subhead = new TextViewStyle(designSpec.getStyle().getSubhead());
+        headline = new TextViewStyle(designSpec.getStyle().getHeadline());
+        bodyOne = new TextViewStyle(designSpec.getStyle().getBodyOne());
         bodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
         note = new TextViewStyle(designSpec.getStyle().getNote());
 
@@ -174,7 +180,7 @@ public class HealthBaseCard extends RelativeLayout {
                 int width = canvas.getWidth();
                 int height = canvas.getHeight();
                 float halfBorder = borderWidth / 2F;
-                float containBorderRadius = radius + halfBorder;
+                float containBorderRadius = radius;
 
                 backgroundBounds.set(0, 0, width, height);
                 canvas.drawRect(backgroundBounds, backgroundPaint);
@@ -204,7 +210,7 @@ public class HealthBaseCard extends RelativeLayout {
                 canvas.drawPath(path, roundPaint);
 
                 bounds.set(halfBorder, halfBorder, width - halfBorder, height - halfBorder);
-                canvas.drawRoundRect(backgroundBounds, radius, radius, borderPaint);
+                canvas.drawRoundRect(bounds, radius, radius, borderPaint);
             }
         };
         v.setId(RandomId.get());
@@ -279,7 +285,7 @@ public class HealthBaseCard extends RelativeLayout {
     public View titleBottomLine(View topView) {
         LayoutParams params = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                ruler.getH(0.36));
+                (int) horizontalTwoHeight);
         params.addRule(ALIGN_BOTTOM, topView.getId());
         params.addRule(CENTER_HORIZONTAL);
         params.setMargins(
@@ -335,7 +341,7 @@ public class HealthBaseCard extends RelativeLayout {
         linePaint.setAntiAlias(true);
         linePaint.setColor(ColorTable._D9D9D9);
         linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setStrokeWidth(ruler.getH(0.36));
+        linePaint.setStrokeWidth(2);
 
         LinearLayout v = new LinearLayout(context) {
 
@@ -513,7 +519,7 @@ public class HealthBaseCard extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        bodyTwo.style(v);
+        headline.style(v);
         v.setTextColor(ColorTable._8DC41F);
 
         return v;
@@ -530,7 +536,7 @@ public class HealthBaseCard extends RelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        note.style(v);
+        bodyOne.style(v);
 
         return v;
     }

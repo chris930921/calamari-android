@@ -40,7 +40,6 @@ public class HealthLayout extends FractionAbleRelativeLayout {
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(cardContainer = cardContainer());
         cardContainer.addView(cardList = cardList());

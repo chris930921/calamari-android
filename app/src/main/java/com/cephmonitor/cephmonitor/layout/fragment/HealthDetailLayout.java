@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 
@@ -39,7 +38,6 @@ public class HealthDetailLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         list = list();
         workFine = workFine();

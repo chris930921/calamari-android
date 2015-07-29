@@ -44,12 +44,14 @@ public class MainLayout extends RelativeLayout {
     private Context context;
     private WH ruler;
     private DesignSpec designSpec;
+    private int backgroundOne;
 
     public MainLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
         designSpec = ThemeManager.getStyle(context);
+        backgroundOne = designSpec.getPrimaryColors().getBackgroundOne();
 
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -249,6 +251,7 @@ public class MainLayout extends RelativeLayout {
         FrameLayout v = new FrameLayout(context);
         v.setId(CONTAINER_ID);
         v.setLayoutParams(params);
+        v.setBackgroundColor(backgroundOne);
 
         return v;
     }

@@ -168,7 +168,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(primary);
-            layout.bottomBar.setVisibility(View.VISIBLE);
         }
     };
 
@@ -178,7 +177,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_health_detail));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -194,7 +192,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_osd_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -213,7 +210,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(osdId + "");
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(titleColor);
-            layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -229,7 +225,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_mon_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -246,7 +241,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_notification));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.VISIBLE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -262,7 +256,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_host_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -278,7 +271,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pg_status));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -293,7 +285,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_usage_status));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -309,7 +300,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -325,7 +315,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_list));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.bottomBar.setVisibility(View.GONE);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

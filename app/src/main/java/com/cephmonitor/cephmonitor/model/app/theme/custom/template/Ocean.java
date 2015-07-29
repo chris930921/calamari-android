@@ -52,7 +52,7 @@ public class Ocean extends DesignSpec {
 
             @Override
             public int getSecondary() {
-                return Color.parseColor("#20638f");
+                return Color.parseColor("#2676ab");
             }
 
             @Override
@@ -283,12 +283,12 @@ public class Ocean extends DesignSpec {
         return new Horizontal(this, getContext()) {
             @Override
             public float getHorizontalOneHeight() {
-                return 0.36F;
+                return 2;
             }
 
             @Override
             public float getHorizontalTwoHeight() {
-                return 0.36F;
+                return 2;
             }
         };
     }

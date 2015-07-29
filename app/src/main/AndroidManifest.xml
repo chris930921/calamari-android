@@ -11,7 +11,7 @@
     <application
         android:name=".model.debug.DebugApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon01"
         android:label="@string/gradle_app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme,android:label">

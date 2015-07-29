@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -49,7 +48,6 @@ public class UsageStatusLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         diskUsageStatisticsTitle = diskUsageStatisticsTitle();
         diskUsageStatisticsAvailable = diskUsageStatisticsAvailable(diskUsageStatisticsTitle);

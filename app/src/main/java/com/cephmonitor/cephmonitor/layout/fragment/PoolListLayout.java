@@ -27,7 +27,6 @@ public class PoolListLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         list = list();
         addView(list);

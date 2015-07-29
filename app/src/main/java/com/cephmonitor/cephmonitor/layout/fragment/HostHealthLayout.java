@@ -26,7 +26,6 @@ public class HostHealthLayout extends FractionAbleRelativeLayout {
 
         setId(RandomId.get());
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
 
         addView(list = list());
     }
