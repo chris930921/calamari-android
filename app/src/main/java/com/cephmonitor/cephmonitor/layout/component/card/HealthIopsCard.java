@@ -85,6 +85,8 @@ public class HealthIopsCard extends HealthBaseCard {
 
     public void setChartData(ChartLine adapter) {
         if (histogram == null) return;
+
+        histogram.cleanData();
         histogram.addAdapter(adapter);
     }
 

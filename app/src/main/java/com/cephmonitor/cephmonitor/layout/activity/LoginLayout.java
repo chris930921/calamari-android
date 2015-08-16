@@ -1,205 +1,385 @@
 package com.cephmonitor.cephmonitor.layout.activity;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.edittext.BorderEditText;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 import com.resourcelibrary.model.view.button.RoundFillColorButton;
-import com.resourcelibrary.model.view.edittext.RoundCornerEditText;
 
 public class LoginLayout extends RelativeLayout {
     public ImageView inwinLogo;
-    public TextView titleOne;
-    public TextView titleTwo;
-    public TextView titleThree;
+//    public TextView titleOne;
+//    public TextView titleTwo;
+//    public TextView titleThree;
 
-    public RoundCornerEditText host;
-    public RoundCornerEditText port;
-    public RoundCornerEditText name;
-    public RoundCornerEditText password;
+    public BorderEditText host;
+    public BorderEditText port;
+    public BorderEditText name;
+    public BorderEditText password;
+
+    public RelativeLayout footer;
+    public TextView versionText;
+    public RelativeLayout footerBottomLineCenterContainer;
+    public TextView fromText;
+    public ImageView inwinTextLogo;
+    public TextView developerText;
 
     public Button signIn;
 
     private Context context;
     private WH ruler;
+    private String versionName;
+
+    private DesignSpec designSpec;
+    private int backgroundColor;
+    private int inputBackgroundColor;
+    private int buttonBackgroundColor;
+    private int buttonPressColor;
+    private TextViewStyle inputTextStyle;
+    private TextViewStyle buttonTextStyle;
+    private TextViewStyle footerTextStyle;
+    private int imageTopMargin;
+    private int imageBottomMargin;
+    private int inputTopMargin;
+    private int buttonTopMargin;
+    private int textBottomMargin;
+    private int inputLeftRightMargin;
 
     public LoginLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
-        int padding = ruler.getW(6.12);
+        this.designSpec = ThemeManager.getStyle(context);
+        backgroundColor = designSpec.getPrimaryColors().getBackgroundOne();
+        inputBackgroundColor = designSpec.getPrimaryColors().getBackgroundThree();
+        buttonBackgroundColor = designSpec.getPrimaryColors().getPrimary();
+        buttonPressColor = designSpec.getPrimaryColors().getSecondary();
+        inputTextStyle = new TextViewStyle(designSpec.getStyle().getBodyOne());
+        buttonTextStyle = new TextViewStyle(designSpec.getStyle().getLargeButton());
+        footerTextStyle = new TextViewStyle(designSpec.getStyle().getNote());
+        imageTopMargin = ruler.getW(designSpec.getMargin().getTopBottomFour());
+        imageBottomMargin = ruler.getW(designSpec.getMargin().getLeftRightFour());
+        inputTopMargin = ruler.getW(designSpec.getMargin().getTopBottomOne());
+        buttonTopMargin = ruler.getW(designSpec.getMargin().getTopBottomOne());
+        textBottomMargin = ruler.getW(designSpec.getMargin().getTopBottomOne());
+        inputLeftRightMargin = ruler.getW(designSpec.getMargin().getLeftRightOne());
+
+        try {
+            PackageInfo packageInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
-        setBackgroundColor(Color.WHITE);
-        setPadding(padding, padding, padding, padding);
+        setBackgroundColor(backgroundColor);
+        setPadding(inputLeftRightMargin, 0, inputLeftRightMargin, 0);
 
-        addView(inwinLogo = inwinLogo());
-        addView(titleOne = titleOne(inwinLogo));
-        addView(titleThree = titleThree(inwinLogo, titleOne));
-        addView(titleTwo = titleTwo(titleThree));
-        addView(host = host(titleThree));
-        addView(port = port(host));
-        addView(name = name(port));
-        addView(password = password(name));
-        addView(signIn = signIn(password));
+        inwinLogo = inwinLogo();
+        host = host(inwinLogo);
+        port = port(host);
+        name = name(port);
+        password = password(name);
+        signIn = signIn(password);
+        footer = footer();
+        versionText = versionText();
+        footerBottomLineCenterContainer = footerBottomLineCenterContainer(versionText);
+        fromText = fromText();
+        inwinTextLogo = inwinTextLogo(fromText);
+        developerText = developerText(inwinTextLogo);
+
+        addView(inwinLogo);
+        addView(host);
+        addView(port);
+        addView(name);
+        addView(password);
+        addView(signIn);
+        addView(footer);
+        footer.addView(versionText);
+        footer.addView(footerBottomLineCenterContainer);
+        footerBottomLineCenterContainer.addView(fromText);
+        footerBottomLineCenterContainer.addView(inwinTextLogo);
+        footerBottomLineCenterContainer.addView(developerText);
 
         setTextInput();
         recoverInputStatus();
     }
 
     private ImageView inwinLogo() {
-        LayoutParams params = new LayoutParams(ruler.getW(36.7), ruler.getH(16.8));
+        LayoutParams params = new LayoutParams(
+                220,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(CENTER_HORIZONTAL);
         params.addRule(ALIGN_PARENT_TOP);
-        params.addRule(ALIGN_PARENT_LEFT);
+        params.topMargin = imageTopMargin;
 
         ImageView v = new ImageView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setImageResource(R.drawable.icon01);
+        v.setAdjustViewBounds(true);
+        v.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         return v;
     }
 
-    private TextView titleOne(View relativeView) {
-        LayoutParams params = new LayoutParams(ruler.getW(51.02), LayoutParams.WRAP_CONTENT);
-        params.addRule(ALIGN_TOP, relativeView.getId());
-        params.addRule(RIGHT_OF, relativeView.getId());
-        params.setMargins(ruler.getW(2.04), 0, 0, 0);
+//    private TextView titleOne(View relativeView) {
+//        LayoutParams params = new LayoutParams(ruler.getW(51.02), LayoutParams.WRAP_CONTENT);
+//        params.addRule(ALIGN_TOP, relativeView.getId());
+//        params.addRule(RIGHT_OF, relativeView.getId());
+//        params.setMargins(ruler.getW(2.04), 0, 0, 0);
+//
+//        TextView v = new TextView(context);
+//        v.setId(RandomId.get());
+//        v.setLayoutParams(params);
+//        v.setTextSize(ruler.getTextSize(30));
+//        v.setGravity(Gravity.CENTER_VERTICAL);
+//        v.setTypeface(null, Typeface.BOLD);
+//        v.setText(R.string.login_title_one);
+//
+//        return v;
+//    }
+//
+//    private TextView titleThree(View alignBottom, View alignLeft) {
+//        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
+//        params.addRule(ALIGN_LEFT, alignLeft.getId());
+//        params.addRule(ALIGN_BOTTOM, alignBottom.getId());
+//        params.setMargins(0, 0, 0, 0);
+//
+//        TextView v = new TextView(context);
+//        v.setId(RandomId.get());
+//        v.setLayoutParams(params);
+//        v.setTextSize(ruler.getTextSize(20));
+//        v.setGravity(Gravity.CENTER_VERTICAL);
+//        v.setText(R.string.login_title_three);
+//        return v;
+//    }
+//
+//    private TextView titleTwo(View relativeView) {
+//        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
+//        params.addRule(ALIGN_LEFT, relativeView.getId());
+//        params.addRule(ABOVE, relativeView.getId());
+//        params.setMargins(0, 0, 0, 0);
+//
+//        TextView v = new TextView(context);
+//        v.setId(RandomId.get());
+//        v.setLayoutParams(params);
+//        v.setTextSize(ruler.getTextSize(20));
+//        v.setGravity(Gravity.CENTER_VERTICAL);
+//        v.setText(R.string.login_title_two);
+//        return v;
+//    }
 
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(30));
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setTypeface(null, Typeface.BOLD);
-        v.setText(R.string.login_title_one);
 
-        return v;
-    }
-
-    private TextView titleThree(View alignBottom, View alignLeft) {
-        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
-        params.addRule(ALIGN_LEFT, alignLeft.getId());
-        params.addRule(ALIGN_BOTTOM, alignBottom.getId());
-        params.setMargins(0, 0, 0, 0);
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setText(R.string.login_title_three);
-        return v;
-    }
-
-    private TextView titleTwo(View relativeView) {
-        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
-        params.addRule(ALIGN_LEFT, relativeView.getId());
-        params.addRule(ABOVE, relativeView.getId());
-        params.setMargins(0, 0, 0, 0);
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setText(R.string.login_title_two);
-        return v;
-    }
-
-
-    private RoundCornerEditText host(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(7.22));
+    private BorderEditText host(View relativeView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
-        params.setMargins(0, ruler.getH(6.02), 0, 0);
+        params.topMargin = imageBottomMargin;
 
-        RoundCornerEditText v = addInput(R.string.login_host);
+        BorderEditText v = addInput(R.string.login_host);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private RoundCornerEditText port(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(7.22));
+    private BorderEditText port(View relativeView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
-        params.setMargins(0, ruler.getH(4.21), 0, 0);
+        params.topMargin = inputTopMargin;
 
-        RoundCornerEditText v = addInput(R.string.login_port);
+        BorderEditText v = addInput(R.string.login_port);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private RoundCornerEditText name(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(7.22));
+    private BorderEditText name(View relativeView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
-        params.setMargins(0, ruler.getH(4.21), 0, 0);
+        params.topMargin = inputTopMargin;
 
-        RoundCornerEditText v = addInput(R.string.login_name);
+        BorderEditText v = addInput(R.string.login_name);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private RoundCornerEditText password(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(7.22));
+    private BorderEditText password(View relativeView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
-        params.setMargins(0, ruler.getH(4.21), 0, 0);
+        params.topMargin = inputTopMargin;
 
-        RoundCornerEditText v = addInput(R.string.login_password);
+        BorderEditText v = addInput(R.string.login_password);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private RoundCornerEditText addInput(int hintId) {
-        RoundCornerEditText input = new RoundCornerEditText(context);
+    private BorderEditText addInput(int hintId) {
+        BorderEditText input = new BorderEditText(context);
         input.setId(RandomId.get());
-        input.setTextSize(ruler.getTextSize(22));
         input.setSingleLine(true);
         input.setGravity(Gravity.CENTER_VERTICAL);
         input.setPadding(ruler.getW(6.12), 0, ruler.getW(6.12), 0);
         input.setHint(hintId);
         input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
         input.setTypeface(null, Typeface.BOLD);
-        input.setBorderWidth(ruler.getW(1.02));
+        input.setBackgroundColor(inputBackgroundColor);
+        inputTextStyle.style(input);
 
         return input;
     }
 
     private Button signIn(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(7.22));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
-        params.setMargins(0, ruler.getH(4.81), 0, 0);
+        params.topMargin = buttonTopMargin;
 
         RoundFillColorButton v = new RoundFillColorButton(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
-        v.setTextColor(Color.argb(255, 255, 255, 255));
         v.setGravity(Gravity.CENTER);
         v.setPadding(0, 0, 0, 0);
-        v.setFillAndPressColor(ColorTable._E63427, ColorTable._942119);
+        v.setFillAndPressColor(buttonBackgroundColor, buttonPressColor);
         v.setText(R.string.login_sign_in);
+        buttonTextStyle.style(v);
+        v.setTextColor(Color.WHITE);
+
+        return v;
+    }
+
+    private RelativeLayout footer() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        params.bottomMargin = textBottomMargin;
+
+        RelativeLayout v = new RelativeLayout(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER);
+
+        return v;
+    }
+
+    private TextView versionText() {
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setText(getContext().getString(R.string.login_version) + versionName);
+        footerTextStyle.style(v);
+
+        return v;
+    }
+
+    private RelativeLayout footerBottomLineCenterContainer(View topView) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        params.addRule(BELOW, topView.getId());
+
+        RelativeLayout v = new RelativeLayout(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER);
+
+        return v;
+    }
+
+    private TextView fromText() {
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        params.addRule(CENTER_VERTICAL);
+
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setText(R.string.login_from);
+        footerTextStyle.style(v);
+
+        return v;
+    }
+
+    private ImageView inwinTextLogo(View leftView) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(context.getResources(), R.drawable.icon034, options);
+        float width = options.outWidth;
+        float height = options.outHeight;
+        float viewHeight = 28;
+        float multiple = viewHeight / height;
+        float viewWidth = width * multiple;
+
+        LayoutParams params = new LayoutParams(
+                (int) viewWidth,
+                (int) viewHeight);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        params.addRule(RIGHT_OF, leftView.getId());
+
+        ImageView v = new ImageView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setAdjustViewBounds(true);
+        v.setScaleType(ImageView.ScaleType.FIT_XY);
+        v.setImageResource(R.drawable.icon034);
+
+        return v;
+    }
+
+    private TextView developerText(View leftView) {
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        params.addRule(RIGHT_OF, leftView.getId());
+        params.addRule(CENTER_VERTICAL);
+
+        TextView v = new TextView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setText(R.string.login_developer);
+        footerTextStyle.style(v);
 
         return v;
     }
@@ -212,15 +392,15 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private void recoverInputStatus() {
-        int color = ColorTable._666666;
-        host.setBorderColor(color);
-        port.setBorderColor(color);
-        name.setBorderColor(color);
-        password.setBorderColor(color);
+        host.recoverColor();
+        port.recoverColor();
+        name.recoverColor();
+        password.recoverColor();
     }
 
     public void setNoValueInput(View v) {
         recoverInputStatus();
-        ((RoundCornerEditText) v).setBorderColor(ColorTable._E63427);
+        BorderEditText input = ((BorderEditText) v);
+        input.warningColor();
     }
 }

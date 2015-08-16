@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.io.ReadAssetsFile;
 import com.resourcelibrary.model.network.api.ceph.CephApiUrl;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -29,6 +30,7 @@ public class ClusterV2MonListRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "[ { \"name\": \"node-60\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" }, { \"name\": \"node-61\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" }, { \"name\": \"node-62\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" }, { \"name\": \"node-63\", \"rank\": 0, \"in_quorum\": true, \"server\": \"node-60.domain.tld\", \"addr\": \"192.168.0.8:6789/0\" } ]";
+        String result = new ReadAssetsFile(getContext()).readText("api/api_v2_cluster_id_mon.txt");
+        return result;
     }
 }

@@ -26,4 +26,8 @@ public abstract class IconSize extends SpecAttribute {
     public abstract float getLargeButton();
 
     public abstract float getMessage();
+
+    public abstract float getDisplayOne();
+
+    public abstract float getHeadline();
 }

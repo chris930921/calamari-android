@@ -4,9 +4,6 @@
     <string name="app_name">Ceph Monitor</string>
 
     //LoginActivity
-    <string name="login_title_one">Login</string>
-    <string name="login_title_two">Welcome</string>
-    <string name="login_title_three">Ceph Monitor！</string>
     <string name="login_host">Host</string>
     <string name="login_port">Port</string>
     <string name="login_name">Name</string>
@@ -16,6 +13,9 @@
     <string name="login_fail_confirm">Confirm</string>
     <string name="login_fail_sing_in">Incorrect username or password.</string>
     <string name="login_sign_in">Sign in</string>
+    <string name="login_version">Ceph Monitor Version\u0020</string>
+    <string name="login_from">由</string>
+    <string name="login_developer">公司設計開發</string>
 
     //MainActivity
     <string name="main_activity_option_notification">Notifications</string>
@@ -29,7 +29,7 @@
     <string name="main_activity_fragment_health">Dashboard</string>
     <string name="main_activity_fragment_health_detail">Health Detail</string>
     <string name="main_activity_fragment_osd_health">OSD Health</string>
-    <string name="main_activity_fragment_mon_health">MON Health</string>
+    <string name="main_activity_fragment_mon_health">Monitor Health</string>
     <string name="main_activity_fragment_notification">Notifications</string>
     <string name="main_activity_fragment_host_health">Host List</string>
     <string name="main_activity_fragment_pg_status">PG Status</string>

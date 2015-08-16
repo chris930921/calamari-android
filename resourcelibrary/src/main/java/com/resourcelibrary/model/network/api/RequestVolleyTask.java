@@ -21,12 +21,18 @@ public class RequestVolleyTask<T> {
     private static RequestQueue taskQueue;
     //API需要的參數。
     private T params;
+    private Context context;
 
     //沒有佇列參考就取新的實體，有就略過。
     public RequestVolleyTask(Context context) {
+        this.context = context;
         if (taskQueue == null) {
             taskQueue = Volley.newRequestQueue(context, new MutipleCookieHttpStack());
         }
+    }
+
+    protected Context getContext() {
+        return context;
     }
 
     //開啟或關閉假資料測試。

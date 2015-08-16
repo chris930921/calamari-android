@@ -32,7 +32,7 @@ public class FloatLayoutLabel extends View {
     private int leftMargin;
     private int topMargin;
 
-    private static final String maxTextHeightExample = "Ij";
+    private static final String maxTextHeightExample = "a";
 
     public FloatLayoutLabel(Context context) {
         super(context);

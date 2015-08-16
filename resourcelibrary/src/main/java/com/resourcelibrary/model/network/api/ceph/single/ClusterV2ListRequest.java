@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.io.ReadAssetsFile;
 import com.resourcelibrary.model.network.api.ceph.CephApiUrl;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -29,6 +30,7 @@ public class ClusterV2ListRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "[ { \"update_time\": \"2015-04-22T18:40:43.204986+00:00\", \"id\": \"313b8bd3-a506-49bd-ad57-f99cf350505f\", \"name\": \"ceph\" } ]";
+        String result = new ReadAssetsFile(getContext()).readText("api/api_v2_cluster.txt");
+        return result;
     }
 }

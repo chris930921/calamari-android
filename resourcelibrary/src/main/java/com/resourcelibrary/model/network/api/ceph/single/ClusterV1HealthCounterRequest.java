@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.io.ReadAssetsFile;
 import com.resourcelibrary.model.network.api.ceph.CephApiUrl;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -29,11 +30,8 @@ public class ClusterV1HealthCounterRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        boolean isRandom = true;
-        if (isRandom) {
-            return "{ \"pg\": { \"warn\": { \"count\": " + ((int) (Math.random() * 300) + 600) + ", \"states\": {} }, \"critical\": { \"count\": " + ((int) (Math.random() * 300) + 600) + ", \"states\": {} }, \"ok\": { \"count\": 960, \"states\": { \"active\": 960, \"clean\": 960 } } }, \"mds\": { \"up_not_in\": 0, \"not_up_not_in\": 0, \"total\": 0, \"up_in\": 0 }, \"mon\": { \"warn\": { \"count\": " + (int) (Math.random() * 3) + ", \"states\": {} }, \"critical\": { \"count\": " + (int) (Math.random() * 3) + ", \"states\": {} }, \"ok\": { \"count\": 1, \"states\": { \"in\": 1 } } }, \"osd\": { \"warn\": { \"count\": " + (int) (Math.random() * 3) + ", \"states\": {} }, \"critical\": { \"count\": " + (int) (Math.random() * 3) + ", \"states\": {} }, \"ok\": { \"count\": 3, \"states\": { \"up/in\": 3 } } }, \"cluster_update_time\": \"2015-04-22T18:42:23.046870+00:00\", \"cluster_update_time_unix\": 1429728143000 }";
-        } else {
-            return "{ \"pg\": { \"warn\": { \"count\": 10, \"states\": {} }, \"critical\": { \"count\": 15, \"states\": {} }, \"ok\": { \"count\": 960, \"states\": { \"active\": 960, \"clean\": 960 } } }, \"mds\": { \"up_not_in\": 0, \"not_up_not_in\": 0, \"total\": 0, \"up_in\": 0 }, \"mon\": { \"warn\": { \"count\": 4, \"states\": {} }, \"critical\": { \"count\": 6, \"states\": {} }, \"ok\": { \"count\": 1, \"states\": { \"in\": 1 } } }, \"osd\": { \"warn\": { \"count\": 1, \"states\": {} }, \"critical\": { \"count\": 2, \"states\": {} }, \"ok\": { \"count\": 3, \"states\": { \"up/in\": 3 } } }, \"cluster_update_time\": \"2015-04-22T18:42:23.046870+00:00\", \"cluster_update_time_unix\": 1429728143000 }";
-        }
+//        String result = new ReadAssetsFile(getContext()).readText("api/api_v1_cluster_id_health_counters.txt");
+        String result = new ReadAssetsFile(getContext()).readText("api/api_v1_cluster_id_health_counters_osd_fail.txt");
+        return result;
     }
 }

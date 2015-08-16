@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.io.ReadAssetsFile;
 import com.resourcelibrary.model.network.api.ceph.CephApiUrl;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -31,6 +32,17 @@ public class GraphiteMetricsFindPools extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        return "[]";
+        String path;
+        if (params.getGraphiteQuery().contains("iostat")) {
+            path = "api/graphite_mettics_find_servers_ceph_node2_iostat_all.txt";
+        } else if (params.getGraphiteQuery().contains("cpu")) {
+            path = "api/graphite_mettics_find_servers_ceph_node2_cpu_all.txt";
+        } else if (params.getGraphiteQuery().contains("pool")) {
+            path = "api/graphite_mettics_find_servers_ceph_cluster_id_pool_all.txt";
+        } else {
+            return "[]";
+        }
+        String result = new ReadAssetsFile(getContext()).readText(path);
+        return result;
     }
 }

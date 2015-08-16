@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.fragment.HealthDetailFragment;
@@ -23,9 +25,11 @@ import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
+import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
+import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import com.resourcelibrary.model.view.dialog.RoundSimpleSelectDialog;
@@ -41,6 +45,8 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private DesignSpec designSpec;
     private int primary;
     private int secondary;
+    private int broadcastResourceId;
+    private int nextBroadcastResourceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,8 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(HostDetailSummaryFragment.class, showHostDetailSummaryFragment);
         changeStyleTask.put(HostDetailAllCpusFragment.class, showHostDetailAllCpusFragment);
         changeStyleTask.put(HostDetailIopsFragment.class, showHostDetailIopsFragment);
+
+        layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
         FragmentLauncher.goHealthFragment(activity);
         layout.health.setBackgroundResource(R.drawable.icon06);
@@ -119,6 +127,53 @@ public class MainActivity extends Activity implements InitFragment.Style {
                 dialog.show();
             }
         });
+        layout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if (nextBroadcastResourceId == R.string.main_activity_fragment_health) return;
+                if (nextBroadcastResourceId == broadcastResourceId) return;
+
+                broadcastResourceId = nextBroadcastResourceId;
+                int[] optionNameResourceGroup = NavigationMenu.optionNameResourceGroup;
+                if (broadcastResourceId == optionNameResourceGroup[0]) {
+                    FragmentLauncher.goHealthFragment(activity);
+                } else if (broadcastResourceId == optionNameResourceGroup[12]) {
+                    ActivityLauncher.goLoginActivity(activity);
+                    loginInfo.setIsLogin(false);
+                    finish();
+                } else if (broadcastResourceId == optionNameResourceGroup[9]) {
+                    FragmentLauncher.goNotificationFragment(activity, null);
+                } else if (broadcastResourceId == optionNameResourceGroup[10]) {
+                    //TODO
+                } else if (broadcastResourceId == optionNameResourceGroup[11]) {
+                    //TODO
+                } else {
+                    Bundle message = new Bundle();
+                    message.putInt("RECEIVER_ID", broadcastResourceId);
+                    LoadFinishReceiver.sendBroadcast(activity, message);
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+
+        layout.navigationMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                nextBroadcastResourceId = (int) view.getTag();
+                layout.changeNavigationStatus();
+            }
+        });
 
         choiceFragment();
     }
@@ -167,6 +222,11 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             setTitle(getResources().getString(R.string.main_activity_fragment_health));
             layout.hideAllComponent();
+            layout.showNavigation();
+            layout.setSelected(R.string.main_activity_fragment_health);
+            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            broadcastResourceId = R.string.main_activity_fragment_health;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.topBar.setBackgroundColor(primary);
         }
     };
@@ -177,6 +237,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_health_detail));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_health_detail);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -192,6 +253,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_osd_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_osd_health);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -225,6 +287,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_mon_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_mon_health);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -241,6 +304,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_notification));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_option_notification);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -256,6 +320,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_host_health));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_host_health);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -271,6 +336,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pg_status));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_pg_status);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -285,6 +351,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_usage_status));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_usage_status);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -300,6 +367,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_pool_iops);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -315,6 +383,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             setTitle(getResources().getString(R.string.main_activity_fragment_pool_list));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
+            layout.setSelected(R.string.main_activity_fragment_pool_list);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

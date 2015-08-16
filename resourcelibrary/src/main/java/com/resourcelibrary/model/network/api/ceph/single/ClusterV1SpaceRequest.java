@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.resourcelibrary.model.io.ReadAssetsFile;
 import com.resourcelibrary.model.network.api.ceph.CephApiUrl;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -13,6 +14,7 @@ import com.resourcelibrary.model.network.api.ceph.RequestCephTask;
  * Created by User on 4/16/2015.
  */
 public class ClusterV1SpaceRequest extends RequestCephTask {
+    public static int fakeValueIndex;
 
     public ClusterV1SpaceRequest(Context context) {
         super(context);
@@ -29,8 +31,14 @@ public class ClusterV1SpaceRequest extends RequestCephTask {
 
     @Override
     protected String fakeValue(CephParams params) {
-        String[] used_values = {"181830676480", "281830676480", "381830676480", "477288345600", "540926791680"};
-        int index = (int) (Math.random() * 5);
-        return "{ \"space\": { \"free_bytes\": 631986425856, \"used_bytes\": " + used_values[index] + ", \"capacity_bytes\": 636384460800 } }";
+        String[] useValue = {
+                "api/api_v1_cluster_id_space_28%.txt",
+                "api/api_v1_cluster_id_space_44%.txt",
+                "api/api_v1_cluster_id_space_60%.txt",
+                "api/api_v1_cluster_id_space_75%.txt",
+                "api/api_v1_cluster_id_space_85%.txt"};
+        fakeValueIndex = (fakeValueIndex + 1) % 5;
+        String result = new ReadAssetsFile(getContext()).readText(useValue[fakeValueIndex]);
+        return result;
     }
 }

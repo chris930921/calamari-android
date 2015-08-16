@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -126,6 +127,7 @@ public class UsageStatusLayout extends FractionAbleRelativeLayout {
         ChartTable v = new ChartTable(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
+        v.setBackgroundColor(Color.TRANSPARENT);
 
         return v;
     }

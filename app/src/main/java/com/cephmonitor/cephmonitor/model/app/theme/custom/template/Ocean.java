@@ -307,6 +307,16 @@ public class Ocean extends DesignSpec {
             }
 
             @Override
+            public float getLeftRightThree() {
+                return 9;
+            }
+
+            @Override
+            public float getLeftRightFour() {
+                return 12;
+            }
+
+            @Override
             public float getTopBottomOne() {
                 return 3;
             }
@@ -314,6 +324,16 @@ public class Ocean extends DesignSpec {
             @Override
             public float getTopBottomTwo() {
                 return 6;
+            }
+
+            @Override
+            public float getTopBottomThree() {
+                return 9;
+            }
+
+            @Override
+            public float getTopBottomFour() {
+                return 12;
             }
         };
     }
@@ -379,6 +399,16 @@ public class Ocean extends DesignSpec {
             @Override
             public float getMessage() {
                 return 30F;
+            }
+
+            @Override
+            public float getDisplayOne() {
+                return 11.7F;
+            }
+
+            @Override
+            public float getHeadline() {
+                return 8.8F;
             }
         };
     }

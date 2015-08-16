@@ -2,6 +2,7 @@ package com.cephmonitor.cephmonitor.layout.activity;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.container.DrawerRelativeLayout;
+import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.layout.component.tab.SimpleTabView;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
@@ -21,11 +24,13 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-public class MainLayout extends RelativeLayout {
+public class MainLayout extends DrawerRelativeLayout {
     public static final int CONTAINER_ID = MainLayout.class.hashCode();
 
     private OnClickListener backClickEvent;
 
+    public NavigationMenu navigationMenu;
+    public FrameLayout drawerDragBar;
     public RelativeLayout bottomBar;
     public RelativeLayout topBar;
     public SimpleTabView tabGroup;
@@ -36,6 +41,7 @@ public class MainLayout extends RelativeLayout {
     public Button more;
     public View bottomBarLine;
     public ImageView back;
+    public ImageView navigationButton;
     public View realBackButton;
 
     public TextView title;
@@ -57,30 +63,79 @@ public class MainLayout extends RelativeLayout {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
         setBackgroundColor(Color.WHITE);
+        setScrimColor(Color.parseColor("#80000000"));
 
-        addView(topBar = topBar());
-        topBar.addView(back = back());
-        topBar.addView(realBackButton = realBackButton());
-        topBar.addView(title = title(back));
+        navigationMenu = navigationMenu();
+        topBar = topBar();
+        back = back();
+        navigationButton = navigationButton();
+        realBackButton = realBackButton();
+        title = title(back);
+        bottomBar = bottomBar();
+        bottomBarLine = bottomBarLine();
+        bottomContainer = bottomContainer(bottomBarLine);
+        health = health();
+        usage = usage();
+        performance = performance();
+        performance = performance();
+        more = more();
+        tabGroup = tabGroup(topBar);
+        fragment = fragment(tabGroup, bottomBar);
+        drawerDragBar = drawerDragBar();
 
+        setLeftSideView(navigationMenu);
+        addView(topBar);
+        topBar.addView(back);
+        topBar.addView(navigationButton);
+        topBar.addView(realBackButton);
+        topBar.addView(title);
         addView(bottomBar = bottomBar());
-        bottomBar.addView(bottomBarLine = bottomBarLine());
-        bottomBar.addView(bottomContainer = bottomContainer(bottomBarLine));
-        bottomContainer.addView(health = health());
+        bottomBar.addView(bottomBarLine);
+        bottomBar.addView(bottomContainer);
+        bottomContainer.addView(health);
         bottomContainer.addView(divider());
-        bottomContainer.addView(usage = usage());
+        bottomContainer.addView(usage);
         bottomContainer.addView(divider());
-        bottomContainer.addView(performance = performance());
+        bottomContainer.addView(performance);
         bottomContainer.addView(divider());
-        bottomContainer.addView(more = more());
+        bottomContainer.addView(more);
+        addView(tabGroup);
+        addView(fragment);
+        addView(drawerDragBar);
+    }
 
-        addView(tabGroup = tabGroup(topBar));
-        addView(fragment = fragment(tabGroup, bottomBar));
+    private FrameLayout drawerDragBar() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                40,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+        FrameLayout v = new FrameLayout(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setBackgroundColor(Color.TRANSPARENT);
+
+        return v;
+    }
+
+    private NavigationMenu navigationMenu() {
+        DrawerLayout.LayoutParams params = new DrawerLayout.LayoutParams(
+                ruler.getW(80),
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        params.gravity = Gravity.START;
+
+        NavigationMenu v = new NavigationMenu(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setVisibility(INVISIBLE);
+        v.setBackgroundColor(backgroundOne);
+
+        return v;
     }
 
     private RelativeLayout topBar() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
-        params.addRule(ALIGN_PARENT_TOP);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
@@ -92,12 +147,12 @@ public class MainLayout extends RelativeLayout {
     }
 
     private ImageView back() {
-        LayoutParams params = new LayoutParams(
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ruler.getW(designSpec.getIconSize().getTitle()),
                 ruler.getW(designSpec.getIconSize().getTitle())
         );
-        params.addRule(CENTER_VERTICAL);
-        params.addRule(ALIGN_PARENT_LEFT);
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         params.leftMargin = ruler.getW(3);
 
         ImageView v = new ImageView(context);
@@ -109,25 +164,42 @@ public class MainLayout extends RelativeLayout {
         return v;
     }
 
+    private ImageView navigationButton() {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ruler.getW(designSpec.getIconSize().getTitle()),
+                ruler.getW(designSpec.getIconSize().getTitle())
+        );
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        params.leftMargin = ruler.getW(3);
+
+        ImageView v = new ImageView(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setImageResource(R.drawable.icon032);
+        v.setVisibility(INVISIBLE);
+
+        return v;
+    }
+
     private View realBackButton() {
-        LayoutParams params = new LayoutParams(
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ruler.getW(20),
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        params.addRule(CENTER_VERTICAL);
-        params.addRule(ALIGN_PARENT_LEFT);
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         View v = new View(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
 
-
         return v;
     }
 
     private TextView title(View leftView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        params.addRule(RIGHT_OF, leftView.getId());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
         params.setMargins(0, 0, ruler.getW(designSpec.getIconSize().getTitle()), 0);
 
         TextView v = new TextView(context);
@@ -143,10 +215,10 @@ public class MainLayout extends RelativeLayout {
     }
 
     private SimpleTabView tabGroup(View topView) {
-        LayoutParams params = new LayoutParams(
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 ruler.getW(13));
-        params.addRule(BELOW, topView.getId());
+        params.addRule(RelativeLayout.BELOW, topView.getId());
 
         SimpleTabView v = new SimpleTabView(context);
         v.setId(RandomId.get());
@@ -159,8 +231,8 @@ public class MainLayout extends RelativeLayout {
     }
 
     private RelativeLayout bottomBar() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.04));
-        params.addRule(ALIGN_PARENT_BOTTOM);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(12.04));
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
         RelativeLayout v = new RelativeLayout(context);
         v.setId(RandomId.get());
@@ -172,9 +244,9 @@ public class MainLayout extends RelativeLayout {
     }
 
     private LinearLayout bottomContainer(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        params.addRule(BELOW, relativeView.getId());
-        params.addRule(CENTER_HORIZONTAL);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.BELOW, relativeView.getId());
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         LinearLayout v = new LinearLayout(context);
         v.setId(RandomId.get());
@@ -232,8 +304,8 @@ public class MainLayout extends RelativeLayout {
     }
 
     private View bottomBarLine() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(0.36));
-        params.addRule(ALIGN_PARENT_TOP);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(0.36));
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
         View v = new View(context);
         v.setId(RandomId.get());
@@ -244,9 +316,9 @@ public class MainLayout extends RelativeLayout {
     }
 
     private FrameLayout fragment(View topView, View bottomView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        params.addRule(BELOW, topView.getId());
-        params.addRule(ABOVE, bottomView.getId());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.BELOW, topView.getId());
+        params.addRule(RelativeLayout.ABOVE, bottomView.getId());
 
         FrameLayout v = new FrameLayout(context);
         v.setId(CONTAINER_ID);
@@ -272,8 +344,20 @@ public class MainLayout extends RelativeLayout {
         backClickEvent = event;
     }
 
+    public void showNavigation() {
+        navigationButton.setVisibility(VISIBLE);
+        realBackButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeNavigationStatus();
+            }
+        });
+    }
+
     public void hideAllComponent() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         back.setVisibility(INVISIBLE);
+        navigationButton.setVisibility(INVISIBLE);
         realBackButton.setOnClickListener(null);
         backClickEvent = null;
         bottomBar.setVisibility(GONE);
@@ -296,4 +380,14 @@ public class MainLayout extends RelativeLayout {
     public void addTab(String name, Object tag, OnTabChangeListener listener) {
         tabGroup.add(name, tag, listener);
     }
+
+    public void setNavigationTitleText(String lineOne, String lineTwo) {
+        navigationMenu.titleLineOne.setText(lineOne);
+        navigationMenu.titleLineTwo.setText(lineTwo);
+    }
+
+    public void setSelected(int resourceId) {
+        navigationMenu.setSelected(resourceId);
+    }
+
 }

@@ -17,7 +17,16 @@ public abstract class Margin extends SpecAttribute {
 
     public abstract float getLeftRightTwo();
 
+    public abstract float getLeftRightThree();
+
+    public abstract float getLeftRightFour();
+
     public abstract float getTopBottomOne();
 
     public abstract float getTopBottomTwo();
+
+    public abstract float getTopBottomThree();
+
+    public abstract float getTopBottomFour();
+
 }

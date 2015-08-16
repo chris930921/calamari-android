@@ -1,6 +1,8 @@
 package com.cephmonitor.cephmonitor.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,10 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine;
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
+import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
+import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.logic.TimeUnit;
 import com.resourcelibrary.model.network.GeneralError;
@@ -74,6 +78,8 @@ public class HealthFragment extends Fragment {
     public int pgCardDirtyCount;
 
     private LoadingDialog loadingDialog;
+
+    private LoadFinishReceiver loadFinishReceiver;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -141,9 +147,41 @@ public class HealthFragment extends Fragment {
         layout.monCard.setTitleOnClickListener(monCardClickEvent);
         layout.hostsCard.setTitleOnClickListener(hostCardClickEvent);
         layout.pgStatusCard.setTitleOnClickListener(pgStatusCardClickEvent);
-        layout.usageCard.setTitleOnClickListener(pgUsageStatusClickEvent);
+        layout.usageCard.setTitleOnClickListener(usageStatusClickEvent);
         layout.iopsCard.setTitleOnClickListener(iopsClickEvent);
         layout.poolsCard.setTitleOnClickListener(poolsClickEvent);
+
+        loadFinishReceiver = new LoadFinishReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int resourceId = intent.getExtras().getInt("RECEIVER_ID");
+                int[] optionNameResourceGroup = NavigationMenu.optionNameResourceGroup;
+                if (resourceId == optionNameResourceGroup[1]) {
+                    healthCardClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[2]) {
+                    osdCardClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[3]) {
+                    monCardClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[4]) {
+                    poolsClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[5]) {
+                    hostCardClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[6]) {
+                    pgStatusCardClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[7]) {
+                    usageStatusClickEvent.onClick(null);
+                } else if (resourceId == optionNameResourceGroup[8]) {
+                    iopsClickEvent.onClick(null);
+                }
+            }
+        };
+        loadFinishReceiver.register(getActivity());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        loadFinishReceiver.unregister(getActivity());
     }
 
     private View.OnClickListener healthCardClickEvent = new View.OnClickListener() {
@@ -158,6 +196,7 @@ public class HealthFragment extends Fragment {
             FragmentLauncher.goHealthDetailFragment(getActivity(), arg);
         }
     };
+
     private View.OnClickListener osdCardClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -203,12 +242,13 @@ public class HealthFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener pgUsageStatusClickEvent = new View.OnClickListener() {
+    private View.OnClickListener usageStatusClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             FragmentLauncher.goUsageStatusFragment(getActivity(), null);
         }
     };
+
     private View.OnClickListener iopsClickEvent = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

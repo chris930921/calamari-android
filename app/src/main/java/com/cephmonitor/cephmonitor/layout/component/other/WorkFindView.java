@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.component.other;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class WorkFindView extends RelativeLayout {
     private Context context;
     private WH ruler;
 
+    private int messageColor;
+
     public ImageView workFineImage;
     public TextView workFineLineOne;
     public TextView workFineLineTwo;
@@ -41,6 +44,8 @@ public class WorkFindView extends RelativeLayout {
         messageIconSize = designSpec.getIconSize().getMessage();
         leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
         topBottomPaddingOne = designSpec.getPadding().getTopBottomOne();
+
+        messageColor = Color.parseColor("#999999");
 
         workFineImage = workFineImage();
         workFineLineOne = workFineLineOne(workFineImage);
@@ -78,6 +83,7 @@ public class WorkFindView extends RelativeLayout {
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
         message.style(v);
+        v.setTextColor(messageColor);
 
         return v;
     }
@@ -94,6 +100,7 @@ public class WorkFindView extends RelativeLayout {
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
         message.style(v);
+        v.setTextColor(messageColor);
 
         return v;
     }
