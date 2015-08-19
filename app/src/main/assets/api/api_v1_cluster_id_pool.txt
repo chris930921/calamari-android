@@ -1,0 +1,52 @@
+[
+  {
+    "pool_id": 0,
+    "name": "rbd",
+    "quota_max_bytes": 0,
+    "quota_max_objects": 0,
+    "used_objects": 514,
+    "used_bytes": 2147483784,
+    "id": 0,
+    "cluster": "359888a8-b571-4bca-8209-686190717137"
+  },
+  {
+    "pool_id": 1,
+    "name": "scbench",
+    "quota_max_bytes": 0,
+    "quota_max_objects": 0,
+    "used_objects": 0,
+    "used_bytes": 0,
+    "id": 1,
+    "cluster": "359888a8-b571-4bca-8209-686190717137"
+  },
+  {
+    "pool_id": 2,
+    "name": "rbdbench",
+    "quota_max_bytes": 0,
+    "quota_max_objects": 0,
+    "used_objects": 256,
+    "used_bytes": 1063096455,
+    "id": 2,
+    "cluster": "359888a8-b571-4bca-8209-686190717137"
+  },
+  {
+    "pool_id": 3,
+    "name": "cephfs_data",
+    "quota_max_bytes": 0,
+    "quota_max_objects": 0,
+    "used_objects": 0,
+    "used_bytes": 0,
+    "id": 3,
+    "cluster": "359888a8-b571-4bca-8209-686190717137"
+  },
+  {
+    "pool_id": 4,
+    "name": "cephfs_metadata",
+    "quota_max_bytes": 0,
+    "quota_max_objects": 0,
+    "used_objects": 20,
+    "used_bytes": 2284,
+    "id": 4,
+    "cluster": "359888a8-b571-4bca-8209-686190717137"
+  }
+]

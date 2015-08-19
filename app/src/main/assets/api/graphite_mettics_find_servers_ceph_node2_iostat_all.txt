@@ -1,0 +1,72 @@
+[
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sda",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sda",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sda1",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sda1",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sda2",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sda2",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sda6",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sda6",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sdb",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sdb",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sdb1",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sdb1",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "sdb5",
+    "expandable": 1,
+    "id": "servers.ceph-node2.iostat.sdb5",
+    "allowChildren": 1
+  }
+]

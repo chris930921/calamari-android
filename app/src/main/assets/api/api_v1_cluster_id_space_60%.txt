@@ -1,0 +1,7 @@
+{
+  "space": {
+    "free_bytes": 631986425856,
+    "used_bytes": 381830676480,
+    "capacity_bytes": 636384460800
+  }
+}

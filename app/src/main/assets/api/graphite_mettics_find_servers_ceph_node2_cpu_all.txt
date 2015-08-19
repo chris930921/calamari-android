@@ -1,0 +1,32 @@
+[
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "cpu0",
+    "expandable": 1,
+    "id": "servers.ceph-node2.cpu.cpu0",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "cpu1",
+    "expandable": 1,
+    "id": "servers.ceph-node2.cpu.cpu1",
+    "allowChildren": 1
+  },
+  {
+    "leaf": 0,
+    "context": {
+      
+    },
+    "text": "total",
+    "expandable": 1,
+    "id": "servers.ceph-node2.cpu.total",
+    "allowChildren": 1
+  }
+]

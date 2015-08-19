@@ -1,0 +1,16 @@
+[
+  {
+    "name": "ceph-node5",
+    "rank": 0,
+    "in_quorum": true,
+    "server": "ceph-node5",
+    "addr": "10.21.20.165:6789\/0"
+  },
+  {
+    "name": "ceph-node6",
+    "rank": 1,
+    "in_quorum": true,
+    "server": "ceph-node6",
+    "addr": "10.21.20.166:6789\/0"
+  }
+]

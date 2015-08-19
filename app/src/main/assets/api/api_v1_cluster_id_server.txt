@@ -1,0 +1,111 @@
+[
+  {
+    "addr": "ceph-node4",
+    "hostname": "ceph-node4",
+    "name": "ceph-node4",
+    "services": [
+      {
+        "type": "osd",
+        "service_id": "6",
+        "name": "osd.6"
+      },
+      {
+        "type": "osd",
+        "service_id": "7",
+        "name": "osd.7"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-node5",
+    "hostname": "ceph-node5",
+    "name": "ceph-node5",
+    "services": [
+      {
+        "type": "mon",
+        "service_id": "ceph-node5",
+        "name": "mon.ceph-node5"
+      },
+      {
+        "type": "osd",
+        "service_id": "8",
+        "name": "osd.8"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-node3",
+    "hostname": "ceph-node3",
+    "name": "ceph-node3",
+    "services": [
+      {
+        "type": "osd",
+        "service_id": "4",
+        "name": "osd.4"
+      },
+      {
+        "type": "osd",
+        "service_id": "5",
+        "name": "osd.5"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-node6",
+    "hostname": "ceph-node6",
+    "name": "ceph-node6",
+    "services": [
+      {
+        "type": "mon",
+        "service_id": "ceph-node6",
+        "name": "mon.ceph-node6"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-node2",
+    "hostname": "ceph-node2",
+    "name": "ceph-node2",
+    "services": [
+      {
+        "type": "osd",
+        "service_id": "2",
+        "name": "osd.2"
+      },
+      {
+        "type": "osd",
+        "service_id": "3",
+        "name": "osd.3"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-mds",
+    "hostname": "ceph-mds",
+    "name": "ceph-mds",
+    "services": [
+      {
+        "type": "mds",
+        "service_id": "ceph-mds",
+        "name": "mds.ceph-mds"
+      }
+    ]
+  },
+  {
+    "addr": "ceph-node1",
+    "hostname": "ceph-node1",
+    "name": "ceph-node1",
+    "services": [
+      {
+        "type": "osd",
+        "service_id": "1",
+        "name": "osd.1"
+      },
+      {
+        "type": "osd",
+        "service_id": "0",
+        "name": "osd.0"
+      }
+    ]
+  }
+]

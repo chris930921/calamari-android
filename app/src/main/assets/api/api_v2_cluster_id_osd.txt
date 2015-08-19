@@ -1,0 +1,254 @@
+[
+  {
+    "uuid": "8b7e32ab-dca2-4f86-951c-a6d113561e34",
+    "up": true,
+    "in": true,
+    "id": 0,
+    "reweight": 1,
+    "server": "ceph-node1",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.161:6804\/1849",
+    "cluster_addr": "10.21.20.161:6805\/1849",
+    "crush_node_ancestry": [
+      [
+        -2,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "15eae82d-9c9e-45f8-a2af-468da6bafbea",
+    "up": true,
+    "in": true,
+    "id": 1,
+    "reweight": 1,
+    "server": "ceph-node1",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.161:6800\/1740",
+    "cluster_addr": "10.21.20.161:6801\/1740",
+    "crush_node_ancestry": [
+      [
+        -2,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "8fd0d48b-5569-4d31-8619-94de78a17b45",
+    "up": true,
+    "in": true,
+    "id": 2,
+    "reweight": 1,
+    "server": "ceph-node2",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.162:6800\/1686",
+    "cluster_addr": "10.21.20.162:6801\/1686",
+    "crush_node_ancestry": [
+      [
+        -3,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "77c3bb46-ac41-4b30-a6b2-9c9f60559dcb",
+    "up": true,
+    "in": true,
+    "id": 3,
+    "reweight": 1,
+    "server": "ceph-node2",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.162:6804\/1804",
+    "cluster_addr": "10.21.20.162:6805\/1804",
+    "crush_node_ancestry": [
+      [
+        -3,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "97dce65c-72b6-4032-886f-d8cd2f79256b",
+    "up": true,
+    "in": true,
+    "id": 4,
+    "reweight": 1,
+    "server": "ceph-node3",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.163:6800\/1693",
+    "cluster_addr": "10.21.20.163:6801\/1693",
+    "crush_node_ancestry": [
+      [
+        -4,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "d59c8bd6-5704-4440-b2db-e24c99696b92",
+    "up": true,
+    "in": true,
+    "id": 5,
+    "reweight": 1,
+    "server": "ceph-node3",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.163:6804\/1811",
+    "cluster_addr": "10.21.20.163:6805\/1811",
+    "crush_node_ancestry": [
+      [
+        -4,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "75a3d78a-0fdb-4ae8-bc58-5923a6ac194b",
+    "up": true,
+    "in": true,
+    "id": 6,
+    "reweight": 1,
+    "server": "ceph-node4",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.164:6800\/1675",
+    "cluster_addr": "10.21.20.164:6801\/1675",
+    "crush_node_ancestry": [
+      [
+        -5,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "7d880b90-4938-4307-9032-35da5ee76770",
+    "up": true,
+    "in": true,
+    "id": 7,
+    "reweight": 1,
+    "server": "ceph-node4",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.164:6804\/1538",
+    "cluster_addr": "10.21.20.164:6805\/1538",
+    "crush_node_ancestry": [
+      [
+        -5,
+        -1
+      ]
+    ]
+  },
+  {
+    "uuid": "da6d7398-ce6a-433e-b12a-ba2a14668207",
+    "up": true,
+    "in": true,
+    "id": 8,
+    "reweight": 1,
+    "server": "ceph-node5",
+    "pools": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "valid_commands": [
+      "scrub",
+      "deep_scrub",
+      "repair"
+    ],
+    "public_addr": "10.21.20.165:6800\/17423",
+    "cluster_addr": "10.21.20.165:6801\/17423",
+    "crush_node_ancestry": [
+      [
+        -6,
+        -1
+      ]
+    ]
+  }
+]

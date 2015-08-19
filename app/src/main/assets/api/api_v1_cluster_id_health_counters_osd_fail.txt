@@ -1,0 +1,71 @@
+{
+  "pg": {
+    "warn": {
+      "count": 0,
+      "states": {
+        
+      }
+    },
+    "critical": {
+      "count": 0,
+      "states": {
+        
+      }
+    },
+    "ok": {
+      "count": 584,
+      "states": {
+        "active": 584,
+        "clean": 584
+      }
+    }
+  },
+  "mds": {
+    "up_not_in": 0,
+    "not_up_not_in": 0,
+    "total": 1,
+    "up_in": 1
+  },
+  "mon": {
+    "warn": {
+      "count": 0,
+      "states": {
+        
+      }
+    },
+    "critical": {
+      "count": 0,
+      "states": {
+        
+      }
+    },
+    "ok": {
+      "count": 2,
+      "states": {
+        "in": 2
+      }
+    }
+  },
+  "osd": {
+    "warn": {
+      "count": 3,
+      "states": {
+        
+      }
+    },
+    "critical": {
+      "count": 2,
+      "states": {
+        
+      }
+    },
+    "ok": {
+      "count": 4,
+      "states": {
+        "up\/in": 9
+      }
+    }
+  },
+  "cluster_update_time": "2015-08-08T22:14:31.551429+00:00",
+  "cluster_update_time_unix": 1439072071000
+}
