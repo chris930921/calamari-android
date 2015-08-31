@@ -27,9 +27,6 @@ import com.resourcelibrary.model.view.button.RoundFillColorButton;
 
 public class LoginLayout extends RelativeLayout {
     public ImageView inwinLogo;
-//    public TextView titleOne;
-//    public TextView titleTwo;
-//    public TextView titleThree;
 
     public BorderEditText host;
     public BorderEditText port;
@@ -90,7 +87,6 @@ public class LoginLayout extends RelativeLayout {
             e.printStackTrace();
         }
 
-
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
@@ -144,54 +140,6 @@ public class LoginLayout extends RelativeLayout {
 
         return v;
     }
-
-//    private TextView titleOne(View relativeView) {
-//        LayoutParams params = new LayoutParams(ruler.getW(51.02), LayoutParams.WRAP_CONTENT);
-//        params.addRule(ALIGN_TOP, relativeView.getId());
-//        params.addRule(RIGHT_OF, relativeView.getId());
-//        params.setMargins(ruler.getW(2.04), 0, 0, 0);
-//
-//        TextView v = new TextView(context);
-//        v.setId(RandomId.get());
-//        v.setLayoutParams(params);
-//        v.setTextSize(ruler.getTextSize(30));
-//        v.setGravity(Gravity.CENTER_VERTICAL);
-//        v.setTypeface(null, Typeface.BOLD);
-//        v.setText(R.string.login_title_one);
-//
-//        return v;
-//    }
-//
-//    private TextView titleThree(View alignBottom, View alignLeft) {
-//        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
-//        params.addRule(ALIGN_LEFT, alignLeft.getId());
-//        params.addRule(ALIGN_BOTTOM, alignBottom.getId());
-//        params.setMargins(0, 0, 0, 0);
-//
-//        TextView v = new TextView(context);
-//        v.setId(RandomId.get());
-//        v.setLayoutParams(params);
-//        v.setTextSize(ruler.getTextSize(20));
-//        v.setGravity(Gravity.CENTER_VERTICAL);
-//        v.setText(R.string.login_title_three);
-//        return v;
-//    }
-//
-//    private TextView titleTwo(View relativeView) {
-//        LayoutParams params = new LayoutParams(ruler.getW(80), LayoutParams.WRAP_CONTENT);
-//        params.addRule(ALIGN_LEFT, relativeView.getId());
-//        params.addRule(ABOVE, relativeView.getId());
-//        params.setMargins(0, 0, 0, 0);
-//
-//        TextView v = new TextView(context);
-//        v.setId(RandomId.get());
-//        v.setLayoutParams(params);
-//        v.setTextSize(ruler.getTextSize(20));
-//        v.setGravity(Gravity.CENTER_VERTICAL);
-//        v.setText(R.string.login_title_two);
-//        return v;
-//    }
-
 
     private BorderEditText host(View relativeView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
@@ -340,23 +288,42 @@ public class LoginLayout extends RelativeLayout {
         return v;
     }
 
-    private ImageView inwinTextLogo(View leftView) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(context.getResources(), R.drawable.icon034, options);
-        float width = options.outWidth;
-        float height = options.outHeight;
-        float viewHeight = 28;
-        float multiple = viewHeight / height;
-        float viewWidth = width * multiple;
-
-        LayoutParams params = new LayoutParams(
-                (int) viewWidth,
-                (int) viewHeight);
-        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+    private ImageView inwinTextLogo(final View leftView) {
+        LayoutParams params = new LayoutParams(1, 1);
+        params.addRule(RelativeLayout.ALIGN_TOP, leftView.getId());
+        params.addRule(RelativeLayout.ALIGN_BOTTOM, leftView.getId());
         params.addRule(RIGHT_OF, leftView.getId());
 
-        ImageView v = new ImageView(context);
+        ImageView v = new ImageView(context) {
+            private int height = 1;
+
+            @Override
+            protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+                super.onSizeChanged(w, h, oldw, oldh);
+
+                int viewHeight = leftView.getHeight();
+                if (height == viewHeight) return;
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.icon034, options);
+                float width = options.outWidth;
+                float height = options.outHeight;
+                float multiple = viewHeight / height;
+                float viewWidth = width * multiple;
+
+                final ViewGroup.LayoutParams params = getLayoutParams();
+                params.width = (int) viewWidth;
+                height = viewHeight;
+
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setLayoutParams(params);
+                    }
+                });
+            }
+        };
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setAdjustViewBounds(true);

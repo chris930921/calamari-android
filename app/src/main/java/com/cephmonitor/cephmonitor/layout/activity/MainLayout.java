@@ -355,7 +355,7 @@ public class MainLayout extends DrawerRelativeLayout {
     }
 
     public void hideAllComponent() {
-        setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//        setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         back.setVisibility(INVISIBLE);
         navigationButton.setVisibility(INVISIBLE);
         realBackButton.setOnClickListener(null);

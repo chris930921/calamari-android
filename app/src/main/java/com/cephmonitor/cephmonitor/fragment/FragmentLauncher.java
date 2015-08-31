@@ -14,6 +14,9 @@ import com.resourcelibrary.model.log.ShowLog;
  * Created by User on 4/17/2015.
  */
 public class FragmentLauncher {
+    public static final String FIRST_FRAGMENT_LAYER = "First Fragment Layer";
+    public static final String SECOND_FRAGMENT_LAYER = "Second Fragment Layer";
+    public static final String THIRD_FRAGMENT_LAYER = "Third Fragment Layer";
 
     private static boolean checkFragmentOpening(Activity activity, String fragmentName) {
         return activity.getFragmentManager().findFragmentByTag(fragmentName) == null;
@@ -29,9 +32,14 @@ public class FragmentLauncher {
         printBackStack(activity);
     }
 
-    private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
+//    private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
+//        FragmentManager manager = activity.getFragmentManager();
+//        manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//    }
+
+    private static void cleanToTragetFragment(Activity activity, String fragmentTag) {
         FragmentManager manager = activity.getFragmentManager();
-        manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private static void printBackStack(Activity activity) {
@@ -60,23 +68,23 @@ public class FragmentLauncher {
         transaction.commit();
     }
 
-    private static void changeAndBackFadeSlide(Activity activity, int containerId, Fragment fragment) {
+    private static void changeAndBackFadeSlide(Activity activity, int containerId, Fragment fragment, String backStackTag) {
         FragmentManager manager = activity.getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.setCustomAnimations(R.anim.fade_slide_left_in, R.anim.slide_left_out, R.anim.fade_slide_right_in, R.anim.slide_right_out);
         transaction.replace(containerId, fragment, fragment.getClass().getName());
-        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.addToBackStack(backStackTag);
         transaction.commit();
     }
 
-    private static void changeAndBackFade(Activity activity, int containerId, Fragment fragment) {
+    private static void changeAndBackFade(Activity activity, int containerId, Fragment fragment, String backStackTag) {
         FragmentManager manager = activity.getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.hide_out, R.anim.fade_in, R.anim.hide_out);
         transaction.replace(containerId, fragment, fragment.getClass().getName());
-        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.addToBackStack(backStackTag);
         transaction.commit();
     }
 
@@ -85,7 +93,7 @@ public class FragmentLauncher {
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
             Fragment page = new HealthFragment();
-            cleanAllPopFragment(activity, page);
+            cleanToTragetFragment(activity, FIRST_FRAGMENT_LAYER);
             changeFadeIn(activity, MainLayout.CONTAINER_ID, page);
         }
     }
@@ -96,8 +104,9 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthDetailFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
+
         }
     }
 
@@ -107,8 +116,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -118,8 +127,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthDetailFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
     }
 
@@ -129,8 +138,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new MonHealthFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -140,8 +149,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new NotificationFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -151,8 +160,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HostHealthFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -162,8 +171,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PgStatusFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -173,8 +182,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new UsageStatusFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -184,8 +193,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PoolIopsFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -195,8 +204,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PoolListFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -206,8 +215,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HostDetailFragment();
             page.setArguments(arg);
-            cleanAllPopFragment(activity, page);
-            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page);
+            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
         printBackStack(activity);
     }
@@ -215,18 +224,18 @@ public class FragmentLauncher {
     public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailSummaryFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
     }
 
     public static void goHostDetailAllCpusFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailAllCpusFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
     }
 
     public static void goHostDetailIopsFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailIopsFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
     }
 }

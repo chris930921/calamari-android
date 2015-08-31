@@ -224,7 +224,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.hideAllComponent();
             layout.showNavigation();
             layout.setSelected(R.string.main_activity_fragment_health);
-            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             broadcastResourceId = R.string.main_activity_fragment_health;
             nextBroadcastResourceId = broadcastResourceId;
             layout.topBar.setBackgroundColor(primary);

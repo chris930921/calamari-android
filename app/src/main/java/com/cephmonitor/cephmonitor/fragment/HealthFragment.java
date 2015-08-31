@@ -101,6 +101,7 @@ public class HealthFragment extends Fragment {
     public void onPause() {
         super.onPause();
         currentUpdateId = (currentUpdateId + 1) % 100000;
+        loadingDialog.cancel();
     }
 
     private Runnable requestFlow(final int updateId) {

@@ -11,8 +11,8 @@ Thumbs.db
 .classpath
 .project
 .gradle
+.idea
 build/
 *.log
 /*.zip
 /*.rar
-/*/
