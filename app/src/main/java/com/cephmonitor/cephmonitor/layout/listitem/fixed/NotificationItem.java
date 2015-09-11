@@ -1,246 +1,194 @@
 package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.view.MotionEvent;
+import android.graphics.Color;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.listitem.reuse.RoundLeftBarItem;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
-import com.resourcelibrary.model.logic.GestureAdapter;
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.resourcelibrary.model.logic.RandomId;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 import com.resourcelibrary.model.view.WH;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-public class NotificationItem extends RelativeLayout {
-    public static final int WARNING = 0;
-    public static final int ERROR = 1;
 
-    private Context context;
+public class NotificationItem extends RoundLeftBarItem {
+    public static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     private WH ruler;
+    private int borderColor;
+    private int statusBarWidth;
+    private int statusBarColor;
 
-    public View topFillView;
-    public View bottomImageFillView;
-    public View bottomTextFillView;
-    public ImageView leftImage;
-    public ImageView rightImage;
-    public RelativeLayout textContainer;
-    public TextView centerTopText;
-    public TextView centerBottomText;
+    public View download;
+    public TextView message;
+    public RelativeLayout bottomContainer;
+    public View statusIcon;
+    public TextView status;
+    public TextView triggerTime;
 
+    private CephNotificationConstant.StatusConstant statusConstant;
     private DesignSpec designSpec;
-    private TextViewStyle bodyOne;
-    private TextViewStyle subhead;
-    private float bodyIconSize;
-    private float subheadIconSize;
-    private float topBottomMarginOne;
-    private float leftRightPaddingOne;
+    private TextViewStyle messageTextStyle;
+    private TextViewStyle triggeredTextStyle;
+    private TextViewStyle statusTextStyle;
+    private int backgroundColor;
+    private int topBottomPaddingOne;
+    private int leftRightPaddingOne;
+    private int downloadIconSize;
 
     public NotificationItem(Context context) {
         super(context);
-        this.context = context;
-        this.ruler = new WH(context);
+        ruler = new WH(getContext());
+        borderColor = ColorTable._D9D9D9;
+        statusBarWidth = ruler.getW(3);
+        statusBarColor = Color.BLACK;
+        statusConstant = new CephNotificationConstant.StatusConstant(getContext());
+
         this.designSpec = ThemeManager.getStyle(context);
-        bodyOne = new TextViewStyle(designSpec.getStyle().getBodyOne());
-        subhead = new TextViewStyle(designSpec.getStyle().getSubhead());
-        bodyIconSize = designSpec.getIconSize().getBody();
-        subheadIconSize = designSpec.getIconSize().getSubhead();
-        topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
-        leftRightPaddingOne = designSpec.getPadding().getLeftRightOne();
+        messageTextStyle = new TextViewStyle(designSpec.getStyle().getBodyOne());
+        triggeredTextStyle = new TextViewStyle(designSpec.getStyle().getNote());
+        statusTextStyle = new TextViewStyle(designSpec.getStyle().getNote());
+        backgroundColor = designSpec.getPrimaryColors().getBackgroundThree();
+        topBottomPaddingOne = ruler.getW(designSpec.getPadding().getTopBottomOne());
+        leftRightPaddingOne = ruler.getW(designSpec.getPadding().getLeftRightOne());
+        downloadIconSize = ruler.getW(designSpec.getIconSize().getSubhead());
 
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        setViewBackgroundColor(backgroundColor);
+        setViewPadding(leftRightPaddingOne, topBottomPaddingOne, leftRightPaddingOne, topBottomPaddingOne);
+        setStatusBarWidth(statusBarWidth);
+        setStatusBarColor(statusBarColor);
+        setBorderColor(borderColor);
+        setBorderWidth(3);
+        setRadius(10);
+        setTopBottomMargin(topBottomPaddingOne, topBottomPaddingOne);
 
-        setId(RandomId.get());
-        setLayoutParams(params);
+        download = download();
+        message = message(download);
+        bottomContainer = bottomContainer(message);
+        statusIcon = statusIcon();
+        status = status(statusIcon);
+        triggerTime = triggerTime(status);
 
-        topFillView = topFillView();
-        leftImage = leftImage(topFillView);
-        rightImage = rightImage(leftImage);
-        bottomImageFillView = bottomImageFillView(leftImage);
-        textContainer = textContainer(leftImage, rightImage);
-        bottomTextFillView = bottomTextFillView(textContainer);
-        centerTopText = centerTopText();
-        centerBottomText = centerBottomText(centerTopText);
-
-        addView(topFillView);
-        addView(leftImage);
-        addView(bottomImageFillView);
-        addView(rightImage);
-        addView(textContainer);
-        addView(bottomTextFillView);
-        textContainer.addView(centerTopText);
-        textContainer.addView(centerBottomText);
+        addView(download);
+        addView(message);
+        addView(bottomContainer);
+        bottomContainer.addView(statusIcon);
+        bottomContainer.addView(status);
+        bottomContainer.addView(triggerTime);
     }
 
-    private View topFillView() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
-        params.addRule(ALIGN_PARENT_LEFT);
-        params.addRule(ALIGN_PARENT_TOP);
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private View bottomImageFillView(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
-        params.addRule(ALIGN_PARENT_LEFT);
-        params.addRule(BELOW, topView.getId());
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private View bottomTextFillView(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(topBottomMarginOne));
-        params.addRule(ALIGN_PARENT_LEFT);
-        params.addRule(BELOW, topView.getId());
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private ImageView leftImage(View topView) {
-        LayoutParams params = new LayoutParams(ruler.getW(bodyIconSize), ruler.getW(bodyIconSize));
-        params.addRule(ALIGN_PARENT_LEFT);
-        params.addRule(BELOW, topView.getId());
-        params.rightMargin = ruler.getW(leftRightPaddingOne);
-
-        ImageView v = new ImageView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private ImageView rightImage(View alignView) {
-        LayoutParams params = new LayoutParams(ruler.getW(subheadIconSize), ruler.getW(subheadIconSize));
+    protected View download() {
+        LayoutParams params = new LayoutParams(downloadIconSize, downloadIconSize);
         params.addRule(ALIGN_PARENT_RIGHT);
-        params.addRule(ALIGN_TOP, alignView.getId());
-        params.addRule(ALIGN_BOTTOM, alignView.getId());
+        params.leftMargin = leftRightPaddingOne;
 
-        ImageView v = new ImageView(context);
+        View v = new View(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setImageResource(R.drawable.icon027);
+        v.setBackgroundResource(R.drawable.icon037);
 
         return v;
     }
 
-    private RelativeLayout textContainer(View leftView, View rightView) {
+    protected TextView message(View rightView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(CENTER_VERTICAL);
-        params.addRule(ALIGN_TOP, leftView.getId());
-        params.addRule(RIGHT_OF, leftView.getId());
+        params.addRule(ALIGN_PARENT_TOP);
         params.addRule(LEFT_OF, rightView.getId());
-        params.rightMargin = ruler.getW(leftRightPaddingOne);
+        params.bottomMargin = topBottomPaddingOne;
 
-        RelativeLayout v = new RelativeLayout(context);
+        TextView v = new TextView(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
+        messageTextStyle.style(v);
 
         return v;
     }
 
-    private TextView centerTopText() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(ALIGN_TOP);
-
-        TextView v = new TextView(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        bodyOne.style(v);
-
-        return v;
-    }
-
-    private TextView centerBottomText(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    protected RelativeLayout bottomContainer(View topView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(BELOW, topView.getId());
+        params.addRule(ALIGN_RIGHT, topView.getId());
 
-        TextView v = new TextView(context);
+        RelativeLayout v = new RelativeLayout(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setGravity(Gravity.CENTER_VERTICAL);
-        subhead.style(v);
 
         return v;
     }
 
-    public void setItemValue(Object tag, int status, String topContent, String bottomContent) {
-        if (status == WARNING) {
-            leftImage.setImageResource(R.drawable.icon022);
-        } else if (status == ERROR) {
-            leftImage.setImageResource(R.drawable.icon023);
-        }
-        setTag(tag);
-        centerTopText.setText(topContent);
-        centerBottomText.setText(bottomContent);
+
+    protected View statusIcon() {
+        LayoutParams params = new LayoutParams(downloadIconSize, downloadIconSize);
+        params.addRule(ALIGN_PARENT_TOP);
+        params.addRule(CENTER_VERTICAL);
+
+        View v = new View(getContext());
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setBackgroundColor(Color.YELLOW);
+
+        return v;
     }
 
-    public void setItemValue(Object tag, String status, String topContent, String bottomContent) {
-        if (ClusterV1HealthData.HEALTH_WARN.equals(status)) {
-            setItemValue(tag, WARNING, topContent, bottomContent);
-        } else if (ClusterV1HealthData.HEALTH_ERR.equals(status)) {
-            setItemValue(tag, ERROR, topContent, bottomContent);
+    protected TextView status(View leftView) {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RIGHT_OF, leftView.getId());
+        params.addRule(CENTER_VERTICAL);
+        params.leftMargin = leftRightPaddingOne;
+
+        TextView v = new TextView(getContext());
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        statusTextStyle.style(v);
+
+        return v;
+    }
+
+    protected TextView triggerTime(View leftView) {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RIGHT_OF, leftView.getId());
+        params.addRule(CENTER_VERTICAL);
+        params.addRule(ALIGN_PARENT_RIGHT);
+
+        TextView v = new TextView(getContext());
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        triggeredTextStyle.style(v);
+
+        return v;
+    }
+
+    public void setMessage(String message) {
+        this.message.setText(message);
+    }
+
+    public void setTime(Calendar calendar) {
+        this.triggerTime.setText(" - " + datetimeFormat.format(calendar.getTime()));
+    }
+
+    public void setStatus(String status) {
+        this.status.setText(status);
+        this.statusIcon.setBackgroundResource(statusConstant.getStatusIconGroup().get(status));
+        this.status.setTextColor(statusConstant.getStatusTextColorGroup().get(status));
+        if (status.equals(CephNotificationConstant.STATUS_RESOLVED)) {
+            download.setVisibility(VISIBLE);
+        } else {
+            download.setVisibility(GONE);
         }
     }
 
-    public OnClickListener rightImageClickEvent;
-    protected GestureAdapter guesture = new GestureAdapter() {
-        @Override
-        public void onDown(MotionEvent event) {
-
-        }
-
-        @Override
-        public void onMoveStart(MotionEvent event) {
-
-        }
-
-        @Override
-        public void onMoving(MotionEvent event) {
-
-        }
-
-        @Override
-        public void onClick(MotionEvent event) {
-            if (event.getX() > getMeasuredWidth() - ruler.getW(10)) {
-                if (rightImageClickEvent != null) {
-                    rightImageClickEvent.onClick(NotificationItem.this);
-                }
-            }
-        }
-
-        @Override
-        public void onMoveEnd(MotionEvent event) {
-
-        }
-    };
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return guesture.onTouchEvent(event, super.onTouchEvent(event));
+    public void setLevel(int level) {
+        this.statusBarColor = statusConstant.getStatusColorGroup().get(level);
+        setStatusBarColor(this.statusBarColor);
     }
-
-    public void setRightImageClickEvent(OnClickListener event) {
-        rightImageClickEvent = event;
-    }
-
 }

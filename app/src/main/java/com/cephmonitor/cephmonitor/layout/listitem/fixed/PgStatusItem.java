@@ -112,7 +112,6 @@ public class PgStatusItem extends RelativeLayout {
         pgStatus = pgStatus();
         pgValue = pgValue(pgStatus);
 
-
         addView(topFillView);
         addView(contentContainer);
         contentContainer.addView(leftTextContainer);

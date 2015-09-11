@@ -17,6 +17,7 @@ import com.cephmonitor.cephmonitor.fragment.HostDetailIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.HostDetailSummaryFragment;
 import com.cephmonitor.cephmonitor.fragment.HostHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.MonHealthFragment;
+import com.cephmonitor.cephmonitor.fragment.NotificationDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
@@ -29,6 +30,7 @@ import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
@@ -75,6 +77,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(HostDetailSummaryFragment.class, showHostDetailSummaryFragment);
         changeStyleTask.put(HostDetailAllCpusFragment.class, showHostDetailAllCpusFragment);
         changeStyleTask.put(HostDetailIopsFragment.class, showHostDetailIopsFragment);
+        changeStyleTask.put(NotificationDetailFragment.class, showNotificationDetailFragment);
 
         layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
@@ -297,7 +300,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
         }
     };
 
-
     private InitFragment.Task showNotificationFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
@@ -305,6 +307,24 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
             layout.setSelected(R.string.main_activity_option_notification);
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showNotificationDetailFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            CephNotificationConstant.StatusConstant statusConstant = new CephNotificationConstant.StatusConstant(activity);
+            int titleColor = statusConstant.getStatusColorGroup().get(arg.getInt("0"));
+
+            setTitle(getResources().getString(R.string.main_activity_fragment_notification_detail));
+            layout.hideAllComponent();
+            layout.topBar.setBackgroundColor(titleColor);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

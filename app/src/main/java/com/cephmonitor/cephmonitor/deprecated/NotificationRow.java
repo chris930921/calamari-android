@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.model.database;
+package com.cephmonitor.cephmonitor.deprecated;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

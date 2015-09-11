@@ -1,12 +1,12 @@
 package com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification;
 
-import android.app.Notification;
 import android.content.Context;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternFour;
+import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 
 import org.json.JSONException;
@@ -15,38 +15,44 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class UsagePercentWarnNotification extends ConditionNotification<ClusterV1Space> {
-    private static final int WARN_PERCENT_MIN = 70;
-    private double percent;
+    private int monitorType = 4;
+    private int level = 3;
+    private int monitorNumber = 1;
+    private RecordedPatternFour comparePattern;
 
     public UsagePercentWarnNotification(Context context) {
         super(context);
     }
 
     @Override
-    protected boolean decide(ClusterV1Space data) {
+    protected void decide(ClusterV1Space data) {
+        int comparePercent;
         try {
-            percent = (double) data.getUsedBytes() / (double) data.getCapacityBytes();
-            int comparePercent = (int) (percent * 100);
-            boolean result = true;
-            result &= comparePercent >= WARN_PERCENT_MIN;
-            result &= comparePercent < UsagePercentErrorNotification.WARN_PERCENT_MAX;
-            return result;
+            double percent = (double) data.getUsedBytes() / (double) data.getCapacityBytes();
+            comparePercent = (int) (percent * 10000);
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            getCheckResult().isSendNotification = false;
+            getCheckResult().isCheckError = false;
+            return;
         }
-    }
-
-    @Override
-    protected Notification onTrue(ClusterV1Space data) {
-        String title = getContext().getResources().getString(R.string.check_service_usage_percent_warn_title);
-        String content = String.format(
-                getContext().getResources().getString(R.string.check_service_usage_percent_warn_content),
-                percent * 100
+        ShowLog.d("監控訊息: 警告數值是 " + comparePercent);
+        comparePattern = new RecordedPatternFour();
+        comparePattern.setParams(
+                getContext(),
+                getCheckResult(),
+                comparePercent,
+                monitorType,
+                level,
+                monitorNumber,
+                R.string.check_service_043001_abnormal_content_new,
+                R.string.check_service_043001_normal_content_finish,
+                R.string.check_service_043001_abnormal_title,
+                R.string.check_service_043001_normal_title,
+                CephNotificationConstant.WARNING_TYPE_WARNING,
+                7000,
+                8500
         );
-        String status = ClusterV1HealthData.HEALTH_WARN;
-        CephDefaultNotification.save(getContext(), title, content, status);
-
-        return CephDefaultNotification.get(getContext(), title, content);
+        comparePattern.compare();
     }
 }

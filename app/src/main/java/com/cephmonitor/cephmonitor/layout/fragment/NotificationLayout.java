@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 
@@ -54,6 +55,7 @@ public class NotificationLayout extends FractionAbleRelativeLayout {
         v.setDivider(new ColorDrawable(horizontalColor));
         v.setDividerHeight(horizontalSize);
         v.setPadding(0, 0, 0, ruler.getW(topBottomMarginOne));
+        v.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
         return v;
     }

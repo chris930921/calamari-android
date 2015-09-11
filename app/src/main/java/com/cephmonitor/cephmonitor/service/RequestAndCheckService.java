@@ -7,7 +7,6 @@ import android.os.IBinder;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.BuildConfig;
-import com.cephmonitor.cephmonitor.fragment.NotificationFragment;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountErrorNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountWarnNotification;
@@ -17,8 +16,8 @@ import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.PgCou
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.PgCountWarnNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.UsagePercentErrorNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.UsagePercentWarnNotification;
+import com.cephmonitor.cephmonitor.receiver.ChangePeriodReceiver;
 import com.resourcelibrary.model.log.ShowLog;
-import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.RequestVolleyTask;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
@@ -91,7 +90,7 @@ public class RequestAndCheckService extends Service {
     private void requestFirstClusterId() {
         ClusterV2ListRequest spider = new ClusterV2ListRequest(this);
         spider.setRequestParams(requestParams);
-        spider.request(successFirstClusterId, failFirstClusterId);
+        spider.request(successFirstClusterId, failRequestResource);
     }
 
     private Response.Listener<String> successFirstClusterId = new Response.Listener<String>() {
@@ -100,18 +99,17 @@ public class RequestAndCheckService extends Service {
             try {
                 dealWithFirstClusterExists(s);
                 requestOsdMonStatus();
-                requestClusterSpace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     };
 
-
-    public final Response.ErrorListener failFirstClusterId = new Response.ErrorListener() {
+    public final Response.ErrorListener failRequestResource = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            ShowLog.d("無法取得第一個cluster，取消接下來的檢查動作。");
+            ShowLog.d("伺服器錯誤導致無法取得遠端資源，取消接下來的檢查動作，，轉為伺服器錯誤週期。");
+            ChangePeriodReceiver.sendServerErrorMessage(RequestAndCheckService.this);
             stopSelf();
         }
     };
@@ -126,7 +124,7 @@ public class RequestAndCheckService extends Service {
     private void requestOsdMonStatus() {
         ClusterV1HealthCounterRequest spider = new ClusterV1HealthCounterRequest(this);
         spider.setRequestParams(requestParams);
-        spider.request(successOsdMonStatus, GeneralError.callback(this));
+        spider.request(successOsdMonStatus, failRequestResource);
     }
 
     private Response.Listener<String> successOsdMonStatus = new Response.Listener<String>() {
@@ -137,6 +135,7 @@ public class RequestAndCheckService extends Service {
                 public void run() {
                     try {
                         dealWithStatusCount(s);
+                        requestClusterSpace();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -145,19 +144,16 @@ public class RequestAndCheckService extends Service {
         }
     };
 
+    private ClusterV1HealthCounterData v1HealthCounterData;
 
     private void dealWithStatusCount(final String response) throws JSONException {
-        ClusterV1HealthCounterData data = new ClusterV1HealthCounterData(response);
-        for (ConditionNotification checker : healthCountCheckList) {
-            checker.check(data);
-        }
-        NotificationFragment.send(RequestAndCheckService.this);
+        v1HealthCounterData = new ClusterV1HealthCounterData(response);
     }
 
     private void requestClusterSpace() {
         ClusterV1SpaceRequest spider = new ClusterV1SpaceRequest(this);
         spider.setRequestParams(requestParams);
-        spider.request(successClusterSpace, GeneralError.callback(this));
+        spider.request(successClusterSpace, failRequestResource);
     }
 
     private Response.Listener<String> successClusterSpace = new Response.Listener<String>() {
@@ -176,13 +172,30 @@ public class RequestAndCheckService extends Service {
         }
     };
 
+    private ClusterV1Space v1Space;
 
     private void dealWithClusterSpace(final String response) throws JSONException {
-        ClusterV1Space data = new ClusterV1Space(response);
+        ShowLog.d("成功取得所有資料時，恢復正常檢查週期。");
+        ChangePeriodReceiver.sendDefaultMessage(this);
+        v1Space = new ClusterV1Space(response);
+
+        int trueCount = 0;
+        ShowLog.d("執行空間檢查，檢查數量: " + clusterSpaceCheckList.size());
         for (ConditionNotification checker : clusterSpaceCheckList) {
-            checker.check(data);
+            boolean result = checker.check(v1Space);
+            trueCount = (result) ? trueCount : trueCount + 1;
         }
-        NotificationFragment.send(RequestAndCheckService.this);
+        ShowLog.d("執行數量檢查，檢查數量: " + healthCountCheckList.size());
+//        NotificationFragment.send(RequestAndCheckService.this);
+        for (ConditionNotification checker : healthCountCheckList) {
+            boolean result = checker.check(v1HealthCounterData);
+            trueCount = (result) ? trueCount : trueCount + 1;
+        }
+//        NotificationFragment.send(RequestAndCheckService.this);
+        if (trueCount != clusterSpaceCheckList.size() + healthCountCheckList.size()) {
+            ShowLog.d("檢查到錯誤，進入錯誤檢查週期。");
+            ChangePeriodReceiver.sendCheckMessage(this);
+        }
     }
 
     public IBinder onBind(Intent intent) {

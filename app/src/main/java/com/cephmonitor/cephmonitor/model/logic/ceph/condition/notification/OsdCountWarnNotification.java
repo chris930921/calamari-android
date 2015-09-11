@@ -1,14 +1,12 @@
 package com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification;
 
-import android.app.Notification;
 import android.content.Context;
 
 import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.model.logic.CompareString;
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternOne;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
 
 import org.json.JSONException;
 
@@ -16,42 +14,42 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class OsdCountWarnNotification extends ConditionNotification<ClusterV1HealthCounterData> {
+    private int monitorType = 1;
+    private int level = 3;
+    private int monitorNumber = 1;
+    private RecordedPatternOne comparePattern;
 
     public OsdCountWarnNotification(Context context) {
         super(context);
     }
 
     @Override
-    protected boolean decide(ClusterV1HealthCounterData data) {
-        Boolean check = true;
-        String previousStatus = getClassSelfStatus().loadStatus();
+    protected void decide(ClusterV1HealthCounterData data) {
+        int compareValue;
         try {
-            int compareValue = data.getOsdWarningCount();
-            check &= CompareString.notEqualInt(previousStatus, compareValue);
-            check &= compareValue > 0;
+            compareValue = data.getOsdWarningCount();
         } catch (JSONException e) {
             e.printStackTrace();
-            check = false;
+            getCheckResult().isSendNotification = false;
+            getCheckResult().isCheckError = false;
+            return;
         }
-        return check;
-    }
-
-    @Override
-    protected Notification onTrue(ClusterV1HealthCounterData data) {
-        try {
-            String title = getContext().getResources().getString(R.string.check_service_osd_count_warn_title);
-            String content = String.format(
-                    getContext().getResources().getString(R.string.check_service_osd_count_warn_content),
-                    data.getOsdWarningCount()
-            );
-            String status = ClusterV1HealthData.HEALTH_WARN;
-            CephDefaultNotification.save(getContext(), title, content, status);
-
-            getClassSelfStatus().saveStatus(data.getOsdWarningCount() + "");
-            return CephDefaultNotification.get(getContext(), title, content);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+        comparePattern = new RecordedPatternOne();
+        comparePattern.setParams(
+                getContext(),
+                getCheckResult(),
+                compareValue,
+                monitorType,
+                level,
+                monitorNumber,
+                R.string.check_service_013001_abnormal_content_new,
+                R.string.check_service_013001_abnormal_content_more,
+                R.string.check_service_013001_abnormal_content_relapse,
+                R.string.check_service_013001_normal_content_finish,
+                R.string.check_service_013001_abnormal_title,
+                R.string.check_service_013001_normal_title,
+                CephNotificationConstant.WARNING_TYPE_WARNING
+        );
+        comparePattern.compare();
     }
 }

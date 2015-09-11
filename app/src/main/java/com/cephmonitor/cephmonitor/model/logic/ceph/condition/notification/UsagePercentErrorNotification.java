@@ -1,12 +1,12 @@
 package com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification;
 
-import android.app.Notification;
 import android.content.Context;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.notification.style.CephDefaultNotification;
-import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternThree;
+import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 
 import org.json.JSONException;
@@ -15,31 +15,43 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class UsagePercentErrorNotification extends ConditionNotification<ClusterV1Space> {
-    public static final int WARN_PERCENT_MAX = 80;
+    private int monitorType = 4;
+    private int level = 2;
+    private int monitorNumber = 1;
+    private RecordedPatternThree comparePattern;
 
     public UsagePercentErrorNotification(Context context) {
         super(context);
     }
 
     @Override
-    protected boolean decide(ClusterV1Space data) {
+    protected void decide(ClusterV1Space data) {
+        int comparePercent;
         try {
             double percent = (double) data.getUsedBytes() / (double) data.getCapacityBytes();
-            int comparePercent = (int) (percent * 100);
-            return comparePercent >= WARN_PERCENT_MAX;
+            comparePercent = (int) (percent * 10000);
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            getCheckResult().isSendNotification = false;
+            getCheckResult().isCheckError = false;
+            return;
         }
-    }
-
-    @Override
-    protected Notification onTrue(ClusterV1Space data) {
-        String title = getContext().getResources().getString(R.string.check_service_usage_percent_error_title);
-        String content = getContext().getResources().getString(R.string.check_service_usage_percent_error_content);
-
-        String status = ClusterV1HealthData.HEALTH_ERR;
-        CephDefaultNotification.save(getContext(), title, content, status);
-        return CephDefaultNotification.get(getContext(), title, content);
+        ShowLog.d("監控訊息: 錯誤數值是 " + comparePercent);
+        comparePattern = new RecordedPatternThree();
+        comparePattern.setParams(
+                getContext(),
+                getCheckResult(),
+                comparePercent,
+                monitorType,
+                level,
+                monitorNumber,
+                R.string.check_service_042001_abnormal_content_new,
+                R.string.check_service_042001_normal_content_finish,
+                R.string.check_service_042001_abnormal_title,
+                R.string.check_service_042001_normal_title,
+                CephNotificationConstant.WARNING_TYPE_ERROR,
+                8500
+        );
+        comparePattern.compare();
     }
 }

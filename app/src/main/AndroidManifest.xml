@@ -27,6 +27,11 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".TestingActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <service
             android:name=".service.LooperService"

@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "0.9.2"
+        versionName "0.10.0"
         resValue "string", "gradle_app_name", "Ceph"
         testApplicationId 'com.cephmonitor.cephmonitor.test'
     }

@@ -1,10 +1,7 @@
 package com.cephmonitor.cephmonitor.fragment;
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,24 +10,25 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
 import com.cephmonitor.cephmonitor.InitFragment;
+import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.fragment.NotificationLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.NotificationItem;
-import com.cephmonitor.cephmonitor.model.database.NotificationRow;
 import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
+import com.cephmonitor.cephmonitor.model.database.data.KeepLoadRecordedData;
+import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
+import com.cephmonitor.cephmonitor.model.database.operator.RecordedOperator;
+import com.resourcelibrary.model.log.ShowLog;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
 public class NotificationFragment extends Fragment {
-    private static final String ACTION = NotificationFragment.class.getName();
-    private static final IntentFilter UPDATE_RECEIVER_FILTER = new IntentFilter(ACTION);
-    private static final Intent UPDATE_INTENT = new Intent(ACTION);
     private NotificationLayout layout;
-    protected ArrayList<NotificationRow> notifications;
-    protected StoreNotifications database;
-
-    public static void send(Context context) {
-        context.sendBroadcast(UPDATE_INTENT);
-    }
+    private ArrayList<RecordedData> recordGroup;
+    private RecordedOperator recordedOperator;
+    private StoreNotifications store;
+    private KeepLoadRecordedData keepLoadRecorded;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -42,83 +40,21 @@ public class NotificationFragment extends Fragment {
     }
 
     public void init() {
-        database = new StoreNotifications(getActivity());
-        notifications = new ArrayList<>();
-        layout.list.setAdapter(listAdapter);
-        layout.list.setOnScrollListener(scrollEvent);
-    }
+        store = new StoreNotifications(getActivity());
+        SQLiteDatabase database = store.getReadableDatabase();
+        keepLoadRecorded = new KeepLoadRecordedData();
+        keepLoadRecorded.loadOldRecordGroup(database);
+        database.close();
 
-    public void reloadNotification() {
-        database = new StoreNotifications(getActivity());
-        notifications.clear();
-        notifications.addAll(database.findBeforeData());
-        checkEmpty();
-    }
-
-    public void loadNewNotifications() {
-        ArrayList<NotificationRow> updateNotifications = database.updateNewData();
-
-        for (int i = 0; i < updateNotifications.size(); i++) {
-            notifications.add(i, updateNotifications.get(i));
-        }
-        checkEmpty();
-    }
-
-    public void loadOldNotifications() {
-        notifications.addAll(database.findBeforeData());
-        checkEmpty();
-
-    }
-
-    public void checkEmpty() {
-        if (notifications.size() == 0) {
+        if (keepLoadRecorded.recordGroup.size() == 0) {
             layout.showWorkFind();
         } else {
-            layout.hideWorkFind();
-            listAdapter.notifyDataSetChanged();
+            recordGroup = keepLoadRecorded.recordGroup;
+            recordedOperator = new RecordedOperator(getActivity());
+            layout.list.setAdapter(listAdapter);
+            layout.list.setOnScrollListener(scrollEvent);
         }
     }
-
-    private BroadcastReceiver updateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION)) {
-                if (layout.list.getFirstVisiblePosition() == 0 && notifications.size() != 0) {
-                    loadNewNotifications();
-                } else if (layout.list.getFirstVisiblePosition() == 0) {
-                    reloadNotification();
-                }
-            }
-        }
-    };
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().registerReceiver(updateReceiver, UPDATE_RECEIVER_FILTER);
-        reloadNotification();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(updateReceiver);
-    }
-
-    private View.OnClickListener clickDelete = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NotificationRow row = (NotificationRow) view.getTag();
-            boolean isSuccessRemove = database.removeNotification(row.id);
-            if (isSuccessRemove) {
-                notifications.remove(row);
-                if (layout.list.getLastVisiblePosition() == notifications.size() - 1) {
-                    loadOldNotifications();
-                }
-                checkEmpty();
-            }
-        }
-    };
 
     private AbsListView.OnScrollListener scrollEvent = new AbsListView.OnScrollListener() {
         private int prevFirstVisibleItem = -1;
@@ -130,14 +66,26 @@ public class NotificationFragment extends Fragment {
 
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            if (firstVisibleItem == prevFirstVisibleItem) return;
-
-            if (database == null) {
-            } else if (totalItemCount == database.getCount()) {
-            } else if (firstVisibleItem == 0 && prevFirstVisibleItem > 0) {
-                loadNewNotifications();
+            if (firstVisibleItem == prevFirstVisibleItem) {
+                ShowLog.d("還看的見第一個項目，不更新。");
+                return;
+            }
+            if (store == null) {
+                ShowLog.d("資料庫物件沒有建立，不更新。");
+                return;
+            }
+//            if(totalItemCount == store.getCount()){
+//                ShowLog.d("現有資料和資料庫相同，不更新。");
+//                return;
+//            }
+            if (firstVisibleItem == 0 && prevFirstVisibleItem > 0) {
+                ShowLog.d("滑到頂部且有新值，進行更新。");
             } else if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0 && (prevFirstVisibleItem < firstVisibleItem)) {
-                loadOldNotifications();
+                ShowLog.d("滑到頂部且還有舊值，進行更新。");
+                SQLiteDatabase database = store.getReadableDatabase();
+                keepLoadRecorded.loadOldRecordGroup(database);
+                database.close();
+                listAdapter.notifyDataSetChanged();
             }
             prevFirstVisibleItem = firstVisibleItem;
         }
@@ -146,7 +94,7 @@ public class NotificationFragment extends Fragment {
     private BaseAdapter listAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            return notifications.size();
+            return recordGroup.size();
         }
 
         @Override
@@ -162,20 +110,49 @@ public class NotificationFragment extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             NotificationItem item;
-            if (view != null) {
-                item = (NotificationItem) view;
-            } else {
+            if (view == null) {
                 item = new NotificationItem(getActivity());
+            } else {
+                item = (NotificationItem) view;
             }
-            NotificationRow row = notifications.get(i);
-            item.setItemValue(
-                    row,
-                    row.status,
-                    row.content,
-                    row.getCreatedDate()
-            );
-            item.setRightImageClickEvent(clickDelete);
+            RecordedData recorded = recordGroup.get(i);
+            recordedOperator.setValue(recorded);
+            item.setMessage(recordedOperator.getLastMessageWithParam());
+            item.setStatus(recorded.status);
+            item.setTime(recorded.triggered);
+            item.setLevel(recorded.level);
+            item.setTag(recorded);
+            item.setOnClickListener(clickEvent);
             return item;
+        }
+    };
+    private View.OnClickListener clickEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NotificationItem item = (NotificationItem) view;
+            RecordedData recorded = (RecordedData) item.getTag();
+            RecordedOperator operator = new RecordedOperator(getActivity());
+            operator.setValue(recorded);
+
+            Bundle argGroup = new Bundle();
+            argGroup.putInt("0", recorded.level);
+            argGroup.putString("1", operator.getLastMessageWithParam());
+            argGroup.putString("2", recorded.status);
+            argGroup.putLong("3", recorded.triggered.getTimeInMillis());
+            argGroup.putLong("4", (recorded.resolved == null) ? -1 : recorded.resolved.getTimeInMillis());
+            try {
+                argGroup.putInt("5", recorded.otherParamsJson.getInt("description_title"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                argGroup.putInt("5", R.string.something_parse_error);
+            }
+            try {
+                argGroup.putString("6", recorded.otherParamsJson.getString("description"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                argGroup.putString("6", getString(R.string.something_parse_error));
+            }
+            FragmentLauncher.goNotificationDetailFragment(getActivity(), argGroup);
         }
     };
 }

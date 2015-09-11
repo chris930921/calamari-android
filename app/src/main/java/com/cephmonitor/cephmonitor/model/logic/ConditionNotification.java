@@ -3,55 +3,82 @@ package com.cephmonitor.cephmonitor.model.logic;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.NotificationCompat;
 
+import com.cephmonitor.cephmonitor.ActivityLauncher;
 import com.cephmonitor.cephmonitor.BuildConfig;
-import com.cephmonitor.cephmonitor.model.file.io.ClassSelfStatus;
+import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
+import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
+import com.cephmonitor.cephmonitor.model.database.data.TriggeredRecordedData;
+import com.cephmonitor.cephmonitor.model.database.operator.RecordedOperator;
+
+import java.util.ArrayList;
 
 /**
  * Created by User on 5/13/2015.
  */
 public abstract class ConditionNotification<T> {
     public static final int NOTIFICATION_ID = (BuildConfig.IS_LOCALHOST) ? 9218 : 4937; // 隨機定義的通知編號，沒有特別意義。
+    private CheckResult checkResult;
     private Context context;
-    private ClassSelfStatus statusManager;
 
     public ConditionNotification(Context context) {
         this.context = context;
-        this.statusManager = new ClassSelfStatus(getClass(), getContext());
     }
 
-    public void check(T data) {
-        boolean isAbove = decide(data);
-        Notification msg;
+    public boolean check(T data) {
+        checkResult = new CheckResult();
+        decide(data);
 
-        if (isAbove) {
-            msg = onTrue(data);
-        } else {
-            msg = onFalse(data);
-        }
-
-        if (msg != null) {
+        if (checkResult.isSendNotification) {
+            Notification msg = getNotification();
             msg.defaults = Notification.DEFAULT_ALL;
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID, msg);
         }
+        return checkResult.isCheckError;
     }
 
-    protected ClassSelfStatus getClassSelfStatus() {
-        return statusManager;
+    protected CheckResult getCheckResult() {
+        return checkResult;
     }
 
     protected Context getContext() {
         return context;
     }
 
-    protected abstract boolean decide(T data);
+    protected abstract void decide(T data);
 
-    protected Notification onTrue(T data) {
-        return null;
-    }
+    protected Notification getNotification() {
+        StoreNotifications store = new StoreNotifications(context);
+        SQLiteDatabase database = store.getReadableDatabase();
+        TriggeredRecordedData triggeredTimeGroup = new TriggeredRecordedData();
+        triggeredTimeGroup.load(database);
 
-    protected Notification onFalse(T data) {
-        return null;
+        ArrayList<RecordedData> recordGroup = triggeredTimeGroup.recordGroup;
+        RecordedOperator recordedOperator = new RecordedOperator(context);
+
+        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+        for (int i = 0; i < recordGroup.size() & i < 8; i++) {
+            recordedOperator.setValue(recordGroup.get(i));
+            String message = recordedOperator.getMessageWithParam();
+            style.addLine(message);
+        }
+
+        recordedOperator.setValue(recordGroup.get(0));
+        String title = recordedOperator.getTitleWithParam();
+        String content = recordedOperator.getMessageWithParam();
+        Notification notification = new NotificationCompat.Builder(context)
+                .setContentIntent(ActivityLauncher.goMainActivityNotificationPending(context))
+                .setTicker(title)
+                .setSmallIcon(R.drawable.icon01)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setStyle(style)
+                .build();
+        notification.priority = Notification.PRIORITY_MAX;
+        return notification;
     }
 }

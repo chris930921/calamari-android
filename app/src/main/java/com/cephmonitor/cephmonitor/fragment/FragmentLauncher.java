@@ -154,6 +154,17 @@ public class FragmentLauncher {
         }
     }
 
+    public static void goNotificationDetailFragment(Activity activity, Bundle arg) {
+        String fragmentName = NotificationDetailFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new NotificationDetailFragment();
+            page.setArguments(arg);
+            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        }
+    }
+
     public static void goHostHealthFragment(Activity activity, Bundle arg) {
         String fragmentName = HostHealthFragment.class.getName();
         boolean isClosed = checkFragmentOpening(activity, fragmentName);

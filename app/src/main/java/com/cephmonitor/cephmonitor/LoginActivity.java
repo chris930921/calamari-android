@@ -42,12 +42,12 @@ public class LoginActivity extends Activity {
         loadingDialog = new LoadingDialog(this);
         dialog = new MessageDialog(activity);
 
+        ServiceLauncher.startLooperService(this);
         if (loginInfo.isLogin()) {
             ActivityLauncher.goMainActivity(activity);
             loadingDialog.cancel();
             activity.finish();
         }
-
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
 //        deleteDatabase(StoreNotifications.DB_NAME);
     }
@@ -67,8 +67,6 @@ public class LoginActivity extends Activity {
         layout.password.setText(loginInfo.getPassword());
 
         layout.signIn.setOnClickListener(clickSignIn());
-
-        ServiceLauncher.startLooperService(this);
     }
 
     private View.OnClickListener clickSignIn() {

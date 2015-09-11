@@ -30,11 +30,18 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="WARN" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="成功取得所有資料時" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.cephmonitor.cephmonitor" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4b95795-ad56-48d9-b09f-6a8092aad482" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\User\AndroidStudioProjects\CephMonitor\.idea\libraries\appcompat_v7_21_0_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\AndroidStudioProjects\CephMonitor\.idea\libraries\robotium_solo_5_4_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\AndroidStudioProjects\CephMonitor\.idea\libraries\support_annotations_21_0_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\AndroidStudioProjects\CephMonitor\.idea\libraries\support_v4_21_0_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\User\AndroidStudioProjects\CephMonitor\.idea\libraries\volley.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/LooperService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/LooperService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CephMonitor.iws" />
@@ -57,11 +64,54 @@
     <favorites_list name="CephMonitor" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="NotificationItem.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/NotificationItem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1168" max-vertical-offset="3762">
+              <caret line="63" column="63" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServiceLauncher.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/ServiceLauncher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="475">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LooperService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/LooperService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="263" max-vertical-offset="1425">
+              <caret line="43" column="27" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestAndCheckService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/RequestAndCheckService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.73616236" vertical-offset="0" max-vertical-offset="2907">
+              <caret line="52" column="50" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
-      <setting name="OPEN_NEW_TAB" value="true" />
+      <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
@@ -2425,7 +2475,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5738925634039" />
+        <entry key="$PROJECT_DIR$" value="5739242972773" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2608,57 +2658,57 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/container/HorizonFloatContainer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/HostHealthLayout.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/NotificationItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/NotificationLayout.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/params/LoginParams.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/notification/style/CephDefaultNotification.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/ActivityLauncher.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/other/WorkFindView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/container/DrawerRelativeLayout.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/app/theme/custom/attribute/IconSize.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/container/CircleBorderContainer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/edittext/BorderEditText.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/app/theme/custom/attribute/Margin.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/app/theme/custom/template/Ocean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/receiver/LoadFinishReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/UsageStatusLayout.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/other/FloatLayoutLabel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/OSDHealthDetailLayout.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/RecorderData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/FindPendingData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/ShowNotificationData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/ResolvedNotificationData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/ResolvedRecordedData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/PendingRecordedData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedComparePatternOne.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/WriteResultSuccessListener.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/CephGetRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/CephPostRequest.java" />
-        <option value="$PROJECT_DIR$/app/src/main/assets/api/api_v1_cluster_id_pool.txt" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/RequestVolleyTask.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/io/ReadAssetsFile.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/PoolV1ListRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ApiV2ClusterIdPoolRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1ServerRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1SpaceRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2ListRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2MonListRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/deprecated/GraphiteIopsReadWriteSumRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteMetricsFindPools.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/card/HealthIopsCard.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1OsdListRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2OsdListRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1HealthCounterRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1HealthRequest.java" />
-        <option value="$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteRenderRequest.java" />
-        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/cephmonitor/cephmonitor/RobotiumTest.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/activity/LoginLayout.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/BorderTextViewItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/other/NavigationMenu.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/activity/MainLayout.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/notification/style/CephDefaultNotificationNew.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/TestingActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/StoreNotifications.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/receiver/ChangePeriodReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/CheckResult.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/CheckResult.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/MonCountErrorNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/UsagePercentWarnNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/UsagePercentErrorNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/OsdCountWarnNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/OsdCountErrorNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/MonCountWarnNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/RecordedByTriggeredData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/TriggereRecordeddData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/TriggeredRecordeddData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/PgStatusItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/RequestAndCheckService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/PgStatusItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/NotificationLayout.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ConditionNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/NotificationNewItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/KeepLoadRecordedData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/RoundLeftBarItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/ceph/constant/CephNotificationConstant.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/NotificationItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/FragmentLauncher.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/HealthFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/TopBorderTextViewItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/NotificationDetailLayout.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/table/RecordedTable.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/RecordedData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternFour.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/operator/RecordedOperator.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternTwo.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternThree.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/PgCountErrorNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/PgCountWarnNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/NotificationDetailFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternOne.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/NotificationFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/LooperService.java" />
       </list>
     </option>
   </component>
@@ -2716,18 +2766,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CephMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2755,41 +2793,21 @@
               <option name="myItemId" value="CephMonitor" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resourcelibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="CephMonitor" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resourcelibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CephMonitor" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2809,7 +2827,7 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="LayoutCode.rearrangeEntriesXML" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Ceph進度/Android 進度回報" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="options.lastSelected" value="vcs.Git" />
@@ -2817,17 +2835,17 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="DEBUGGABLE_DEVICE" value="samsung-gt_i9300-4df0062763f27f27" />
-    <property name="DEBUGGABLE_PROCESS" value="com.cephmonitor.cephmonitor.localhost" />
+    <property name="DEBUGGABLE_PROCESS" value="com.cephmonitor.cephmonitor" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="LayoutCode.rearrangeEntriesGroovy" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.cephmonitor.cephmonitor.receiver" />
-      <recent name="com.cephmonitor.cephmonitor.layout.component.container" />
+      <recent name="com.cephmonitor.cephmonitor.layout.fragment" />
+      <recent name="com.cephmonitor.cephmonitor.fragment" />
+      <recent name="com.cephmonitor.cephmonitor.layout.listitem.fixed" />
       <recent name="com.cephmonitor.cephmonitor.layout.listitem.reuse" />
-      <recent name="com.cephmonitor.cephmonitor.layout.component.list" />
-      <recent name="com.cephmonitor.cephmonitor.layout.listitem" />
+      <recent name="com.cephmonitor.cephmonitor.model.database.data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\AndroidStudioProjects\CephMonitor\app\src\main\assets\api" />
@@ -2839,11 +2857,12 @@
     <key name="android.template.packageName">
       <recent name="com.cephmonitor.cephmonitor" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.cephmonitor.cephmonitor" />
+      <recent name="com.cephmonitor.testmoduleproject" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\AndroidStudioProjects\CephMonitor\app\src\androidTest\java\com\cephmonitor\cephmonitor\test\ceph" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.cephmonitor.testmoduleproject" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app - Phone">
@@ -3205,7 +3224,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -3213,21 +3232,21 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977974" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2907489" sideWeight="0.2889126" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977974" sideWeight="0.61034113" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37114537" sideWeight="0.2889126" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50220263" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.280837" sideWeight="0.2889126" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19669509" sideWeight="0.50437826" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19722815" sideWeight="0.25218913" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5986141" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37114537" sideWeight="0.7110874" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23027718" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37114537" sideWeight="0.7110874" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23027718" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19669509" sideWeight="0.4956217" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19722815" sideWeight="0.74781084" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.6652452" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3235,23 +3254,23 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32929516" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.6332623" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2907489" sideWeight="0.2889126" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19402985" sideWeight="0.5031056" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37114537" sideWeight="0.2889126" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19669509" sideWeight="0.50437826" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.280837" sideWeight="0.2889126" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08635394" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23027718" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19402985" sideWeight="0.49689442" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19669509" sideWeight="0.4956217" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.6652452" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3259,8 +3278,8 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977974" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.6332623" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977974" sideWeight="0.61034113" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50220263" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5986141" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37114537" sideWeight="0.7110874" order="13" side_tool="false" content_ui="tabs" />
@@ -3302,389 +3321,405 @@
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteRenderRequest.java</url>
-          <line>58</line>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/TestingActivity.java</url>
+          <line>55</line>
           <properties />
-          <option name="timeStamp" value="82" />
+          <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteRenderRequest.java</url>
-          <line>60</line>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/NotificationFragment.java</url>
+          <line>46</line>
           <properties />
-          <option name="timeStamp" value="83" />
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="86" />
+      <option name="time" value="110" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/LoginPostRequest.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/receiver/BootUpReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="1254">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2MonListRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69557196" vertical-offset="60" max-vertical-offset="646">
-          <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2ListRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75461257" vertical-offset="47" max-vertical-offset="608">
-          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/deprecated/GraphiteIopsReadWriteSumRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2MonStatusRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5689981" vertical-offset="60" max-vertical-offset="589">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/graphite_mettics_find_servers_ceph_node2_iostat_all.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2804428" vertical-offset="0" max-vertical-offset="1463">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2SingleRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15867159" vertical-offset="47" max-vertical-offset="589">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteMetricsFindPools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0310078" vertical-offset="0" max-vertical-offset="836">
-          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/graphite_render_empty.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="516">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/card/HealthIopsCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.016605167" vertical-offset="1073" max-vertical-offset="1615">
-          <caret line="72" column="61" selection-start-line="72" selection-start-column="61" selection-end-line="72" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/deprecated/TestAreaLineRandomAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="1140">
-          <caret line="35" column="44" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/PoolV1ListRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6494465" vertical-offset="104" max-vertical-offset="646">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/api_v1_cluster_id_osd_warning_error.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4522">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/api_v1_cluster_id_osd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40405905" vertical-offset="3980" max-vertical-offset="4522">
-          <caret line="221" column="22" selection-start-line="221" selection-start-column="22" selection-end-line="221" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/api_v2_cluster_id_osd_warning_error.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4921">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1OsdListRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6494465" vertical-offset="66" max-vertical-offset="608">
-          <caret line="32" column="69" selection-start-line="32" selection-start-column="69" selection-end-line="32" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/object/ClusterV2OsdData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73616236" vertical-offset="76" max-vertical-offset="1083">
-          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/api_v1_cluster_id_health_counters_osd_fail.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1444">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1HealthCounterRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61439115" vertical-offset="66" max-vertical-offset="627">
-          <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV2OsdListRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71955717" vertical-offset="9" max-vertical-offset="627">
-          <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/api/api_v1_cluster_id_health_error.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1520">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/ClusterV1HealthRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33394834" vertical-offset="47" max-vertical-offset="589">
-          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/NotificationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17527676" vertical-offset="0" max-vertical-offset="836">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/single/GraphiteRenderRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3321034" vertical-offset="0" max-vertical-offset="2147">
-          <caret line="53" column="52" selection-start-line="53" selection-start-column="52" selection-end-line="53" selection-end-column="52" />
-          <folding>
-            <element signature="e#784#785#0" expanded="false" />
-            <element signature="e#814#815#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-studio/sdk/platforms/android-21/android.jar!/android/widget/Toast.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21550095" vertical-offset="0" max-vertical-offset="950">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/cephmonitor/cephmonitor/RobotiumTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.80627304" vertical-offset="0" max-vertical-offset="798">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/HealthDetailFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1402214" vertical-offset="57" max-vertical-offset="1520">
-          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58800775" vertical-offset="171" max-vertical-offset="3496">
-          <caret line="25" column="56" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/DefaultListItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2416973" vertical-offset="1833" max-vertical-offset="2375">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/card/HealthBaseCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6309963" vertical-offset="1653" max-vertical-offset="11723">
-          <caret line="126" column="49" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/activity/LoginLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.0867157" vertical-offset="1859" max-vertical-offset="6669">
-          <caret line="328" column="36" selection-start-line="328" selection-start-column="36" selection-end-line="328" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.38560885" vertical-offset="0" max-vertical-offset="542">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/receiver/LoadFinishReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="551">
-          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="513">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-studio/sdk/platforms/android-21/android.jar!/android/view/View.class">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/receiver/ChangePeriodReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3327032" vertical-offset="22947" max-vertical-offset="24415">
-          <caret line="1218" column="13" selection-start-line="1218" selection-start-column="13" selection-end-line="1218" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.06551724" vertical-offset="399" max-vertical-offset="1330">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/FragmentLauncher.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/StoreNotifications.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1653" max-vertical-offset="4541">
-          <caret line="120" column="9" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.36034483" vertical-offset="0" max-vertical-offset="580">
+          <caret line="15" column="48" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/activity/MainLayout.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/CheckResult.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3321033" vertical-offset="6033" max-vertical-offset="6878">
-          <caret line="356" column="36" selection-start-line="356" selection-start-column="36" selection-end-line="356" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.1402214" vertical-offset="0" max-vertical-offset="542">
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/UsagePercentErrorNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42066422" vertical-offset="2945" max-vertical-offset="6099">
-          <caret line="225" column="71" selection-start-line="225" selection-start-column="71" selection-end-line="225" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.71955717" vertical-offset="427" max-vertical-offset="988">
+          <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/HealthFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/UsagePercentWarnNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4907749" vertical-offset="855" max-vertical-offset="8968">
-          <caret line="101" column="24" selection-start-line="101" selection-start-column="24" selection-end-line="101" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.71955717" vertical-offset="446" max-vertical-offset="1007">
+          <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/app/theme/custom/attribute/Horizontal.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/OsdCountWarnNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3275862" vertical-offset="0" max-vertical-offset="580">
-          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.71955717" vertical-offset="408" max-vertical-offset="969">
+          <caret line="52" column="33" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/app/theme/custom/template/Ocean.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/OsdCountErrorNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3249" max-vertical-offset="7429">
-          <caret line="293" column="5" selection-start-line="293" selection-start-column="5" selection-end-line="293" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.71955717" vertical-offset="427" max-vertical-offset="988">
+          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/MonCountWarnNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71955717" vertical-offset="408" max-vertical-offset="969">
+          <caret line="52" column="33" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resourcelibrary/src/main/java/com/resourcelibrary/model/network/api/ceph/object/CephStaticValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47416973" vertical-offset="370" max-vertical-offset="912">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/DatabaseConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="380">
+          <caret line="9" column="102" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/DatabaseParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6309963" vertical-offset="114" max-vertical-offset="1406">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/PgStatusItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5774908" vertical-offset="912" max-vertical-offset="5092">
+          <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/deprecated/NotificationItemOldVersion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="741" max-vertical-offset="4446">
+          <caret line="72" column="27" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/component/other/NavigationMenu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="5092">
-          <caret line="82" column="38" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/TopBorderTextViewItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5405904" vertical-offset="220" max-vertical-offset="1121">
-          <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/NotificationRow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="133" max-vertical-offset="684">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3890785" vertical-offset="0" max-vertical-offset="988">
-          <caret line="18" column="40" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/deprecated/MessageList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3026166" vertical-offset="19" max-vertical-offset="1140">
-          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5403868" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="25" column="63" selection-start-line="25" selection-start-column="63" selection-end-line="25" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ConditionNotification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0701107" vertical-offset="171" max-vertical-offset="950">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4493" max-vertical-offset="5092">
+          <caret line="294" column="47" selection-start-line="294" selection-start-column="47" selection-end-line="294" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/MonCountErrorNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="969">
-          <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+        <state vertical-scroll-proportion="1.1568266" vertical-offset="0" max-vertical-offset="969">
+          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/PendingRecordedData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="28" max-vertical-offset="741">
+          <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/ResolvedRecordedData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="741">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/TriggeredRecordedData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61439115" vertical-offset="161" max-vertical-offset="703">
+          <caret line="31" column="45" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/KeepLoadRecordedData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4723247" vertical-offset="190" max-vertical-offset="1216">
+          <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-studio/sdk/platforms/android-21/android.jar!/android/view/ViewGroup.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327032" vertical-offset="3130" max-vertical-offset="8132">
+          <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/reuse/RoundLeftBarItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5092251" vertical-offset="2574" max-vertical-offset="3743">
+          <caret line="164" column="105" selection-start-line="164" selection-start-column="105" selection-end-line="164" selection-end-column="105" />
+          <folding>
+            <element signature="e#2817#2818#0" expanded="false" />
+            <element signature="e#2864#2865#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/NotificationLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8062731" vertical-offset="294" max-vertical-offset="1463">
+          <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/ceph/constant/CephNotificationConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2453874" vertical-offset="275" max-vertical-offset="1216">
+          <caret line="50" column="35" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2083#2084#0" expanded="true" />
+            <element signature="e#2130#2131#0" expanded="true" />
+            <element signature="e#2194#2195#0" expanded="true" />
+            <element signature="e#2240#2241#0" expanded="true" />
+            <element signature="e#2309#2310#0" expanded="true" />
+            <element signature="e#2360#2361#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/OSDHealthDetailLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.9815498" vertical-offset="1596" max-vertical-offset="4142">
+          <caret line="70" column="70" selection-start-line="70" selection-start-column="70" selection-end-line="70" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/FragmentLauncher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40405905" vertical-offset="2593" max-vertical-offset="4750">
+          <caret line="156" column="51" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6845018" vertical-offset="4056" max-vertical-offset="6327">
+          <caret line="326" column="31" selection-start-line="326" selection-start-column="31" selection-end-line="326" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/r/online/debug/com/cephmonitor/cephmonitor/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34816247" vertical-offset="27446" max-vertical-offset="101137">
+          <caret line="1459" column="30" selection-start-line="1459" selection-start-column="30" selection-end-line="1459" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/fragment/NotificationDetailLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54428047" vertical-offset="4075" max-vertical-offset="4731">
+          <caret line="249" column="29" selection-start-line="249" selection-start-column="29" selection-end-line="249" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/table/DatabaseTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31549814" vertical-offset="0" max-vertical-offset="542">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ConditionNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321033" vertical-offset="181" max-vertical-offset="1330">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternFour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5092251" vertical-offset="1301" max-vertical-offset="2641">
+          <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternTwo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61439115" vertical-offset="3125" max-vertical-offset="3667">
+          <caret line="194" column="44" selection-start-line="194" selection-start-column="44" selection-end-line="194" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternThree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54428047" vertical-offset="1111" max-vertical-offset="2413">
+          <caret line="86" column="64" selection-start-line="86" selection-start-column="64" selection-end-line="86" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/table/RecordedTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7896679" vertical-offset="598" max-vertical-offset="1254">
+          <caret line="57" column="101" selection-start-line="57" selection-start-column="101" selection-end-line="57" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/operator/RecordedOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6845018" vertical-offset="1795" max-vertical-offset="2356">
+          <caret line="116" column="24" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/data/RecordedData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.3634686" vertical-offset="0" max-vertical-offset="3610">
+          <caret line="163" column="38" selection-start-line="163" selection-start-column="38" selection-end-line="163" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/PgCountErrorNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59594095" vertical-offset="342" max-vertical-offset="1102">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/condition/notification/PgCountWarnNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73616236" vertical-offset="57" max-vertical-offset="1102">
+          <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1083">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/NotificationDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="741">
+          <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/logic/ceph/compare/RecordedPatternOne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.1568265" vertical-offset="2251" max-vertical-offset="3534">
+          <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/fragment/NotificationFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7693727" vertical-offset="294" max-vertical-offset="2546">
+          <caret line="152" column="35" selection-start-line="152" selection-start-column="35" selection-end-line="152" selection-end-column="35" />
+          <folding>
+            <element signature="e#5649#5679#0" expanded="false" />
+            <element signature="e#5923#5964#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73616236" vertical-offset="247" max-vertical-offset="2546">
+          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4777563" vertical-offset="380" max-vertical-offset="4807">
+          <caret line="33" column="82" selection-start-line="33" selection-start-column="82" selection-end-line="33" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38560885" vertical-offset="0" max-vertical-offset="1140">
+          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/layout/listitem/fixed/NotificationItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1168" max-vertical-offset="3762">
+          <caret line="63" column="63" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/ServiceLauncher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24538745" vertical-offset="0" max-vertical-offset="542">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="475">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/LooperService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5608856" vertical-offset="114" max-vertical-offset="760">
-          <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="263" max-vertical-offset="1425">
+          <caret line="43" column="27" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/service/RequestAndCheckService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="2641">
-          <caret line="86" column="22" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cephmonitor/cephmonitor/model/database/StoreNotifications.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2930057" vertical-offset="3" max-vertical-offset="3781">
-          <caret line="75" column="24" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.73616236" vertical-offset="0" max-vertical-offset="2907">
+          <caret line="52" column="50" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="50" />
           <folding />
         </state>
       </provider>
