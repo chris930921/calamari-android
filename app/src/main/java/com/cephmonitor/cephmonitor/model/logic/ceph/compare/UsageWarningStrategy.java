@@ -17,49 +17,52 @@ import java.util.Calendar;
 /**
  * Created by User on 2015/9/2.
  */
-public class RecordedPatternTwo {
+public class UsageWarningStrategy {
     public Context context;
     public CheckResult checkResult;
-    public float compareValue;
-    public int elementValue;
-    public int denominatorValue;
+    public int compareValue;
     public int monitorType;
     public int level;
     public int monitorNumber;
     public int createMessageId;
-    public int moreMessageId;
-    public int relapseMessageId;
     public int finishMessageId;
     public int abnormalTitleId;
     public int normalTitleId;
     public int waringType;
 
+    public int limit;
+    public int max;
     public int recordedId;
 
-    public void setParams(Context context, CheckResult checkResult, float compareValue,
-                          int elementValue, int denominatorValue,
+    public void setParams(Context context, CheckResult checkResult, int compareValue,
                           int monitorType, int level, int monitorNumber,
-                          int createMessageId, int moreMessageId, int relapseMessageId, int finishMessageId,
+                          int createMessageId, int finishMessageId,
                           int abnormalTitleId, int normalTitleId,
-                          int waringType) {
+                          int waringType, int limit,
+                          int max) {
         this.context = context;
         this.checkResult = checkResult;
         this.compareValue = compareValue;
-        this.elementValue = elementValue;
-        this.denominatorValue = denominatorValue;
         this.monitorType = monitorType;
         this.level = level;
         this.monitorNumber = monitorNumber;
         this.createMessageId = createMessageId;
-        this.moreMessageId = moreMessageId;
-        this.relapseMessageId = relapseMessageId;
         this.finishMessageId = finishMessageId;
         this.abnormalTitleId = abnormalTitleId;
         this.normalTitleId = normalTitleId;
         this.waringType = waringType;
+        this.limit = limit;
+        this.max = max;
     }
 
     public void compare() {
+        if (compareValue >= max) {
+            ShowLog.d("監控訊息: 交由錯誤警告檢查。");
+            checkResult.isSendNotification = false;
+            checkResult.isCheckError = false;
+            return;
+        }
+
         StoreNotifications store = new StoreNotifications(context);
         SQLiteDatabase database = store.getReadableDatabase();
 
@@ -69,7 +72,8 @@ public class RecordedPatternTwo {
         findPending.monitorNumber = monitorNumber;
         findPending.load(database);
 
-        if (!findPending.isExist && compareValue > 0.2) {
+        ShowLog.d("監控訊息: 檢查中數值: " + compareValue + " 上限數值:" + limit);
+        if (!findPending.isExist && compareValue >= limit) {
             RecordedData recorded = new RecordedData();
             recorded.count = compareValue;
             recorded.level = level;
@@ -86,13 +90,21 @@ public class RecordedPatternTwo {
             recorded.waringType = waringType;
             recorded.monitorType = monitorType;
             recorded.monitorNumber = monitorNumber;
-            updateOtherParams(recorded);
+
+            String showPercent = String.format("%.2f", recorded.count / 100);
+            RecordedOperator recordedOperator = new RecordedOperator(context);
+            recordedOperator.setValue(recorded);
+            recordedOperator.clearMessageParamGroup();
+            recordedOperator.addMessageParam(showPercent);
+            recordedOperator.addOtherParam("description_title", R.string.notification_detail_usage);
+            recordedOperator.addOtherParam("description", showPercent + "%");
+
             recorded.create(database);
             ShowLog.d("監控訊息: 出現損壞。");
             checkResult.isSendNotification = true;
             checkResult.isCheckError = true;
             return;
-        } else if (!findPending.isExist) {
+        } else if (!findPending.isExist && compareValue < limit) {
             ShowLog.d("監控訊息: 正常運作中。");
             checkResult.isSendNotification = false;
             checkResult.isCheckError = false;
@@ -105,77 +117,18 @@ public class RecordedPatternTwo {
         recordedId = findPending.recordId;
 
         boolean check;
-
-        // 持續修復的情況。
-        check = true;
-        check &= compareValue < recorded.previousCount;
-        check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0.2;
-        if (check) {
-            recorded.count = compareValue;
-            recorded.previousCount = compareValue;
-            updateOtherParams(recorded);
-            recorded.save(database);
-            ShowLog.d("監控訊息: 持續修補中。");
-            checkResult.isSendNotification = false;
-            checkResult.isCheckError = true;
-            return;
-        }
-
-        // 持續損壞的情況。
-        check = true;
-        check &= compareValue > recorded.previousCount;
-        check &= compareValue >= recorded.originalCount;
-        check &= compareValue > 0.2;
-        check &= recorded.originalCount > 0;
-        if (check) {
-            recorded.count = compareValue;
-            recorded.triggered = Calendar.getInstance();
-            recorded.originalCount = compareValue;
-            recorded.previousCount = compareValue;
-            recorded.lastMessageId = moreMessageId;
-            recorded.lastErrorMessageId = moreMessageId;
-            updateOtherParams(recorded);
-            recorded.save(database);
-            ShowLog.d("監控訊息: 持續損壞中。");
-            checkResult.isSendNotification = true;
-            checkResult.isCheckError = true;
-            return;
-        }
-
-        // 上一次修復，這一次又損壞的情況。
-        check = true;
-        check &= compareValue > recorded.previousCount;
-        check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0.2;
-        if (check) {
-            recorded.count = compareValue;
-            recorded.triggered = Calendar.getInstance();
-            recorded.previousCount = compareValue;
-            recorded.lastMessageId = relapseMessageId;
-            recorded.lastErrorMessageId = relapseMessageId;
-            updateOtherParams(recorded);
-            recorded.save(database);
-            ShowLog.d("監控訊息: 修復完又壞了的情況。");
-            checkResult.isSendNotification = true;
-            checkResult.isCheckError = true;
-            return;
-        }
-
         // 全部修復完成的情況。
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue < recorded.originalCount;
-        check &= compareValue < 0.2;
+        check &= compareValue < limit;
         if (check) {
-            recorded.count = compareValue;
             recorded.status = CephNotificationConstant.STATUS_RESOLVED;
             recorded.resolved = Calendar.getInstance();
             recorded.originalCount = 0;
             recorded.previousCount = 0;
             recorded.lastMessageId = finishMessageId;
             recorded.lastTitleId = normalTitleId;
-            updateOtherParams(recorded);
             recorded.save(database);
             ShowLog.d("監控訊息: 全部修復完成。");
             checkResult.isSendNotification = true;
@@ -187,13 +140,5 @@ public class RecordedPatternTwo {
         checkResult.isSendNotification = false;
         checkResult.isCheckError = true;
         return;
-    }
-
-    private void updateOtherParams(RecordedData recorded) {
-        String showPercent = String.format("%.2f", compareValue * 100);
-        RecordedOperator recordedOperator = new RecordedOperator(context);
-        recordedOperator.setValue(recorded);
-        recordedOperator.addOtherParam("description_title", R.string.notification_detail_error_ratio);
-        recordedOperator.addOtherParam("description", showPercent + "% (" + elementValue + "/" + denominatorValue + ")");
     }
 }

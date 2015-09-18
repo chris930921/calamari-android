@@ -17,6 +17,7 @@ public class FragmentLauncher {
     public static final String FIRST_FRAGMENT_LAYER = "First Fragment Layer";
     public static final String SECOND_FRAGMENT_LAYER = "Second Fragment Layer";
     public static final String THIRD_FRAGMENT_LAYER = "Third Fragment Layer";
+    public static final String FOURTH_FRAGMENT_LAYER = "Fourth Fragment Layer";
 
     private static boolean checkFragmentOpening(Activity activity, String fragmentName) {
         return activity.getFragmentManager().findFragmentByTag(fragmentName) == null;
@@ -27,17 +28,12 @@ public class FragmentLauncher {
         printBackStack(activity);
     }
 
-    public static void backFragment(Activity activity, Class fragmentClass) {
-        activity.getFragmentManager().popBackStackImmediate(fragmentClass.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    public static void backFragment(Activity activity, String Layer) {
+        activity.getFragmentManager().popBackStackImmediate(Layer, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         printBackStack(activity);
     }
 
-//    private static void cleanAllPopFragment(Activity activity, Fragment fragment) {
-//        FragmentManager manager = activity.getFragmentManager();
-//        manager.popBackStack(fragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//    }
-
-    private static void cleanToTragetFragment(Activity activity, String fragmentTag) {
+    private static void cleanToTargetFragment(Activity activity, String fragmentTag) {
         FragmentManager manager = activity.getFragmentManager();
         manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
@@ -93,8 +89,10 @@ public class FragmentLauncher {
         boolean isClosed = checkFragmentOpening(activity, fragmentName);
         if (isClosed) {
             Fragment page = new HealthFragment();
-            cleanToTragetFragment(activity, FIRST_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, FIRST_FRAGMENT_LAYER);
             changeFadeIn(activity, MainLayout.CONTAINER_ID, page);
+        }else{
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
         }
     }
 
@@ -104,9 +102,8 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HealthDetailFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
-
         }
     }
 
@@ -116,7 +113,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -127,7 +124,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new OSDHealthDetailFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
     }
@@ -138,7 +135,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new MonHealthFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -149,7 +146,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new NotificationFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -160,7 +157,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new NotificationDetailFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
     }
@@ -171,7 +168,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HostHealthFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -182,7 +179,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PgStatusFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -193,7 +190,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new UsageStatusFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -204,7 +201,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PoolIopsFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -215,7 +212,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new PoolListFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, SECOND_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -226,7 +223,7 @@ public class FragmentLauncher {
         if (isClosed) {
             Fragment page = new HostDetailFragment();
             page.setArguments(arg);
-            cleanToTragetFragment(activity, THIRD_FRAGMENT_LAYER);
+            cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
         printBackStack(activity);
@@ -235,18 +232,18 @@ public class FragmentLauncher {
     public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailSummaryFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, FOURTH_FRAGMENT_LAYER);
     }
 
     public static void goHostDetailAllCpusFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailAllCpusFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, FOURTH_FRAGMENT_LAYER);
     }
 
     public static void goHostDetailIopsFragment(Activity activity, Bundle arg) {
         Fragment page = new HostDetailIopsFragment();
         page.setArguments(arg);
-        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, FOURTH_FRAGMENT_LAYER);
     }
 }

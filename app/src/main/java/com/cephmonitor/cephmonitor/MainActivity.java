@@ -34,7 +34,6 @@ import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
-import com.resourcelibrary.model.view.dialog.RoundSimpleSelectDialog;
 
 import java.util.HashMap;
 
@@ -82,54 +81,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
         FragmentLauncher.goHealthFragment(activity);
-        layout.health.setBackgroundResource(R.drawable.icon06);
-        layout.health.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout.recoverAllButton();
-                layout.health.setBackgroundResource(R.drawable.icon06);
-                FragmentLauncher.goHealthFragment(activity);
-            }
-        });
 
-        layout.usage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout.recoverAllButton();
-                layout.usage.setBackgroundResource(R.drawable.icon08);
-            }
-        });
-
-        layout.performance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layout.recoverAllButton();
-                layout.performance.setBackgroundResource(R.drawable.icon10);
-            }
-        });
-
-        layout.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RoundSimpleSelectDialog dialog = new RoundSimpleSelectDialog(activity);
-                dialog.setPosition(0, layout.bottomBar.getHeight());
-
-                dialog.addItem(getResources().getString(R.string.main_activity_option_notification), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentLauncher.goNotificationFragment(activity, null);
-                    }
-                });
-                dialog.addItem(getResources().getString(R.string.main_activity_option_node_list), null);
-                dialog.addItem(getResources().getString(R.string.main_activity_option_pool_list), null);
-                dialog.addItem(getResources().getString(R.string.main_activity_option_logs), null);
-                dialog.addItem(getResources().getString(R.string.main_activity_option_alert), null);
-                dialog.addItem(getResources().getString(R.string.main_activity_option_setting), null);
-                dialog.addItem(getResources().getString(R.string.main_activity_option_logout), null);
-
-                dialog.show();
-            }
-        });
         layout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -141,7 +93,6 @@ public class MainActivity extends Activity implements InitFragment.Style {
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                if (nextBroadcastResourceId == R.string.main_activity_fragment_health) return;
                 if (nextBroadcastResourceId == broadcastResourceId) return;
 
                 broadcastResourceId = nextBroadcastResourceId;
@@ -223,12 +174,12 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_health));
+            int titleResource = R.string.main_activity_fragment_health;
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.showNavigation();
-            layout.setSelected(R.string.main_activity_fragment_health);
-//            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            broadcastResourceId = R.string.main_activity_fragment_health;
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
             nextBroadcastResourceId = broadcastResourceId;
             layout.topBar.setBackgroundColor(primary);
         }
@@ -237,10 +188,13 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHealthDetailFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_health_detail));
+            int titleResource = R.string.main_activity_fragment_health_detail;
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_health_detail);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -253,10 +207,13 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showOsdHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_osd_health));
+            int titleResource = R.string.main_activity_fragment_osd_health;
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_osd_health);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -287,10 +244,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showMonHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_mon_health));
+            int titleResource = R.string.main_activity_fragment_mon_health;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_mon_health);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -303,10 +264,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showNotificationFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_notification));
+            int titleResource = R.string.main_activity_fragment_notification;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_option_notification);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -321,8 +286,9 @@ public class MainActivity extends Activity implements InitFragment.Style {
         public void action(Bundle arg) {
             CephNotificationConstant.StatusConstant statusConstant = new CephNotificationConstant.StatusConstant(activity);
             int titleColor = statusConstant.getStatusColorGroup().get(arg.getInt("0"));
+            int titleResource = R.string.main_activity_fragment_notification_detail;
 
-            setTitle(getResources().getString(R.string.main_activity_fragment_notification_detail));
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(titleColor);
             layout.showBack(new View.OnClickListener() {
@@ -337,10 +303,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHostHealthFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_host_health));
+            int titleResource = R.string.main_activity_fragment_host_health;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_host_health);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -353,10 +323,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showPgStatusFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_pg_status));
+            int titleResource = R.string.main_activity_fragment_pg_status;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_pg_status);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -368,10 +342,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showUsageStatusFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_usage_status));
+            int titleResource = R.string.main_activity_fragment_usage_status;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_usage_status);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -384,10 +362,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showPoolIopsFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_pool_iops));
+            int titleResource = R.string.main_activity_fragment_pool_iops;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_pool_iops);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -400,10 +382,14 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showPoolListFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            setTitle(getResources().getString(R.string.main_activity_fragment_pool_list));
+            int titleResource = R.string.main_activity_fragment_pool_list;
+
+            setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
             layout.topBar.setBackgroundColor(secondary);
-            layout.setSelected(R.string.main_activity_fragment_pool_list);
+            layout.setSelected(titleResource);
+            broadcastResourceId = titleResource;
+            nextBroadcastResourceId = broadcastResourceId;
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -425,7 +411,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentLauncher.backFragment(activity, HostDetailFragment.class);
+                    FragmentLauncher.backFragment(activity, FragmentLauncher.THIRD_FRAGMENT_LAYER);
                 }
             });
 

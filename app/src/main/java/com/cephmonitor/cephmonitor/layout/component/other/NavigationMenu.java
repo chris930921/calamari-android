@@ -64,7 +64,7 @@ public class NavigationMenu extends RelativeLayout {
             R.string.main_activity_fragment_health, R.string.main_activity_fragment_health_detail, R.string.main_activity_fragment_osd_health,
             R.string.main_activity_fragment_mon_health, R.string.main_activity_fragment_pool_list, R.string.main_activity_fragment_host_health,
             R.string.main_activity_fragment_pg_status, R.string.main_activity_fragment_usage_status, R.string.main_activity_fragment_pool_iops,
-            R.string.main_activity_option_notification, R.string.main_activity_option_logs, R.string.main_activity_option_setting,
+            R.string.main_activity_fragment_notification, R.string.main_activity_option_logs, R.string.main_activity_option_setting,
             R.string.main_activity_option_logout,
     };
 

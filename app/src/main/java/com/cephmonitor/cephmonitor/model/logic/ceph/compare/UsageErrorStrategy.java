@@ -17,7 +17,7 @@ import java.util.Calendar;
 /**
  * Created by User on 2015/9/2.
  */
-public class RecordedPatternThree {
+public class UsageErrorStrategy {
     public Context context;
     public CheckResult checkResult;
     public int compareValue;
@@ -80,7 +80,7 @@ public class RecordedPatternThree {
             recorded.monitorType = monitorType;
             recorded.monitorNumber = monitorNumber;
 
-            String showPercent = String.format("%.2f", (float) compareValue / 100);
+            String showPercent = String.format("%.2f", recorded.count / 100);
             RecordedOperator recordedOperator = new RecordedOperator(context);
             recordedOperator.setValue(recorded);
             recordedOperator.addOtherParam("description_title", R.string.notification_detail_usage);
@@ -110,7 +110,6 @@ public class RecordedPatternThree {
         check &= compareValue < recorded.originalCount;
         check &= compareValue < limit;
         if (check) {
-            recorded.count = compareValue;
             recorded.status = CephNotificationConstant.STATUS_RESOLVED;
             recorded.resolved = Calendar.getInstance();
             recorded.originalCount = 0;

@@ -18,11 +18,7 @@
     <string name="login_developer">公司設計開發</string>
 
     //MainActivity
-    <string name="main_activity_option_notification">Notifications</string>
-    <string name="main_activity_option_node_list">Node List</string>
-    <string name="main_activity_option_pool_list">Pool List</string>
     <string name="main_activity_option_logs">Logs</string>
-    <string name="main_activity_option_alert">Alert</string>
     <string name="main_activity_option_setting">Settings</string>
     <string name="main_activity_option_logout">Logout</string>
 

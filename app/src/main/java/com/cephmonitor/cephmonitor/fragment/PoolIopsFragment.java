@@ -19,12 +19,9 @@ import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.model.network.SequenceTask;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.RequestVolleyTask;
-import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindData;
-import com.resourcelibrary.model.network.api.ceph.object.GraphiteFindListData;
 import com.resourcelibrary.model.network.api.ceph.object.GraphiteRenderData;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
-import com.resourcelibrary.model.network.api.ceph.single.GraphiteMetricsFindPools;
 import com.resourcelibrary.model.network.api.ceph.single.GraphiteRenderRequest;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
@@ -32,16 +29,18 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class PoolIopsFragment extends Fragment {
     private PoolIopsLayout layout;
     private ArrayList<ArrayList<String>> targetListGroup;
-    private ArrayList<GraphiteFindData> metricsGroup;
     private HashMap<Integer, PoolIopsItem> itemGroup;
     private HashMap<Integer, ArrayList<ChartLine>> adapterListGroup;
     private SequenceTask taskGroup;
-    private HashMap<String, String> pools;
+    private LinkedHashMap<String, String> pools;
     private LoadingDialog loadingDialog;
+    private ArrayList<String> graphiteIdGroup;
+    private ArrayList<String> idGroup;
 
     final int[] lineTextColorGroup = {ColorTable._8DC41F, ColorTable._F7B500};
 
@@ -56,11 +55,10 @@ public class PoolIopsFragment extends Fragment {
 
     public void init() {
         loadingDialog = new LoadingDialog(getActivity());
-        metricsGroup = new ArrayList<>();
         targetListGroup = new ArrayList<>();
         adapterListGroup = new HashMap<>();
         itemGroup = new HashMap<>();
-        pools = new HashMap<>();
+        pools = new LinkedHashMap<>();
         taskGroup = new SequenceTask();
         taskGroup = new SequenceTask();
         taskGroup.setOnEveryTaskFinish(new SequenceTask.CallBack() {
@@ -81,78 +79,37 @@ public class PoolIopsFragment extends Fragment {
 
         try {
             Bundle arg = getArguments();
+            String clusterId = arg.getString("0");
             PoolV1ListData poolData = new PoolV1ListData("[]");
             poolData.inBox(arg);
-            pools = poolData.getIdStringMapName();
-            pools.put("all", "Aggregate");
+            pools = poolData.getIdStringMapNameContainAggregate();
+            idGroup = poolData.getIdGroupContainAggregate();
+            graphiteIdGroup = poolData.getGraphiteIdGroupContainAggregate(clusterId);
 
             layout.list.setAdapter(defaultAdapter);
             layout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Bundle arg = getArguments();
-                    String clusterId = arg.getString("0");
-                    requestTargetGroups(clusterId);
+
+                    for (int i = 0; i < graphiteIdGroup.size(); i++) {
+                        String id = graphiteIdGroup.get(i);
+                        ArrayList<String> targetGroup = new ArrayList<>();
+                        targetGroup.add(id + ".num_read");
+                        targetGroup.add(id + ".num_write");
+
+                        targetListGroup.add(targetGroup);
+                    }
+                    for (int i = 0; i < targetListGroup.size(); i++) {
+                        request(i);
+                    }
+                    taskGroup.start();
+                    layout.list.setAdapter(adapter);
                 }
             }, 300);
             loadingDialog.show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private void requestTargetGroups(String clusterId) {
-        final String query = "ceph.cluster." + clusterId + ".pool.*";
-        final ArrayList<String> orderTargetList = new ArrayList<>();
-        orderTargetList.add("ceph.cluster." + clusterId + ".pool.all");
-
-        AnalyzeListener<String> success = new AnalyzeListener<String>() {
-            @Override
-            public synchronized boolean doInBackground(String s) {
-                try {
-                    GraphiteFindListData data = new GraphiteFindListData(s);
-                    metricsGroup = data.getOrderList(orderTargetList);
-
-                    for (int i = 0; i < metricsGroup.size(); i++) {
-                        GraphiteFindData metrics = metricsGroup.get(i);
-                        String target = metrics.getId();
-
-                        ArrayList<String> targetGroup = new ArrayList<>();
-                        targetGroup.add(target + ".num_read");
-                        targetGroup.add(target + ".num_write");
-
-                        targetListGroup.add(targetGroup);
-                    }
-                    return true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-
-            @Override
-            public void onPostExecute() {
-                for (int i = 0; i < targetListGroup.size(); i++) {
-                    request(i);
-                }
-                taskGroup.start();
-                layout.list.setAdapter(adapter);
-            }
-        };
-
-        Response.ErrorListener fail = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LoadingDialog.delayCancel(layout, loadingDialog);
-            }
-        };
-
-        LoginParams requestParams = new LoginParams(getActivity());
-        requestParams.setGraphiteQuery(query);
-
-        GraphiteMetricsFindPools spider = new GraphiteMetricsFindPools(getActivity());
-        spider.setRequestParams(requestParams);
-        spider.request(success, fail);
     }
 
     private void request(final int index) {
@@ -240,7 +197,7 @@ public class PoolIopsFragment extends Fragment {
             } else {
                 item = (PoolIopsItem) view;
             }
-            String poolName = pools.get(metricsGroup.get(i).getName());
+            String poolName = pools.get(idGroup.get(i));
             item.setTag(i);
             itemGroup.put(i, item);
             item.setName(poolName);

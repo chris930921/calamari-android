@@ -5,7 +5,7 @@ import android.content.Context;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternTwo;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.PgStrategy;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 
 import org.json.JSONException;
@@ -17,7 +17,7 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
     private int monitorType = 3;
     private int level = 3;
     private int monitorNumber = 1;
-    private RecordedPatternTwo comparePattern;
+    private PgStrategy comparePattern;
 
     public PgCountWarnNotification(Context context) {
         super(context);
@@ -29,7 +29,7 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
         float errorCount;
         float totalCount;
         try {
-            errorCount = data.getPlacmentGroupsErrorCount();
+            errorCount = data.getPlacmentGroupsWarningCount();
             totalCount = data.getPlacmentGroupsTotalCount();
             percent = errorCount / totalCount;
         } catch (JSONException e) {
@@ -39,7 +39,7 @@ public class PgCountWarnNotification extends ConditionNotification<ClusterV1Heal
             return;
         }
 
-        comparePattern = new RecordedPatternTwo();
+        comparePattern = new PgStrategy();
         comparePattern.setParams(
                 getContext(),
                 getCheckResult(),

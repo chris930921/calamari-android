@@ -17,10 +17,12 @@ import java.util.Calendar;
 /**
  * Created by User on 2015/9/2.
  */
-public class RecordedPatternOne {
+public class PgStrategy {
     public Context context;
     public CheckResult checkResult;
-    public int compareValue;
+    public float compareValue;
+    public int elementValue;
+    public int denominatorValue;
     public int monitorType;
     public int level;
     public int monitorNumber;
@@ -34,13 +36,17 @@ public class RecordedPatternOne {
 
     public int recordedId;
 
-    public void setParams(Context context, CheckResult checkResult, int compareValue, int monitorType, int level, int monitorNumber,
+    public void setParams(Context context, CheckResult checkResult, float compareValue,
+                          int elementValue, int denominatorValue,
+                          int monitorType, int level, int monitorNumber,
                           int createMessageId, int moreMessageId, int relapseMessageId, int finishMessageId,
                           int abnormalTitleId, int normalTitleId,
                           int waringType) {
         this.context = context;
         this.checkResult = checkResult;
         this.compareValue = compareValue;
+        this.elementValue = elementValue;
+        this.denominatorValue = denominatorValue;
         this.monitorType = monitorType;
         this.level = level;
         this.monitorNumber = monitorNumber;
@@ -63,7 +69,7 @@ public class RecordedPatternOne {
         findPending.monitorNumber = monitorNumber;
         findPending.load(database);
 
-        if (!findPending.isExist && compareValue != 0) {
+        if (!findPending.isExist && compareValue > 0.2) {
             RecordedData recorded = new RecordedData();
             recorded.count = compareValue;
             recorded.level = level;
@@ -104,7 +110,7 @@ public class RecordedPatternOne {
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0;
+        check &= compareValue > 0.2;
         if (check) {
             recorded.count = compareValue;
             recorded.previousCount = compareValue;
@@ -120,10 +126,10 @@ public class RecordedPatternOne {
         check = true;
         check &= compareValue > recorded.previousCount;
         check &= compareValue >= recorded.originalCount;
-        check &= compareValue > 0;
+        check &= compareValue > 0.2;
         check &= recorded.originalCount > 0;
         if (check) {
-            recorded.count = compareValue;
+            recorded.count = recorded.count + compareValue - recorded.previousCount;
             recorded.triggered = Calendar.getInstance();
             recorded.originalCount = compareValue;
             recorded.previousCount = compareValue;
@@ -141,9 +147,9 @@ public class RecordedPatternOne {
         check = true;
         check &= compareValue > recorded.previousCount;
         check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0;
+        check &= compareValue > 0.2;
         if (check) {
-            recorded.count = compareValue;
+            recorded.count = recorded.count + compareValue - recorded.previousCount;
             recorded.triggered = Calendar.getInstance();
             recorded.previousCount = compareValue;
             recorded.lastMessageId = relapseMessageId;
@@ -160,16 +166,14 @@ public class RecordedPatternOne {
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue < recorded.originalCount;
-        check &= compareValue == 0;
+        check &= compareValue < 0.2;
         if (check) {
-            recorded.count = compareValue;
             recorded.status = CephNotificationConstant.STATUS_RESOLVED;
             recorded.resolved = Calendar.getInstance();
             recorded.originalCount = 0;
             recorded.previousCount = 0;
             recorded.lastMessageId = finishMessageId;
             recorded.lastTitleId = normalTitleId;
-            updateOtherParams(recorded);
             recorded.save(database);
             ShowLog.d("監控訊息: 全部修復完成。");
             checkResult.isSendNotification = true;
@@ -184,9 +188,10 @@ public class RecordedPatternOne {
     }
 
     private void updateOtherParams(RecordedData recorded) {
+        String showPercent = String.format("%.2f", recorded.count * 100);
         RecordedOperator recordedOperator = new RecordedOperator(context);
         recordedOperator.setValue(recorded);
-        recordedOperator.addOtherParam("description_title", R.string.notification_detail_error);
-        recordedOperator.addOtherParam("description", String.valueOf(compareValue));
+        recordedOperator.addOtherParam("description_title", R.string.notification_detail_error_ratio);
+        recordedOperator.addOtherParam("description", showPercent + "% (" + elementValue + "/" + denominatorValue + ")");
     }
 }

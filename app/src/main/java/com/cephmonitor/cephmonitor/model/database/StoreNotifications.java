@@ -11,7 +11,7 @@ import com.cephmonitor.cephmonitor.model.database.table.RecordedTable;
  */
 public class StoreNotifications extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    public static final String DB_NAME = "CephMonitorSqlite.db";
+    public static final String DB_NAME = "CephMonitorSqlite_v3.db";
 
     public StoreNotifications(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

@@ -23,7 +23,6 @@ public class NotificationLayout extends FractionAbleRelativeLayout {
     private DesignSpec designSpec;
     private float leftRightMarginOne;
     private float topBottomMarginOne;
-    private int horizontalSize;
     private int horizontalColor;
 
     public NotificationLayout(Context context) {
@@ -33,8 +32,7 @@ public class NotificationLayout extends FractionAbleRelativeLayout {
         this.designSpec = ThemeManager.getStyle(context);
         leftRightMarginOne = designSpec.getMargin().getLeftRightOne();
         topBottomMarginOne = designSpec.getMargin().getTopBottomOne();
-        horizontalSize = (int) designSpec.getHorizontal().getHorizontalOneHeight();
-        horizontalColor = designSpec.getPrimaryColors().getHorizontalOne();
+        horizontalColor = Color.TRANSPARENT;
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -53,7 +51,6 @@ public class NotificationLayout extends FractionAbleRelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setDivider(new ColorDrawable(horizontalColor));
-        v.setDividerHeight(horizontalSize);
         v.setPadding(0, 0, 0, ruler.getW(topBottomMarginOne));
         v.setSelector(new ColorDrawable(Color.TRANSPARENT));
 

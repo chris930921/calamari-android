@@ -19,4 +19,13 @@ public class PoolV1Data extends PortableJsonObject {
     public String getName() throws JSONException {
         return json.getString("name");
     }
+
+    public String getClusterName() {
+        try {
+            return json.getString("cluster");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }

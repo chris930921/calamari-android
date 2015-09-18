@@ -5,7 +5,7 @@ import android.content.Context;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternThree;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.UsageErrorStrategy;
 import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1Space;
 
@@ -18,7 +18,7 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
     private int monitorType = 4;
     private int level = 2;
     private int monitorNumber = 1;
-    private RecordedPatternThree comparePattern;
+    private UsageErrorStrategy comparePattern;
 
     public UsagePercentErrorNotification(Context context) {
         super(context);
@@ -37,7 +37,7 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
             return;
         }
         ShowLog.d("監控訊息: 錯誤數值是 " + comparePercent);
-        comparePattern = new RecordedPatternThree();
+        comparePattern = new UsageErrorStrategy();
         comparePattern.setParams(
                 getContext(),
                 getCheckResult(),

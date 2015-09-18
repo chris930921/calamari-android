@@ -5,7 +5,7 @@ import android.content.Context;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
-import com.cephmonitor.cephmonitor.model.logic.ceph.compare.RecordedPatternOne;
+import com.cephmonitor.cephmonitor.model.logic.ceph.compare.IncrementStrategy;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 
 import org.json.JSONException;
@@ -17,7 +17,7 @@ public class OsdCountWarnNotification extends ConditionNotification<ClusterV1Hea
     private int monitorType = 1;
     private int level = 3;
     private int monitorNumber = 1;
-    private RecordedPatternOne comparePattern;
+    private IncrementStrategy comparePattern;
 
     public OsdCountWarnNotification(Context context) {
         super(context);
@@ -34,7 +34,7 @@ public class OsdCountWarnNotification extends ConditionNotification<ClusterV1Hea
             getCheckResult().isCheckError = false;
             return;
         }
-        comparePattern = new RecordedPatternOne();
+        comparePattern = new IncrementStrategy();
         comparePattern.setParams(
                 getContext(),
                 getCheckResult(),
