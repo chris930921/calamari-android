@@ -24,6 +24,7 @@ import com.cephmonitor.cephmonitor.fragment.OSDHealthFragment;
 import com.cephmonitor.cephmonitor.fragment.PgStatusFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
+import com.cephmonitor.cephmonitor.fragment.SettingsFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
@@ -77,6 +78,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
         changeStyleTask.put(HostDetailAllCpusFragment.class, showHostDetailAllCpusFragment);
         changeStyleTask.put(HostDetailIopsFragment.class, showHostDetailIopsFragment);
         changeStyleTask.put(NotificationDetailFragment.class, showNotificationDetailFragment);
+        changeStyleTask.put(SettingsFragment.class, showSettingsFragment);
 
         layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
@@ -108,7 +110,7 @@ public class MainActivity extends Activity implements InitFragment.Style {
                 } else if (broadcastResourceId == optionNameResourceGroup[10]) {
                     //TODO
                 } else if (broadcastResourceId == optionNameResourceGroup[11]) {
-                    //TODO
+                    FragmentLauncher.goSettingsFragment(activity, null);
                 } else {
                     Bundle message = new Bundle();
                     message.putInt("RECEIVER_ID", broadcastResourceId);
@@ -451,6 +453,22 @@ public class MainActivity extends Activity implements InitFragment.Style {
     private InitFragment.Task showHostDetailIopsFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
+        }
+    };
+
+    private InitFragment.Task showSettingsFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            int titleResource = R.string.main_activity_option_setting;
+
+            setTitle(getResources().getString(titleResource));
+            layout.hideAllComponent();
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
         }
     };
 }

@@ -238,6 +238,18 @@
     //HostDetailIopsFragment
     <string name="host_detail_iops">- IOPS\u0020</string>
 
+    
+    //SettingsFragment
+    <string name="settings_profile">Profile</string>
+    <string name="settings_profile_language">Language</string>
+    <string name="settings_profile_formats">Date Formats</string>
+    <string name="settings_alert">Alert</string>
+    <string name="settings_about">About</string>
+    <string name="settings_about_version">Version</string>
+    <string name="settings_dialog_cancel">Cancel</string>
+    <string name="settings_dialog_save">SAVE</string>
+    <string name="settings_language_dialog_description">Please redirect to login page to switch another language.\nSign out now?</string>
+
 
     <string name="something_parse_error">[[something parse error]]</string>
 </resources>

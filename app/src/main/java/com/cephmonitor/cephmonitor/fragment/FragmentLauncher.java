@@ -47,14 +47,6 @@ public class FragmentLauncher {
         ShowLog.d("print back stack:===========================================");
     }
 
-    private static void change(Activity activity, int containerId, Fragment fragment) {
-        FragmentManager manager = activity.getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(containerId, fragment, fragment.getClass().getName());
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.commit();
-    }
-
     private static void changeFadeIn(Activity activity, int containerId, Fragment fragment) {
         FragmentManager manager = activity.getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -91,7 +83,7 @@ public class FragmentLauncher {
             Fragment page = new HealthFragment();
             cleanToTargetFragment(activity, FIRST_FRAGMENT_LAYER);
             changeFadeIn(activity, MainLayout.CONTAINER_ID, page);
-        }else{
+        } else {
             cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
         }
     }
@@ -226,7 +218,6 @@ public class FragmentLauncher {
             cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
-        printBackStack(activity);
     }
 
     public static void goHostDetailSummaryFragment(Activity activity, Bundle arg) {
@@ -245,5 +236,16 @@ public class FragmentLauncher {
         Fragment page = new HostDetailIopsFragment();
         page.setArguments(arg);
         changeAndBackFade(activity, MainLayout.CONTAINER_ID, page, FOURTH_FRAGMENT_LAYER);
+    }
+
+    public static void goSettingsFragment(Activity activity, Bundle arg) {
+        String fragmentName = SettingsFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new SettingsFragment();
+            page.setArguments(arg);
+            cleanToTargetFragment(activity, SECOND_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
+        }
     }
 }
