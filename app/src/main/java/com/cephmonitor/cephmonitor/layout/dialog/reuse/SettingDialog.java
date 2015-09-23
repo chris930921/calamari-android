@@ -127,8 +127,6 @@ public class SettingDialog extends TopRoundDialogContainer {
         v.setLayoutParams(params);
         v.setOrientation(LinearLayout.HORIZONTAL);
         v.setGravity(Gravity.CENTER_VERTICAL);
-        v.setDividerDrawable(new ColorDrawable(designSpec.getPrimaryColors().getHorizontalTwo()));
-        v.setDividerPadding(3);
 
         return v;
     }
@@ -186,6 +184,18 @@ public class SettingDialog extends TopRoundDialogContainer {
         v.setText(name);
         v.setTextColor(color);
 
+        buttonContainer.addView(buttonFillView());
         buttonContainer.addView(v);
+    }
+
+    public View buttonFillView() {
+        LayoutParams params = new LayoutParams(
+                3, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        View v = new View(getContext());
+        v.setLayoutParams(params);
+        v.setBackgroundColor(designSpec.getPrimaryColors().getHorizontalTwo());
+
+        return v;
     }
 }

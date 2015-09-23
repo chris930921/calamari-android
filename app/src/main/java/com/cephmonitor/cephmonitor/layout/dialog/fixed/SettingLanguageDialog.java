@@ -46,10 +46,6 @@ public class SettingLanguageDialog extends SettingDialog {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-//        params.leftMargin =;
-//        params.rightMargin = ruler.getW(designSpec.getMargin().getLeftRightOne());
-//        params.topMargin = ruler.getW(designSpec.getMargin().getLeftRightOne());
-//        params.bottomMargin = ruler.getW(designSpec.getMargin().getLeftRightOne());
 
         TextView v = new TextView(getContext());
         v.setId(RandomId.get());
@@ -67,12 +63,14 @@ public class SettingLanguageDialog extends SettingDialog {
     }
 
 
-    public void setSaveOnClick(final OnClickListener event) {
-        addButton(getContext().getString(R.string.settings_dialog_save), designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
+    public void setOkClick(final OnClickListener event) {
+        addButton(getContext().getString(R.string.settings_dialog_ok), designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
-                event.onClick(view);
+                if (event != null) {
+                    event.onClick(view);
+                }
             }
         });
     }

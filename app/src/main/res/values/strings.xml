@@ -201,7 +201,7 @@
     <string name="pg_status_down">Down</string>
     <string name="pg_status_degraded">Degraded</string>
     <string name="pg_status_clean">Clean</string>
-    <string name="pg_status__osd">OSD</string>
+    <string name="pg_status_osd">OSD</string>
 
     //PoolListFragment
     <string name="pool_list_id_ahead"># </string>
@@ -247,9 +247,12 @@
     <string name="settings_about">About</string>
     <string name="settings_about_version">Version</string>
     <string name="settings_dialog_cancel">Cancel</string>
+    <string name="settings_dialog_ok">OK</string>
     <string name="settings_dialog_save">SAVE</string>
-    <string name="settings_language_dialog_description">Please redirect to login page to switch another language.\nSign out now?</string>
-
+    <string name="settings_language_dialog_description">Please redirect to login page to switch another language.Sign out now?</string>
+    <string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
+    <string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
+    <string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
 
     <string name="something_parse_error">[[something parse error]]</string>
 </resources>

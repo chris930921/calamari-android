@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.cephmonitor.cephmonitor.BuildConfig;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.SettingDateFormatsDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.SettingLanguageDialog;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingProfileItem;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingTitleItem;
@@ -31,10 +32,12 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
     public ListView contentList;
     public SettingTitleItem profileTitle;
     public SettingProfileItem languageItem;
-    public SettingProfileItem DateFormatsItem;
+    public SettingProfileItem dateFormatsItem;
     public SettingTitleItem alertTitle;
     public SettingTitleItem aboutTitle;
     public SettingProfileItem versionItem;
+    public SettingLanguageDialog languageDialog;
+    public SettingDateFormatsDialog dateFormatsDialog;
 
     private DesignSpec designSpec;
     private int contentListVerticalPadding;
@@ -46,6 +49,8 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         this.ruler = new WH(context);
         this.contentViewGroup = new ArrayList<>();
         this.designSpec = ThemeManager.getStyle(getContext());
+        this.languageDialog = new SettingLanguageDialog(getContext());
+        this.dateFormatsDialog = new SettingDateFormatsDialog(getContext());
         contentListVerticalPadding = ruler.getW(designSpec.getMargin().getTopBottomOne());
         contentListHorizontalPadding = ruler.getW(designSpec.getMargin().getTopBottomOne());
         titleStyle = new TextViewStyle(designSpec.getStyle().getSubhead());
@@ -59,14 +64,14 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
 
         profileTitle = profileTitle();
         languageItem = languageItem();
-        DateFormatsItem = DateFormatsItem();
+        dateFormatsItem = dateFormatsItem();
         alertTitle = alertTitle();
         aboutTitle = aboutTitle();
         versionItem = versionItem();
 
         contentViewGroup.add(profileTitle);
         contentViewGroup.add(languageItem);
-        contentViewGroup.add(DateFormatsItem);
+        contentViewGroup.add(dateFormatsItem);
         contentViewGroup.add(alertTitle);
         contentViewGroup.add(aboutTitle);
         contentViewGroup.add(versionItem);
@@ -135,21 +140,26 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         SettingProfileItem v = new SettingProfileItem(getContext());
         v.setBorderStyle(DynamicRoundBorderItem.ITEM_STYLE_HEADER);
         v.setName(getContext().getString(R.string.settings_profile_language));
-        v.setOnClickListener(new OnClickListener() {//FIXME
+        v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SettingLanguageDialog dialog = new SettingLanguageDialog(getContext());
-                dialog.show();
+                languageDialog.show();
             }
         });
 
         return v;
     }
 
-    protected SettingProfileItem DateFormatsItem() {
+    protected SettingProfileItem dateFormatsItem() {
         SettingProfileItem v = new SettingProfileItem(getContext());
         v.setBorderStyle(DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
         v.setName(getContext().getString(R.string.settings_profile_formats));
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateFormatsDialog.show();
+            }
+        });
 
         return v;
     }
@@ -184,6 +194,7 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         v.setText(resource);
         v.setTextStyle(titleStyle);
         v.setVerticalPadding(contentListVerticalPadding, contentListVerticalPadding);
+
         return v;
     }
 
