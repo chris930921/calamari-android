@@ -70,7 +70,6 @@ public class NotificationItem extends RoundLeftBarItem {
         setBorderColor(borderColor);
         setBorderWidth(3);
         setRadius(10);
-        setTopBottomMargin(topBottomPaddingOne, topBottomPaddingOne);
 
         download = download();
         message = message(download);

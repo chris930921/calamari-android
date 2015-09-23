@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import com.cephmonitor.cephmonitor.ActivityLauncher;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.SettingsLayout;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
 public class SettingsFragment extends Fragment {
     public SettingsLayout layout;
+    private SettingStorage settingStorage;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -24,6 +26,10 @@ public class SettingsFragment extends Fragment {
     }
 
     public void init() {
+        settingStorage = new SettingStorage(getActivity());
+        layout.languageItem.setValue(getString(settingStorage.getLanguageResource()));
+        layout.dateFormatsItem.setValue(getString(settingStorage.getDateFormatsResource()));
+
         layout.languageDialog.setOkClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,6 +39,13 @@ public class SettingsFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        layout.dateFormatsDialog.setSaveClick(null);
+        layout.dateFormatsDialog.setSaveClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = layout.dateFormatsDialog.getSelectedId();
+                settingStorage.setDateFormats(id);
+                layout.dateFormatsItem.setValue(getString(settingStorage.getDateFormatsResource()));
+            }
+        });
     }
 }

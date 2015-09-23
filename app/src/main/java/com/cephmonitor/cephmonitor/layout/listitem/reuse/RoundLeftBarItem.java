@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 
 import com.cephmonitor.cephmonitor.model.logic.GenerateViewId;
-import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
 import java.util.HashMap;
@@ -30,8 +29,6 @@ public class RoundLeftBarItem extends RelativeLayout {
     private Paint leftBarPaint;
 
     public RelativeLayout contentContainer;
-    public View topFillView;
-    public View bottomFillView;
 
     private int statusBarWidth;
     private int barColor;
@@ -41,8 +38,6 @@ public class RoundLeftBarItem extends RelativeLayout {
     private int topPadding;
     private int rightPadding;
     private int bottomPadding;
-    private int topMargin;
-    private int bottomMargin;
 
     public RoundLeftBarItem(Context context) {
         super(context);
@@ -58,8 +53,6 @@ public class RoundLeftBarItem extends RelativeLayout {
         rightPadding = 10;
         bottomPadding = 10;
         statusBarWidth = ruler.getW(3);
-        topMargin = ruler.getW(3);
-        bottomMargin = ruler.getW(3);
 
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(params);
@@ -78,13 +71,8 @@ public class RoundLeftBarItem extends RelativeLayout {
         leftBarPaint.setAntiAlias(true);
         leftBarPaint.setColor(barColor);
 
-        topFillView = topFillView();
-        contentContainer = contentContainer(topFillView);
-        bottomFillView = bottomFillView(contentContainer);
-
-        super.addView(topFillView);
+        contentContainer = contentContainer();
         super.addView(contentContainer);
-        super.addView(bottomFillView);
     }
 
     @Override
@@ -92,9 +80,8 @@ public class RoundLeftBarItem extends RelativeLayout {
         contentContainer.addView(child);
     }
 
-    private RelativeLayout contentContainer(View topView) {
+    private RelativeLayout contentContainer() {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        params.addRule(BELOW, topView.getId());
 
         RelativeLayout v = new RelativeLayout(context) {
             @Override
@@ -123,29 +110,6 @@ public class RoundLeftBarItem extends RelativeLayout {
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
         v.setPadding(statusBarWidth + leftPadding, 0, rightPadding, 0);
-
-        return v;
-    }
-
-    private View topFillView() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, topMargin);
-        params.addRule(ALIGN_PARENT_TOP);
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-
-        return v;
-    }
-
-    private View bottomFillView(View topView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, bottomMargin);
-        params.addRule(ALIGN_PARENT_BOTTOM);
-        params.addRule(BELOW, topView.getId());
-
-        View v = new View(context);
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
 
         return v;
     }
@@ -190,16 +154,5 @@ public class RoundLeftBarItem extends RelativeLayout {
     public void setRadius(int radius) {
         this.radius = radius;
         invalidate();
-    }
-
-    public void setTopBottomMargin(int topMargin, int bottomMargin) {
-        this.topMargin = topMargin;
-        this.bottomMargin = bottomMargin;
-        ViewGroup.LayoutParams topParams = topFillView.getLayoutParams();
-        ViewGroup.LayoutParams bottomParams = bottomFillView.getLayoutParams();
-        topParams.height = topMargin;
-        bottomParams.height = bottomMargin;
-        topFillView.setLayoutParams(topParams);
-        bottomFillView.setLayoutParams(bottomParams);
     }
 }

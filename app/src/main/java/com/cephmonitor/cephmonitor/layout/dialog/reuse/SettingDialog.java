@@ -56,8 +56,8 @@ public class SettingDialog extends TopRoundDialogContainer {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
 
         Window window = dialog.getWindow();
         WindowManager.LayoutParams windowParams = window.getAttributes();

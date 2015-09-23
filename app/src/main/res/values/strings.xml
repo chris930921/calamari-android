@@ -112,10 +112,10 @@
     <string name="check_service_013001_normal_content_finish">OSD has been repaired!</string>
 
     // RequestAndCheckService OSD Error
-    <string name="check_service_012001_abnormal_title">儲存系統錯誤</string>
-    <string name="check_service_012001_abnormal_content_new">發生 OSD 損毀！</string>
-    <string name="check_service_012001_abnormal_content_more">OSD 損毀數增加！</string>
-    <string name="check_service_012001_abnormal_content_relapse">OSD 損毀數增加！</string>
+    <string name="check_service_012001_abnormal_title">Storage System Error</string>
+    <string name="check_service_012001_abnormal_content_new">OSD is in severe status!</string>
+    <string name="check_service_012001_abnormal_content_more">OSD comes new severe status!</string>
+    <string name="check_service_012001_abnormal_content_relapse">OSD comes new severe status!</string>
     <string name="check_service_012001_normal_title">Storage System Info</string>
     <string name="check_service_012001_normal_content_finish">OSD has been repaired!</string>
 
@@ -128,10 +128,10 @@
     <string name="check_service_023001_normal_content_finish">Monitor has been repaired!</string>
 
     // RequestAndCheckService Monitor Error
-    <string name="check_service_022001_abnormal_title">儲存系統錯誤</string>
-    <string name="check_service_022001_abnormal_content_new">發生 Monitor 損毀！</string>
-    <string name="check_service_022001_abnormal_content_more">Monitor 損毀數增加！</string>
-    <string name="check_service_022001_abnormal_content_relapse">Monitor 損毀數增加！</string>
+    <string name="check_service_022001_abnormal_title">Storage System Error</string>
+    <string name="check_service_022001_abnormal_content_new">Monitor is in severe status!</string>
+    <string name="check_service_022001_abnormal_content_more">Monitor comes new severe status!</string>
+    <string name="check_service_022001_abnormal_content_relapse">Monitor comes new severe status!</string>
     <string name="check_service_022001_normal_title">Storage System Info</string>
     <string name="check_service_022001_normal_content_finish">Monitor has been repaired!</string>
 
@@ -144,10 +144,10 @@
     <string name="check_service_033001_normal_content_finish">PGs have been repaired!</string>
 
     // RequestAndCheckService PG Error
-    <string name="check_service_032001_abnormal_title">儲存系統錯誤</string>
-    <string name="check_service_032001_abnormal_content_new">PG 狀態異常！!</string>
-    <string name="check_service_032001_abnormal_content_more">PG 異常數增加！</string>
-    <string name="check_service_032001_abnormal_content_relapse">PG 異常數增加！</string>
+    <string name="check_service_032001_abnormal_title">Storage System Error</string>
+    <string name="check_service_032001_abnormal_content_new">Some PGs stuck in abnormal states!</string>
+    <string name="check_service_032001_abnormal_content_more">Some other PGs stuck in abnormal states!</string>
+    <string name="check_service_032001_abnormal_content_relapse">Some other PGs stuck in abnormal states!</string>
     <string name="check_service_032001_normal_title">Storage System Info</string>
     <string name="check_service_032001_normal_content_finish">PGs have been repaired!</string>
 
@@ -158,8 +158,8 @@
     <string name="check_service_043001_normal_content_finish">Storage capacity has been expanded!</string>
 
     // RequestAndCheckService Usage Error
-    <string name="check_service_042001_abnormal_title">儲存系統錯誤</string>
-    <string name="check_service_042001_abnormal_content_new">使用量已達上限！請立即擴充儲存空間！</string>
+    <string name="check_service_042001_abnormal_title">Storage System Error</string>
+    <string name="check_service_042001_abnormal_content_new">Not enough free space! Please expand the storage capacity immediately!</string>
     <string name="check_service_042001_normal_title">Storage System Info</string>
     <string name="check_service_042001_normal_content_finish">Storage capacity has been expanded!</string>
 
@@ -253,6 +253,9 @@
     <string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
     <string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
     <string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
+    <string name="settings_language_dialog_english">English</string>
+    <string name="settings_language_dialog_chinese">繁體中文</string>
+    <string name="settings_language_dialog_japanese">日本語</string>
 
     <string name="something_parse_error">[[something parse error]]</string>
 </resources>

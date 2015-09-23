@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.dialog.reuse.SettingDialog;
-import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingSingleChoiceItem;
+import com.cephmonitor.cephmonitor.layout.listitem.fixed.LoginLanguageChoiceItem;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.SettingConstant;
@@ -20,31 +20,31 @@ import com.resourcelibrary.model.view.WH;
 /**
  * Created by chriske on 2015/9/20.
  */
-public class SettingDateFormatsDialog extends SettingDialog {
+public class LoginLanguageDialog extends SettingDialog {
     public WH ruler;
     public LinearLayout dateContainer;
     private DesignSpec designSpec;
-    private SettingSingleChoiceItem dateYearMonthDay;
-    private SettingSingleChoiceItem dateMonthDayYear;
-    private SettingSingleChoiceItem dateDayMonthYear;
+    private LoginLanguageChoiceItem english;
+    private LoginLanguageChoiceItem chinese;
+    private LoginLanguageChoiceItem japanese;
     private int selectedId;
-    private SettingSingleChoiceItem current;
+    private LoginLanguageChoiceItem current;
 
-    public SettingDateFormatsDialog(Context context) {
+    public LoginLanguageDialog(Context context) {
         super(context);
         this.ruler = new WH(getContext());
         this.designSpec = ThemeManager.getStyle(getContext());
 
         dateContainer = dateContainer();
-        dateYearMonthDay = dateYearMonthDay();
-        dateMonthDayYear = dateMonthDayYear();
-        dateDayMonthYear = dateDayMonthYear();
+        english = english();
+        chinese = chinese();
+        japanese = japanese();
 
-        dateContainer.addView(dateYearMonthDay);
+        dateContainer.addView(english);
         dateContainer.addView(fillView());
-        dateContainer.addView(dateMonthDayYear);
+        dateContainer.addView(chinese);
         dateContainer.addView(fillView());
-        dateContainer.addView(dateDayMonthYear);
+        dateContainer.addView(japanese);
 
         setTitle(getContext().getString(R.string.settings_profile_formats));
         addContentView(dateContainer);
@@ -82,39 +82,40 @@ public class SettingDateFormatsDialog extends SettingDialog {
         return v;
     }
 
-    private SettingSingleChoiceItem dateYearMonthDay() {
-        SettingSingleChoiceItem v = getChoiceItem(SettingConstant.DATE_FORMATS_YEAR_MONTH_DAY, R.string.settings_date_format_dialog_year_month_day);
+    private LoginLanguageChoiceItem english() {
+        LoginLanguageChoiceItem v = getChoiceItem(SettingConstant.LANGUAGE_ENGLISH, R.string.settings_language_dialog_english);
         return v;
     }
 
-    private SettingSingleChoiceItem dateMonthDayYear() {
-        return getChoiceItem(SettingConstant.DATE_FORMATS_MONTH_DAY_YEAR, R.string.settings_date_format_dialog_month_day_year);
+    private LoginLanguageChoiceItem chinese() {
+        return getChoiceItem(SettingConstant.LANGUAGE_CHINESE, R.string.settings_language_dialog_chinese);
     }
 
-    private SettingSingleChoiceItem dateDayMonthYear() {
-        return getChoiceItem(SettingConstant.DATE_FORMATS_DAY_MONTH_YEAR, R.string.settings_date_format_dialog_day_month_year);
+    private LoginLanguageChoiceItem japanese() {
+        return getChoiceItem(SettingConstant.LANGUAGE_JAPANESE, R.string.settings_language_dialog_japanese);
     }
 
-    private SettingSingleChoiceItem getChoiceItem(final int id, int resource) {
+    private LoginLanguageChoiceItem getChoiceItem(final int id, int resource) {
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
 
-        SettingSingleChoiceItem v = new SettingSingleChoiceItem(getContext());
+        LoginLanguageChoiceItem v = new LoginLanguageChoiceItem(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setName(getContext().getString(resource));
         v.setTag(id);
+        v.setFlag(id);
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateYearMonthDay.filedValue.setState(false);
-                dateMonthDayYear.filedValue.setState(false);
-                dateDayMonthYear.filedValue.setState(false);
-                current = (SettingSingleChoiceItem) view;
+                english.filedValue.setState(false);
+                chinese.filedValue.setState(false);
+                japanese.filedValue.setState(false);
+                current = (LoginLanguageChoiceItem) view;
                 current.filedValue.setState(true);
-                selectedId = (int) current.getTag();
+                selectedId = (int)current.getTag();
             }
         });
 
@@ -124,10 +125,10 @@ public class SettingDateFormatsDialog extends SettingDialog {
     @Override
     public void show() {
         SettingStorage settingStorage = new SettingStorage(getContext());
-        selectedId = settingStorage.getDateFormats();
-        dateYearMonthDay.filedValue.setState(dateYearMonthDay.getTag() == selectedId);
-        dateMonthDayYear.filedValue.setState(dateMonthDayYear.getTag() == selectedId);
-        dateDayMonthYear.filedValue.setState(dateDayMonthYear.getTag() == selectedId);
+        selectedId = settingStorage.getLanguage();
+        english.filedValue.setState(english.getTag() == selectedId);
+        chinese.filedValue.setState(chinese.getTag() == selectedId);
+        japanese.filedValue.setState(japanese.getTag() == selectedId);
         super.show();
     }
 
