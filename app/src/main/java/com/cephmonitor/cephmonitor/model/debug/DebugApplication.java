@@ -33,8 +33,13 @@ public class DebugApplication extends Application {
         customUncaughtExceptionHandler = new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
+                // 抓取所有錯誤
+
+                // 寫入到檔案中
                 writeToSdcardFile(DebugApplication.this, e);
+                // Post 到 Google 表單中
                 postToGoogleDoc(e);
+                // 照常拋出錯誤
                 defaultUncaughtExceptionHandler.uncaughtException(t, e);
             }
         };
@@ -43,10 +48,12 @@ public class DebugApplication extends Application {
 
     public static void writeToSdcardFile(Application app, Throwable e) {
         try {
+            // 寫入到 /sdcard/<application package name>
             File sdCardDir = new File(Environment.getExternalStorageDirectory() + "/" + app.getApplicationContext().getPackageName());
             sdCardDir.mkdirs();
 
             Calendar time = Calendar.getInstance();
+            // 檔案取名 error_output_  加上 timestamp
             File saveFile = new File(sdCardDir, "error_output_" + time.getTimeInMillis() + ".txt");
             PrintWriter pw = new PrintWriter(saveFile);
             pw.write(time.getTime().toString() + "\n");
@@ -83,6 +90,7 @@ public class DebugApplication extends Application {
         private String isLocalhost;
 
         public GoogleDocPostRequest(String errorMessage, String device, String isLocalhost, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+            // 根據不同表單置換不同網址
             super(Method.POST, "https://docs.google.com/forms/d/1AxsF91Ext_fEBa9YPC3fia_ucotIeioZ63lyCtVw3wY/formResponse", listener, errorListener);
             this.errorMessage = errorMessage;
             this.device = device;
@@ -92,6 +100,7 @@ public class DebugApplication extends Application {
         @Override
         protected Map<String, String> getParams() throws AuthFailureError {
             HashMap<String, String> params = new HashMap<>();
+            // 這裡要進入 Google 表單的網頁，到原始碼中找出每個輸入欄的編號，用 Chrome 可以輕鬆達成。
             params.put("entry.1347410436", device);
             params.put("entry.1938478189", errorMessage);
             params.put("entry.503708045", isLocalhost);
