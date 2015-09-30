@@ -242,7 +242,7 @@ public class PgStatusItem extends RelativeLayout {
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setSingleLine(true);
-        v.setText(R.string.pg_status__osd);
+        v.setText(R.string.pg_status_osd);
         bodyOne.style(v);
 
         return v;

@@ -7,6 +7,8 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginLanguageDialog;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
@@ -29,6 +31,8 @@ public class LoginActivity extends Activity {
     private LoginParams params;
     private LoadingDialog loadingDialog;
     private MessageDialog dialog;
+    private SettingStorage settingStorage;
+    private LoginLanguageDialog loginLanguageDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class LoginActivity extends Activity {
         params = new LoginParams(this);
         loadingDialog = new LoadingDialog(this);
         dialog = new MessageDialog(activity);
+        settingStorage = new SettingStorage(this);
+        loginLanguageDialog = new LoginLanguageDialog(this);
 
         ServiceLauncher.startLooperService(this);
         if (loginInfo.isLogin()) {
@@ -49,6 +55,14 @@ public class LoginActivity extends Activity {
             activity.finish();
         }
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
+        loginLanguageDialog.setSaveClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = loginLanguageDialog.getSelectedId();
+                settingStorage.setLanguage(id);
+                layout.language.setLanguage(id);
+            }
+        });
 //        deleteDatabase(StoreNotifications.DB_NAME);
     }
 
@@ -65,6 +79,13 @@ public class LoginActivity extends Activity {
         layout.port.setText(loginInfo.getPort());
         layout.name.setText(loginInfo.getName());
         layout.password.setText(loginInfo.getPassword());
+        layout.language.setLanguage(settingStorage.getLanguage());
+        layout.language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginLanguageDialog.show();
+            }
+        });
 
         layout.signIn.setOnClickListener(clickSignIn());
     }

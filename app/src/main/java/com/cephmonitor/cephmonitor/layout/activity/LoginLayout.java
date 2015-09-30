@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.component.button.SelectLanguageButton;
 import com.cephmonitor.cephmonitor.layout.component.edittext.BorderEditText;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
@@ -32,6 +33,7 @@ public class LoginLayout extends RelativeLayout {
     public BorderEditText port;
     public BorderEditText name;
     public BorderEditText password;
+    public SelectLanguageButton language;
 
     public RelativeLayout footer;
     public TextView versionText;
@@ -98,7 +100,8 @@ public class LoginLayout extends RelativeLayout {
         port = port(host);
         name = name(port);
         password = password(name);
-        signIn = signIn(password);
+        language = language(password);
+        signIn = signIn(language);
         footer = footer();
         versionText = versionText();
         footerBottomLineCenterContainer = footerBottomLineCenterContainer(versionText);
@@ -111,6 +114,7 @@ public class LoginLayout extends RelativeLayout {
         addView(port);
         addView(name);
         addView(password);
+        addView(language);
         addView(signIn);
         addView(footer);
         footer.addView(versionText);
@@ -184,6 +188,19 @@ public class LoginLayout extends RelativeLayout {
         params.topMargin = inputTopMargin;
 
         BorderEditText v = addInput(R.string.login_password);
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private SelectLanguageButton language(View relativeView) {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        params.addRule(CENTER_HORIZONTAL);
+        params.addRule(BELOW, relativeView.getId());
+        params.topMargin = inputTopMargin;
+
+        SelectLanguageButton v = new SelectLanguageButton(getContext());
+        v.setId(RandomId.get());
         v.setLayoutParams(params);
 
         return v;
