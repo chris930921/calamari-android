@@ -1,6 +1,5 @@
 package com.cephmonitor.cephmonitor.model.logic;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,14 +12,14 @@ import java.util.Locale;
  * Created by User on 1/26/2015.
  */
 public class LanguageConfig {
-    private Activity activity;
+    private Context context;
     private static final String FILE_PATH = "select_language_file";
     private static final String LANGUAGE_ID = "language_id";
     public SharedPreferences setting;
 
-    public LanguageConfig(Activity activity) {
-        this.activity = activity;
-        setting = activity.getSharedPreferences(FILE_PATH, Context.MODE_MULTI_PROCESS);
+    public LanguageConfig(Context context) {
+        this.context = context;
+        setting = context.getSharedPreferences(FILE_PATH, Context.MODE_MULTI_PROCESS);
     }
 
     private void setLanguage(int id) {
@@ -40,7 +39,7 @@ public class LanguageConfig {
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        activity.getResources().updateConfiguration(config, activity.getResources().getDisplayMetrics());
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
     }
 
     public void loadLanguage() {

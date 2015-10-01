@@ -7,7 +7,9 @@ import android.os.IBinder;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.BuildConfig;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
+import com.cephmonitor.cephmonitor.model.logic.LanguageConfig;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountErrorNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.MonCountWarnNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.condition.notification.OsdCountErrorNotification;
@@ -37,9 +39,14 @@ public class RequestAndCheckService extends Service {
     private LoginParams requestParams;
     private ArrayList<ConditionNotification> healthCountCheckList;
     private ArrayList<ConditionNotification> clusterSpaceCheckList;
+    private SettingStorage settingStorage;
+    private LanguageConfig languageConfig;
 
     @Override
     public void onCreate() {
+        settingStorage = new SettingStorage(this);
+        languageConfig = new LanguageConfig(this);
+        languageConfig.setLocale(settingStorage.getLanguage());
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
 
         healthCountCheckList = new ArrayList<>();
