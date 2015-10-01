@@ -48,7 +48,7 @@ public class SettingDateFormatsDialog extends SettingDialog {
 
         setTitle(getContext().getString(R.string.settings_profile_formats));
         addContentView(dateContainer);
-        addButton(getContext().getString(R.string.settings_dialog_cancel), ColorTable._666666, new OnClickListener() {
+        addButton(R.string.settings_dialog_cancel, ColorTable._666666, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
@@ -136,11 +136,11 @@ public class SettingDateFormatsDialog extends SettingDialog {
     }
 
     public void setSaveClick(final OnClickListener event) {
-        addButton(getContext().getString(R.string.settings_dialog_save), designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
+        addButton(R.string.settings_dialog_save, designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
-                if(current == null)
+                if (current == null)
                     return;
 
                 if (event != null) {

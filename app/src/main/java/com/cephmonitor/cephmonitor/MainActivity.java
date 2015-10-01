@@ -32,6 +32,7 @@ import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
@@ -39,7 +40,7 @@ import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import java.util.HashMap;
 
 
-public class MainActivity extends Activity implements InitFragment.Style {
+public class MainActivity extends Activity implements InitFragment.Style, RefreshViewManager.Interface {
     public MainLayout layout;
     public LoginParams loginInfo;
     public Activity activity;

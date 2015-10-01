@@ -9,7 +9,9 @@ import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginLanguageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.logic.LanguageConfig;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
@@ -23,7 +25,7 @@ import com.resourcelibrary.model.view.dialog.MessageDialog;
 import java.util.ArrayList;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements RefreshViewManager.Interface {
     public LoginLayout layout;
     public LoginParams loginInfo;
     public EmptyChecker emptyChecker;
@@ -33,20 +35,26 @@ public class LoginActivity extends Activity {
     private MessageDialog dialog;
     private SettingStorage settingStorage;
     private LoginLanguageDialog loginLanguageDialog;
+    private LanguageConfig languageConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingStorage = new SettingStorage(this);
+        languageConfig = new LanguageConfig(this);
+        languageConfig.setLocale(settingStorage.getLanguage());
         layout = new LoginLayout(this);
         setContentView(layout);
+
         loginInfo = new LoginParams(this);
         emptyChecker = new EmptyChecker();
         activity = this;
         params = new LoginParams(this);
         loadingDialog = new LoadingDialog(this);
         dialog = new MessageDialog(activity);
-        settingStorage = new SettingStorage(this);
+
         loginLanguageDialog = new LoginLanguageDialog(this);
+
 
         ServiceLauncher.startLooperService(this);
         if (loginInfo.isLogin()) {
@@ -60,7 +68,9 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 int id = loginLanguageDialog.getSelectedId();
                 settingStorage.setLanguage(id);
+                languageConfig.setLocale(id);
                 layout.language.setLanguage(id);
+                refreshViewManager.refresh();
             }
         });
 //        deleteDatabase(StoreNotifications.DB_NAME);
@@ -88,6 +98,7 @@ public class LoginActivity extends Activity {
         });
 
         layout.signIn.setOnClickListener(clickSignIn());
+        refreshViewManager.refresh();
     }
 
     private View.OnClickListener clickSignIn() {

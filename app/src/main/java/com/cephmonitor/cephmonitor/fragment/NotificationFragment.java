@@ -144,13 +144,13 @@ public class NotificationFragment extends Fragment {
                 argGroup.putInt("5", recorded.otherParamsJson.getInt("description_title"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                argGroup.putInt("5", R.string.something_parse_error);
+                argGroup.putInt("5", R.string.other_empty);
             }
             try {
                 argGroup.putString("6", recorded.otherParamsJson.getString("description"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                argGroup.putString("6", getString(R.string.something_parse_error));
+                argGroup.putString("6", getString(R.string.other_empty));
             }
             FragmentLauncher.goNotificationDetailFragment(getActivity(), argGroup);
         }
