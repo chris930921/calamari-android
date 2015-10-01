@@ -3,6 +3,7 @@ package com.cephmonitor.cephmonitor.model.database.data;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.database.DatabaseParser;
 import com.cephmonitor.cephmonitor.model.database.table.RecordedTable;
 import com.resourcelibrary.model.log.ShowLog;
@@ -47,10 +48,16 @@ public class KeepLoadRecordedData extends DatabaseData {
 
     @Override
     public String selectScript() {
-        String sql = "SELECT * FROM ? ORDER BY ? DESC LIMIT ? , ? ";
+        String sql = "SELECT * FROM ? ORDER BY CASE WHEN ? = ? THEN 1 ELSE 2 END, " +
+                "CASE WHEN ? = ? THEN ? ELSE ? END DESC LIMIT ? , ? ";
         Object[] paramGroup = {
                 RecordedTable.TABLE_NAME,
+                RecordedTable.FIELD_STATUS,
+                CephNotificationConstant.STATUS_PENDING,
+                RecordedTable.FIELD_STATUS,
+                CephNotificationConstant.STATUS_PENDING,
                 RecordedTable.FIELD_TRIGGERED,
+                RecordedTable.FIELD_RESOLVED,
                 loadStart,
                 loadEnd
         };

@@ -27,7 +27,7 @@
     <string name="main_activity_fragment_osd_health">OSD Health</string>
     <string name="main_activity_fragment_mon_health">Monitor Health</string>
     <string name="main_activity_fragment_notification">Notifications</string>
-    <string name="main_activity_fragment_notification_detail">Notifications Detail</string>
+    <string name="main_activity_fragment_notification_detail">Notification Detail</string>
     <string name="main_activity_fragment_host_health">Host List</string>
     <string name="main_activity_fragment_pg_status">PG Status</string>
     <string name="main_activity_fragment_usage_status">Usage Status</string>

@@ -119,7 +119,7 @@ public class NotificationFragment extends Fragment {
             recordedOperator.setValue(recorded);
             item.setMessage(recordedOperator.getLastMessageWithParam());
             item.setStatus(recorded.status);
-            item.setTime(recorded.triggered);
+            item.setTime(recordedOperator.getTimeWithStatus());
             item.setLevel(recorded.level);
             item.setTag(recorded);
             item.setOnClickListener(clickEvent);
