@@ -13,6 +13,8 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
+import com.cephmonitor.cephmonitor.model.ceph.constant.SettingConstant;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -20,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NotificationDetailLayout extends FractionAbleScrollView {
-    public static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private Context context;
     private WH ruler;
     private int dividerHeight;
@@ -105,7 +106,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView message() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
         TextView v = new TextView(getContext());
@@ -117,7 +120,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected RelativeLayout bottomContainer(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
         RelativeLayout v = new RelativeLayout(getContext());
@@ -129,7 +134,8 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
 
 
     protected View statusIcon() {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(downloadIconSize, downloadIconSize);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                downloadIconSize, downloadIconSize);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         params.addRule(RelativeLayout.CENTER_VERTICAL);
 
@@ -142,7 +148,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView status(View leftView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
         params.addRule(RelativeLayout.CENTER_VERTICAL);
         params.leftMargin = leftRightPaddingOne;
@@ -156,7 +164,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView triggeredTitle(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
         params.topMargin = dividerHeight;
 
@@ -170,7 +180,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView triggered(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
         TextView v = new TextView(getContext());
@@ -182,7 +194,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView descriptionTitle(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
         params.topMargin = dividerHeight;
 
@@ -196,7 +210,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView description(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
         TextView v = new TextView(getContext());
@@ -208,7 +224,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView resolvedTitle(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
         params.topMargin = dividerHeight;
 
@@ -222,7 +240,9 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     protected TextView resolved(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
 
         TextView v = new TextView(getContext());
@@ -245,6 +265,10 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
             resolvedTitle.setVisibility(GONE);
             resolved.setVisibility(GONE);
         } else {
+            SettingStorage settingStorage = new SettingStorage(getContext());
+            int id = settingStorage.getDateFormats();
+            SimpleDateFormat datetimeFormat = SettingConstant.getSimpleFormat(id);
+
             resolvedTitle.setVisibility(VISIBLE);
             resolved.setVisibility(VISIBLE);
             resolved.setText(datetimeFormat.format(resolvedTime.getTime()));
@@ -257,6 +281,10 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     }
 
     public void setTriggered(Calendar calendar) {
+        SettingStorage settingStorage = new SettingStorage(getContext());
+        int id = settingStorage.getDateFormats();
+        SimpleDateFormat datetimeFormat = SettingConstant.getSimpleFormat(id);
+
         triggered.setText(datetimeFormat.format(calendar.getTime()));
     }
 }

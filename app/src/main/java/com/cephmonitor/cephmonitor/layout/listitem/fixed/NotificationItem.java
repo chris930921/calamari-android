@@ -14,6 +14,8 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
+import com.cephmonitor.cephmonitor.model.ceph.constant.SettingConstant;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -22,8 +24,6 @@ import java.util.Calendar;
 
 
 public class NotificationItem extends RoundLeftBarItem {
-    public static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
     private WH ruler;
     private int borderColor;
     private int statusBarWidth;
@@ -172,6 +172,9 @@ public class NotificationItem extends RoundLeftBarItem {
     }
 
     public void setTime(Calendar calendar) {
+        SettingStorage settingStorage = new SettingStorage(getContext());
+        int id = settingStorage.getDateFormats();
+        SimpleDateFormat datetimeFormat = SettingConstant.getSimpleFormat(id);
         this.triggerTime.setText(" - " + datetimeFormat.format(calendar.getTime()));
     }
 

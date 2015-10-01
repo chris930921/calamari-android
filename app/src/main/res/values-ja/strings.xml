@@ -254,8 +254,16 @@
 	<string name="settings_language_dialog_option_japanese">日本語</string>
 	<string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
 	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
-	<string name="settings_date_format_dialog_day_month_year">2015/12/31</string>
+	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
 
 	//Other
 	<string name="other_empty"></string>
+	<string name="other_time_unit_year">年</string>
+	<string name="other_time_unit_month">月</string>
+	<string name="other_time_unit_day">日</string>
+	<string name="other_time_unit_hour">時間</string>
+	<string name="other_time_unit_min">分</string>
+	<string name="other_time_unit_second">秒</string>
+	<string name="other_time_unit_just_now">JUST NOW</string>
+	<string name="other_time_unit_multiple"></string>
 </resources>

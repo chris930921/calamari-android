@@ -2,6 +2,7 @@ package com.cephmonitor.cephmonitor.model.ceph.constant;
 
 import com.cephmonitor.cephmonitor.R;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -12,6 +13,7 @@ public class SettingConstant {
     public static final int LANGUAGE_ENGLISH = 0;
     public static final int LANGUAGE_CHINESE = 1;
     public static final int LANGUAGE_JAPANESE = 2;
+
     private static final HashMap<Integer, Integer> languageIdMapResource = new HashMap<>();
     private static final HashMap<Integer, Integer> languageIdMapFlag = new HashMap<>();
 
@@ -20,7 +22,8 @@ public class SettingConstant {
     public static final int DATE_FORMATS_DAY_MONTH_YEAR = 2;
     private static final HashMap<Integer, Integer> lateFormatsIdMapResource = new HashMap<>();
 
-    public static final HashMap<Integer, Locale> localeMap = new HashMap<>();
+    private static final HashMap<Integer, Locale> localeMap = new HashMap<>();
+    private static final HashMap<Integer, SimpleDateFormat> dateFormatMap = new HashMap<>();
 
     static {
         languageIdMapResource.put(LANGUAGE_ENGLISH, R.string.settings_language_dialog_option_english);
@@ -38,6 +41,10 @@ public class SettingConstant {
         localeMap.put(LANGUAGE_ENGLISH, new Locale("en", ""));
         localeMap.put(LANGUAGE_CHINESE, new Locale("zh", ""));
         localeMap.put(LANGUAGE_JAPANESE, new Locale("ja", ""));
+
+        dateFormatMap.put(DATE_FORMATS_YEAR_MONTH_DAY, new SimpleDateFormat("yyyy/MM/dd HH:mm"));
+        dateFormatMap.put(DATE_FORMATS_MONTH_DAY_YEAR, new SimpleDateFormat("MM/dd/yyyy HH:mm"));
+        dateFormatMap.put(DATE_FORMATS_DAY_MONTH_YEAR, new SimpleDateFormat("dd/MM/yyyy HH:mm"));
     }
 
     public static int getLanguageResource(int id) {
@@ -54,5 +61,9 @@ public class SettingConstant {
 
     public static Locale getLocale(int id) {
         return localeMap.get(id);
+    }
+
+    public static SimpleDateFormat getSimpleFormat(int id) {
+        return dateFormatMap.get(id);
     }
 }

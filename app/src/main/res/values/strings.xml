@@ -44,7 +44,7 @@
 	<string name="health_card_status_error">ERROR</string>
 
 	<string name="health_card_health">HEALTH</string>
-	<string name="health_card_ago">ago</string>
+	<string name="health_card_ago">\u0020ago</string>
 
 	<string name="health_card_osd">OSD</string>
 	<string name="health_card_in_and_up">In \u0026 Up</string>
@@ -254,8 +254,16 @@
 	<string name="settings_language_dialog_option_japanese">日本語</string>
 	<string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
 	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
-	<string name="settings_date_format_dialog_day_month_year">2015/12/31</string>
+	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
 
 	//Other
 	<string name="other_empty"></string>
+	<string name="other_time_unit_year">year</string>
+	<string name="other_time_unit_month">month</string>
+	<string name="other_time_unit_day">day</string>
+	<string name="other_time_unit_hour">hour</string>
+	<string name="other_time_unit_min">min</string>
+	<string name="other_time_unit_second">second</string>
+	<string name="other_time_unit_just_now">JUST NOW</string>
+	<string name="other_time_unit_multiple">s</string>
 </resources>

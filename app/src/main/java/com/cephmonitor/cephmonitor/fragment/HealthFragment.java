@@ -16,10 +16,10 @@ import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
+import com.cephmonitor.cephmonitor.model.logic.TimeUnit;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
 import com.resourcelibrary.model.log.ShowLog;
-import com.resourcelibrary.model.logic.TimeUnit;
 import com.resourcelibrary.model.network.GeneralError;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthData;
@@ -522,7 +522,7 @@ public class HealthFragment extends Fragment {
 
             long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
             long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
-            layout.healthCard.setCenterText(TimeUnit.change(period));
+            layout.healthCard.setCenterText(TimeUnit.change(period, getActivity()));
 
             layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
 
