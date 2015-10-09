@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.listitem.fixed;
+package com.cephmonitor.cephmonitor.layout.listitem.reuse;
 
 import android.content.Context;
 import android.graphics.Color;

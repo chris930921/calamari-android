@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.cephmonitor.cephmonitor.fragment.AlertTriggersFragment;
 import com.cephmonitor.cephmonitor.fragment.FragmentLauncher;
 import com.cephmonitor.cephmonitor.fragment.HealthDetailFragment;
 import com.cephmonitor.cephmonitor.fragment.HealthFragment;
@@ -80,6 +81,7 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
         changeStyleTask.put(HostDetailIopsFragment.class, showHostDetailIopsFragment);
         changeStyleTask.put(NotificationDetailFragment.class, showNotificationDetailFragment);
         changeStyleTask.put(SettingsFragment.class, showSettingsFragment);
+        changeStyleTask.put(AlertTriggersFragment.class, showAlertTriggersFragment);
 
         layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
@@ -461,6 +463,22 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
         @Override
         public void action(Bundle arg) {
             int titleResource = R.string.main_activity_option_setting;
+
+            setTitle(getResources().getString(titleResource));
+            layout.hideAllComponent();
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showAlertTriggersFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            int titleResource = R.string.settings_alert_alert_triggers_title;
 
             setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();

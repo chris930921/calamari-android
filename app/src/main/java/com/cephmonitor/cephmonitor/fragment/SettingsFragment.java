@@ -47,5 +47,11 @@ public class SettingsFragment extends Fragment {
                 layout.dateFormatsItem.setValue(getString(settingStorage.getDateFormatsResource()));
             }
         });
+        layout.alertTriggers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentLauncher.goAlertTriggerFragment(getActivity(), null);
+            }
+        });
     }
 }

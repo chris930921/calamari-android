@@ -255,6 +255,36 @@
 	<string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
 	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
 	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
+	<string name="settings_alert_notifications_title">Notifications</string>
+	<string name="settings_alert_notifications_description">Trigger alarts when storage system comes new warnings</string>
+	<string name="settings_alert_email_notifications_title">Email Notifications</string>
+	<string name="settings_alert_email_notifications_description">Notification will be sent to</string>
+	<string name="settings_alert_auto_delete_title">Auto Delete</string>
+	<string name="settings_alert_auto_delete_description">Delete alerts automatically when alerts were resolved</string>
+	<string name="settings_alert_time_period_title">Time Period</string>
+	<string name="settings_alert_time_period_description">Set a time frame to monitor and receive alerts</string>
+	<string name="settings_alert_alert_triggers_title">Alert Triggers</string>
+	<string name="settings_alert_alert_triggers_description">Setup different alert mechanisms based on various scenarios</string>
+	<string name="settings_alert_triggers_osd">OSD</string>
+	<string name="settings_alert_triggers_osd_warning">Warnings</string>
+	<string name="settings_alert_triggers_osd_warning_description">Trigger alert when %1$s OSD is in abnormal status</string>
+	<string name="settings_alert_triggers_osd_error">Errors</string>
+	<string name="settings_alert_triggers_osd_error_description">Trigger alert when %1$s OSD is in severely status</string>
+	<string name="settings_alert_triggers_monitor">Monitor</string>
+	<string name="settings_alert_triggers_monitor_warning">Warnings</string>
+	<string name="settings_alert_triggers_monitor_warning_description">Trigger alert when %1$s monitor is in abnormal status</string>
+	<string name="settings_alert_triggers_monitor_error">Errors</string>
+	<string name="settings_alert_triggers_monitor_error_description">Trigger alert when %1$s monitor is in severely status</string>
+	<string name="settings_alert_triggers_pg">Placement Group</string>
+	<string name="settings_alert_triggers_pg_warning">Warnings</string>
+	<string name="settings_alert_triggers_pg_warning_description">Trigger alert when %1$s %% PGs are modified by Ceph</string>
+	<string name="settings_alert_triggers_pg_error">Errors</string>
+	<string name="settings_alert_triggers_pg_error_description">Trigger alert when %1$s %% PGs stuck in abnormal states</string>
+	<string name="settings_alert_triggers_usage">Usage</string>
+	<string name="settings_alert_triggers_usage_warning">Warnings</string>
+	<string name="settings_alert_triggers_usage_warning_description">Trigger alert when usage exceeds %1$s %%</string>
+	<string name="settings_alert_triggers_usage_error">Errors</string>
+	<string name="settings_alert_triggers_usage_error_description">Trigger alert when usage exceeds %1$s %%</string>
 
 	//Other
 	<string name="other_empty"></string>
@@ -266,4 +296,23 @@
 	<string name="other_time_unit_second">second</string>
 	<string name="other_time_unit_just_now">JUST NOW</string>
 	<string name="other_time_unit_multiple">s</string>
+
+	<string name="other_calculater_unit_osd">OSD</string>
+	<string name="other_calculater_unit_mon">MON</string>
+	<string name="other_calculater_unit_pg">%</string>
+	<string name="other_calculater_unit_usage">%</string>
+	<string name="other_calculater_condition_max">MAX</string>
+	<string name="other_calculater_condition_min">MIN</string>
+	<string name="other_calculater_condition_pgs">PGs</string>
+	<string name="other_calculater_number_one">1</string>
+	<string name="other_calculater_number_two">2</string>
+	<string name="other_calculater_number_three">3</string>
+	<string name="other_calculater_number_four">4</string>
+	<string name="other_calculater_number_five">5</string>
+	<string name="other_calculater_number_six">6</string>
+	<string name="other_calculater_number_seven">7</string>
+	<string name="other_calculater_number_eight">8</string>
+	<string name="other_calculater_number_nine">9</string>
+	<string name="other_calculater_number_zero">0</string>
+	<string name="other_calculater_button_clear">Clear</string>
 </resources>
