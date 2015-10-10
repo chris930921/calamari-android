@@ -169,7 +169,7 @@ public class SettingDialog extends TopRoundDialogContainer {
         dialogContentContainer.addView(v);
     }
 
-    public void addButton(final int resourceId, int color, OnClickListener event) {
+    public TextView addButton(final int resourceId, int color, OnClickListener event) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -195,6 +195,8 @@ public class SettingDialog extends TopRoundDialogContainer {
                 v.setText(resourceId);
             }
         });
+
+        return v;
     }
 
     public View buttonFillView() {

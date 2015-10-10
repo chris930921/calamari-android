@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
-import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMaxMinDialog;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingTitleItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.DynamicRoundBorderItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingDescriptionItem;
@@ -159,7 +159,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerDialog dialog = new AlertTriggerDialog(getContext());
+                AlertTriggerMaxMinDialog dialog = new AlertTriggerMaxMinDialog(getContext());
                 dialog.show();
             }
         });

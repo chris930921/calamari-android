@@ -17,7 +17,7 @@ import com.resourcelibrary.model.view.WH;
 /**
  * Created by chriske on 2015/10/9.
  */
-public class LimitCalculator extends RelativeLayout {
+public class CalculatorLayout extends RelativeLayout {
     private WH ruler;
     private DesignSpec designSpec;
     private TextViewStyle styleBodyTwo;
@@ -25,9 +25,9 @@ public class LimitCalculator extends RelativeLayout {
     private TextViewStyle styleNote;
 
     public RelativeLayout fieldResult;
-    private TextView unitHeightFillView;
+    public TextView unitHeightFillView;
     public TextView fieldValue;
-    private TextView fieldUnit;
+    public TextView fieldUnit;
     public RelativeLayout fieldCondition;
     public RelativeLayout numberBoard;
     public TextView numberEight;
@@ -49,7 +49,7 @@ public class LimitCalculator extends RelativeLayout {
     public View lineBetweenRowTwoThree;
     public View lineBetweenRowThreeFour;
 
-    public LimitCalculator(Context context) {
+    public CalculatorLayout(Context context) {
         super(context);
         ruler = new WH(getContext());
         designSpec = ThemeManager.getStyle(getContext());
@@ -187,43 +187,43 @@ public class LimitCalculator extends RelativeLayout {
     }
 
     protected TextView numberEight() {
-        return getCenterNumber(R.string.other_calculater_number_eight, null);
+        return getCenterNumber(R.string.other_calculater_number_eight, null, 8);
     }
 
     protected TextView numberSeven(View centerView) {
-        return getLeftOfCenterNumber(R.string.other_calculater_number_seven, centerView);
+        return getLeftOfCenterNumber(R.string.other_calculater_number_seven, centerView, 7);
     }
 
     protected TextView numberNine(View centerView) {
-        return getRightOfCenterNumber(R.string.other_calculater_number_nine, centerView);
+        return getRightOfCenterNumber(R.string.other_calculater_number_nine, centerView, 9);
     }
 
     protected TextView numberFive(View topView) {
-        return getCenterNumber(R.string.other_calculater_number_five, topView);
+        return getCenterNumber(R.string.other_calculater_number_five, topView, 5);
     }
 
     protected TextView numberFour(View centerView) {
-        return getLeftOfCenterNumber(R.string.other_calculater_number_four, centerView);
+        return getLeftOfCenterNumber(R.string.other_calculater_number_four, centerView, 4);
     }
 
     protected TextView numberSix(View centerView) {
-        return getRightOfCenterNumber(R.string.other_calculater_number_six, centerView);
+        return getRightOfCenterNumber(R.string.other_calculater_number_six, centerView, 6);
     }
 
     protected TextView numberTwo(View topView) {
-        return getCenterNumber(R.string.other_calculater_number_two, topView);
+        return getCenterNumber(R.string.other_calculater_number_two, topView, 2);
     }
 
     protected TextView numberOne(View centerView) {
-        return getLeftOfCenterNumber(R.string.other_calculater_number_four, centerView);
+        return getLeftOfCenterNumber(R.string.other_calculater_number_one, centerView, 1);
     }
 
     protected TextView numberThree(View centerView) {
-        return getRightOfCenterNumber(R.string.other_calculater_number_three, centerView);
+        return getRightOfCenterNumber(R.string.other_calculater_number_three, centerView, 3);
     }
 
     protected TextView buttonClear(View topView) {
-        TextView v = getNumberButton(R.string.other_calculater_button_clear);
+        TextView v = getNumberButton(R.string.other_calculater_button_clear, -1);
         LayoutParams params = (LayoutParams) v.getLayoutParams();
         params.addRule(BELOW, topView.getId());
         params.addRule(ALIGN_PARENT_RIGHT);
@@ -233,20 +233,13 @@ public class LimitCalculator extends RelativeLayout {
     }
 
     protected TextView numberZero(View rightView) {
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ruler.getW(23)
-        );
+        TextView v = getNumberButton(R.string.other_calculater_number_zero, 0);
+        LayoutParams params = (LayoutParams) v.getLayoutParams();
+        params.addRule(CENTER_HORIZONTAL);
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.addRule(ALIGN_TOP, rightView.getId());
         params.addRule(LEFT_OF, rightView.getId());
         params.addRule(ALIGN_PARENT_LEFT);
-
-        TextView v = new TextView(getContext());
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setBackgroundColor(designSpec.getPrimaryColors().getBackgroundOne());
-        v.setGravity(Gravity.CENTER);
-        v.setText(R.string.other_calculater_number_zero);
 
         return v;
     }
@@ -275,8 +268,8 @@ public class LimitCalculator extends RelativeLayout {
         return v;
     }
 
-    private TextView getCenterNumber(int resourceText, View topView) {
-        TextView v = getNumberButton(resourceText);
+    private TextView getCenterNumber(int resourceText, View topView, int number) {
+        TextView v = getNumberButton(resourceText, number);
         LayoutParams params = (LayoutParams) v.getLayoutParams();
         params.addRule(CENTER_HORIZONTAL);
         if (topView == null) {
@@ -289,8 +282,8 @@ public class LimitCalculator extends RelativeLayout {
         return v;
     }
 
-    private TextView getLeftOfCenterNumber(int resourceText, View centerView) {
-        TextView v = getNumberButton(resourceText);
+    private TextView getLeftOfCenterNumber(int resourceText, View centerView, int number) {
+        TextView v = getNumberButton(resourceText, number);
         LayoutParams params = (LayoutParams) v.getLayoutParams();
         params.addRule(LEFT_OF, centerView.getId());
         params.addRule(ALIGN_TOP, centerView.getId());
@@ -300,8 +293,8 @@ public class LimitCalculator extends RelativeLayout {
         return v;
     }
 
-    private TextView getRightOfCenterNumber(int resourceText, View centerView) {
-        TextView v = getNumberButton(resourceText);
+    private TextView getRightOfCenterNumber(int resourceText, View centerView, int number) {
+        TextView v = getNumberButton(resourceText, number);
         LayoutParams params = (LayoutParams) v.getLayoutParams();
         params.addRule(RIGHT_OF, centerView.getId());
         params.addRule(ALIGN_TOP, centerView.getId());
@@ -311,7 +304,7 @@ public class LimitCalculator extends RelativeLayout {
         return v;
     }
 
-    private TextView getNumberButton(int resourceText) {
+    private TextView getNumberButton(int resourceText, int number) {
         LayoutParams params = new LayoutParams(
                 ruler.getW(31),
                 ruler.getW(23)
@@ -323,6 +316,7 @@ public class LimitCalculator extends RelativeLayout {
         v.setBackgroundColor(designSpec.getPrimaryColors().getBackgroundOne());
         v.setGravity(Gravity.CENTER);
         v.setText(resourceText);
+        v.setTag(number);
 
         return v;
     }
