@@ -11,7 +11,15 @@ import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
-import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMaxMinDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerCountPercentageDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonErrorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonWarningDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOriginCalculatorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdErrorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdWarningDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerPgErrorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerPgWarningDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.OnSaveFinishedEvent;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingTitleItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.DynamicRoundBorderItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingDescriptionItem;
@@ -152,14 +160,16 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
     }
 
     protected SettingDescriptionItem osdWarning() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_osd_warning,
                 R.string.settings_alert_triggers_osd_warning_description,
                 DynamicRoundBorderItem.ITEM_STYLE_HEADER);
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerMaxMinDialog dialog = new AlertTriggerMaxMinDialog(getContext());
+                AlertTriggerOsdWarningDialog dialog = new AlertTriggerOsdWarningDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
                 dialog.show();
             }
         });
@@ -168,34 +178,59 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
     }
 
     protected SettingDescriptionItem osdError() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_osd_error,
                 R.string.settings_alert_triggers_osd_error_description,
                 DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerOsdErrorDialog dialog = new AlertTriggerOsdErrorDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
+                dialog.show();
+            }
+        });
         return v;
     }
 
     protected SettingTitleItem monitorTitle() {
         SettingTitleItem v = getTitle(R.string.settings_alert_triggers_monitor);
+
         return v;
     }
 
     protected SettingDescriptionItem monitorWarning() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_monitor_warning,
                 R.string.settings_alert_triggers_monitor_warning_description,
                 DynamicRoundBorderItem.ITEM_STYLE_HEADER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerMonWarningDialog dialog = new AlertTriggerMonWarningDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
+                dialog.show();
+            }
+        });
         return v;
     }
 
     protected SettingDescriptionItem monitorError() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_monitor_error,
                 R.string.settings_alert_triggers_monitor_error_description,
                 DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerMonErrorDialog dialog = new AlertTriggerMonErrorDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
+                dialog.show();
+            }
+        });
         return v;
     }
 
@@ -205,20 +240,36 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
     }
 
     protected SettingDescriptionItem pgWarning() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_pg_warning,
                 R.string.settings_alert_triggers_pg_warning_description,
                 DynamicRoundBorderItem.ITEM_STYLE_HEADER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerPgWarningDialog dialog = new AlertTriggerPgWarningDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
+                dialog.show();
+            }
+        });
         return v;
     }
 
     protected SettingDescriptionItem pgError() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_pg_error,
                 R.string.settings_alert_triggers_pg_error_description,
                 DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerPgErrorDialog dialog = new AlertTriggerPgErrorDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
+                dialog.show();
+            }
+        });
         return v;
     }
 
@@ -232,7 +283,15 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
                 R.string.settings_alert_triggers_usage_warning,
                 R.string.settings_alert_triggers_usage_warning_description,
                 DynamicRoundBorderItem.ITEM_STYLE_HEADER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerCountPercentageDialog dialog = new AlertTriggerCountPercentageDialog(getContext());
+                dialog.setTitle(getContext().getString(R.string.settings_alert_triggers_usage_warning_dialog_title));
+                dialog.setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
+                dialog.show();
+            }
+        });
         return v;
     }
 
@@ -241,7 +300,15 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
                 R.string.settings_alert_triggers_usage_error,
                 R.string.settings_alert_triggers_usage_error_description,
                 DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
-
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertTriggerCountPercentageDialog dialog = new AlertTriggerCountPercentageDialog(getContext());
+                dialog.setTitle(getContext().getString(R.string.settings_alert_triggers_usage_error_dialog_title));
+                dialog.setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
+                dialog.show();
+            }
+        });
         return v;
     }
 
@@ -268,4 +335,16 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
 
         return v;
     }
+
+    public void setDialogSaveFinishedEvent(OnSaveFinishedEvent dialogSaveFinishedEvent) {
+        this.dialogSaveFinishedEvent = dialogSaveFinishedEvent;
+
+    }
+
+    private OnSaveFinishedEvent dialogSaveFinishedEvent = new OnSaveFinishedEvent() {
+        @Override
+        public void onFinish(AlertTriggerOriginCalculatorDialog dialog) {
+
+        }
+    };
 }

@@ -25,9 +25,45 @@ public class SettingStorage {
         set("DateFormats", dateFormatsId);
     }
 
+    public void setAlertTriggerOsdWarning(long value) {
+        set("AlertTriggerOsdWarning", value);
+    }
+
+    public void setAlertTriggerOsdError(long value) {
+        set("AlertTriggerOsdError", value);
+    }
+
+    public void setAlertTriggerMonWarning(long value) {
+        set("AlertTriggerMonWarning", value);
+    }
+
+    public void setAlertTriggerMonError(long value) {
+        set("AlertTriggerMonError", value);
+    }
+
+    public void setAlertTriggerPgWarning(float value) {
+        set("AlertTriggerPgWarning", value);
+    }
+
+    public void setAlertTriggerPgError(float value) {
+        set("AlertTriggerPgError", value);
+    }
+
     public void set(String key, int value) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
+        editor.commit();
+    }
+
+    public void set(String key, long value) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(key, value);
+        editor.commit();
+    }
+
+    public void set(String key, float value) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat(key, value);
         editor.commit();
     }
 
@@ -39,11 +75,35 @@ public class SettingStorage {
         return settings.getInt("DateFormats", 0);
     }
 
-    public int getLanguageResource(){
+    public int getLanguageResource() {
         return SettingConstant.getLanguageResource(getLanguage());
     }
 
-    public int getDateFormatsResource(){
+    public int getDateFormatsResource() {
         return SettingConstant.getDateFormatsResource(getDateFormats());
+    }
+
+    public long getAlertTriggerOsdWarning() {
+        return settings.getLong("AlertTriggerOsdWarning", 1);
+    }
+
+    public long getAlertTriggerOsdError() {
+        return settings.getLong("AlertTriggerOsdError", 1);
+    }
+
+    public long getAlertTriggerMonWarning() {
+        return settings.getLong("AlertTriggerMonWarning", 1);
+    }
+
+    public long getAlertTriggerMonError() {
+        return settings.getLong("AlertTriggerMonError", 1);
+    }
+
+    public float getAlertTriggerPgWarning() {
+        return settings.getFloat("AlertTriggerPgWarning", 0.2F);
+    }
+
+    public float getAlertTriggerPgError() {
+        return settings.getFloat("AlertTriggerPgError", 0.2F);
     }
 }

@@ -13,18 +13,16 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
-import java.math.BigInteger;
-
 /**
  * Created by chriske on 2015/10/10.
  */
-public class OriginCalculator extends CalculatorLayout {
+public abstract class OriginCalculator extends CalculatorLayout {
     private WH ruler;
     private View conditionLastRightView;
     private DesignSpec designSpec;
     private TextViewStyle styleBodyTwo;
     private TextViewStyle styleNote;
-    private long resultValue;
+
 
     public OriginCalculator(Context context) {
         super(context);
@@ -35,6 +33,7 @@ public class OriginCalculator extends CalculatorLayout {
 
         fieldValue.setText("");
 
+        OnClickListener numberClickEvent = clickNumberEvent();
         numberEight.setOnClickListener(numberClickEvent);
         numberSeven.setOnClickListener(numberClickEvent);
         numberNine.setOnClickListener(numberClickEvent);
@@ -48,43 +47,16 @@ public class OriginCalculator extends CalculatorLayout {
         buttonClear.setOnClickListener(clearClickEvent);
     }
 
-    private OnClickListener numberClickEvent = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int number = (int) view.getTag();
-            String oldValue = fieldValue.getText().toString();
-            String newValue = oldValue + number;
-            BigInteger value = new BigInteger(newValue);
-            if (value.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
-                valueTooLong();
-            } else {
-                fieldValue.setText(value.toString());
-                calculate();
-            }
-        }
-    };
+    protected abstract OnClickListener clickNumberEvent();
 
     private OnClickListener clearClickEvent = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            fieldValue.setText("");
             clear();
         }
     };
 
-    protected BigInteger valueTooLong() {
-        return new BigInteger(fieldValue.getText().toString());
-    }
-
-    protected long calculate() {
-        resultValue = Long.parseLong(fieldValue.getText().toString());
-        return resultValue;
-    }
-
-    protected long clear() {
-        resultValue = 0;
-        return resultValue;
-    }
+    protected abstract void clear();
 
     public void setUnit(String unit) {
         unitHeightFillView.setText(unit);
@@ -92,6 +64,10 @@ public class OriginCalculator extends CalculatorLayout {
     }
 
     protected TextView addBoldSubTitle(int resourceText) {
+        return addBoldSubTitle(getContext().getString(resourceText));
+    }
+
+    protected TextView addBoldSubTitle(String text) {
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -103,7 +79,7 @@ public class OriginCalculator extends CalculatorLayout {
         styleNote.style(v);
         v.setTypeface(Typeface.DEFAULT_BOLD);
         v.setTextColor(ColorTable._CCCCCC);
-        v.setText(resourceText);
+        v.setText(text);
 
         fieldCondition.addView(v);
         conditionLastRightView = v;
@@ -176,10 +152,6 @@ public class OriginCalculator extends CalculatorLayout {
 
     protected void setValueVaild() {
         styleBodyTwo.style(fieldValue);
-    }
-
-    public long getValue() {
-        return resultValue;
     }
 
     public void setOnInvalidEvent(OnValidStateChangeEvent invalidEvent) {
