@@ -27,5 +27,6 @@ public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
                 storage.setAlertTriggerMonError(value);
             }
         });
+        getCalculator().clear();
     }
 }

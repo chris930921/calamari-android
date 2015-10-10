@@ -54,7 +54,7 @@ public class MaxMinCalculator extends OriginCalculator {
     }
 
     @Override
-    protected void clear() {
+    public void clear() {
         fieldValue.setText("");
         resultValue = 0;
         validStateChangeEvent.onInvalidEvent();
@@ -62,11 +62,6 @@ public class MaxMinCalculator extends OriginCalculator {
 
     public long getResultValue() {
         return resultValue;
-    }
-
-    public void setResultValue(long resultValue) {
-        this.resultValue = resultValue;
-        fieldValue.setText(String.valueOf(resultValue));
     }
 
     public void setMax(int max) {

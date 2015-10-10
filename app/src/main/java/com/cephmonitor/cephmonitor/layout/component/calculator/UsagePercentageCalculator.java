@@ -36,6 +36,7 @@ public class UsagePercentageCalculator extends OriginCalculator {
 
         totalValue.setText(String.valueOf(total));
         updatePartValue();
+        clear();
     }
 
     @Override
@@ -72,14 +73,14 @@ public class UsagePercentageCalculator extends OriginCalculator {
 
 
     @Override
-    protected void clear() {
+    public void clear() {
         fieldValue.setText("");
         partPercentage = 0;
         validStateChangeEvent.onInvalidEvent();
         updatePartValue();
     }
 
-    protected float getResultValue() {
+    public float getResultValue() {
         return partPercentage;
     }
 

@@ -16,6 +16,7 @@ public class AlertTriggerOsdWarningDialog extends AlertTriggerMaxMinDialog {
         super(context);
         storage = new SettingStorage(getContext());
 
+
         setTitle(getContext().getString(R.string.settings_alert_triggers_osd_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_osd));
         getCalculator().setMax(total / 2);
@@ -27,5 +28,6 @@ public class AlertTriggerOsdWarningDialog extends AlertTriggerMaxMinDialog {
                 storage.setAlertTriggerOsdWarning(value);
             }
         });
+        getCalculator().clear();
     }
 }

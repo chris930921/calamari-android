@@ -40,6 +40,7 @@ public class CountPercentageCalculator extends OriginCalculator {
 
         totalValue.setText(String.valueOf(total));
         partValue.setText(String.valueOf(part));
+        clear();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class CountPercentageCalculator extends OriginCalculator {
 
 
     @Override
-    protected void clear() {
+    public void clear() {
         fieldValue.setText("");
         partPercentage = 0;
         validStateChangeEvent.onInvalidEvent();

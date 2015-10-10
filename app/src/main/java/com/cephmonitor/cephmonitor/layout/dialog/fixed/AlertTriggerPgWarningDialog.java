@@ -16,6 +16,7 @@ public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDial
         super(context);
         storage = new SettingStorage(getContext());
 
+
         setTitle(getContext().getString(R.string.settings_alert_triggers_pg_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_pg));
         getCalculator().setTotal(total);
@@ -28,5 +29,6 @@ public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDial
                 storage.setAlertTriggerPgWarning(getCalculator().getResultValue());
             }
         });
+        getCalculator().clear();
     }
 }

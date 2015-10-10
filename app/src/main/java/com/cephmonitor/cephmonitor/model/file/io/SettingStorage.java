@@ -49,6 +49,14 @@ public class SettingStorage {
         set("AlertTriggerPgError", value);
     }
 
+    public void setAlertTriggerUsageWarning(float value) {
+        set("AlertTriggerUsageWarning", value);
+    }
+
+    public void setAlertTriggerUsageError(float value) {
+        set("AlertTriggerUsageError", value);
+    }
+
     public void set(String key, int value) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
@@ -105,5 +113,13 @@ public class SettingStorage {
 
     public float getAlertTriggerPgError() {
         return settings.getFloat("AlertTriggerPgError", 0.2F);
+    }
+
+    public float getAlertTriggerUsageWarning() {
+        return settings.getFloat("AlertTriggerUsageWarning", 0.7F);
+    }
+
+    public float getAlertTriggerUsageError() {
+        return settings.getFloat("AlertTriggerUsageError", 0.85F);
     }
 }

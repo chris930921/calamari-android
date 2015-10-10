@@ -42,6 +42,8 @@ public class AlertTriggersFragment extends Fragment {
         updateDescriptionMap.put(layout.monitorError, R.string.settings_alert_triggers_monitor_error_description);
         updateDescriptionMap.put(layout.pgWarning, R.string.settings_alert_triggers_pg_warning_description);
         updateDescriptionMap.put(layout.pgError, R.string.settings_alert_triggers_pg_error_description);
+        updateDescriptionMap.put(layout.usageWarning, R.string.settings_alert_triggers_usage_warning_description);
+        updateDescriptionMap.put(layout.usageError, R.string.settings_alert_triggers_usage_error_description);
 
         updateAllDescription();
 
@@ -62,6 +64,8 @@ public class AlertTriggersFragment extends Fragment {
                 storage.getAlertTriggerMonError(),
                 (int) (storage.getAlertTriggerPgWarning() * 100),
                 (int) (storage.getAlertTriggerPgError() * 100),
+                (int) (storage.getAlertTriggerUsageWarning() * 100),
+                (int) (storage.getAlertTriggerUsageError() * 100),
         };
         int i = 0;
         for (SettingDescriptionItem item : updateDescriptionMap.keySet()) {

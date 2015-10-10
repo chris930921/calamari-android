@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
-import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerCountPercentageDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonErrorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonWarningDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOriginCalculatorDialog;
@@ -19,6 +18,8 @@ import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdErrorDialo
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdWarningDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerPgErrorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerPgWarningDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerUsageErrorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerUsageWarningDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.OnSaveFinishedEvent;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingTitleItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.DynamicRoundBorderItem;
@@ -279,16 +280,16 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
     }
 
     protected SettingDescriptionItem usageWarning() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_usage_warning,
                 R.string.settings_alert_triggers_usage_warning_description,
                 DynamicRoundBorderItem.ITEM_STYLE_HEADER);
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerCountPercentageDialog dialog = new AlertTriggerCountPercentageDialog(getContext());
-                dialog.setTitle(getContext().getString(R.string.settings_alert_triggers_usage_warning_dialog_title));
-                dialog.setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
+                AlertTriggerUsageWarningDialog dialog = new AlertTriggerUsageWarningDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
                 dialog.show();
             }
         });
@@ -296,16 +297,16 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
     }
 
     protected SettingDescriptionItem usageError() {
-        SettingDescriptionItem v = getDescriptionItem(
+        final SettingDescriptionItem v = getDescriptionItem(
                 R.string.settings_alert_triggers_usage_error,
                 R.string.settings_alert_triggers_usage_error_description,
                 DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerCountPercentageDialog dialog = new AlertTriggerCountPercentageDialog(getContext());
-                dialog.setTitle(getContext().getString(R.string.settings_alert_triggers_usage_error_dialog_title));
-                dialog.setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
+                AlertTriggerUsageErrorDialog dialog = new AlertTriggerUsageErrorDialog(getContext(), 200);
+                dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
+                dialog.setTag(v);
                 dialog.show();
             }
         });
