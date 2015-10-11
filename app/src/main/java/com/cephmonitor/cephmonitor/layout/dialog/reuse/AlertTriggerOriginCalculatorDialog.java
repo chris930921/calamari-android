@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.dialog.fixed;
+package com.cephmonitor.cephmonitor.layout.dialog.reuse;
 
 import android.content.Context;
 import android.view.View;
@@ -9,7 +9,7 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.calculator.OnValidStateChangeEvent;
 import com.cephmonitor.cephmonitor.layout.component.calculator.OriginCalculator;
-import com.cephmonitor.cephmonitor.layout.dialog.reuse.SettingDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.OnSaveFinishedEvent;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;

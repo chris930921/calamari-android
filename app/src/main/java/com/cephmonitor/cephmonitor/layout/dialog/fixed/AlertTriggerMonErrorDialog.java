@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerMaxMinDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 
 /**
@@ -12,13 +13,13 @@ import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
     private SettingStorage storage;
 
-    public AlertTriggerMonErrorDialog(Context context, int total) {
+    public AlertTriggerMonErrorDialog(Context context) {
         super(context);
         storage = new SettingStorage(getContext());
 
         setTitle(getContext().getString(R.string.settings_alert_triggers_monitor_error_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_mon));
-        getCalculator().setMax((int) Math.floor(total / 2));
+        getCalculator().setMax((int) Math.floor(storage.getAlertTriggerMonTotal() / 2));
         getCalculator().setMin(1);
         setSaveClick(new OnClickListener() {
             @Override

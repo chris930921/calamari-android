@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerUsagePercentageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 
 /**
@@ -12,13 +13,13 @@ import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 public class AlertTriggerUsageWarningDialog extends AlertTriggerUsagePercentageDialog {
     private SettingStorage storage;
 
-    public AlertTriggerUsageWarningDialog(Context context, int total) {
+    public AlertTriggerUsageWarningDialog(Context context) {
         super(context);
         storage = new SettingStorage(getContext());
 
         setTitle(getContext().getString(R.string.settings_alert_triggers_usage_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
-        getCalculator().setTotal(total);
+        getCalculator().setTotal(storage.getAlertTriggerUsageTotal());
         getCalculator().setPartPercentage(storage.getAlertTriggerUsageWarning());
         getCalculator().setMaxPercentage(0.85F);
         getCalculator().setMinPercentage(0.05F);

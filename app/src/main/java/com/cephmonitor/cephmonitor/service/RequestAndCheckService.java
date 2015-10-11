@@ -193,12 +193,10 @@ public class RequestAndCheckService extends Service {
             trueCount = (result) ? trueCount : trueCount + 1;
         }
         ShowLog.d("執行數量檢查，檢查數量: " + healthCountCheckList.size());
-//        NotificationFragment.send(RequestAndCheckService.this);
         for (ConditionNotification checker : healthCountCheckList) {
             boolean result = checker.check(v1HealthCounterData);
             trueCount = (result) ? trueCount : trueCount + 1;
         }
-//        NotificationFragment.send(RequestAndCheckService.this);
         if (trueCount != clusterSpaceCheckList.size() + healthCountCheckList.size()) {
             ShowLog.d("檢查到錯誤，進入錯誤檢查週期。");
             ChangePeriodReceiver.sendCheckMessage(this);

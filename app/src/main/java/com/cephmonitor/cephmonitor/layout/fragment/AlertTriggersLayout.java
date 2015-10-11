@@ -13,7 +13,7 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonErrorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerMonWarningDialog;
-import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOriginCalculatorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerOriginCalculatorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdErrorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOsdWarningDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerPgErrorDialog;
@@ -168,7 +168,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerOsdWarningDialog dialog = new AlertTriggerOsdWarningDialog(getContext(), 200);
+                AlertTriggerOsdWarningDialog dialog = new AlertTriggerOsdWarningDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -186,7 +186,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerOsdErrorDialog dialog = new AlertTriggerOsdErrorDialog(getContext(), 200);
+                AlertTriggerOsdErrorDialog dialog = new AlertTriggerOsdErrorDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -209,7 +209,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerMonWarningDialog dialog = new AlertTriggerMonWarningDialog(getContext(), 200);
+                AlertTriggerMonWarningDialog dialog = new AlertTriggerMonWarningDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -226,7 +226,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerMonErrorDialog dialog = new AlertTriggerMonErrorDialog(getContext(), 200);
+                AlertTriggerMonErrorDialog dialog = new AlertTriggerMonErrorDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -248,7 +248,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerPgWarningDialog dialog = new AlertTriggerPgWarningDialog(getContext(), 200);
+                AlertTriggerPgWarningDialog dialog = new AlertTriggerPgWarningDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -265,7 +265,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerPgErrorDialog dialog = new AlertTriggerPgErrorDialog(getContext(), 200);
+                AlertTriggerPgErrorDialog dialog = new AlertTriggerPgErrorDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -287,7 +287,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerUsageWarningDialog dialog = new AlertTriggerUsageWarningDialog(getContext(), 200);
+                AlertTriggerUsageWarningDialog dialog = new AlertTriggerUsageWarningDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();
@@ -304,7 +304,7 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertTriggerUsageErrorDialog dialog = new AlertTriggerUsageErrorDialog(getContext(), 200);
+                AlertTriggerUsageErrorDialog dialog = new AlertTriggerUsageErrorDialog(getContext());
                 dialog.setSaveFinishedEvent(dialogSaveFinishedEvent);
                 dialog.setTag(v);
                 dialog.show();

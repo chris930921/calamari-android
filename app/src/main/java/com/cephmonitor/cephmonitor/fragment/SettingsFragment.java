@@ -29,6 +29,8 @@ public class SettingsFragment extends Fragment {
         settingStorage = new SettingStorage(getActivity());
         layout.languageItem.setValue(getString(settingStorage.getLanguageResource()));
         layout.dateFormatsItem.setValue(getString(settingStorage.getDateFormatsResource()));
+        layout.notificationsItem.checkbox.setChecked(settingStorage.getNotifications());
+        layout.autoDeleteItem.checkbox.setChecked(settingStorage.getAutoDelete());
 
         layout.languageDialog.setOkClick(new View.OnClickListener() {
             @Override
@@ -51,6 +53,22 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentLauncher.goAlertTriggerFragment(getActivity(), null);
+            }
+        });
+        layout.notificationsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean check = !layout.notificationsItem.checkbox.isChecked();
+                layout.notificationsItem.checkbox.setChecked(check);
+                settingStorage.setNotifications(check);
+            }
+        });
+        layout.autoDeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean check = !layout.autoDeleteItem.checkbox.isChecked();
+                layout.autoDeleteItem.checkbox.setChecked(check);
+                settingStorage.setAutoDelete(check);
             }
         });
     }

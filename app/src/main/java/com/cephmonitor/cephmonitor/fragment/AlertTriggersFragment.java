@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
-import com.cephmonitor.cephmonitor.layout.dialog.fixed.AlertTriggerOriginCalculatorDialog;
+import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerOriginCalculatorDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.OnSaveFinishedEvent;
 import com.cephmonitor.cephmonitor.layout.fragment.AlertTriggersLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingDescriptionItem;

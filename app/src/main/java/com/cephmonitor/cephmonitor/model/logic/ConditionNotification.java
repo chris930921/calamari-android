@@ -13,6 +13,7 @@ import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
 import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
 import com.cephmonitor.cephmonitor.model.database.data.TriggeredRecordedData;
 import com.cephmonitor.cephmonitor.model.database.operator.RecordedOperator;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
  */
 public abstract class ConditionNotification<T> {
     public static final int NOTIFICATION_ID = (BuildConfig.IS_LOCALHOST) ? 9218 : 4937; // 隨機定義的通知編號，沒有特別意義。
+    private SettingStorage settingStorage;
     private CheckResult checkResult;
     private Context context;
 
@@ -29,10 +31,11 @@ public abstract class ConditionNotification<T> {
     }
 
     public boolean check(T data) {
+        settingStorage = new SettingStorage(getContext());
         checkResult = new CheckResult();
         decide(data);
 
-        if (checkResult.isSendNotification) {
+        if (checkResult.isSendNotification && settingStorage.getNotifications()) {
             Notification msg = getNotification();
             msg.defaults = Notification.DEFAULT_ALL;
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

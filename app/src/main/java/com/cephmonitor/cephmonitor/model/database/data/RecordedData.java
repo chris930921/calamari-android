@@ -192,4 +192,16 @@ public class RecordedData extends DatabaseData {
         };
         return DatabaseParser.replaceSymbolToParam(sql, paramGroup);
     }
+
+    @Override
+    public String deleteScript() {
+        String sql = "DELETE FROM ? WHERE ? = ? ;";
+        Object[] paramGroup = {
+                RecordedTable.TABLE_NAME,
+                RecordedTable.FIELD_ID,
+                id,
+        };
+
+        return DatabaseParser.replaceSymbolToParam(sql, paramGroup);
+    }
 }

@@ -15,6 +15,21 @@ public abstract class DatabaseData {
         cursor.close();
     }
 
+    public boolean remove(SQLiteDatabase database) {
+        String sql = deleteScript();
+
+        if (sql == null) {
+            return false;
+        }
+
+        try {
+            database.execSQL(sql);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public boolean save(SQLiteDatabase database) {
         String sql = updateScript();
 
@@ -54,6 +69,10 @@ public abstract class DatabaseData {
     }
 
     public String insertScript() {
+        return null;
+    }
+
+    public String deleteScript() {
         return null;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.compare.IncrementStrategy;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV1HealthCounterData;
@@ -14,6 +15,7 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class MonCountErrorNotification extends ConditionNotification<ClusterV1HealthCounterData> {
+    private SettingStorage settingStorage;
     private int monitorType = 2;
     private int level = 2;
     private int monitorNumber = 1;
@@ -21,11 +23,12 @@ public class MonCountErrorNotification extends ConditionNotification<ClusterV1He
 
     public MonCountErrorNotification(Context context) {
         super(context);
+        settingStorage = new SettingStorage(getContext());
     }
 
     @Override
     protected void decide(ClusterV1HealthCounterData data) {
-        int compareValue = 0;
+        long compareValue = 0;
         try {
             compareValue = data.getMonErrorCount();
         } catch (JSONException e) {
@@ -38,7 +41,7 @@ public class MonCountErrorNotification extends ConditionNotification<ClusterV1He
         comparePattern.setParams(
                 getContext(),
                 getCheckResult(),
-                compareValue,
+                compareValue - settingStorage.getAlertTriggerMonError() + 1,
                 monitorType,
                 level,
                 monitorNumber,

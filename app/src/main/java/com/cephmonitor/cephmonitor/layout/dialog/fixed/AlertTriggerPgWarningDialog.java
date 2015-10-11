@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerCountPercentageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 
 /**
@@ -12,14 +13,14 @@ import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDialog {
     public SettingStorage storage;
 
-    public AlertTriggerPgWarningDialog(Context context, int total) {
+    public AlertTriggerPgWarningDialog(Context context) {
         super(context);
         storage = new SettingStorage(getContext());
 
 
         setTitle(getContext().getString(R.string.settings_alert_triggers_pg_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_pg));
-        getCalculator().setTotal(total);
+        getCalculator().setTotal(storage.getAlertTriggerPgTotal());
         getCalculator().setPartPercentage(storage.getAlertTriggerPgWarning());
         getCalculator().setMaxPercentage(0.8F);
         getCalculator().setMinPercentage(0.2F);

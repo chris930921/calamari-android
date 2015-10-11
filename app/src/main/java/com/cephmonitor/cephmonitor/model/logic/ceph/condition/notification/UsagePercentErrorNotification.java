@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.ConditionNotification;
 import com.cephmonitor.cephmonitor.model.logic.ceph.compare.UsageErrorStrategy;
 import com.resourcelibrary.model.log.ShowLog;
@@ -15,6 +16,7 @@ import org.json.JSONException;
  * Created by User on 5/13/2015.
  */
 public class UsagePercentErrorNotification extends ConditionNotification<ClusterV1Space> {
+    private SettingStorage settingStorage;
     private int monitorType = 4;
     private int level = 2;
     private int monitorNumber = 1;
@@ -22,6 +24,7 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
 
     public UsagePercentErrorNotification(Context context) {
         super(context);
+        this.settingStorage = new SettingStorage(context);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class UsagePercentErrorNotification extends ConditionNotification<Cluster
                 R.string.check_service_042001_abnormal_title,
                 R.string.check_service_042001_normal_title,
                 CephNotificationConstant.WARNING_TYPE_ERROR,
-                8500
+                (int) (settingStorage.getAlertTriggerUsageError() * 10000)
         );
         comparePattern.compare();
     }

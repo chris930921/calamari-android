@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.layout.dialog.fixed;
+package com.cephmonitor.cephmonitor.layout.dialog.reuse;
 
 import android.content.Context;
 

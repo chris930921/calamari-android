@@ -65,7 +65,6 @@ public class UsagePercentageCalculator extends OriginCalculator {
                 }
                 partPercentage = (float) value / 100F;
                 fieldValue.setText(String.valueOf(value));
-                part = (long) (total * partPercentage);
                 updatePartValue();
             }
         };
@@ -92,9 +91,9 @@ public class UsagePercentageCalculator extends OriginCalculator {
         this.minPercentage = minPercentage;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
-        totalValue.setText(String.valueOf(total));
+        totalValue.setText(ByteUnit.change(total));
         updatePartValue();
     }
 
@@ -104,7 +103,7 @@ public class UsagePercentageCalculator extends OriginCalculator {
     }
 
     private void updatePartValue() {
-        part = (long) (total * maxPercentage);
+        part = (long) (total * partPercentage);
         partValue.setText(ByteUnit.change(part));
     }
 }

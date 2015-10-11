@@ -16,6 +16,7 @@ import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.ChartLine
 import com.cephmonitor.cephmonitor.layout.component.chart.mutiple.line.adapter.LineAdapter;
 import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.fragment.HealthLayout;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.TimeUnit;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HealthFragment extends Fragment {
+    private SettingStorage settingStorage;
     private HealthLayout layout;
     private LoginParams requestParams;
     private ClusterV1HealthData healthData;
@@ -76,6 +78,9 @@ public class HealthFragment extends Fragment {
     public int pgCardTotalCount;
     public int pgCardWorkingCount;
     public int pgCardDirtyCount;
+
+    private long usageSpace;
+    private long totalSpace;
 
     private LoadingDialog loadingDialog;
 
@@ -120,6 +125,7 @@ public class HealthFragment extends Fragment {
     }
 
     private void init() {
+        settingStorage = new SettingStorage(getActivity());
         loadingDialog = new LoadingDialog(getActivity());
 
         currentUpdateId = 0;
@@ -441,15 +447,13 @@ public class HealthFragment extends Fragment {
     }
 
     private AnalyzeListener<String> successStoreSpace = new AnalyzeListener<String>() {
-        private long rightValue;
-        private long leftValue;
 
         @Override
         public boolean doInBackground(String s) {
             try {
                 ClusterV1Space data = new ClusterV1Space(s);
-                rightValue = data.getCapacityBytes();
-                leftValue = data.getUsedBytes();
+                totalSpace = data.getCapacityBytes();
+                usageSpace = data.getUsedBytes();
                 return true;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -459,7 +463,7 @@ public class HealthFragment extends Fragment {
 
         @Override
         public void onPostExecute() {
-            layout.usageCard.setLongValue(leftValue, rightValue);
+            layout.usageCard.setLongValue(usageSpace, totalSpace);
             layout.removeCallbacks(updateViewTask);
             layout.post(updateViewTask);
         }
@@ -542,6 +546,11 @@ public class HealthFragment extends Fragment {
             layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
             String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
             layout.pgStatusCard.setCenterValueText(pgStatus);
+
+            settingStorage.setAlertTriggerOsdTotal(oadCardTotalCount);
+            settingStorage.setAlertTriggerMonTotal(monCardTotalCount);
+            settingStorage.setAlertTriggerPgTotal(pgCardTotalCount);
+            settingStorage.setAlertTriggerUsageTotal(totalSpace);
         }
     };
 }

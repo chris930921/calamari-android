@@ -97,7 +97,7 @@ public class CountPercentageCalculator extends OriginCalculator {
         this.minPercentage = minPercentage;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
         totalValue.setText(String.valueOf(total));
         part = (long) (total * maxPercentage);
