@@ -32,7 +32,6 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
     public Activity activity;
     private LoginParams params;
     private LoadingDialog loadingDialog;
-    private MessageDialog dialog;
     private SettingStorage settingStorage;
     private LoginLanguageDialog loginLanguageDialog;
     private LanguageConfig languageConfig;
@@ -51,10 +50,8 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         activity = this;
         params = new LoginParams(this);
         loadingDialog = new LoadingDialog(this);
-        dialog = new MessageDialog(activity);
 
         loginLanguageDialog = new LoginLanguageDialog(this);
-
 
         ServiceLauncher.startLooperService(this);
         if (loginInfo.isLogin()) {
@@ -80,10 +77,10 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
     protected void onResume() {
         super.onResume();
 
-        emptyChecker.put(getResources().getString(R.string.login_host), layout.host, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_port), layout.port, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_name), layout.name, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_password), layout.password, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_host), layout.host, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_port), layout.port, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_name), layout.name, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_password), layout.password, noValueInputAction);
 
         layout.host.setText(loginInfo.getHost());
         layout.port.setText(loginInfo.getPort());
@@ -109,7 +106,8 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
                 if (noValueField.size() == 0) {
                     requestLoginPost();
                 } else {
-                    showNoValueDialog(noValueField.get(0));
+                    int resourceId = Integer.parseInt(noValueField.get(0));
+                    showNoValueDialog(resourceId);
                 }
             }
         };
@@ -158,6 +156,7 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
     };
 
     private void showLoginErrorDialog() {
+        MessageDialog dialog = new MessageDialog(activity);
         dialog.setOnConfirmClickListener(null);
         String title = getResources().getString(R.string.login_fail_title);
         String content = getResources().getString(R.string.login_fail_sing_in);
@@ -165,10 +164,11 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         dialog.show(title, content, confirm);
     }
 
-    private void showNoValueDialog(String noValueInputName) {
+    private void showNoValueDialog(int noValueInputNameResource) {
+        MessageDialog dialog = new MessageDialog(activity);
         dialog.setOnConfirmClickListener(clickNoValueConfirm);
         String title = getResources().getString(R.string.login_fail_title);
-        String content = noValueInputName + getResources().getString(R.string.login_fail_content);
+        String content = getString(noValueInputNameResource) + getResources().getString(R.string.login_fail_content);
         String confirm = getResources().getString(R.string.login_fail_confirm);
         dialog.show(title, content, confirm);
     }

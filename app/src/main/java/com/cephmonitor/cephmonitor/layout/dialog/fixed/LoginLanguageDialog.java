@@ -49,7 +49,6 @@ public class LoginLanguageDialog extends SettingDialog {
         dateContainer.addView(fillView());
         dateContainer.addView(japanese);
 
-        setTitle(getContext().getString(R.string.settings_profile_formats));
         addContentView(dateContainer);
         addButton(R.string.settings_dialog_cancel, ColorTable._666666, new OnClickListener() {
             @Override
@@ -61,7 +60,6 @@ public class LoginLanguageDialog extends SettingDialog {
         intermediary.refreshViewManager.addTask(new Runnable() {
             @Override
             public void run() {
-                setTitle(getContext().getString(R.string.settings_profile_formats));
                 english.setName(getContext().getString(R.string.settings_language_dialog_option_english));
                 chinese.setName(getContext().getString(R.string.settings_language_dialog_option_chinese));
                 japanese.setName(getContext().getString(R.string.settings_language_dialog_option_japanese));
@@ -142,6 +140,7 @@ public class LoginLanguageDialog extends SettingDialog {
         english.filedValue.setState(english.getTag() == selectedId);
         chinese.filedValue.setState(chinese.getTag() == selectedId);
         japanese.filedValue.setState(japanese.getTag() == selectedId);
+        setTitle(getContext().getString(R.string.settings_profile_language));
         super.show();
     }
 

@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.listitem.fixed;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -67,6 +68,7 @@ public class LoginLanguageChoiceItem extends RelativeLayout {
                 ruler.getW(designSpec.getIconSize().getBody())
         );
         params.addRule(CENTER_VERTICAL);
+        params.addRule(CENTER_VERTICAL);
         params.addRule(ALIGN_PARENT_RIGHT);
 
         CircleRadioButton v = new CircleRadioButton(getContext());
@@ -74,6 +76,7 @@ public class LoginLanguageChoiceItem extends RelativeLayout {
         v.setLayoutParams(params);
         v.setCircleColor(ColorTable._D9D9D9, designSpec.getPrimaryColors().getPrimary());
         v.setCircleStyle(3, 0.7F);
+        v.setClickable(false);
 
         return v;
     }
@@ -104,4 +107,8 @@ public class LoginLanguageChoiceItem extends RelativeLayout {
         flag.setImageResource(SettingConstant.getLanguageFlag(id));
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return true;
+    }
 }

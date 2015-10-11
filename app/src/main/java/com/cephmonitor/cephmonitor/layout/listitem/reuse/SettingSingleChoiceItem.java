@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.layout.listitem.reuse;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -78,5 +79,8 @@ public class SettingSingleChoiceItem extends RelativeLayout {
         filedName.setText(content);
     }
 
-
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return true;
+    }
 }
