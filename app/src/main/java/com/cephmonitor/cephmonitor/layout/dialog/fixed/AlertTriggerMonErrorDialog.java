@@ -17,10 +17,13 @@ public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
         super(context);
         storage = new SettingStorage(getContext());
 
+        long maxHalf = ((long) Math.floor(storage.getAlertTriggerMonTotal())) / 2;
+        long max = maxHalf + ((maxHalf == 0) ? 1 : 0);
         setTitle(getContext().getString(R.string.settings_alert_triggers_monitor_error_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_mon));
-        getCalculator().setMax((int) Math.floor(storage.getAlertTriggerMonTotal() / 2));
+        getCalculator().setMax(max);
         getCalculator().setMin(1);
+        getCalculator().setResultValue(storage.getAlertTriggerMonError());
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +31,5 @@ public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
                 storage.setAlertTriggerMonError(value);
             }
         });
-        getCalculator().clear();
     }
 }

@@ -305,12 +305,12 @@
 	<string name="other_time_unit_just_now">JUST NOW</string>
 	<string name="other_time_unit_multiple">s</string>
 
-	<string name="other_calculater_unit_osd">OSD</string>
-	<string name="other_calculater_unit_mon">MON</string>
+	<string name="other_calculater_unit_osd">\u0020OSD</string>
+	<string name="other_calculater_unit_mon">\u0020MON</string>
 	<string name="other_calculater_unit_pg">%</string>
 	<string name="other_calculater_unit_usage">%</string>
-	<string name="other_calculater_condition_max">MAX</string>
-	<string name="other_calculater_condition_min">MIN</string>
+	<string name="other_calculater_condition_max">MAX\u0020</string>
+	<string name="other_calculater_condition_min">MIN\u0020</string>
 	<string name="other_calculater_condition_pgs">PGs</string>
 	<string name="other_calculater_number_one">1</string>
 	<string name="other_calculater_number_two">2</string>

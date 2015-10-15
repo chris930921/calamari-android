@@ -75,7 +75,7 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
 
     private ClickAbleTabButton leftButton() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getW(10));
         params.weight = 1;
 
         ClickAbleTabButton v = new ClickAbleTabButton(context);
@@ -94,13 +94,15 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
 
     private ClickAbleTabImage centerButton() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getW(10));
         params.weight = 1;
 
         ClickAbleTabImage v = new ClickAbleTabImage(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
+        v.setImageViewSize(
+                ruler.getW(designSpec.getIconSize().getDefaultButton()),
+                ruler.getW(designSpec.getIconSize().getDefaultButton()));
         v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
         v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
         v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());
@@ -113,13 +115,15 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
 
     private ClickAbleTabImage rightButton() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getW(10));
         params.weight = 1;
 
         ClickAbleTabImage v = new ClickAbleTabImage(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
+        v.setImageViewSize(
+                ruler.getW(designSpec.getIconSize().getDefaultButton()),
+                ruler.getW(designSpec.getIconSize().getDefaultButton()));
         v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
         v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
         v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());

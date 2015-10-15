@@ -21,15 +21,14 @@ public class AlertTriggerPgErrorDialog extends AlertTriggerCountPercentageDialog
         setTitle(getContext().getString(R.string.settings_alert_triggers_pg_error_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_pg));
         getCalculator().setTotal(storage.getAlertTriggerPgTotal());
-        getCalculator().setPartPercentage(storage.getAlertTriggerPgError());
         getCalculator().setMaxPercentage(0.8F);
         getCalculator().setMinPercentage(0.2F);
+        getCalculator().setPartPercentage(storage.getAlertTriggerPgError());
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 storage.setAlertTriggerPgError(getCalculator().getResultValue());
             }
         });
-        getCalculator().clear();
     }
 }

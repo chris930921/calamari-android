@@ -21,7 +21,7 @@ public class CalculatorLayout extends RelativeLayout {
     private WH ruler;
     private DesignSpec designSpec;
     private TextViewStyle styleBodyTwo;
-    private TextViewStyle styleDefaultButton;
+    private TextViewStyle styleLargeButton;
     private TextViewStyle styleNote;
 
     public RelativeLayout fieldResult;
@@ -54,7 +54,7 @@ public class CalculatorLayout extends RelativeLayout {
         ruler = new WH(getContext());
         designSpec = ThemeManager.getStyle(getContext());
         styleBodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
-        styleDefaultButton = new TextViewStyle(designSpec.getStyle().getDefaultButton());
+        styleLargeButton = new TextViewStyle(designSpec.getStyle().getLargeButton());
         styleNote = new TextViewStyle(designSpec.getStyle().getNote());
 
         setPadding(
@@ -317,6 +317,7 @@ public class CalculatorLayout extends RelativeLayout {
         v.setGravity(Gravity.CENTER);
         v.setText(resourceText);
         v.setTag(number);
+        styleLargeButton.style(v);
 
         return v;
     }
