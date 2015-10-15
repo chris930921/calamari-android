@@ -14,6 +14,7 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.SettingConstant;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -29,11 +30,13 @@ public class LoginLanguageDialog extends SettingDialog {
     private LoginLanguageChoiceItem japanese;
     private int selectedId;
     private LoginLanguageChoiceItem current;
+    private RefreshViewManager.Interface intermediary;
 
     public LoginLanguageDialog(Context context) {
         super(context);
         this.ruler = new WH(getContext());
         this.designSpec = ThemeManager.getStyle(getContext());
+        intermediary = (RefreshViewManager.Interface) context;
 
         dateContainer = dateContainer();
         english = english();
@@ -46,12 +49,20 @@ public class LoginLanguageDialog extends SettingDialog {
         dateContainer.addView(fillView());
         dateContainer.addView(japanese);
 
-        setTitle(getContext().getString(R.string.settings_profile_formats));
         addContentView(dateContainer);
-        addButton(getContext().getString(R.string.settings_dialog_cancel), ColorTable._666666, new OnClickListener() {
+        addButton(R.string.settings_dialog_cancel, ColorTable._666666, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
+            }
+        });
+        RefreshViewManager.Interface intermediary = (RefreshViewManager.Interface) context;
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                english.setName(getContext().getString(R.string.settings_language_dialog_option_english));
+                chinese.setName(getContext().getString(R.string.settings_language_dialog_option_chinese));
+                japanese.setName(getContext().getString(R.string.settings_language_dialog_option_japanese));
             }
         });
     }
@@ -83,16 +94,16 @@ public class LoginLanguageDialog extends SettingDialog {
     }
 
     private LoginLanguageChoiceItem english() {
-        LoginLanguageChoiceItem v = getChoiceItem(SettingConstant.LANGUAGE_ENGLISH, R.string.settings_language_dialog_english);
+        LoginLanguageChoiceItem v = getChoiceItem(SettingConstant.LANGUAGE_ENGLISH, R.string.settings_language_dialog_option_english);
         return v;
     }
 
     private LoginLanguageChoiceItem chinese() {
-        return getChoiceItem(SettingConstant.LANGUAGE_CHINESE, R.string.settings_language_dialog_chinese);
+        return getChoiceItem(SettingConstant.LANGUAGE_CHINESE, R.string.settings_language_dialog_option_chinese);
     }
 
     private LoginLanguageChoiceItem japanese() {
-        return getChoiceItem(SettingConstant.LANGUAGE_JAPANESE, R.string.settings_language_dialog_japanese);
+        return getChoiceItem(SettingConstant.LANGUAGE_JAPANESE, R.string.settings_language_dialog_option_japanese);
     }
 
     private LoginLanguageChoiceItem getChoiceItem(final int id, int resource) {
@@ -115,7 +126,7 @@ public class LoginLanguageDialog extends SettingDialog {
                 japanese.filedValue.setState(false);
                 current = (LoginLanguageChoiceItem) view;
                 current.filedValue.setState(true);
-                selectedId = (int)current.getTag();
+                selectedId = (int) current.getTag();
             }
         });
 
@@ -129,6 +140,7 @@ public class LoginLanguageDialog extends SettingDialog {
         english.filedValue.setState(english.getTag() == selectedId);
         chinese.filedValue.setState(chinese.getTag() == selectedId);
         japanese.filedValue.setState(japanese.getTag() == selectedId);
+        setTitle(getContext().getString(R.string.settings_profile_language));
         super.show();
     }
 
@@ -137,11 +149,11 @@ public class LoginLanguageDialog extends SettingDialog {
     }
 
     public void setSaveClick(final OnClickListener event) {
-        addButton(getContext().getString(R.string.settings_dialog_save), designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
+        addButton(R.string.settings_dialog_save, designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
-                if(current == null)
+                if (current == null)
                     return;
 
                 if (event != null) {

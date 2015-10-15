@@ -1,20 +1,23 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.button.ClickAbleTabButton;
+import com.cephmonitor.cephmonitor.layout.component.button.ClickAbleTabImage;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.cephmonitor.cephmonitor.layout.component.osdhealthboxes.OsdHealthBoxes;
 import com.cephmonitor.cephmonitor.layout.component.other.WorkFindView;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
-import com.resourcelibrary.model.view.button.RoundStrokeFillButton;
-import com.resourcelibrary.model.view.button.RoundStrokeFillImage;
 
 public class OSDHealthLayout extends FractionAbleRelativeLayout {
     private Context context;
@@ -26,88 +29,112 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
     public WorkFindView workFine;
 
     public OsdHealthBoxes boxesContainer;
-    public RoundStrokeFillButton leftButton;
-    public RoundStrokeFillImage centerButton;
-    public RoundStrokeFillImage rightButton;
+    public LinearLayout buttonContainer;
+    public ClickAbleTabButton leftButton;
+    public ClickAbleTabImage centerButton;
+    public ClickAbleTabImage rightButton;
+
+    public DesignSpec designSpec;
 
     public OSDHealthLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(getContext());
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         setId(RandomId.get());
         setLayoutParams(params);
 
-        addView(centerButton = centerButton());
-        addView(leftButton = leftButton(centerButton));
-        addView(rightButton = rightButton(centerButton));
-        addView(scrollContainer = scrollContainer(centerButton));
-        addView(workFineContainer = workFineContainer());
-
+        addView(buttonContainer = buttonContainer());
+        addView(scrollContainer = scrollContainer(buttonContainer));
+        addView(workFineContainer = workFineContainer(scrollContainer));
+        buttonContainer.addView(leftButton = leftButton());
+        buttonContainer.addView(centerButton = centerButton());
+        buttonContainer.addView(rightButton = rightButton());
         workFineContainer.addView(workFine = workFine());
 
         scrollContainer.addView(containerInnerScroll = containerInnerScroll());
         containerInnerScroll.addView(boxesContainer = boxesContainer());
     }
 
-    private RoundStrokeFillImage centerButton() {
-        LayoutParams params = new LayoutParams(ruler.getW(30), ruler.getH(7.5));
-        params.addRule(CENTER_HORIZONTAL);
-        params.setMargins(0, ruler.getW(5), 0, 0);
+    private LinearLayout buttonContainer() {
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(ALIGN_PARENT_BOTTOM);
 
-        RoundStrokeFillImage v = new RoundStrokeFillImage(context);
+        LinearLayout v = new LinearLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setImageResource(R.drawable.icon024);
-        v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
-        v.setFillColor(ColorTable._F3F3F3);
-        v.setStrokeColor(ColorTable._B7B7B7);
-        v.setClickColor(ColorTable._D9D9D9);
+        v.setOrientation(LinearLayout.HORIZONTAL);
+        v.setWeightSum(3);
 
         return v;
     }
 
-    private RoundStrokeFillButton leftButton(View rightView) {
-        LayoutParams params = new LayoutParams(ruler.getW(30), ruler.getH(7.5));
-        params.addRule(LEFT_OF, rightView.getId());
-        params.addRule(ALIGN_TOP, rightView.getId());
-        params.setMargins(ruler.getW(5), 0, -3, 0);
 
-        RoundStrokeFillButton v = new RoundStrokeFillButton(context);
+    private ClickAbleTabButton leftButton() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+        params.weight = 1;
+
+        ClickAbleTabButton v = new ClickAbleTabButton(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(R.string.osd_health_all);
-        v.setTextColor(ColorTable._666666);
-        v.setFillColor(ColorTable._F3F3F3);
-        v.setStrokeColor(ColorTable._B7B7B7);
-        v.setClickColor(ColorTable._D9D9D9);
+        v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
+        v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
+        v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());
+        v.setClickColor(designSpec.getPrimaryColors().getPrimary());
+        v.setOriginTextColor(ColorTable._999999);
+        v.recover();
 
         return v;
     }
 
-    private RoundStrokeFillImage rightButton(View leftView) {
-        LayoutParams params = new LayoutParams(ruler.getW(30), ruler.getH(7.5));
-        params.addRule(RIGHT_OF, leftView.getId());
-        params.addRule(ALIGN_TOP, leftView.getId());
-        params.setMargins(-3, 0, ruler.getW(5), 0);
+    private ClickAbleTabImage centerButton() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+        params.weight = 1;
 
-        RoundStrokeFillImage v = new RoundStrokeFillImage(context);
+        ClickAbleTabImage v = new ClickAbleTabImage(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setImageResource(R.drawable.icon025);
         v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
-        v.setFillColor(ColorTable._F3F3F3);
-        v.setStrokeColor(ColorTable._B7B7B7);
-        v.setClickColor(ColorTable._D9D9D9);
+        v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
+        v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
+        v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());
+        v.setClickColor(designSpec.getPrimaryColors().getPrimary(), R.drawable.icon043);
+        v.setOriginImageResource(R.drawable.icon024);
+        v.recover();
 
         return v;
     }
 
-    private ScrollView scrollContainer(View topView) {
+    private ClickAbleTabImage rightButton() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ruler.getH(7.5));
+        params.weight = 1;
+
+        ClickAbleTabImage v = new ClickAbleTabImage(context);
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setPadding(ruler.getW(10), ruler.getH(1.5), ruler.getW(10), ruler.getH(1.5));
+        v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
+        v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
+        v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());
+        v.setClickColor(designSpec.getPrimaryColors().getPrimary(), R.drawable.icon042);
+        v.setDividerLine(false);
+        v.setOriginImageResource(R.drawable.icon025);
+        v.recover();
+
+        return v;
+    }
+
+    private ScrollView scrollContainer(View bottomView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        params.addRule(BELOW, topView.getId());
+        params.addRule(ABOVE, bottomView.getId());
+        params.addRule(ALIGN_PARENT_TOP);
         params.setMargins(ruler.getW(5), ruler.getH(5), ruler.getW(5), ruler.getH(5));
 
         ScrollView v = new ScrollView(context);
@@ -126,8 +153,10 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
         return v;
     }
 
-    private RelativeLayout workFineContainer() {
+    private RelativeLayout workFineContainer(View backgroundView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.addRule(ALIGN_TOP, backgroundView.getId());
+        params.addRule(ALIGN_BOTTOM, backgroundView.getId());
 
         RelativeLayout v = new RelativeLayout(context);
         v.setLayoutParams(params);
@@ -170,9 +199,8 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
     }
 
     public void recoverButtons() {
-        int color = ColorTable._F3F3F3;
-        leftButton.setFillColor(color);
-        rightButton.setFillColor(color);
-        centerButton.setFillColor(color);
+        leftButton.recover();
+        rightButton.recover();
+        centerButton.recover();
     }
 }

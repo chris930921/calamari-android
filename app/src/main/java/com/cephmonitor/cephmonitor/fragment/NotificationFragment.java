@@ -119,7 +119,7 @@ public class NotificationFragment extends Fragment {
             recordedOperator.setValue(recorded);
             item.setMessage(recordedOperator.getLastMessageWithParam());
             item.setStatus(recorded.status);
-            item.setTime(recorded.triggered);
+            item.setTime(recordedOperator.getTimeWithStatus());
             item.setLevel(recorded.level);
             item.setTag(recorded);
             item.setOnClickListener(clickEvent);
@@ -144,13 +144,13 @@ public class NotificationFragment extends Fragment {
                 argGroup.putInt("5", recorded.otherParamsJson.getInt("description_title"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                argGroup.putInt("5", R.string.something_parse_error);
+                argGroup.putInt("5", R.string.other_empty);
             }
             try {
                 argGroup.putString("6", recorded.otherParamsJson.getString("description"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                argGroup.putString("6", getString(R.string.something_parse_error));
+                argGroup.putString("6", getString(R.string.other_empty));
             }
             FragmentLauncher.goNotificationDetailFragment(getActivity(), argGroup);
         }

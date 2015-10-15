@@ -5,16 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.cephmonitor.cephmonitor.model.database.table.RecordedTable;
+import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
 /**
  * Created by User on 6/8/2015.
  */
 public class StoreNotifications extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    public static final String DB_NAME = "CephMonitorSqlite_v3.db";
+    public static final String DB_NAME = "CephMonitorSqlite_v4_";
+    public static final String EXTENSION = ".db";
 
     public StoreNotifications(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DB_NAME + new LoginParams(context).getHost() + EXTENSION, null, DB_VERSION);
     }
 
     @Override

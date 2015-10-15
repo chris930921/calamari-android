@@ -57,7 +57,7 @@ public class CircleRadioButton extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        if (action == MotionEvent.ACTION_UP) {
+        if (action == MotionEvent.ACTION_UP && isClickable()) {
             radioState = !radioState;
             invalidate();
             return false;

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Ceph Monitor</string>
+
+	//LoginActivity
+	<string name="login_host">伺服器位址</string>
+	<string name="login_port">埠號</string>
+	<string name="login_name">使用者名稱</string>
+	<string name="login_password">密碼</string>
+	<string name="login_fail_title">登入失敗</string>
+	<string name="login_fail_content">\u0020不正確</string>
+	<string name="login_fail_confirm">確認</string>
+	<string name="login_fail_sing_in">無效的帳號或是密碼</string>
+	<string name="login_sign_in">登入</string>
+	<string name="login_version">Ceph Monitor Version\u0020</string>
+	<string name="login_from">由</string>
+	<string name="login_developer">公司設計開發</string>
+
+	//MainActivity
+	<string name="main_activity_option_logs">紀錄</string>
+	<string name="main_activity_option_setting">設定</string>
+	<string name="main_activity_option_logout">登出</string>
+
+	<string name="main_activity_fragment_health">儀表板</string>
+	<string name="main_activity_fragment_health_detail">健康詳細資訊</string>
+	<string name="main_activity_fragment_osd_health">OSD 健康</string>
+	<string name="main_activity_fragment_mon_health">監視器健康</string>
+	<string name="main_activity_fragment_notification">通知</string>
+	<string name="main_activity_fragment_notification_detail">通知詳細資訊</string>
+	<string name="main_activity_fragment_host_health">主機列表</string>
+	<string name="main_activity_fragment_pg_status">PG 狀態</string>
+	<string name="main_activity_fragment_usage_status">使用量狀態</string>
+	<string name="main_activity_fragment_pool_iops">集區 IOPS</string>
+	<string name="main_activity_fragment_pool_list">集區列表</string>
+
+	<string name="main_activity_fragment_tab_summary">總結</string>
+	<string name="main_activity_fragment_tab_all_cpus">整體 CPUs</string>
+	<string name="main_activity_fragment_tab_iops">IOPS</string>
+
+	//HealthFragment
+	<string name="health_card_status_ok">OK</string>
+	<string name="health_card_status_warning">警告</string>
+	<string name="health_card_status_error">錯誤</string>
+
+	<string name="health_card_health">健康</string>
+	<string name="health_card_ago">前</string>
+
+	<string name="health_card_osd">OSD</string>
+	<string name="health_card_in_and_up">In \u0026 Up</string>
+
+	<string name="health_card_mon">監視器</string>
+	<string name="health_card_quorum">Quorum</string>
+
+	<string name="health_card_pools">集區</string>
+	<string name="health_card_active">活躍</string>
+
+	<string name="health_card_hosts">主機</string>
+	<string name="health_card_reporting">報告</string>
+
+	<string name="health_card_pg">PG 狀態</string>
+	<string name="health_card_clean">乾淨</string>
+	<string name="health_card_Working">工作中</string>
+	<string name="health_card_Dirty">污染</string>
+
+	<string name="health_card_usage">使用量</string>
+	<string name="health_card_used">已使用</string>
+	<string name="health_card_available">可使用</string>
+
+	<string name="health_card_iops">IOPS</string>
+	<string name="health_card_read_write">- 讀取 + 寫入</string>
+
+	<string name="health_card_warnings">警告</string>
+	<string name="health_card_errors">錯誤</string>
+
+	//HealthDetailFragment
+	<string name="health_detail_great">沒有異常 !</string>
+	<string name="health_detail_work_fine">系統正常運作 !</string>
+
+	//RequestAndCheckService 舊版訊息
+	<string name="check_service_mon_count_error_title">錯誤！Monitor 損毀</string>
+	<string name="check_service_mon_count_error_content">有 %1$s 個 Monitor 損毀！</string>
+
+	<string name="check_service_mon_count_warn_title">警告！Monitor 異常</string>
+	<string name="check_service_mon_count_warn_content">有 %1$s 個 Monitor 異常！</string>
+
+	<string name="check_service_osd_count_error_title">錯誤！OSD 損毀</string>
+	<string name="check_service_osd_count_error_content">有 %1$s 個 OSD 損毀！</string>
+
+	<string name="check_service_osd_count_warn_title">警告！OSD 異常</string>
+	<string name="check_service_osd_count_warn_content">有 %1$s 個 OSD 異常！</string>
+
+	<string name="check_service_pg_count_error_title">錯誤！PG 損毀</string>
+	<string name="check_service_pg_count_error_content">有 %1$s 個 PG 損毀！</string>
+
+	<string name="check_service_pg_count_warn_title">警告！PG 異常</string>
+	<string name="check_service_pg_count_warn_content">有 %1$s 個 PG 異常！</string>
+
+	<string name="check_service_usage_percent_error_title">錯誤！使用量滿載</string>
+	<string name="check_service_usage_percent_error_content">使用量已達到上限！請擴充儲存空間。</string>
+
+	<string name="check_service_usage_percent_warn_title">警告！使用量即將滿載</string>
+	<string name="check_service_usage_percent_warn_content">使用量已達到 %1$s %%！建議擴充儲存空間。</string>
+
+	// 新版訊息
+
+	// RequestAndCheckService OSD Warning
+	<string name="check_service_013001_abnormal_title">儲存系統警告</string>
+	<string name="check_service_013001_abnormal_content_new">發生 OSD 異常！</string>
+	<string name="check_service_013001_abnormal_content_more">OSD 異常數增加！</string>
+	<string name="check_service_013001_abnormal_content_relapse">OSD 異常數增加！</string>
+	<string name="check_service_013001_normal_title">儲存系統資訊</string>
+	<string name="check_service_013001_normal_content_finish">OSD 修復完成！</string>
+
+	// RequestAndCheckService OSD Error
+	<string name="check_service_012001_abnormal_title">儲存系統錯誤</string>
+	<string name="check_service_012001_abnormal_content_new">發生 OSD 損毀！</string>
+	<string name="check_service_012001_abnormal_content_more">OSD 損毀數增加！</string>
+	<string name="check_service_012001_abnormal_content_relapse">OSD 損毀數增加！</string>
+	<string name="check_service_012001_normal_title">儲存系統資訊</string>
+	<string name="check_service_012001_normal_content_finish">OSD 修復完成！</string>
+
+	// RequestAndCheckService Monitor Warning
+	<string name="check_service_023001_abnormal_title">儲存系統警告</string>
+	<string name="check_service_023001_abnormal_content_new">發生 Monitor 異常！</string>
+	<string name="check_service_023001_abnormal_content_more">Monitor 異常數增加！</string>
+	<string name="check_service_023001_abnormal_content_relapse">Monitor 異常數增加！</string>
+	<string name="check_service_023001_normal_title">儲存系統警告</string>
+	<string name="check_service_023001_normal_content_finish">Monitor 修復完成！</string>
+
+	// RequestAndCheckService Monitor Error
+	<string name="check_service_022001_abnormal_title">儲存系統錯誤</string>
+	<string name="check_service_022001_abnormal_content_new">發生 Monitor 損毀！</string>
+	<string name="check_service_022001_abnormal_content_more">Monitor 損毀數增加！</string>
+	<string name="check_service_022001_abnormal_content_relapse">Monitor 損毀數增加！</string>
+	<string name="check_service_022001_normal_title">儲存系統警告</string>
+	<string name="check_service_022001_normal_content_finish">Monitor 修復完成！</string>
+
+	// RequestAndCheckService PG Warning
+	<string name="check_service_033001_abnormal_title">儲存系統警告</string>
+	<string name="check_service_033001_abnormal_content_new">PG 狀態更動！</string>
+	<string name="check_service_033001_abnormal_content_more">部分 PG 狀態更動！</string>
+	<string name="check_service_033001_abnormal_content_relapse">部分 PG 狀態更動！</string>
+	<string name="check_service_033001_normal_title">儲存系統資訊</string>
+	<string name="check_service_033001_normal_content_finish">PG 修復完成！</string>
+
+	// RequestAndCheckService PG Error
+	<string name="check_service_032001_abnormal_title">儲存系統錯誤</string>
+	<string name="check_service_032001_abnormal_content_new">PG 狀態異常！</string>
+	<string name="check_service_032001_abnormal_content_more">PG 異常數增加！</string>
+	<string name="check_service_032001_abnormal_content_relapse">PG 異常數增加！</string>
+	<string name="check_service_032001_normal_title">儲存系統資訊</string>
+	<string name="check_service_032001_normal_content_finish">PG 修復完成！</string>
+
+	// RequestAndCheckService Usage Warning
+	<string name="check_service_043001_abnormal_title">儲存系統警告</string>
+	<string name="check_service_043001_abnormal_content_new">使用量已超過 %1$s %%！建議擴充儲存空間！</string>
+	<string name="check_service_043001_normal_title">儲存系統資訊</string>
+	<string name="check_service_043001_normal_content_finish">已擴充儲存空間！</string>
+
+	// RequestAndCheckService Usage Error
+	<string name="check_service_042001_abnormal_title">儲存系統錯誤</string>
+	<string name="check_service_042001_abnormal_content_new">使用量已達上限！請立即擴充儲存空間！</string>
+	<string name="check_service_042001_normal_title">儲存系統資訊</string>
+	<string name="check_service_042001_normal_content_finish">已擴充儲存空間！</string>
+
+	//OsdHealthFragment
+	<string name="osd_health_all">全部</string>
+	<string name="osd_health_great">沒有異常 !</string>
+	<string name="osd_health_work_fine">OSD 全部正常運作 !</string>
+
+	//OsdDetailFragment
+	<string name="osd_detail_host_name">主機名稱</string>
+	<string name="osd_detail_public_ip">公共 IP</string>
+	<string name="osd_detail_cluster_ip">叢集 IP</string>
+	<string name="osd_detail_pools">集區</string>
+	<string name="osd_detail_re_weight">Reweight</string>
+	<string name="osd_detail_uuid">UUID</string>
+
+	//NotificationFragment
+	<string name="notification_work_find_line_one">現在沒有任何通知!</string>
+	<string name="notification_work_find_line_two"></string>
+	<string name="notification_detail_triggered_title">觸發時間</string>
+	<string name="notification_detail_resolved_title">解決時間</string>
+	<string name="notification_detail_error">錯誤</string>
+	<string name="notification_detail_error_ratio">錯誤比率</string>
+	<string name="notification_detail_usage">使用量</string>
+
+	//UsageStatusFragment
+	<string name="usage_status_disk_usage_statistics">硬碟使用量統計</string>
+	<string name="usage_status_disk_usage_available">-可用量</string>
+	<string name="usage_status_disk_usage_used">-使用量</string>
+
+	//PoolIopsFragment
+	<string name="pool_iops_read">-讀取</string>
+	<string name="pool_iops_write">-寫入</string>
+
+	//HostHealthFragment
+	<string name="host_health_osd">OSD</string>
+
+	//PgStatusFragment
+	<string name="pg_status_down">下降</string>
+	<string name="pg_status_degraded">降級</string>
+	<string name="pg_status_clean">乾淨</string>
+	<string name="pg_status_osd">OSD</string>
+
+	//PoolListFragment
+	<string name="pool_list_id_ahead"># </string>
+	<string name="pool_list_id_replicas">副本</string>
+	<string name="pool_list_id_pgs">PGs</string>
+
+	//HostDetailSummaryFragment
+	<string name="host_detail_title_cpu_summary">CPU 總結</string>
+	<string name="host_detail_title_load_average">平均負載</string>
+	<string name="host_detail_title_memory">記憶體</string>
+	<string name="host_detail_summary_system">- 系統\u0020</string>
+	<string name="host_detail_summary_user">- 使用者\u0020</string>
+	<string name="host_detail_summary_Idle">- 閒置\u0020</string>
+	<string name="host_detail_summary_one_min">- 1 分\u0020</string>
+	<string name="host_detail_summary_five_min">- 5 分\u0020</string>
+	<string name="host_detail_summary_fifteen_min">- 15 分\u0020</string>
+	<string name="host_detail_summary_active">- 活躍\u0020</string>
+	<string name="host_detail_summary_buffers">- 緩衝\u0020</string>
+	<string name="host_detail_summary_free">- 釋放\u0020</string>
+	<string name="host_detail_summary_cached">- 暫存\u0020</string>
+
+	//HostDetailAllCPUsFragment
+	<string name="host_detail_all_cpus_title_cpu_detail">\u0020CPU 詳細資訊</string>
+	<string name="host_detail_all_cpus_system">- 系統\u0020</string>
+	<string name="host_detail_all_cpus_user">- 使用者\u0020</string>
+	<string name="host_detail_all_cpus_nice">- 優先權\u0020</string>
+	<string name="host_detail_all_cpus_idle">- 閒置\u0020</string>
+	<string name="host_detail_all_cpus_io_wait">- IOWait\u0020</string>
+	<string name="host_detail_all_cpus_irq">- IRQ\u0020</string>
+	<string name="host_detail_all_cpus_soft_irq">- 軟體 IRQ\u0020</string>
+	<string name="host_detail_all_cpus_steal">- Steal\u0020</string>
+
+	//HostDetailIopsFragment
+	<string name="host_detail_iops">- IOPS\u0020</string>
+
+	//SettingsFragment
+	<string name="settings_profile">個人設定</string>
+	<string name="settings_profile_language">語言</string>
+	<string name="settings_profile_formats">日期格式</string>
+	<string name="settings_alert">通知</string>
+	<string name="settings_about">關於</string>
+	<string name="settings_about_version">版本號</string>
+	<string name="settings_dialog_cancel">取消</string>
+	<string name="settings_dialog_ok">確定</string>
+	<string name="settings_dialog_save">儲存</string>
+	<string name="settings_language_dialog_description">請回到登入畫面以便切換語系，是否現在登出？</string>
+	<string name="settings_language_dialog_option_english">English</string>
+	<string name="settings_language_dialog_option_chinese">繁體中文</string>
+	<string name="settings_language_dialog_option_japanese">日本語</string>
+	<string name="settings_date_format_dialog_year_month_day">2015/12/31</string>
+	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
+	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
+	<string name="settings_alert_notifications_title">Notifications</string>
+	<string name="settings_alert_notifications_description">Trigger alarts when storage system comes new warnings</string>
+	<string name="settings_alert_email_notifications_title">Email Notifications</string>
+	<string name="settings_alert_email_notifications_description">Notification will be sent to</string>
+	<string name="settings_alert_auto_delete_title">Auto Delete</string>
+	<string name="settings_alert_auto_delete_description">Delete alerts automatically when alerts were resolved</string>
+	<string name="settings_alert_time_period_title">Time Period</string>
+	<string name="settings_alert_time_period_description">Set a time frame to monitor and receive alerts</string>
+	<string name="settings_alert_alert_triggers_title">Alert Triggers</string>
+	<string name="settings_alert_alert_triggers_description">Setup different alert mechanisms based on various scenarios</string>
+	<string name="settings_alert_triggers_osd">OSD</string>
+	<string name="settings_alert_triggers_osd_warning">Warnings</string>
+	<string name="settings_alert_triggers_osd_warning_description">Trigger alert when %1$s OSD is in abnormal status</string>
+	<string name="settings_alert_triggers_osd_warning_dialog_title">OSD Warnings</string>
+	<string name="settings_alert_triggers_osd_error">Errors</string>
+	<string name="settings_alert_triggers_osd_error_description">Trigger alert when %1$s OSD is in severely status</string>
+	<string name="settings_alert_triggers_osd_error_dialog_title">OSD Errors</string>
+	<string name="settings_alert_triggers_monitor">Monitor</string>
+	<string name="settings_alert_triggers_monitor_warning">Warnings</string>
+	<string name="settings_alert_triggers_monitor_warning_description">Trigger alert when %1$s monitor is in abnormal status</string>
+	<string name="settings_alert_triggers_monitor_warning_dialog_title">Monitor Warnings</string>
+	<string name="settings_alert_triggers_monitor_error">Errors</string>
+	<string name="settings_alert_triggers_monitor_error_description">Trigger alert when %1$s monitor is in severely status</string>
+	<string name="settings_alert_triggers_monitor_error_dialog_title">Monitor Errors</string>
+	<string name="settings_alert_triggers_pg">Placement Group</string>
+	<string name="settings_alert_triggers_pg_warning">Warnings</string>
+	<string name="settings_alert_triggers_pg_warning_description">Trigger alert when %1$s %% PGs are modified by Ceph</string>
+	<string name="settings_alert_triggers_pg_warning_dialog_title">PG Warnings</string>
+	<string name="settings_alert_triggers_pg_error">Errors</string>
+	<string name="settings_alert_triggers_pg_error_description">Trigger alert when %1$s %% PGs stuck in abnormal states</string>
+	<string name="settings_alert_triggers_pg_error_dialog_title">PG Errors</string>
+	<string name="settings_alert_triggers_usage">Usage</string>
+	<string name="settings_alert_triggers_usage_warning">Warnings</string>
+	<string name="settings_alert_triggers_usage_warning_description">Trigger alert when usage exceeds %1$s %%</string>
+	<string name="settings_alert_triggers_usage_warning_dialog_title">Usage Warnings</string>
+	<string name="settings_alert_triggers_usage_error">Errors</string>
+	<string name="settings_alert_triggers_usage_error_description">Trigger alert when usage exceeds %1$s %%</string>
+	<string name="settings_alert_triggers_usage_error_dialog_title">Usage Errors</string>
+
+	//Other
+	<string name="other_empty"></string>
+	<string name="other_time_unit_year">年</string>
+	<string name="other_time_unit_month">月</string>
+	<string name="other_time_unit_day">天</string>
+	<string name="other_time_unit_hour">小時</string>
+	<string name="other_time_unit_min">分鐘</string>
+	<string name="other_time_unit_second">秒</string>
+	<string name="other_time_unit_just_now">剛剛</string>
+	<string name="other_time_unit_multiple"></string>
+
+	<string name="other_calculater_unit_osd">OSD</string>
+	<string name="other_calculater_unit_mon">MON</string>
+	<string name="other_calculater_unit_pg">%</string>
+	<string name="other_calculater_unit_usage">%</string>
+	<string name="other_calculater_condition_max">MAX</string>
+	<string name="other_calculater_condition_min">MIN</string>
+	<string name="other_calculater_condition_pgs">PGs</string>
+	<string name="other_calculater_number_one">1</string>
+	<string name="other_calculater_number_two">2</string>
+	<string name="other_calculater_number_three">3</string>
+	<string name="other_calculater_number_four">4</string>
+	<string name="other_calculater_number_five">5</string>
+	<string name="other_calculater_number_six">6</string>
+	<string name="other_calculater_number_seven">7</string>
+	<string name="other_calculater_number_eight">8</string>
+	<string name="other_calculater_number_nine">9</string>
+	<string name="other_calculater_number_zero">0</string>
+	<string name="other_calculater_button_clear">Clear</string>
+</resources>

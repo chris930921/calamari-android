@@ -33,6 +33,7 @@ public class PgStrategy {
     public int abnormalTitleId;
     public int normalTitleId;
     public int waringType;
+    public float limitValue;
 
     public int recordedId;
 
@@ -41,7 +42,7 @@ public class PgStrategy {
                           int monitorType, int level, int monitorNumber,
                           int createMessageId, int moreMessageId, int relapseMessageId, int finishMessageId,
                           int abnormalTitleId, int normalTitleId,
-                          int waringType) {
+                          int waringType,float limitValue) {
         this.context = context;
         this.checkResult = checkResult;
         this.compareValue = compareValue;
@@ -57,6 +58,7 @@ public class PgStrategy {
         this.abnormalTitleId = abnormalTitleId;
         this.normalTitleId = normalTitleId;
         this.waringType = waringType;
+        this.limitValue = limitValue;
     }
 
     public void compare() {
@@ -69,7 +71,7 @@ public class PgStrategy {
         findPending.monitorNumber = monitorNumber;
         findPending.load(database);
 
-        if (!findPending.isExist && compareValue > 0.2) {
+        if (!findPending.isExist && compareValue > limitValue) {
             RecordedData recorded = new RecordedData();
             recorded.count = compareValue;
             recorded.level = level;
@@ -110,7 +112,7 @@ public class PgStrategy {
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0.2;
+        check &= compareValue > limitValue;
         if (check) {
             recorded.count = compareValue;
             recorded.previousCount = compareValue;
@@ -126,7 +128,7 @@ public class PgStrategy {
         check = true;
         check &= compareValue > recorded.previousCount;
         check &= compareValue >= recorded.originalCount;
-        check &= compareValue > 0.2;
+        check &= compareValue > limitValue;
         check &= recorded.originalCount > 0;
         if (check) {
             recorded.count = recorded.count + compareValue - recorded.previousCount;
@@ -147,7 +149,7 @@ public class PgStrategy {
         check = true;
         check &= compareValue > recorded.previousCount;
         check &= compareValue <= recorded.originalCount;
-        check &= compareValue > 0.2;
+        check &= compareValue > limitValue;
         if (check) {
             recorded.count = recorded.count + compareValue - recorded.previousCount;
             recorded.triggered = Calendar.getInstance();
@@ -166,7 +168,7 @@ public class PgStrategy {
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue < recorded.originalCount;
-        check &= compareValue < 0.2;
+        check &= compareValue < limitValue;
         if (check) {
             recorded.status = CephNotificationConstant.STATUS_RESOLVED;
             recorded.resolved = Calendar.getInstance();

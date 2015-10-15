@@ -9,6 +9,7 @@ import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
 import com.cephmonitor.cephmonitor.model.database.data.FindPendingData;
 import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
 import com.cephmonitor.cephmonitor.model.database.operator.RecordedOperator;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.CheckResult;
 import com.resourcelibrary.model.log.ShowLog;
 
@@ -18,9 +19,10 @@ import java.util.Calendar;
  * Created by User on 2015/9/2.
  */
 public class IncrementStrategy {
+    private SettingStorage settingStorage;
     public Context context;
     public CheckResult checkResult;
-    public int compareValue;
+    public long compareValue;
     public int monitorType;
     public int level;
     public int monitorNumber;
@@ -34,10 +36,11 @@ public class IncrementStrategy {
 
     public int recordedId;
 
-    public void setParams(Context context, CheckResult checkResult, int compareValue, int monitorType, int level, int monitorNumber,
+    public void setParams(Context context, CheckResult checkResult, long compareValue, int monitorType, int level, int monitorNumber,
                           int createMessageId, int moreMessageId, int relapseMessageId, int finishMessageId,
                           int abnormalTitleId, int normalTitleId,
                           int waringType) {
+        this.settingStorage = new SettingStorage(context);
         this.context = context;
         this.checkResult = checkResult;
         this.compareValue = compareValue;
@@ -63,7 +66,7 @@ public class IncrementStrategy {
         findPending.monitorNumber = monitorNumber;
         findPending.load(database);
 
-        if (!findPending.isExist && compareValue != 0) {
+        if (!findPending.isExist && compareValue > 0) {
             RecordedData recorded = new RecordedData();
             recorded.count = compareValue;
             recorded.level = level;
@@ -159,7 +162,7 @@ public class IncrementStrategy {
         check = true;
         check &= compareValue < recorded.previousCount;
         check &= compareValue < recorded.originalCount;
-        check &= compareValue == 0;
+        check &= compareValue <= 0;
         if (check) {
             recorded.status = CephNotificationConstant.STATUS_RESOLVED;
             recorded.resolved = Calendar.getInstance();
@@ -168,7 +171,13 @@ public class IncrementStrategy {
             recorded.lastMessageId = finishMessageId;
             recorded.lastTitleId = normalTitleId;
             updateOtherParams(recorded);
-            recorded.save(database);
+            if (settingStorage.getAutoDelete()) {
+                ShowLog.d("監控訊息: 自動刪除開啟中，刪除資訊。");
+                recorded.remove(database);
+            } else {
+                ShowLog.d("監控訊息: 自動刪除關閉中，保存資訊。");
+                recorded.save(database);
+            }
             ShowLog.d("監控訊息: 全部修復完成。");
             checkResult.isSendNotification = true;
             checkResult.isCheckError = false;
@@ -185,6 +194,6 @@ public class IncrementStrategy {
         RecordedOperator recordedOperator = new RecordedOperator(context);
         recordedOperator.setValue(recorded);
         recordedOperator.addOtherParam("description_title", R.string.notification_detail_error);
-        recordedOperator.addOtherParam("description", String.valueOf((int)recorded.count));
+        recordedOperator.addOtherParam("description", String.valueOf((int) recorded.count));
     }
 }

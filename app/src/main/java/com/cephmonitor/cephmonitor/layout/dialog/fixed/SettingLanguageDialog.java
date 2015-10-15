@@ -34,7 +34,7 @@ public class SettingLanguageDialog extends SettingDialog {
         description = description();
         setTitle(getContext().getString(R.string.settings_profile_language));
         addContentView(description);
-        addButton(getContext().getString(R.string.settings_dialog_cancel), ColorTable._666666, new OnClickListener() {
+        addButton(R.string.settings_dialog_cancel, ColorTable._666666, new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
@@ -64,7 +64,7 @@ public class SettingLanguageDialog extends SettingDialog {
 
 
     public void setOkClick(final OnClickListener event) {
-        addButton(getContext().getString(R.string.settings_dialog_ok), designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
+        addButton(R.string.settings_dialog_ok, designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();

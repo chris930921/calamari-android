@@ -248,4 +248,15 @@ public class FragmentLauncher {
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, SECOND_FRAGMENT_LAYER);
         }
     }
+
+    public static void goAlertTriggerFragment(Activity activity, Bundle arg) {
+        String fragmentName = AlertTriggersFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new AlertTriggersFragment();
+            page.setArguments(arg);
+            cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        }
+    }
 }

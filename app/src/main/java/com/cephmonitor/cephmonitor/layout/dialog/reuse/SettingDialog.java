@@ -19,6 +19,7 @@ import com.cephmonitor.cephmonitor.layout.component.container.TopRoundDialogCont
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -41,6 +42,7 @@ public class SettingDialog extends TopRoundDialogContainer {
     private TextViewStyle buttonStyle;
     private int dialogBackgroundColor;
     private int dialogWidth;
+    private RefreshViewManager.Interface intermediary;
 
     public SettingDialog(Context context) {
         super(context);
@@ -51,6 +53,7 @@ public class SettingDialog extends TopRoundDialogContainer {
         buttonStyle = new TextViewStyle(designSpec.getStyle().getDefaultButton());
         dialogBackgroundColor = designSpec.getPrimaryColors().getBackgroundThree();
         dialogWidth = ruler.getW(100) - ruler.getW(designSpec.getMargin().getLeftRightOne()) * 2;
+        intermediary = (RefreshViewManager.Interface) context;
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -91,7 +94,7 @@ public class SettingDialog extends TopRoundDialogContainer {
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
 
-        TextView v = new TextView(getContext());
+        final TextView v = new TextView(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -166,13 +169,13 @@ public class SettingDialog extends TopRoundDialogContainer {
         dialogContentContainer.addView(v);
     }
 
-    public void addButton(String name, int color, OnClickListener event) {
+    public TextView addButton(final int resourceId, int color, OnClickListener event) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
-        TextView v = new TextView(getContext());
+        final TextView v = new TextView(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setOnClickListener(event);
@@ -181,11 +184,19 @@ public class SettingDialog extends TopRoundDialogContainer {
                 0, ruler.getW(designSpec.getPadding().getTopBottomOne()),
                 0, ruler.getW(designSpec.getPadding().getTopBottomOne()));
         buttonStyle.style(v);
-        v.setText(name);
+        v.setText(resourceId);
         v.setTextColor(color);
 
         buttonContainer.addView(buttonFillView());
         buttonContainer.addView(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setText(resourceId);
+            }
+        });
+
+        return v;
     }
 
     public View buttonFillView() {

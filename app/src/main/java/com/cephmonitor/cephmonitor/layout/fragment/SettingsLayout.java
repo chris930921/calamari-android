@@ -17,6 +17,8 @@ import com.cephmonitor.cephmonitor.layout.dialog.fixed.SettingLanguageDialog;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingProfileItem;
 import com.cephmonitor.cephmonitor.layout.listitem.fixed.SettingTitleItem;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.DynamicRoundBorderItem;
+import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingCheckboxItem;
+import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingDescriptionItem;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -34,6 +36,11 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
     public SettingProfileItem languageItem;
     public SettingProfileItem dateFormatsItem;
     public SettingTitleItem alertTitle;
+    public SettingCheckboxItem notificationsItem;
+    public SettingCheckboxItem emailNotificationsItem;
+    public SettingCheckboxItem autoDeleteItem;
+    public SettingDescriptionItem timePeriod;
+    public SettingDescriptionItem alertTriggers;
     public SettingTitleItem aboutTitle;
     public SettingProfileItem versionItem;
     public SettingLanguageDialog languageDialog;
@@ -66,6 +73,11 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         languageItem = languageItem();
         dateFormatsItem = dateFormatsItem();
         alertTitle = alertTitle();
+        notificationsItem = notificationsItem();
+        emailNotificationsItem = emailNotificationsItem();
+        autoDeleteItem = autoDeleteItem();
+        timePeriod = timePeriod();
+        alertTriggers = alertTriggers();
         aboutTitle = aboutTitle();
         versionItem = versionItem();
 
@@ -73,6 +85,11 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         contentViewGroup.add(languageItem);
         contentViewGroup.add(dateFormatsItem);
         contentViewGroup.add(alertTitle);
+        contentViewGroup.add(notificationsItem);
+        contentViewGroup.add(emailNotificationsItem);
+        contentViewGroup.add(autoDeleteItem);
+        contentViewGroup.add(timePeriod);
+        contentViewGroup.add(alertTriggers);
         contentViewGroup.add(aboutTitle);
         contentViewGroup.add(versionItem);
 
@@ -169,6 +186,71 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         return v;
     }
 
+    protected SettingCheckboxItem notificationsItem() {
+        SettingCheckboxItem v = new SettingCheckboxItem(getContext());
+        v.setBorderStyle(DynamicRoundBorderItem.ITEM_STYLE_HEADER);
+        v.setTitle(getContext().getString(R.string.settings_alert_notifications_title));
+        v.setSubTitle(getContext().getString(R.string.settings_alert_notifications_description));
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        return v;
+    }
+
+    protected SettingCheckboxItem emailNotificationsItem() {
+        SettingCheckboxItem v = new SettingCheckboxItem(getContext());
+        v.setBorderStyle(DynamicRoundBorderItem.ITEM_STYLE_CENTER);
+        v.setTitle(getContext().getString(R.string.settings_alert_email_notifications_title));
+        v.setSubTitle(getContext().getString(R.string.settings_alert_email_notifications_description));
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        return v;
+    }
+
+    protected SettingCheckboxItem autoDeleteItem() {
+        SettingCheckboxItem v = new SettingCheckboxItem(getContext());
+        v.setBorderStyle(DynamicRoundBorderItem.ITEM_STYLE_CENTER);
+        v.setTitle(getContext().getString(R.string.settings_alert_auto_delete_title));
+        v.setSubTitle(getContext().getString(R.string.settings_alert_auto_delete_description));
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        return v;
+    }
+
+    protected SettingDescriptionItem timePeriod() {
+        SettingDescriptionItem v = getDescriptionItem(
+                R.string.settings_alert_time_period_title,
+                R.string.settings_alert_time_period_description,
+                DynamicRoundBorderItem.ITEM_STYLE_CENTER);
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        return v;
+    }
+
+    protected SettingDescriptionItem alertTriggers() {
+        SettingDescriptionItem v = getDescriptionItem(
+                R.string.settings_alert_alert_triggers_title,
+                R.string.settings_alert_alert_triggers_description,
+                DynamicRoundBorderItem.ITEM_STYLE_FOOTER);
+
+        return v;
+    }
+
     protected SettingTitleItem aboutTitle() {
         SettingTitleItem v = getTitle(R.string.settings_about);
         return v;
@@ -198,16 +280,11 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         return v;
     }
 
-    protected ListView getList() {
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT);
-
-        ListView v = new ListView(getContext());
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setDivider(new ColorDrawable(Color.TRANSPARENT));
-        v.setDividerHeight(0);
+    protected SettingDescriptionItem getDescriptionItem(int title, int subTitle, int borderStyle) {
+        SettingDescriptionItem v = new SettingDescriptionItem(getContext());
+        v.setBorderStyle(borderStyle);
+        v.setTitle(getContext().getString(title));
+        v.setSubTitle(getContext().getString(subTitle));
 
         return v;
     }

@@ -9,6 +9,7 @@ import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
 import com.cephmonitor.cephmonitor.model.database.data.FindPendingData;
 import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
 import com.cephmonitor.cephmonitor.model.database.operator.RecordedOperator;
+import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.CheckResult;
 import com.resourcelibrary.model.log.ShowLog;
 
@@ -18,6 +19,7 @@ import java.util.Calendar;
  * Created by User on 2015/9/2.
  */
 public class UsageWarningStrategy {
+    private SettingStorage settingStorage;
     public Context context;
     public CheckResult checkResult;
     public int compareValue;
@@ -40,6 +42,7 @@ public class UsageWarningStrategy {
                           int abnormalTitleId, int normalTitleId,
                           int waringType, int limit,
                           int max) {
+        this.settingStorage = new SettingStorage(context);
         this.context = context;
         this.checkResult = checkResult;
         this.compareValue = compareValue;
@@ -129,7 +132,13 @@ public class UsageWarningStrategy {
             recorded.previousCount = 0;
             recorded.lastMessageId = finishMessageId;
             recorded.lastTitleId = normalTitleId;
-            recorded.save(database);
+            if (settingStorage.getAutoDelete()) {
+                ShowLog.d("監控訊息: 自動刪除開啟中，刪除資訊。");
+                recorded.remove(database);
+            } else {
+                ShowLog.d("監控訊息: 自動刪除關閉中，保存資訊。");
+                recorded.save(database);
+            }
             ShowLog.d("監控訊息: 全部修復完成。");
             checkResult.isSendNotification = true;
             checkResult.isCheckError = false;

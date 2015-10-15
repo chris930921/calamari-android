@@ -2,11 +2,14 @@ package com.cephmonitor.cephmonitor.model.database.operator;
 
 import android.content.Context;
 
+import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.database.data.RecordedData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 /**
  * Created by User on 2015/9/2.
@@ -115,6 +118,14 @@ public class RecordedOperator {
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public Calendar getTimeWithStatus(){
+        if(data.status.equals(CephNotificationConstant.STATUS_PENDING)){
+            return data.triggered;
+        }else{
+            return data.resolved;
         }
     }
 }

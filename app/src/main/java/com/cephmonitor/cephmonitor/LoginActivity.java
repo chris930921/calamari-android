@@ -9,7 +9,9 @@ import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginLanguageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.logic.LanguageConfig;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
 import com.resourcelibrary.model.logic.emptycheck.OnNoValueAction;
@@ -23,29 +25,32 @@ import com.resourcelibrary.model.view.dialog.MessageDialog;
 import java.util.ArrayList;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements RefreshViewManager.Interface {
     public LoginLayout layout;
     public LoginParams loginInfo;
     public EmptyChecker emptyChecker;
     public Activity activity;
     private LoginParams params;
     private LoadingDialog loadingDialog;
-    private MessageDialog dialog;
     private SettingStorage settingStorage;
     private LoginLanguageDialog loginLanguageDialog;
+    private LanguageConfig languageConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingStorage = new SettingStorage(this);
+        languageConfig = new LanguageConfig(this);
+        languageConfig.setLocale(settingStorage.getLanguage());
         layout = new LoginLayout(this);
         setContentView(layout);
+
         loginInfo = new LoginParams(this);
         emptyChecker = new EmptyChecker();
         activity = this;
         params = new LoginParams(this);
         loadingDialog = new LoadingDialog(this);
-        dialog = new MessageDialog(activity);
-        settingStorage = new SettingStorage(this);
+
         loginLanguageDialog = new LoginLanguageDialog(this);
 
         ServiceLauncher.startLooperService(this);
@@ -60,7 +65,9 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 int id = loginLanguageDialog.getSelectedId();
                 settingStorage.setLanguage(id);
+                languageConfig.setLocale(id);
                 layout.language.setLanguage(id);
+                refreshViewManager.refresh();
             }
         });
 //        deleteDatabase(StoreNotifications.DB_NAME);
@@ -70,10 +77,10 @@ public class LoginActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        emptyChecker.put(getResources().getString(R.string.login_host), layout.host, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_port), layout.port, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_name), layout.name, noValueInputAction);
-        emptyChecker.put(getResources().getString(R.string.login_password), layout.password, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_host), layout.host, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_port), layout.port, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_name), layout.name, noValueInputAction);
+        emptyChecker.put(String.valueOf(R.string.login_password), layout.password, noValueInputAction);
 
         layout.host.setText(loginInfo.getHost());
         layout.port.setText(loginInfo.getPort());
@@ -88,6 +95,7 @@ public class LoginActivity extends Activity {
         });
 
         layout.signIn.setOnClickListener(clickSignIn());
+        refreshViewManager.refresh();
     }
 
     private View.OnClickListener clickSignIn() {
@@ -98,7 +106,8 @@ public class LoginActivity extends Activity {
                 if (noValueField.size() == 0) {
                     requestLoginPost();
                 } else {
-                    showNoValueDialog(noValueField.get(0));
+                    int resourceId = Integer.parseInt(noValueField.get(0));
+                    showNoValueDialog(resourceId);
                 }
             }
         };
@@ -147,6 +156,7 @@ public class LoginActivity extends Activity {
     };
 
     private void showLoginErrorDialog() {
+        MessageDialog dialog = new MessageDialog(activity);
         dialog.setOnConfirmClickListener(null);
         String title = getResources().getString(R.string.login_fail_title);
         String content = getResources().getString(R.string.login_fail_sing_in);
@@ -154,10 +164,11 @@ public class LoginActivity extends Activity {
         dialog.show(title, content, confirm);
     }
 
-    private void showNoValueDialog(String noValueInputName) {
+    private void showNoValueDialog(int noValueInputNameResource) {
+        MessageDialog dialog = new MessageDialog(activity);
         dialog.setOnConfirmClickListener(clickNoValueConfirm);
         String title = getResources().getString(R.string.login_fail_title);
-        String content = noValueInputName + getResources().getString(R.string.login_fail_content);
+        String content = getString(noValueInputNameResource) + getResources().getString(R.string.login_fail_content);
         String confirm = getResources().getString(R.string.login_fail_confirm);
         dialog.show(title, content, confirm);
     }

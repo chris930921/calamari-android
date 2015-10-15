@@ -22,6 +22,7 @@ import com.cephmonitor.cephmonitor.layout.component.edittext.BorderEditText;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
+import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 import com.resourcelibrary.model.view.button.RoundFillColorButton;
@@ -62,11 +63,13 @@ public class LoginLayout extends RelativeLayout {
     private int buttonTopMargin;
     private int textBottomMargin;
     private int inputLeftRightMargin;
+    private RefreshViewManager.Interface intermediary;
 
     public LoginLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.intermediary = (RefreshViewManager.Interface) context;
         this.designSpec = ThemeManager.getStyle(context);
         backgroundColor = designSpec.getPrimaryColors().getBackgroundOne();
         inputBackgroundColor = designSpec.getPrimaryColors().getBackgroundThree();
@@ -206,19 +209,25 @@ public class LoginLayout extends RelativeLayout {
         return v;
     }
 
-    private BorderEditText addInput(int hintId) {
-        BorderEditText input = new BorderEditText(context);
-        input.setId(RandomId.get());
-        input.setSingleLine(true);
-        input.setGravity(Gravity.CENTER_VERTICAL);
-        input.setPadding(ruler.getW(6.12), 0, ruler.getW(6.12), 0);
-        input.setHint(hintId);
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-        input.setTypeface(null, Typeface.BOLD);
-        input.setBackgroundColor(inputBackgroundColor);
-        inputTextStyle.style(input);
+    private BorderEditText addInput(final int hintId) {
+        final BorderEditText v = new BorderEditText(context);
+        v.setId(RandomId.get());
+        v.setSingleLine(true);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setPadding(ruler.getW(6.12), 0, ruler.getW(6.12), 0);
+        v.setHint(hintId);
+        v.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+        v.setTypeface(null, Typeface.BOLD);
+        v.setBackgroundColor(inputBackgroundColor);
+        inputTextStyle.style(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setHint(hintId);
+            }
+        });
 
-        return input;
+        return v;
     }
 
     private Button signIn(View relativeView) {
@@ -227,7 +236,7 @@ public class LoginLayout extends RelativeLayout {
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = buttonTopMargin;
 
-        RoundFillColorButton v = new RoundFillColorButton(context);
+        final RoundFillColorButton v = new RoundFillColorButton(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
@@ -236,6 +245,12 @@ public class LoginLayout extends RelativeLayout {
         v.setText(R.string.login_sign_in);
         buttonTextStyle.style(v);
         v.setTextColor(Color.WHITE);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setText(R.string.login_sign_in);
+            }
+        });
 
         return v;
     }
@@ -263,12 +278,18 @@ public class LoginLayout extends RelativeLayout {
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-        TextView v = new TextView(context);
+        final TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(getContext().getString(R.string.login_version) + versionName);
         footerTextStyle.style(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setText(getContext().getString(R.string.login_version) + versionName);
+            }
+        });
 
         return v;
     }
@@ -295,12 +316,18 @@ public class LoginLayout extends RelativeLayout {
         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         params.addRule(CENTER_VERTICAL);
 
-        TextView v = new TextView(context);
+        final TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.login_from);
         footerTextStyle.style(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setText(R.string.login_from);
+            }
+        });
 
         return v;
     }
@@ -358,12 +385,18 @@ public class LoginLayout extends RelativeLayout {
         params.addRule(RIGHT_OF, leftView.getId());
         params.addRule(CENTER_VERTICAL);
 
-        TextView v = new TextView(context);
+        final TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.login_developer);
         footerTextStyle.style(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setText(R.string.login_developer);
+            }
+        });
 
         return v;
     }

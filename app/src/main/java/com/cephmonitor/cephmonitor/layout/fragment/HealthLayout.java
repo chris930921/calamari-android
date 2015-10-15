@@ -1,7 +1,6 @@
 package com.cephmonitor.cephmonitor.layout.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,7 +135,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
         v.setTitle(context.getResources().getString(R.string.health_card_mon));
         v.setLeftText(context.getResources().getString(R.string.health_card_warnings));
         v.setRightText(context.getResources().getString(R.string.health_card_errors));
-        v.setCenterText(context.getResources().getString(R.string.health_card_quorom));
+        v.setCenterText(context.getResources().getString(R.string.health_card_quorum));
 
         v.setValue(0, 0);
         v.setCenterValueText("0 / 0");
