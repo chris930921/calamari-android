@@ -273,7 +273,7 @@
 	<string name="settings_alert_triggers_osd_error_description">%1$s OSD重度の状態にあるときにトリガが警告します</string>
 	<string name="settings_alert_triggers_osd_error_dialog_title">OSD エラー</string>
 	<string name="settings_alert_triggers_monitor">モニター</string>
-	<string name="settings_alert_triggers_monitor_warning">モニター</string>
+	<string name="settings_alert_triggers_monitor_warning">警告</string>
 	<string name="settings_alert_triggers_monitor_warning_description">%1$s モニター異常状態にあるときにトリガが警告します</string>
 	<string name="settings_alert_triggers_monitor_warning_dialog_title">モニター 警告</string>
 	<string name="settings_alert_triggers_monitor_error">エラー</string>
@@ -281,7 +281,7 @@
 	<string name="settings_alert_triggers_monitor_error_dialog_title">モニター エラー</string>
 	<string name="settings_alert_triggers_pg">Placement Group</string>
 	<string name="settings_alert_triggers_pg_warning">警告</string>
-	<string name="settings_alert_triggers_pg_warning_description">Cephによって変更にあるときにトリガが警告します</string>
+	<string name="settings_alert_triggers_pg_warning_description">Cephによって変更にあるとき  %1$s %% PGsにトリガが警告します</string>
 	<string name="settings_alert_triggers_pg_warning_dialog_title">PG 警告</string>
 	<string name="settings_alert_triggers_pg_error">エラー</string>
 	<string name="settings_alert_triggers_pg_error_description">%1$s %%PGs 異常状態にあるときにトリガが警告します</string>

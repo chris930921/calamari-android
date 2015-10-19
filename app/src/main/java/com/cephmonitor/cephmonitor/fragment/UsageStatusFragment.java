@@ -23,7 +23,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class UsageStatusFragment extends Fragment {
     private UsageStatusLayout layout;
@@ -49,12 +49,16 @@ public class UsageStatusFragment extends Fragment {
     private void requestUsageStatus() {
         final ArrayList<String> targetGroup = new ArrayList<>();
         final int[] colorGroup = {ColorTable._8DC41F, ColorTable._F7B500};
-        targetGroup.add("scale(ceph.cluster." + requestParams.getClusterId() + ".df.total_avail,1024)");
-        targetGroup.add("scale(ceph.cluster." + requestParams.getClusterId() + ".df.total_used,1024)");
+        targetGroup.add("sumSeries(" +
+                "scale(ceph.cluster." + requestParams.getClusterId() + ".df.total_avail,1024)," +
+                "ceph.cluster." + requestParams.getClusterId() + ".df.total_avail_bytes)");
+        targetGroup.add("sumSeries(" +
+                "scale(ceph.cluster." + requestParams.getClusterId() + ".df.total_used,1024)," +
+                "ceph.cluster." + requestParams.getClusterId() + ".df.total_used_bytes)");
 
         AnalyzeListener<String> success = new AnalyzeListener<String>() {
             ArrayList<Long> timeGroup;
-            HashMap<String, Integer> targetIndexGroup;
+            LinkedHashMap<String, Integer> targetIndexGroup;
             ArrayList<ChartLine> adapterGroup;
 
             @Override
@@ -62,12 +66,12 @@ public class UsageStatusFragment extends Fragment {
                 adapterGroup = new ArrayList<>();
                 try {
                     GraphiteRenderData renderData = new GraphiteRenderData(s);
-                    targetIndexGroup = renderData.getTargets();
+                    targetIndexGroup = (LinkedHashMap) renderData.getTargets();
+                    ArrayList<String> targetKeySet = new ArrayList<>(targetIndexGroup.keySet());
                     timeGroup = renderData.getTimestampArray();
                     for (int i = 0; i < targetGroup.size(); i++) {
-                        String target = targetGroup.get(i);
+                        String target = targetKeySet.get(i);
                         int color = colorGroup[i];
-                        if (targetIndexGroup.get(target) == null) continue;
 
                         int dataPointIndex = targetIndexGroup.get(target);
                         AreaLineAdapter adapter = new AreaLineAdapter();

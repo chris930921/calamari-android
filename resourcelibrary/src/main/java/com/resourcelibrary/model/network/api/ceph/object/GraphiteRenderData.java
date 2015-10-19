@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by User on 4/22/2015.
@@ -18,7 +19,7 @@ public class GraphiteRenderData extends PortableJsonObject {
 
     public HashMap<String, Integer> getTargets() {
         JSONArray targets;
-        HashMap<String, Integer> result = new HashMap<>();
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
         try {
             targets = json.getJSONArray("targets");
         } catch (JSONException e) {
@@ -49,6 +50,9 @@ public class GraphiteRenderData extends PortableJsonObject {
         for (int i = 0; i < datapoints.length(); i++) {
             try {
                 JSONArray point = datapoints.getJSONArray(i);
+                for (int j = 0; j < point.length(); j++) {
+                    double checkNull = point.getDouble(j);
+                }
                 value.add(point.getDouble(dataPointIndex));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -71,6 +75,9 @@ public class GraphiteRenderData extends PortableJsonObject {
             double sum = 0;
             try {
                 JSONArray point = datapoints.getJSONArray(i);
+                for (int j = 0; j < point.length(); j++) {
+                    double checkNull = point.getDouble(j);
+                }
                 for (int j = dataPointIndex; j < point.length(); j++) {
                     sum += point.getDouble(j);
                 }
@@ -95,7 +102,9 @@ public class GraphiteRenderData extends PortableJsonObject {
         for (int i = 0; i < datapoints.length(); i++) {
             try {
                 JSONArray point = datapoints.getJSONArray(i);
-                double checkNull = point.getLong(1);
+                for (int j = 0; j < point.length(); j++) {
+                    double checkNull = point.getDouble(j);
+                }
                 value.add(point.getLong(0) * 1000L);
             } catch (JSONException e) {
                 e.printStackTrace();

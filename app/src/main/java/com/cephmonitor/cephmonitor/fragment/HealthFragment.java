@@ -513,44 +513,48 @@ public class HealthFragment extends Fragment {
     private Runnable updateViewTask = new Runnable() {
         @Override
         public void run() {
-            if (healthCardErrorCount != 0) {
-                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_error));
-                layout.healthCard.changeRedBorder();
-            } else if (healthCardWarningCount != 0) {
-                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_warning));
-                layout.healthCard.changeOrangeBorder();
-            } else {
-                layout.healthCard.setCenterValueText(getString(R.string.health_card_status_ok));
-                layout.healthCard.changeGreenBorder();
+            try {
+                if (healthCardErrorCount != 0) {
+                    layout.healthCard.setCenterValueText(getString(R.string.health_card_status_error));
+                    layout.healthCard.changeRedBorder();
+                } else if (healthCardWarningCount != 0) {
+                    layout.healthCard.setCenterValueText(getString(R.string.health_card_status_warning));
+                    layout.healthCard.changeOrangeBorder();
+                } else {
+                    layout.healthCard.setCenterValueText(getString(R.string.health_card_status_ok));
+                    layout.healthCard.changeGreenBorder();
+                }
+
+                long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
+                long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
+                layout.healthCard.setCenterText(TimeUnit.change(period, getActivity()));
+
+                layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
+
+                layout.osdCard.setValue(osdCardWarningCount, osdCardErrorCount);
+                String osdStatus = osdCardOkCount + " / " + oadCardTotalCount;
+                layout.osdCard.setCenterValueText(osdStatus);
+
+                layout.monCard.setValue(monCardWarningCount, monCardErrorCount);
+                String monStatus = monCardOkCount + " / " + monCardTotalCount;
+                layout.monCard.setCenterValueText(monStatus);
+
+                layout.poolsCard.setCenterValueText(poolCardStatus + "");
+
+                layout.hostsCard.setValue(hostCardMonCount, hostCardOsdCount);
+                layout.hostsCard.setCenterValueText(hostCardStatus + "");
+
+                layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
+                String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
+                layout.pgStatusCard.setCenterValueText(pgStatus);
+
+                settingStorage.setAlertTriggerOsdTotal(oadCardTotalCount);
+                settingStorage.setAlertTriggerMonTotal(monCardTotalCount);
+                settingStorage.setAlertTriggerPgTotal(pgCardTotalCount);
+                settingStorage.setAlertTriggerUsageTotal(totalSpace);
+            } catch (Exception e) {
+                ShowLog.d("Fragment finished, stop update view.", e);
             }
-
-            long nowTimeStamp = Calendar.getInstance().getTimeInMillis();
-            long period = (nowTimeStamp - healthCardLastUpdate) / 1000; // FIXME 確認伺服器時間
-            layout.healthCard.setCenterText(TimeUnit.change(period, getActivity()));
-
-            layout.healthCard.setValue(healthCardWarningCount, healthCardErrorCount);
-
-            layout.osdCard.setValue(osdCardWarningCount, osdCardErrorCount);
-            String osdStatus = osdCardOkCount + " / " + oadCardTotalCount;
-            layout.osdCard.setCenterValueText(osdStatus);
-
-            layout.monCard.setValue(monCardWarningCount, monCardErrorCount);
-            String monStatus = monCardOkCount + " / " + monCardTotalCount;
-            layout.monCard.setCenterValueText(monStatus);
-
-            layout.poolsCard.setCenterValueText(poolCardStatus + "");
-
-            layout.hostsCard.setValue(hostCardMonCount, hostCardOsdCount);
-            layout.hostsCard.setCenterValueText(hostCardStatus + "");
-
-            layout.pgStatusCard.setValue(pgCardWorkingCount, pgCardDirtyCount);
-            String pgStatus = pgCardOkCount + " / " + pgCardTotalCount;
-            layout.pgStatusCard.setCenterValueText(pgStatus);
-
-            settingStorage.setAlertTriggerOsdTotal(oadCardTotalCount);
-            settingStorage.setAlertTriggerMonTotal(monCardTotalCount);
-            settingStorage.setAlertTriggerPgTotal(pgCardTotalCount);
-            settingStorage.setAlertTriggerUsageTotal(totalSpace);
         }
     };
 }
