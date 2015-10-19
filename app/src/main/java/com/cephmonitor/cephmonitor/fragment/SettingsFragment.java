@@ -1,6 +1,7 @@
 package com.cephmonitor.cephmonitor.fragment;
 
 import android.app.Fragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import com.cephmonitor.cephmonitor.ActivityLauncher;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.layout.fragment.SettingsLayout;
+import com.cephmonitor.cephmonitor.model.database.StoreNotifications;
+import com.cephmonitor.cephmonitor.model.database.data.RemoveResolvedData;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
@@ -69,6 +72,12 @@ public class SettingsFragment extends Fragment {
                 boolean check = !layout.autoDeleteItem.checkbox.isChecked();
                 layout.autoDeleteItem.checkbox.setChecked(check);
                 settingStorage.setAutoDelete(check);
+                if (check) {
+                    StoreNotifications store = new StoreNotifications(getActivity());
+                    SQLiteDatabase database = store.getWritableDatabase();
+                    RemoveResolvedData removeResolvedData = new RemoveResolvedData();
+                    removeResolvedData.remove(database);
+                }
             }
         });
     }

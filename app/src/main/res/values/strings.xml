@@ -256,7 +256,7 @@
 	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
 	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
 	<string name="settings_alert_notifications_title">Notifications</string>
-	<string name="settings_alert_notifications_description">Trigger alarts when storage system comes new warnings</string>
+	<string name="settings_alert_notifications_description">Trigger alerts when storage system comes new warnings</string>
 	<string name="settings_alert_email_notifications_title">Email Notifications</string>
 	<string name="settings_alert_email_notifications_description">Notification will be sent to</string>
 	<string name="settings_alert_auto_delete_title">Auto Delete</string>

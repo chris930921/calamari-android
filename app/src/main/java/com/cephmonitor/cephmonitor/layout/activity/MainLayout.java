@@ -43,6 +43,7 @@ public class MainLayout extends DrawerRelativeLayout {
     private WH ruler;
     private DesignSpec designSpec;
     private int backgroundOne;
+    private boolean locking;
 
     public MainLayout(Context context) {
         super(context);
@@ -233,10 +234,17 @@ public class MainLayout extends DrawerRelativeLayout {
         this.title.setText(title);
     }
 
-    public void showBack(OnClickListener event) {
+    public void showBack(final OnClickListener event) {
         back.setVisibility(VISIBLE);
-        realBackButton.setOnClickListener(event);
-        backClickEvent = event;
+        locking = true;
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                realBackButton.setOnClickListener(event);
+                backClickEvent = event;
+                locking = false;
+            }
+        }, 800);
     }
 
     public void showNavigation() {
@@ -257,6 +265,10 @@ public class MainLayout extends DrawerRelativeLayout {
         backClickEvent = null;
         tabGroup.setVisibility(GONE);
         tabGroup.clear();
+    }
+
+    public boolean isBackLocking() {
+        return locking;
     }
 
     public boolean isBackListener() {

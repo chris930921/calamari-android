@@ -98,7 +98,7 @@ public class ClickAbleTabButton extends Button {
     @Override
     protected void onDraw(Canvas canvas) {
         float halfStrokeWidth = strokeWidth / 2;
-        float bottomLineWidth = 4;
+        float bottomLineWidth = 8;
         float halfBottomLineWidth = bottomLineWidth / 2;
         bottomLinePaint.setStrokeWidth(bottomLineWidth);
         bottomLinePaint.setColor((isActive) ? clickColor : Color.TRANSPARENT);
