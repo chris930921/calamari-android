@@ -1,16 +1,12 @@
 package com.cephmonitor.cephmonitor.layout.listitem.reuse;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cephmonitor.cephmonitor.layout.ColorTable;
+import com.cephmonitor.cephmonitor.layout.component.button.WhiteMarkCheckBox;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -21,7 +17,7 @@ public class SettingCheckboxItem extends SettingItem {
     public WH ruler;
     public TextView filedTitle;
     public TextView filedSubTitle;
-    public CheckBox checkbox;
+    public WhiteMarkCheckBox checkbox;
 
     private DesignSpec designSpec;
     private TextViewStyle nameStyle;
@@ -43,7 +39,7 @@ public class SettingCheckboxItem extends SettingItem {
         addView(filedSubTitle);
     }
 
-    protected CheckBox checkbox() {
+    protected WhiteMarkCheckBox checkbox() {
         LayoutParams params = new LayoutParams(
                 ruler.getW(designSpec.getIconSize().getLargeButton()),
                 ruler.getW(designSpec.getIconSize().getLargeButton())
@@ -51,39 +47,10 @@ public class SettingCheckboxItem extends SettingItem {
         params.addRule(CENTER_VERTICAL);
         params.addRule(ALIGN_PARENT_RIGHT);
 
-        CheckBox v = new CheckBox(getContext()) {
-            Paint backgroundPen = new Paint(Paint.ANTI_ALIAS_FLAG);
-            Paint checkPen = new Paint(Paint.ANTI_ALIAS_FLAG);
-            Paint borderPen = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-            @Override
-            protected void onDraw(Canvas canvas) {
-                backgroundPen.setColor((isChecked()) ? designSpec.getPrimaryColors().getSecondary() : Color.TRANSPARENT);
-                backgroundPen.setStyle(Paint.Style.FILL);
-
-                float strokeWidth = canvas.getWidth() / 10F;
-
-                checkPen.setColor((isChecked()) ? Color.WHITE : Color.TRANSPARENT);
-                checkPen.setStyle(Paint.Style.STROKE);
-                checkPen.setStrokeWidth(strokeWidth);
-
-                borderPen.setColor(ColorTable._999999);
-                borderPen.setStyle(Paint.Style.STROKE);
-                borderPen.setStrokeWidth(strokeWidth);
-
-                canvas.drawRect(strokeWidth, strokeWidth, canvas.getWidth() - strokeWidth, canvas.getHeight() - strokeWidth, borderPen);
-                canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPen);
-                canvas.drawLine(
-                        canvas.getWidth() * 0.1F, canvas.getHeight() * 0.5F,
-                        canvas.getWidth() * 0.3F, canvas.getHeight() * 0.7F, checkPen);
-                canvas.drawLine(
-                        canvas.getWidth() * 0.3F, canvas.getHeight() * 0.7F,
-                        canvas.getWidth() * 0.9F, canvas.getHeight() * 0.2F, checkPen);
-            }
-        };
+        WhiteMarkCheckBox v = new WhiteMarkCheckBox(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        nameStyle.style(v);
+        v.setBackgroundColor(designSpec.getPrimaryColors().getSecondary());
 
         return v;
     }
