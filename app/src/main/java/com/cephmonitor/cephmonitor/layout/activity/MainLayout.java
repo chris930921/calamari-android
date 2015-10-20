@@ -244,7 +244,7 @@ public class MainLayout extends DrawerRelativeLayout {
                 backClickEvent = event;
                 locking = false;
             }
-        }, 800);
+        }, 1200);
     }
 
     public void showNavigation() {

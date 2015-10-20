@@ -44,7 +44,7 @@ public class OSDHealthDetailFragment extends Fragment {
             layout.publicIpContent.setText(osdData.getPublicAddr());
             layout.clusterIpContent.setText(osdData.getClusterAddr());
             layout.poolLabels.setData(names);
-            layout.reweightContent.setText(osdData.getReweight() * 100.0 + "%");
+            layout.reweightContent.setText(((int) Math.ceil(osdData.getReweight() * 100.0)) + "%");
             layout.uuidContent.setText(osdData.getUUID());
         } catch (JSONException e) {
             e.printStackTrace();

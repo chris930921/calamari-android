@@ -80,5 +80,12 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        layout.emailNotificationsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean check = !layout.emailNotificationsItem.checkbox.isChecked();
+                layout.emailNotificationsItem.checkbox.setChecked(check);
+            }
+        });
     }
 }

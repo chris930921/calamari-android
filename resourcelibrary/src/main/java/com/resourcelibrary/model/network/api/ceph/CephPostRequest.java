@@ -23,6 +23,7 @@ public class CephPostRequest extends StringRequest {
         super(Request.Method.POST, url, listener, errorListener);
         this.rawData = rawData;
         this.session = session;
+        setShouldCache(false);
     }
 
     @Override

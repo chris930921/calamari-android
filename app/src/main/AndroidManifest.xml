@@ -14,6 +14,7 @@
         android:icon="@drawable/icon01"
         android:label="@string/gradle_app_name"
         android:theme="@style/AppTheme"
+        android:largeHeap="true"
         tools:replace="android:icon,android:theme,android:label">
         <activity
             android:name=".LoginActivity"
