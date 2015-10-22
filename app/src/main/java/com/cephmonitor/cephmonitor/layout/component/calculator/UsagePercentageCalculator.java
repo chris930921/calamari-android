@@ -47,29 +47,32 @@ public class UsagePercentageCalculator extends OriginCalculator {
                 int number = (int) view.getTag();
                 String oldValue = fieldValue.getText().toString();
                 String newValue = oldValue + number;
-                BigInteger unCheckValue = new BigInteger(newValue);
-                if (unCheckValue.compareTo(BigInteger.valueOf(100L)) == 1) {
-                    return;
-                } else if (unCheckValue.compareTo(BigInteger.valueOf(0L)) == -1) {
-                    return;
-                }
-                long value = Long.parseLong(unCheckValue.toString());
-                int max = (int) (maxPercentage * 100);
-                int min = (int) (minPercentage * 100);
-                if (value > max || value < min) {
-                    validStateChangeEvent.onInvalidEvent();
-                    setValueInvaild();
-                } else {
-                    validStateChangeEvent.onValidEvent();
-                    setValueVaild();
-                }
-                partPercentage = (float) value / 100F;
-                fieldValue.setText(String.valueOf(value));
-                updatePartValue();
+                dealWithStringValue(newValue);
             }
         };
     }
 
+    private void dealWithStringValue(String newValue) {
+        BigInteger unCheckValue = new BigInteger(newValue);
+        if (unCheckValue.compareTo(BigInteger.valueOf(100L)) == 1) {
+            return;
+        } else if (unCheckValue.compareTo(BigInteger.valueOf(0L)) == -1) {
+            return;
+        }
+        long value = Long.parseLong(unCheckValue.toString());
+        int max = (int) (maxPercentage * 100);
+        int min = (int) (minPercentage * 100);
+        if (value > max || value < min) {
+            validStateChangeEvent.onInvalidEvent();
+            setValueInvaild();
+        } else {
+            validStateChangeEvent.onValidEvent();
+            setValueVaild();
+        }
+        partPercentage = (float) value / 100F;
+        fieldValue.setText(String.valueOf(value));
+        updatePartValue();
+    }
 
     @Override
     public void clear() {
@@ -98,8 +101,8 @@ public class UsagePercentageCalculator extends OriginCalculator {
     }
 
     public void setPartPercentage(float partPercentage) {
-        this.partPercentage = partPercentage;
-        updatePartValue();
+        int percentage = (int) (partPercentage * 100);
+        dealWithStringValue(String.valueOf(percentage));
     }
 
     private void updatePartValue() {

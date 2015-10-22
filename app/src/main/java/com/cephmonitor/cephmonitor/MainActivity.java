@@ -35,6 +35,7 @@ import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.cephmonitor.cephmonitor.model.ceph.constant.CephNotificationConstant;
 import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.cephmonitor.cephmonitor.receiver.LoadFinishReceiver;
+import com.resourcelibrary.model.log.ShowLog;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 
@@ -154,11 +155,17 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
     @Override
     public void onBackPressed() {
         FragmentManager manager = getFragmentManager();
+        if (layout.isBackLocking()) {
+            ShowLog.d("Check back button is locking status in layout to avoid crash by changing fragments in high speed.");
+            return;
+        }
         if (layout.isBackListener()) {
+            ShowLog.d("Execute layout back button's onClick function if exists.");
             layout.executeBackListener();
             return;
         }
         if (manager.getBackStackEntryCount() > 0) {
+            ShowLog.d("Execute fragment's popBackStack if layout back button is hiding or it's onClickListener is null");
             manager.popBackStack();
         } else {
             CheckExitDialog.create(activity).show();

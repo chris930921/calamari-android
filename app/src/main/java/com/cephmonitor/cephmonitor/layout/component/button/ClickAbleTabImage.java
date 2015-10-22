@@ -5,12 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.resourcelibrary.model.logic.RandomId;
 
 /**
  * Created by User on 4/17/2015.
  */
-public class ClickAbleTabImage extends ImageView {
+public class ClickAbleTabImage extends RelativeLayout {
     private Paint fillPaint;
     private Paint strokePaint;
     private Paint bottomLinePaint;
@@ -22,10 +26,14 @@ public class ClickAbleTabImage extends ImageView {
     private int clickImageResource;
     private boolean isDividerShow;
     private int originImageResource;
+    private ImageView image;
 
     public ClickAbleTabImage(Context context) {
         super(context);
         isDividerShow = true;
+
+        image = image();
+        addView(image);
 
         fillColor = Color.BLACK;
         strokeColor = Color.BLACK;
@@ -45,6 +53,26 @@ public class ClickAbleTabImage extends ImageView {
         bottomLinePaint.setColor(strokeColor);
         bottomLinePaint.setAntiAlias(true);
         bottomLinePaint.setStyle(Paint.Style.STROKE);
+    }
+
+    private ImageView image() {
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(CENTER_IN_PARENT);
+
+        ImageView v = new ImageView(getContext());
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+
+        return v;
+    }
+
+    public void setImageViewSize(int width, int height) {
+        LayoutParams params = (LayoutParams) image.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        image.setLayoutParams(params);
     }
 
     public void setStrokeWidth(int strokeWidth) {
@@ -78,13 +106,13 @@ public class ClickAbleTabImage extends ImageView {
     }
 
     public void changeClickColor() {
-        setImageResource(clickImageResource);
+        image.setImageResource(clickImageResource);
         isActive = true;
         invalidate();
     }
 
     public void recover() {
-        setImageResource(originImageResource);
+        image.setImageResource(originImageResource);
         isActive = false;
     }
 
@@ -104,9 +132,9 @@ public class ClickAbleTabImage extends ImageView {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas) {
         float halfStrokeWidth = strokeWidth / 2;
-        float bottomLineWidth = 4;
+        float bottomLineWidth = 8;
         float halfBottomLineWidth = bottomLineWidth / 2;
         bottomLinePaint.setStrokeWidth(bottomLineWidth);
         bottomLinePaint.setColor((isActive) ? clickColor : Color.TRANSPARENT);
@@ -122,6 +150,6 @@ public class ClickAbleTabImage extends ImageView {
                 0, canvas.getHeight() - halfBottomLineWidth,
                 canvas.getWidth(), canvas.getHeight() - halfBottomLineWidth, bottomLinePaint);
 
-        super.onDraw(canvas);
+        super.dispatchDraw(canvas);
     }
 }

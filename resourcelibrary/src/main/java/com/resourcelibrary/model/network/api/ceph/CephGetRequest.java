@@ -18,6 +18,7 @@ public class CephGetRequest extends StringRequest {
         super(Method.GET, url, listener, errorListener);
         this.session = session;
         ShowLog.d("網址: " + url);
+        setShouldCache(false);
     }
 
     @Override

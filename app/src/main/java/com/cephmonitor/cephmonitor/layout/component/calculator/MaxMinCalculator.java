@@ -42,13 +42,7 @@ public class MaxMinCalculator extends OriginCalculator {
                 int number = (int) view.getTag();
                 String oldValue = fieldValue.getText().toString();
                 String newValue = oldValue + number;
-                BigInteger value = new BigInteger(newValue);
-                if (value.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
-                    validStateChangeEvent.onInvalidEvent();
-                } else {
-                    fieldValue.setText(value.toString());
-                    calculate();
-                }
+                dealWithStringValue(newValue);
             }
         };
     }
@@ -60,18 +54,32 @@ public class MaxMinCalculator extends OriginCalculator {
         validStateChangeEvent.onInvalidEvent();
     }
 
+    public void setResultValue(long value) {
+        dealWithStringValue(String.valueOf(value));
+    }
+
     public long getResultValue() {
         return resultValue;
     }
 
-    public void setMax(int max) {
+    public void setMax(long max) {
         this.max = max;
         maxValue.setText(String.valueOf(max));
     }
 
-    public void setMin(int min) {
+    public void setMin(long min) {
         this.min = min;
         minValue.setText(String.valueOf(min));
+    }
+
+    private void dealWithStringValue(String newValue) {
+        BigInteger value = new BigInteger(newValue);
+        if (value.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1) {
+            validStateChangeEvent.onInvalidEvent();
+        } else {
+            fieldValue.setText(value.toString());
+            calculate();
+        }
     }
 
     protected void calculate() {

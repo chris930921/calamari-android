@@ -256,7 +256,7 @@
 	<string name="settings_date_format_dialog_month_day_year">12/31/2015</string>
 	<string name="settings_date_format_dialog_day_month_year">31/12/2015</string>
 	<string name="settings_alert_notifications_title">Notifications</string>
-	<string name="settings_alert_notifications_description">Trigger alarts when storage system comes new warnings</string>
+	<string name="settings_alert_notifications_description">Trigger alerts when storage system comes new warnings</string>
 	<string name="settings_alert_email_notifications_title">Email Notifications</string>
 	<string name="settings_alert_email_notifications_description">Notification will be sent to</string>
 	<string name="settings_alert_auto_delete_title">Auto Delete</string>
@@ -305,12 +305,12 @@
 	<string name="other_time_unit_just_now">JUST NOW</string>
 	<string name="other_time_unit_multiple">s</string>
 
-	<string name="other_calculater_unit_osd">OSD</string>
-	<string name="other_calculater_unit_mon">MON</string>
+	<string name="other_calculater_unit_osd">\u0020OSD</string>
+	<string name="other_calculater_unit_mon">\u0020MON</string>
 	<string name="other_calculater_unit_pg">%</string>
 	<string name="other_calculater_unit_usage">%</string>
-	<string name="other_calculater_condition_max">MAX</string>
-	<string name="other_calculater_condition_min">MIN</string>
+	<string name="other_calculater_condition_max">MAX\u0020</string>
+	<string name="other_calculater_condition_min">MIN\u0020</string>
 	<string name="other_calculater_condition_pgs">PGs</string>
 	<string name="other_calculater_number_one">1</string>
 	<string name="other_calculater_number_two">2</string>
