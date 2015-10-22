@@ -307,11 +307,11 @@
 
 	<string name="other_calculater_unit_osd">\u0020OSD</string>
 	<string name="other_calculater_unit_mon">\u0020MON</string>
-	<string name="other_calculater_unit_pg">%</string>
-	<string name="other_calculater_unit_usage">%</string>
+	<string name="other_calculater_unit_pg">\u0020%</string>
+	<string name="other_calculater_unit_usage">\u0020%</string>
 	<string name="other_calculater_condition_max">MAX\u0020</string>
 	<string name="other_calculater_condition_min">MIN\u0020</string>
-	<string name="other_calculater_condition_pgs">PGs</string>
+	<string name="other_calculater_condition_pgs">\u0020PGs</string>
 	<string name="other_calculater_number_one">1</string>
 	<string name="other_calculater_number_two">2</string>
 	<string name="other_calculater_number_three">3</string>

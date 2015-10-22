@@ -28,7 +28,6 @@ import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
 import com.cephmonitor.cephmonitor.fragment.SettingsFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
-import com.cephmonitor.cephmonitor.layout.component.other.NavigationMenu;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -102,18 +101,17 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
                 if (nextBroadcastResourceId == broadcastResourceId) return;
 
                 broadcastResourceId = nextBroadcastResourceId;
-                int[] optionNameResourceGroup = NavigationMenu.optionNameResourceGroup;
-                if (broadcastResourceId == optionNameResourceGroup[0]) {
+                if (broadcastResourceId == R.string.main_activity_fragment_health) {
                     FragmentLauncher.goHealthFragment(activity);
-                } else if (broadcastResourceId == optionNameResourceGroup[12]) {
+                } else if (broadcastResourceId ==  R.string.main_activity_option_logout) {
                     ActivityLauncher.goLoginActivity(activity);
                     loginInfo.setIsLogin(false);
                     finish();
-                } else if (broadcastResourceId == optionNameResourceGroup[9]) {
+                } else if (broadcastResourceId == R.string.main_activity_fragment_notification) {
                     FragmentLauncher.goNotificationFragment(activity, null);
-                } else if (broadcastResourceId == optionNameResourceGroup[10]) {
+                } else if (broadcastResourceId == R.string.main_activity_option_logs) {
                     //TODO
-                } else if (broadcastResourceId == optionNameResourceGroup[11]) {
+                } else if (broadcastResourceId == R.string.main_activity_option_setting) {
                     FragmentLauncher.goSettingsFragment(activity, null);
                 } else {
                     Bundle message = new Bundle();

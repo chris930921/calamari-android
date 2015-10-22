@@ -11,6 +11,7 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthBaseCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthIopsCard;
+import com.cephmonitor.cephmonitor.layout.component.card.HealthPoolsCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
 import com.resourcelibrary.model.logic.RandomId;
@@ -22,7 +23,7 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     public HealthBaseCard healthCard;
     public HealthBaseCard osdCard;
     public HealthBaseCard monCard;
-    public HealthBaseCard poolsCard;
+    public HealthPoolsCard poolsCard;
     public HealthBaseCard hostsCard;
     public HealthBaseCard pgStatusCard;
     public HealthUsageCard usageCard;
@@ -143,11 +144,11 @@ public class HealthLayout extends FractionAbleRelativeLayout {
         return v;
     }
 
-    private HealthBaseCard poolsCard() {
+    private HealthPoolsCard poolsCard() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
-        HealthBaseCard v = new HealthBaseCard(context);
+        HealthPoolsCard v = new HealthPoolsCard(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setIcon(R.drawable.icon017);
