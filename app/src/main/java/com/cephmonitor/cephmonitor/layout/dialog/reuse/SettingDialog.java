@@ -55,9 +55,12 @@ public class SettingDialog extends TopRoundDialogContainer {
         dialogWidth = ruler.getW(100) - ruler.getW(designSpec.getMargin().getLeftRightOne()) * 2;
         intermediary = (RefreshViewManager.Interface) context;
 
+        FrameLayout frameContainer = new FrameLayout(getContext());
+        frameContainer.addView(this);
+
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(this);
+        dialog.setContentView(frameContainer);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);

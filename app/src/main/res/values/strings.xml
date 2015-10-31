@@ -14,8 +14,8 @@
 	<string name="login_fail_sing_in">Incorrect username or password.</string>
 	<string name="login_sign_in">Sign in</string>
 	<string name="login_version">Ceph Monitor Version\u0020</string>
-	<string name="login_from">From</string>
-	<string name="login_developer">Developed by inWinstack</string>
+	<string name="login_from">Developed by\u0020</string>
+	<string name="login_developer"></string>
 
 	//MainActivity
 	<string name="main_activity_option_logs">Logs</string>
@@ -307,11 +307,11 @@
 
 	<string name="other_calculater_unit_osd">\u0020OSD</string>
 	<string name="other_calculater_unit_mon">\u0020MON</string>
-	<string name="other_calculater_unit_pg">%</string>
-	<string name="other_calculater_unit_usage">%</string>
+	<string name="other_calculater_unit_pg">\u0020%</string>
+	<string name="other_calculater_unit_usage">\u0020%</string>
 	<string name="other_calculater_condition_max">MAX\u0020</string>
 	<string name="other_calculater_condition_min">MIN\u0020</string>
-	<string name="other_calculater_condition_pgs">PGs</string>
+	<string name="other_calculater_condition_pgs">\u0020PGs</string>
 	<string name="other_calculater_number_one">1</string>
 	<string name="other_calculater_number_two">2</string>
 	<string name="other_calculater_number_three">3</string>
