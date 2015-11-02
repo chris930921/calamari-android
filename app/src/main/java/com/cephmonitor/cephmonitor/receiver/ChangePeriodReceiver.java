@@ -30,6 +30,8 @@ public class ChangePeriodReceiver extends BroadcastReceiver {
             service.changeCheckPeriod();
         } else if (flag == 2) {
             service.changeServerErrorPeriod();
+        } else if (flag == 3) {
+            service.onChangedPeriodEvent();
         }
     }
 
@@ -46,6 +48,11 @@ public class ChangePeriodReceiver extends BroadcastReceiver {
     public static void sendServerErrorMessage(Context context) {
         ShowLog.d("發送轉換伺服器錯誤週期廣播。");
         sendPeriodMessage(context, 2);
+    }
+
+    public static void sendTimePeriodChangedMessage(Context context) {
+        ShowLog.d("發送週期變更廣播。");
+        sendPeriodMessage(context, 3);
     }
 
     public static void sendPeriodMessage(Context context, int flag) {

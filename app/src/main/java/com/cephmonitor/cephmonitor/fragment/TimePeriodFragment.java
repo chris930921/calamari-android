@@ -13,6 +13,7 @@ import com.cephmonitor.cephmonitor.layout.fragment.TimePeriodLayout;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.FullTimeDecorator;
 import com.cephmonitor.cephmonitor.model.logic.SecondToTime;
+import com.cephmonitor.cephmonitor.receiver.ChangePeriodReceiver;
 
 public class TimePeriodFragment extends Fragment {
     public TimePeriodLayout layout;
@@ -71,6 +72,7 @@ public class TimePeriodFragment extends Fragment {
         } else if (title == R.string.settings_time_period_server_abnormal_title) {
             settingStorage.setTimePeriodServerAbnormal(dialog.getSecondPeriod());
         }
+        ChangePeriodReceiver.sendTimePeriodChangedMessage(getActivity());
     }
 
     public void refreshSubTitle(int resourceId) {
