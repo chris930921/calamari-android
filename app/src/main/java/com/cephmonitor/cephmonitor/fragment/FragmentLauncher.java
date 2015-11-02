@@ -259,4 +259,15 @@ public class FragmentLauncher {
             changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
         }
     }
+
+    public static void goTimePeriodFragment(Activity activity, Bundle arg) {
+        String fragmentName = TimePeriodFragment.class.getName();
+        boolean isClosed = checkFragmentOpening(activity, fragmentName);
+        if (isClosed) {
+            Fragment page = new TimePeriodFragment();
+            page.setArguments(arg);
+            cleanToTargetFragment(activity, THIRD_FRAGMENT_LAYER);
+            changeAndBackFadeSlide(activity, MainLayout.CONTAINER_ID, page, THIRD_FRAGMENT_LAYER);
+        }
+    }
 }

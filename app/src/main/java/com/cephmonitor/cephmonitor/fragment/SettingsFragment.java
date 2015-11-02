@@ -87,5 +87,11 @@ public class SettingsFragment extends Fragment {
                 layout.emailNotificationsItem.checkbox.setChecked(check);
             }
         });
+        layout.timePeriod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentLauncher.goTimePeriodFragment(getActivity(), null);
+            }
+        });
     }
 }

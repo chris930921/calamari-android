@@ -26,6 +26,7 @@ import com.cephmonitor.cephmonitor.fragment.PgStatusFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolIopsFragment;
 import com.cephmonitor.cephmonitor.fragment.PoolListFragment;
 import com.cephmonitor.cephmonitor.fragment.SettingsFragment;
+import com.cephmonitor.cephmonitor.fragment.TimePeriodFragment;
 import com.cephmonitor.cephmonitor.fragment.UsageStatusFragment;
 import com.cephmonitor.cephmonitor.layout.activity.MainLayout;
 import com.cephmonitor.cephmonitor.layout.component.tab.OnTabChangeListener;
@@ -82,6 +83,7 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
         changeStyleTask.put(NotificationDetailFragment.class, showNotificationDetailFragment);
         changeStyleTask.put(SettingsFragment.class, showSettingsFragment);
         changeStyleTask.put(AlertTriggersFragment.class, showAlertTriggersFragment);
+        changeStyleTask.put(TimePeriodFragment.class, showTimePeriodFragment);
 
         layout.setNavigationTitleText(loginInfo.getName(), loginInfo.getHost());
 
@@ -103,7 +105,7 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
                 broadcastResourceId = nextBroadcastResourceId;
                 if (broadcastResourceId == R.string.main_activity_fragment_health) {
                     FragmentLauncher.goHealthFragment(activity);
-                } else if (broadcastResourceId ==  R.string.main_activity_option_logout) {
+                } else if (broadcastResourceId == R.string.main_activity_option_logout) {
                     ActivityLauncher.goLoginActivity(activity);
                     loginInfo.setIsLogin(false);
                     finish();
@@ -481,6 +483,22 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
     };
 
     private InitFragment.Task showAlertTriggersFragment = new InitFragment.Task() {
+        @Override
+        public void action(Bundle arg) {
+            int titleResource = R.string.settings_alert_alert_triggers_title;
+
+            setTitle(getResources().getString(titleResource));
+            layout.hideAllComponent();
+            layout.showBack(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentLauncher.backFragment(activity);
+                }
+            });
+        }
+    };
+
+    private InitFragment.Task showTimePeriodFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
             int titleResource = R.string.settings_alert_alert_triggers_title;

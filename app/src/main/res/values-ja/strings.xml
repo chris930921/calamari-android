@@ -3,7 +3,7 @@
 
 	<string name="app_name">Ceph Monitor</string>
 
-	//LoginActivity
+	// LoginActivity
 	<string name="login_host">ホスト</string>
 	<string name="login_port">ポート</string>
 	<string name="login_name">名前</string>
@@ -17,7 +17,7 @@
 	<string name="login_from">から</string>
 	<string name="login_developer">inWinstack によって開発され</string>
 
-	//MainActivity
+	// MainActivity
 	<string name="main_activity_option_logs">ログ</string>
 	<string name="main_activity_option_setting">設定</string>
 	<string name="main_activity_option_logout">ログアウト</string>
@@ -38,7 +38,7 @@
 	<string name="main_activity_fragment_tab_all_cpus">すべての CPUs </string>
 	<string name="main_activity_fragment_tab_iops">IOPS</string>
 
-	//HealthFragment
+	// HealthFragment
 	<string name="health_card_status_ok">OK</string>
 	<string name="health_card_status_warning">警告</string>
 	<string name="health_card_status_error">エラー</string>
@@ -73,11 +73,11 @@
 	<string name="health_card_warnings">警告</string>
 	<string name="health_card_errors">エラー</string>
 
-	//HealthDetailFragment
+	// HealthDetailFragment
 	<string name="health_detail_great">すばらしいです。</string>
 	<string name="health_detail_work_fine">正常に動作します。</string>
 
-	//RequestAndCheckService 舊版訊息
+	// RequestAndCheckService 舊版訊息
 	<string name="check_service_mon_count_error_title">エラー、Monitor 損傷</string>
 	<string name="check_service_mon_count_error_content">%1$s Monitorの損傷があります。</string>
 
@@ -164,12 +164,12 @@
 	<string name="check_service_042001_normal_title">ストレージシステム情報</string>
 	<string name="check_service_042001_normal_content_finish">ストレージ容量は拡張されました</string>
 
-	//OsdHealthFragment
+	// OsdHealthFragment
 	<string name="osd_health_all">すべて</string>
 	<string name="osd_health_great">すばらしいです。</string>
 	<string name="osd_health_work_fine">すべてのOSD正常に動作します。</string>
 
-	//OsdDetailFragment
+	// OsdDetailFragment
 	<string name="osd_detail_host_name">ホスト名</string>
 	<string name="osd_detail_public_ip">パブリックIP</string>
 	<string name="osd_detail_cluster_ip">クラスタIP</string>
@@ -177,7 +177,7 @@
 	<string name="osd_detail_re_weight">Reweight</string>
 	<string name="osd_detail_uuid">UUID</string>
 
-	//NotificationFragment
+	// NotificationFragment
 	<string name="notification_work_find_line_one">いずれも持っていません</string>
 	<string name="notification_work_find_line_two">今すぐ通知する</string>
 	<string name="notification_detail_triggered_title">でトリガ</string>
@@ -186,30 +186,30 @@
 	<string name="notification_detail_error_ratio">誤り率</string>
 	<string name="notification_detail_usage">使い</string>
 
-	//UsageStatusFragment
+	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">ディスク使用状況の統計情報</string>
 	<string name="usage_status_disk_usage_available">-使用可能</string>
 	<string name="usage_status_disk_usage_used">-使用しました</string>
 
-	//PoolIopsFragment
+	// PoolIopsFragment
 	<string name="pool_iops_read">-リード</string>
 	<string name="pool_iops_write">-ライト</string>
 
-	//HostHealthFragment
+	// HostHealthFragment
 	<string name="host_health_osd">OSD</string>
 
-	//PgStatusFragment
+	// PgStatusFragment
 	<string name="pg_status_down">下</string>
 	<string name="pg_status_degraded">劣化</string>
 	<string name="pg_status_clean">クリーン</string>
 	<string name="pg_status_osd">OSD</string>
 
-	//PoolListFragment
+	// PoolListFragment
 	<string name="pool_list_id_ahead">#</string>
 	<string name="pool_list_id_replicas">レプリカ</string>
 	<string name="pool_list_id_pgs">PGs</string>
 
-	//HostDetailSummaryFragment
+	// HostDetailSummaryFragment
 	<string name="host_detail_title_cpu_summary">CPUサマリー</string>
 	<string name="host_detail_title_load_average">ロード平均</string>
 	<string name="host_detail_title_memory">メモリ</string>
@@ -224,7 +224,7 @@
 	<string name="host_detail_summary_free">- フリー\u0020</string>
 	<string name="host_detail_summary_cached">- キャッシュ\u0020</string>
 
-	//HostDetailAllCPUsFragment
+	// HostDetailAllCPUsFragment
 	<string name="host_detail_all_cpus_title_cpu_detail">\u0020 CPU詳細</string>
 	<string name="host_detail_all_cpus_system">-システム\u0020</string>
 	<string name="host_detail_all_cpus_user">-ユーザー\u0020</string>
@@ -235,10 +235,10 @@
 	<string name="host_detail_all_cpus_soft_irq">-ソフトIRQ\u0020</string>
 	<string name="host_detail_all_cpus_steal">-Steal\u0020</string>
 
-	//HostDetailIopsFragment
+	// HostDetailIopsFragment
 	<string name="host_detail_iops">-IOPS\u0020</string>
 
-	//SettingsFragment
+	// SettingsFragment
 	<string name="settings_profile">プロフィール</string>
 	<string name="settings_profile_language">言語</string>
 	<string name="settings_profile_formats">日付形式</string>
@@ -293,8 +293,14 @@
 	<string name="settings_alert_triggers_usage_error">エラー</string>
 	<string name="settings_alert_triggers_usage_error_description">使用率が %1$s %%を超えた場合に警報を発します</string>
 	<string name="settings_alert_triggers_usage_error_dialog_title">使い エラー</string>
+	<string name="settings_time_period_normal_title">Normal Status Period</string>
+	<string name="settings_time_period_normal_content">Check the system health every %1$s</string>
+	<string name="settings_time_period_abnormal_title">Abnormal Status Period</string>
+	<string name="settings_time_period_abnormal_content">Check the system health every %1$s</string>
+	<string name="settings_time_period_server_abnormal_title">Server Abnormal Status Period</string>
+	<string name="settings_time_period_server_abnormal_content">Check the server health every %1$s</string>
 
-	//Other
+	// Other
 	<string name="other_empty"></string>
 	<string name="other_time_unit_year">年</string>
 	<string name="other_time_unit_month">月</string>

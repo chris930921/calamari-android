@@ -29,39 +29,39 @@ public class TimeUnit {
 
         } else if (millisTimeStampPeriod >= SECOND_OF_YEAR) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_YEAR);
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_YEAR, plurality);
 
         } else if (millisTimeStampPeriod >= SECOND_OF_MONTH) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_MONTH);
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_MONTH, plurality);
 
         } else if (millisTimeStampPeriod >= SECOND_OF_DAY) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_DAY);
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_DAY, plurality);
 
         } else if (millisTimeStampPeriod >= SECOND_OF_HOUR) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_HOUR);
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_HOUR, plurality);
 
         } else if (millisTimeStampPeriod >= SECOND_OF_MIN) {
             int count = (int) (millisTimeStampPeriod / SECOND_OF_MIN);
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_MIN, plurality);
 
         } else {
             int count = (int) millisTimeStampPeriod;
-            String plurality = checkPlurality(count);
+            String plurality = checkMultiple(count);
             result = combineResult(count, UNIT_OF_SECOND, plurality);
 
         }
         return result;
     }
 
-    private static String checkPlurality(int count) {
+    private static String checkMultiple(int count) {
         return (count > 1) ? "s" : "";
     }
 
