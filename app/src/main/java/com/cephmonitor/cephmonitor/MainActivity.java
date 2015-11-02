@@ -501,7 +501,7 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
     private InitFragment.Task showTimePeriodFragment = new InitFragment.Task() {
         @Override
         public void action(Bundle arg) {
-            int titleResource = R.string.settings_alert_alert_triggers_title;
+            int titleResource = R.string.settings_alert_time_period_title;
 
             setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
