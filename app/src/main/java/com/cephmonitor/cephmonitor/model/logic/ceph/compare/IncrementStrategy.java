@@ -171,16 +171,18 @@ public class IncrementStrategy {
             recorded.lastMessageId = finishMessageId;
             recorded.lastTitleId = normalTitleId;
             updateOtherParams(recorded);
+            ShowLog.d("監控訊息: 全部修復完成。");
             if (settingStorage.getAutoDelete()) {
                 ShowLog.d("監控訊息: 自動刪除開啟中，刪除資訊。");
                 recorded.remove(database);
+                checkResult.isSendNotification = false;
+                checkResult.isCheckError = false;
             } else {
                 ShowLog.d("監控訊息: 自動刪除關閉中，保存資訊。");
                 recorded.save(database);
+                checkResult.isSendNotification = true;
+                checkResult.isCheckError = false;
             }
-            ShowLog.d("監控訊息: 全部修復完成。");
-            checkResult.isSendNotification = true;
-            checkResult.isCheckError = false;
             return;
         }
 
