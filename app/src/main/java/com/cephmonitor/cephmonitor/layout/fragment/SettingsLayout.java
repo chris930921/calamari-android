@@ -88,7 +88,7 @@ public class SettingsLayout extends FractionAbleRelativeLayout {
         contentViewGroup.add(notificationsItem);
         contentViewGroup.add(emailNotificationsItem);
         contentViewGroup.add(autoDeleteItem);
-//        contentViewGroup.add(timePeriod); FIXME
+        contentViewGroup.add(timePeriod);
         contentViewGroup.add(alertTriggers);
         contentViewGroup.add(aboutTitle);
         contentViewGroup.add(versionItem);

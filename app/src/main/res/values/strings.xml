@@ -3,7 +3,7 @@
 
 	<string name="app_name">Ceph Monitor</string>
 
-	//LoginActivity
+	// LoginActivity
 	<string name="login_host">Host</string>
 	<string name="login_port">Port</string>
 	<string name="login_name">Name</string>
@@ -17,7 +17,7 @@
 	<string name="login_from">Developed by\u0020</string>
 	<string name="login_developer"></string>
 
-	//MainActivity
+	// MainActivity
 	<string name="main_activity_option_logs">Logs</string>
 	<string name="main_activity_option_setting">Settings</string>
 	<string name="main_activity_option_logout">Logout</string>
@@ -38,7 +38,7 @@
 	<string name="main_activity_fragment_tab_all_cpus">All CPUs</string>
 	<string name="main_activity_fragment_tab_iops">IOPS</string>
 
-	//HealthFragment
+	// HealthFragment
 	<string name="health_card_status_ok">OK</string>
 	<string name="health_card_status_warning">WARNING</string>
 	<string name="health_card_status_error">ERROR</string>
@@ -73,11 +73,11 @@
 	<string name="health_card_warnings">Warnings</string>
 	<string name="health_card_errors">Errors</string>
 
-	//HealthDetailFragment
+	// HealthDetailFragment
 	<string name="health_detail_great">Great !</string>
 	<string name="health_detail_work_fine">System works fine !</string>
 
-	//RequestAndCheckService 舊版訊息
+	// RequestAndCheckService 舊版訊息
 	<string name="check_service_mon_count_error_title"></string>
 	<string name="check_service_mon_count_error_content"></string>
 
@@ -164,12 +164,12 @@
 	<string name="check_service_042001_normal_title">Storage System Info</string>
 	<string name="check_service_042001_normal_content_finish">Storage capacity has been expanded!</string>
 
-	//OsdHealthFragment
+	// OsdHealthFragment
 	<string name="osd_health_all">All</string>
 	<string name="osd_health_great">Great !</string>
 	<string name="osd_health_work_fine">All OSD work fine !</string>
 
-	//OsdDetailFragment
+	// OsdDetailFragment
 	<string name="osd_detail_host_name">Hostname</string>
 	<string name="osd_detail_public_ip">Public IP</string>
 	<string name="osd_detail_cluster_ip">Cluster IP</string>
@@ -177,7 +177,7 @@
 	<string name="osd_detail_re_weight">Reweight</string>
 	<string name="osd_detail_uuid">UUID</string>
 
-	//NotificationFragment
+	// NotificationFragment
 	<string name="notification_work_find_line_one">You don\'t have any</string>
 	<string name="notification_work_find_line_two">notifications right now!</string>
 	<string name="notification_detail_triggered_title">Triggered at</string>
@@ -186,30 +186,30 @@
 	<string name="notification_detail_error_ratio">Error ratio</string>
 	<string name="notification_detail_usage">Usage</string>
 
-	//UsageStatusFragment
+	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">Disk Usage Statistics</string>
 	<string name="usage_status_disk_usage_available">-Available</string>
 	<string name="usage_status_disk_usage_used">-Used</string>
 
-	//PoolIopsFragment
+	// PoolIopsFragment
 	<string name="pool_iops_read">-Read</string>
 	<string name="pool_iops_write">-Write</string>
 
-	//HostHealthFragment
+	// HostHealthFragment
 	<string name="host_health_osd">OSD</string>
 
-	//PgStatusFragment
+	// PgStatusFragment
 	<string name="pg_status_down">Down</string>
 	<string name="pg_status_degraded">Degraded</string>
 	<string name="pg_status_clean">Clean</string>
 	<string name="pg_status_osd">OSD</string>
 
-	//PoolListFragment
+	// PoolListFragment
 	<string name="pool_list_id_ahead"># </string>
 	<string name="pool_list_id_replicas">Replicas</string>
 	<string name="pool_list_id_pgs">PGs</string>
 
-	//HostDetailSummaryFragment
+	// HostDetailSummaryFragment
 	<string name="host_detail_title_cpu_summary">CPU Summary</string>
 	<string name="host_detail_title_load_average">Load Average</string>
 	<string name="host_detail_title_memory">Memory</string>
@@ -224,7 +224,7 @@
 	<string name="host_detail_summary_free">- Free\u0020</string>
 	<string name="host_detail_summary_cached">- cached\u0020</string>
 
-	//HostDetailAllCPUsFragment
+	// HostDetailAllCPUsFragment
 	<string name="host_detail_all_cpus_title_cpu_detail">\u0020CPU Detail</string>
 	<string name="host_detail_all_cpus_system">- System\u0020</string>
 	<string name="host_detail_all_cpus_user">- User\u0020</string>
@@ -235,10 +235,10 @@
 	<string name="host_detail_all_cpus_soft_irq">- Soft IRQ\u0020</string>
 	<string name="host_detail_all_cpus_steal">- Steal\u0020</string>
 
-	//HostDetailIopsFragment
+	// HostDetailIopsFragment
 	<string name="host_detail_iops">- IOPS\u0020</string>
 
-	//SettingsFragment
+	// SettingsFragment
 	<string name="settings_profile">Profile</string>
 	<string name="settings_profile_language">Language</string>
 	<string name="settings_profile_formats">Date Formats</string>
@@ -293,8 +293,14 @@
 	<string name="settings_alert_triggers_usage_error">Errors</string>
 	<string name="settings_alert_triggers_usage_error_description">Trigger alert when usage exceeds %1$s %%</string>
 	<string name="settings_alert_triggers_usage_error_dialog_title">Usage Errors</string>
+	<string name="settings_time_period_normal_title">Normal Status Period</string>
+	<string name="settings_time_period_normal_content">Check the system health every %1$s</string>
+	<string name="settings_time_period_abnormal_title">Abnormal Status Period</string>
+	<string name="settings_time_period_abnormal_content">Check the system health every %1$s</string>
+	<string name="settings_time_period_server_abnormal_title">Server Abnormal Status Period</string>
+	<string name="settings_time_period_server_abnormal_content">Check the server health every %1$s</string>
 
-	//Other
+	// Other
 	<string name="other_empty"></string>
 	<string name="other_time_unit_year">year</string>
 	<string name="other_time_unit_month">month</string>

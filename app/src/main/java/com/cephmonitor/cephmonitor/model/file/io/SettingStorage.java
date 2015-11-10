@@ -81,6 +81,18 @@ public class SettingStorage {
         set("AlertTriggerUsageTotal", value);
     }
 
+    public void setTimePeriodNormal(long value) {
+        set("TimePeriodNormal", value);
+    }
+
+    public void setTimePeriodAbnormal(long value) {
+        set("TimePeriodAbnormal", value);
+    }
+
+    public void setTimePeriodServerAbnormal(long value) {
+        set("TimePeriodServerAbnormal", value);
+    }
+
     public void set(String key, int value) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
@@ -175,5 +187,17 @@ public class SettingStorage {
 
     public boolean getAutoDelete() {
         return settings.getBoolean("AutoDelete", false);
+    }
+
+    public long getTimePeriodNormal() {
+        return settings.getLong("TimePeriodNormal", 30);
+    }
+
+    public long getTimerPeriodAbnormal() {
+        return settings.getLong("TimePeriodAbnormal", 60 * 2);
+    }
+
+    public long getTimerPeriodServerAbnormal() {
+        return settings.getLong("TimePeriodServerAbnormal", 60 * 60);
     }
 }
