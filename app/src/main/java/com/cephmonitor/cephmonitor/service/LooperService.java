@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.logic.FullTimeDecorator;
 import com.cephmonitor.cephmonitor.receiver.ChangePeriodReceiver;
 import com.resourcelibrary.model.log.ShowLog;
 
@@ -20,7 +21,6 @@ public class LooperService extends Service {
     private AlarmManager alarm;
     private ChangePeriodReceiver receiver;
     private int periodStatus;
-    private SettingStorage settingStorage;
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (isFirstOpen) {
@@ -33,7 +33,6 @@ public class LooperService extends Service {
 
     private void init() {
         periodStatus = -1;
-        settingStorage = new SettingStorage(this);
         intent = ServiceLauncher.pendingRequestAndCheckService(this);
         alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         changeDefaultPeriod();
@@ -44,24 +43,30 @@ public class LooperService extends Service {
     public void changeDefaultPeriod() {
         if (periodStatus != 0) {
             periodStatus = 0;
-            ShowLog.d("切換到預設週期");
-            changePeriod(settingStorage.getTimePeriodNormal() * 1000);
+            SettingStorage settingStorage = new SettingStorage(this);
+            long period = settingStorage.getTimePeriodNormal();
+            ShowLog.d("切換到預設週期：" + FullTimeDecorator.change(period));
+            changePeriod(period * 1000);
         }
     }
 
     public void changeCheckPeriod() {
         if (periodStatus != 1) {
             periodStatus = 1;
-            ShowLog.d("切換到檢查週期");
-            changePeriod(settingStorage.getTimerPeriodAbnormal() * 1000);
+            SettingStorage settingStorage = new SettingStorage(this);
+            long period = settingStorage.getTimerPeriodAbnormal();
+            ShowLog.d("切換到檢查週期：" + FullTimeDecorator.change(period));
+            changePeriod(period * 1000);
         }
     }
 
     public void changeServerErrorPeriod() {
         if (periodStatus != 2) {
             periodStatus = 2;
-            ShowLog.d("切換到伺服器錯誤週期");
-            changePeriod(settingStorage.getTimerPeriodServerAbnormal() * 1000);
+            SettingStorage settingStorage = new SettingStorage(this);
+            long period = settingStorage.getTimerPeriodServerAbnormal();
+            ShowLog.d("切換到伺服器錯誤週期：" + FullTimeDecorator.change(period));
+            changePeriod(period * 1000);
         }
     }
 

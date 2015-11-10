@@ -33,25 +33,27 @@ public class TimePeriodFragment extends Fragment {
         settingStorage = new SettingStorage(getActivity());
         refreshSubTitle(REFRESH_ALL);
 
-        layout.normalPeriod.setOnClickListener(showDialog(
-                settingStorage.getTimePeriodNormal(),
-                R.string.settings_time_period_normal_title));
-        layout.abnormalPeriod.setOnClickListener(showDialog(
-                settingStorage.getTimerPeriodAbnormal(),
-                R.string.settings_time_period_abnormal_title));
-        layout.serverAbnormalPeriod.setOnClickListener(showDialog(
-                settingStorage.getTimerPeriodServerAbnormal(),
-                R.string.settings_time_period_server_abnormal_title));
+        layout.normalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_normal_title));
+        layout.abnormalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_abnormal_title));
+        layout.serverAbnormalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_server_abnormal_title));
     }
 
-    private View.OnClickListener showDialog(final long originValue, final int title) {
+    private View.OnClickListener showDialog(final int title) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                long originValue = 0;
+                if (title == R.string.settings_time_period_normal_title) {
+                    originValue = settingStorage.getTimePeriodNormal();
+                } else if (title == R.string.settings_time_period_abnormal_title) {
+                    originValue = settingStorage.getTimerPeriodAbnormal();
+                } else if (title == R.string.settings_time_period_server_abnormal_title) {
+                    originValue = settingStorage.getTimerPeriodServerAbnormal();
+                }
                 SecondToTime secondToTime = new SecondToTime(originValue);
                 final TimePeriodPickerDialog dialog = new TimePeriodPickerDialog(getActivity());
                 dialog.setTitle(title);
-                dialog.setTime(secondToTime.getHour(), secondToTime.getMintune(), secondToTime.getSecond());
+                dialog.setTime(secondToTime.getHour(), secondToTime.getMinute(), secondToTime.getSecond());
                 dialog.setOkClick(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

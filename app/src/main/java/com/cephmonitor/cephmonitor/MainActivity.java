@@ -473,6 +473,7 @@ public class MainActivity extends Activity implements InitFragment.Style, Refres
 
             setTitle(getResources().getString(titleResource));
             layout.hideAllComponent();
+            layout.setSelected(titleResource);
             layout.showBack(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

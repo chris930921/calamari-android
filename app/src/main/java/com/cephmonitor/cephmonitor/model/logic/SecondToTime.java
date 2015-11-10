@@ -28,7 +28,7 @@ public class SecondToTime {
         return hours;
     }
 
-    public int getMintune() {
+    public int getMinute() {
         return minute;
     }
 
