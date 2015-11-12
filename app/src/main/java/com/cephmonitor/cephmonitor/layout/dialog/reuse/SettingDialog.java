@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.cephmonitor.cephmonitor.layout.component.container.TopRoundDialogContainer;
+import com.cephmonitor.cephmonitor.layout.component.container.RoundDialogContainer;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -26,7 +26,7 @@ import com.resourcelibrary.model.view.WH;
 /**
  * Created by User on 4/16/2015.
  */
-public class SettingDialog extends TopRoundDialogContainer {
+public class SettingDialog extends RoundDialogContainer {
     private Dialog dialog;
     private WH ruler;
     private int borderWidth;
@@ -200,6 +200,14 @@ public class SettingDialog extends TopRoundDialogContainer {
         });
 
         return v;
+    }
+
+    public void setTitleBottomLineColor(int color) {
+        bottomTitleLine.setBackgroundColor(color);
+    }
+
+    public void setTitleTextColor(int color) {
+        title.setTextColor(color);
     }
 
     public View buttonFillView() {

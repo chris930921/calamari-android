@@ -22,7 +22,7 @@ public abstract class OriginCalculator extends CalculatorLayout {
     private DesignSpec designSpec;
     private TextViewStyle styleBodyTwo;
     private TextViewStyle styleNote;
-
+    private boolean enableFirstClickClear;
 
     public OriginCalculator(Context context) {
         super(context);
@@ -30,10 +30,11 @@ public abstract class OriginCalculator extends CalculatorLayout {
         this.designSpec = ThemeManager.getStyle(getContext());
         styleBodyTwo = new TextViewStyle(designSpec.getStyle().getBodyTwo());
         styleNote = new TextViewStyle(designSpec.getStyle().getNote());
+        enableFirstClickClear = true;
 
         fieldValue.setText("");
 
-        OnClickListener numberClickEvent = clickNumberEvent();
+        OnClickListener numberClickEvent = clickNumberDefault;
         numberEight.setOnClickListener(numberClickEvent);
         numberSeven.setOnClickListener(numberClickEvent);
         numberNine.setOnClickListener(numberClickEvent);
@@ -46,6 +47,17 @@ public abstract class OriginCalculator extends CalculatorLayout {
         numberZero.setOnClickListener(numberClickEvent);
         buttonClear.setOnClickListener(clearClickEvent);
     }
+
+    protected OnClickListener clickNumberDefault = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (enableFirstClickClear) {
+                enableFirstClickClear = false;
+                clear();
+            }
+            clickNumberEvent().onClick(view);
+        }
+    };
 
     protected abstract OnClickListener clickNumberEvent();
 

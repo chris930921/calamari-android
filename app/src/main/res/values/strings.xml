@@ -12,6 +12,7 @@
 	<string name="login_fail_content">\u0020is incorrect!</string>
 	<string name="login_fail_confirm">Confirm</string>
 	<string name="login_fail_sing_in">Incorrect username or password.</string>
+	<string name="login_fail_server_error">Failed to connect to server !</string>
 	<string name="login_sign_in">Sign in</string>
 	<string name="login_version">Ceph Monitor Version\u0020</string>
 	<string name="login_from">Developed by\u0020</string>

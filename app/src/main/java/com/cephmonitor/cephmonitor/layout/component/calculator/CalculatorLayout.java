@@ -1,6 +1,8 @@
 package com.cephmonitor.cephmonitor.layout.component.calculator;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
+import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -310,13 +313,19 @@ public class CalculatorLayout extends RelativeLayout {
                 ruler.getW(23)
         );
 
+        StateListDrawable states = new StateListDrawable();
+        states.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(ColorTable._D5D5D5));
+        states.addState(new int[]{android.R.attr.state_focused}, new ColorDrawable(ColorTable._D5D5D5));
+        states.addState(new int[]{}, new ColorDrawable(designSpec.getPrimaryColors().getBackgroundOne()));
+
         TextView v = new TextView(getContext());
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setBackgroundColor(designSpec.getPrimaryColors().getBackgroundOne());
+        v.setBackground(states);
         v.setGravity(Gravity.CENTER);
         v.setText(resourceText);
         v.setTag(number);
+        v.setTextColor(ColorTable._666666);
         styleLargeButton.style(v);
 
         return v;

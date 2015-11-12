@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.cephmonitor.cephmonitor"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
         versionName "0.13.0"
@@ -17,14 +17,14 @@ android {
     productFlavors {
         online {
             applicationId "com.cephmonitor.cephmonitor"
-            minSdkVersion 14
+            minSdkVersion 16
             targetSdkVersion 21
             buildConfigField "boolean", "IS_LOCALHOST", "false"
             resValue "string", "gradle_app_name", "Ceph Online"
         }
         localhost {
             applicationId "com.cephmonitor.cephmonitor.localhost"
-            minSdkVersion 14
+            minSdkVersion 16
             targetSdkVersion 21
             buildConfigField "boolean", "IS_LOCALHOST", "true"
             resValue "string", "gradle_app_name", "Ceph Debug"

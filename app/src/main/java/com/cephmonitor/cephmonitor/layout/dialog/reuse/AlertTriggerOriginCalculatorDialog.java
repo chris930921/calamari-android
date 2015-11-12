@@ -27,7 +27,6 @@ public abstract class AlertTriggerOriginCalculatorDialog extends SettingDialog {
         designSpec = ThemeManager.getStyle(getContext());
         calculator = calculator();
 
-        setTitle(getContext().getString(R.string.settings_profile_language));
         addContentView(calculator);
         addButton(R.string.settings_dialog_cancel, ColorTable._666666, cancelClickEvent);
         save = addButton(R.string.settings_dialog_save, designSpec.getPrimaryColors().getPrimary(), null);
