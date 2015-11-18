@@ -71,6 +71,16 @@ public class LoginParams extends CephParams {
     }
 
     @Override
+    public void setCsrfToken(String session) {
+        save("csrf_token", session);
+    }
+
+    @Override
+    public String getCsrfToken() {
+        return get("csrf_token", "");
+    }
+
+    @Override
     public String getClusterId() {
         return get("clusterId", "");
     }

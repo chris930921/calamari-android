@@ -29,8 +29,9 @@ public class LoginPostRequest extends RequestCephTask {
     protected StringRequest taskFlow(final CephParams params, Response.Listener<String> success, Response.ErrorListener fail) {
         String url = CephApiUrl.login(params);
         String emptySession = "";
+        String emptyToken = "";
         String rawData = buildRawData(params.getName(), params.getPassword());
-        CephPostRequest spider = new CephPostRequest(emptySession, rawData, url, success, fail) {
+        CephPostRequest spider = new CephPostRequest(emptySession, emptyToken, rawData, url, success, fail) {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 setSessionToParams(params, response);
@@ -60,7 +61,10 @@ public class LoginPostRequest extends RequestCephTask {
         String totalCookie = response.headers.get("Set-Cookie");
         Matcher matcher = setSearchSessionPattern(totalCookie);
         String Session = getSession(matcher);
+        matcher = setSearchTokenPattern(totalCookie);
+        String token = getToken(matcher);
         params.setSession(Session);
+        params.setCsrfToken(token);
     }
 
     private Matcher setSearchSessionPattern(String totalCookie) {
@@ -69,6 +73,19 @@ public class LoginPostRequest extends RequestCephTask {
     }
 
     private String getSession(Matcher matcher) {
+        String session = "";
+        if (matcher.find()) {
+            session = matcher.group();
+        }
+        return session;
+    }
+
+    private Matcher setSearchTokenPattern(String totalCookie) {
+        Pattern pattern = Pattern.compile("(?<=XSRF-TOKEN=)[a-zA-Z\\d]*");
+        return pattern.matcher(totalCookie);
+    }
+
+    private String getToken(Matcher matcher) {
         String session = "";
         if (matcher.find()) {
             session = matcher.group();

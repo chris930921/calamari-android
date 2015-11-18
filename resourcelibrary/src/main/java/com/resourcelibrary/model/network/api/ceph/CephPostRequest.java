@@ -18,11 +18,13 @@ public class CephPostRequest extends StringRequest {
     private static final String PROTOCOL_CHARSET = "utf-8";
     private String rawData;
     private String session;
+    private String token;
 
-    public CephPostRequest(String session, String rawData, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public CephPostRequest(String session, String token, String rawData, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Request.Method.POST, url, listener, errorListener);
         this.rawData = rawData;
         this.session = session;
+        this.token = token;
         setShouldCache(false);
     }
 
@@ -30,8 +32,12 @@ public class CephPostRequest extends StringRequest {
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
+        if (!token.equals("")) {
+            headers.put("X-XSRF-TOKEN", token);
+            headers.put("XSRF-TOKEN", token);
+        }
         if (!session.equals("")) {
-            headers.put("Cookie", "calamari_sessionid=" + session + "; ");
+            headers.put("Cookie", "calamari_sessionid=" + session + "; XSRF-TOKEN=" + token);
         }
         return headers;
     }

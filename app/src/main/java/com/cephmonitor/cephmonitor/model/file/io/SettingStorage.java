@@ -33,7 +33,7 @@ public class SettingStorage {
         set("AutoDelete", value);
     }
 
-    public void setAlertTriggerOsdWarning(long value) {
+    public void setAlertTriggerOsdWarning(final long value) {
         set("AlertTriggerOsdWarning", value);
     }
 
