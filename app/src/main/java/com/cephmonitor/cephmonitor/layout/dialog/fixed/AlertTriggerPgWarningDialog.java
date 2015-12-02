@@ -22,7 +22,7 @@ public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDial
         setTitle(getContext().getString(R.string.settings_alert_triggers_pg_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_pg));
         getCalculator().setTotal(storage.getAlertTriggerPgTotal());
-        getCalculator().setMaxPercentage(0.8F);
+        getCalculator().setMaxPercentage(storage.getAlertTriggerPgError());
         getCalculator().setMinPercentage(0.2F);
         getCalculator().setPartPercentage(storage.getAlertTriggerPgWarning());
         setSaveClick(new OnClickListener() {

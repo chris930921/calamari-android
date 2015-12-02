@@ -21,7 +21,7 @@ public class AlertTriggerUsageWarningDialog extends AlertTriggerUsagePercentageD
         setTitle(getContext().getString(R.string.settings_alert_triggers_usage_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
         getCalculator().setTotal(storage.getAlertTriggerUsageTotal());
-        getCalculator().setMaxPercentage(0.85F);
+        getCalculator().setMaxPercentage(storage.getAlertTriggerUsageError());
         getCalculator().setMinPercentage(0.05F);
         getCalculator().setPartPercentage(storage.getAlertTriggerUsageWarning());
         setSaveClick(new OnClickListener() {

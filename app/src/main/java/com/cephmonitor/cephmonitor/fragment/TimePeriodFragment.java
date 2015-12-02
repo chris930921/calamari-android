@@ -192,7 +192,6 @@ public class TimePeriodFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //
         final String rawData = object.toString();
         taskQueue.add(new CephPostRequest(params.getSession(), params.getCsrfToken(), rawData, url, new Response.Listener<String>() {
             @Override

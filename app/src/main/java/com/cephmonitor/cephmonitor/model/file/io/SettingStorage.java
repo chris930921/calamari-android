@@ -93,6 +93,10 @@ public class SettingStorage {
         set("TimePeriodServerAbnormal", value);
     }
 
+    public void setEnableEmailNotify(boolean value) {
+        set("EnableEmailNotify", value);
+    }
+
     public void set(String key, int value) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
@@ -199,5 +203,9 @@ public class SettingStorage {
 
     public long getTimerPeriodServerAbnormal() {
         return settings.getLong("TimePeriodServerAbnormal", 60 * 60);
+    }
+
+    public boolean getEnableEmailNotify() {
+        return settings.getBoolean("EnableEmailNotify", false);
     }
 }

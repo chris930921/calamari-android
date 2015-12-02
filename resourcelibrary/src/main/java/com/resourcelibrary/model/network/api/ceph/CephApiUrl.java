@@ -61,6 +61,10 @@ public class CephApiUrl {
         return "http://" + params.getHost() + ":" + params.getPort() + "/api/v2/cluster/" + params.getClusterId() + "/mon/" + params.getMonitorId() + "/status";
     }
 
+    public static String apiV2UserMe(CephParams params) {
+        return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me";
+    }
+
     public static CephApiUrl graphiteRender(CephParams params) {
         String url = "http://" + params.getHost() + ":" + params.getPort() + "/graphite/render/?";
         return new CephApiUrl(url);
