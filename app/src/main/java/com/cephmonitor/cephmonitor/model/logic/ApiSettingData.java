@@ -22,8 +22,8 @@ public class ApiSettingData {
         total = getJSONObject(json);
         osdWarning = getLong("osd_warning", 1);
         osdError = getLong("osd_warning", 1);
-        monitorWarning = getLong("monitor_warning", 1);
-        monitorError = getLong("monitor_error", 1);
+        monitorWarning = getLong("mon_warning", 1);
+        monitorError = getLong("mon_error", 1);
         pgWarning = getFloat("pg_warning", 20) / 100;
         pgError = getFloat("pg_error", 20) / 100;
         usageWarning = getFloat("usage_warning", 70) / 100;
