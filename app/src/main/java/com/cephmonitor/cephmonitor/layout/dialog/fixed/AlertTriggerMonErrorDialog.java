@@ -28,8 +28,9 @@ public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final long value = getCalculator().getResultValue();
-                start("monitor_error", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/monitor/error", new Runnable() {
+                start("mon_error", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/mon/error", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerMonError(value);

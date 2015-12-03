@@ -27,9 +27,10 @@ public class AlertTriggerUsageWarningDialog extends AlertTriggerUsagePercentageD
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final float realValue = getCalculator().getResultValue();
                 int value = (int) (realValue * 100);
-                start("usage_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/usage/warning", new Runnable() {
+                start("usage_warning", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/usage/warning", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerUsageWarning(realValue);

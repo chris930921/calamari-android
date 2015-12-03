@@ -28,8 +28,9 @@ public class AlertTriggerOsdWarningDialog extends AlertTriggerMaxMinDialog {
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final long value = getCalculator().getResultValue();
-                start("osd_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/osd/warning", new Runnable() {
+                start("osd_warning", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/osd/warning", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerOsdWarning(value);

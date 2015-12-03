@@ -52,7 +52,7 @@ public class TimePeriodFragment extends Fragment {
 
         loadingDialog.show();
         LoginParams params = new LoginParams(getActivity());
-        taskQueue.add(new CephGetRequest(params.getSession(), "http://" + params.getHost() + "/api/v1/user/me/alert_rule", new Response.Listener<String>() {
+        taskQueue.add(new CephGetRequest(params.getSession(), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/alert_rule", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {

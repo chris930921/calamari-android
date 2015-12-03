@@ -28,9 +28,10 @@ public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDial
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final float realValue = getCalculator().getResultValue();
                 int value = (int) (realValue * 100);
-                start("pg_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/pg/warning", new Runnable() {
+                start("pg_warning", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/pg/warning", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerPgWarning(realValue);
