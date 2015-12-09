@@ -22,15 +22,16 @@ public class AlertTriggerPgWarningDialog extends AlertTriggerCountPercentageDial
         setTitle(getContext().getString(R.string.settings_alert_triggers_pg_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_pg));
         getCalculator().setTotal(storage.getAlertTriggerPgTotal());
-        getCalculator().setMaxPercentage(0.8F);
+        getCalculator().setMaxPercentage(storage.getAlertTriggerPgError());
         getCalculator().setMinPercentage(0.2F);
         getCalculator().setPartPercentage(storage.getAlertTriggerPgWarning());
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final float realValue = getCalculator().getResultValue();
                 int value = (int) (realValue * 100);
-                start("pg_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/pg/warning", new Runnable() {
+                start("pg_warning", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/pg/warning", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerPgWarning(realValue);

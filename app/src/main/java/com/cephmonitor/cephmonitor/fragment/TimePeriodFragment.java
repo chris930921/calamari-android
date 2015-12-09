@@ -52,15 +52,15 @@ public class TimePeriodFragment extends Fragment {
 
         loadingDialog.show();
         LoginParams params = new LoginParams(getActivity());
-        taskQueue.add(new CephGetRequest(params.getSession(), "http://" + params.getHost() + "/api/v1/user/me/alert_rule", new Response.Listener<String>() {
+        taskQueue.add(new CephGetRequest(params.getSession(), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/alert_rule", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
                     JSONObject total = new JSONObject(s);
                     long osdWarning = Long.parseLong(total.getString("osd_warning"));
                     long osdError = Long.parseLong(total.getString("osd_error"));
-                    long monitorWarning = Long.parseLong(total.getString("monitor_warning"));
-                    long monitorError = Long.parseLong(total.getString("monitor_error"));
+                    long monitorWarning = Long.parseLong(total.getString("mon_warning"));
+                    long monitorError = Long.parseLong(total.getString("mon_error"));
                     float pgWarning = Float.parseFloat(total.getString("pg_warning")) / 100;
                     float pgError = Float.parseFloat(total.getString("pg_error")) / 100;
                     float usageWarning = Float.parseFloat(total.getString("usage_warning")) / 100;
@@ -192,7 +192,6 @@ public class TimePeriodFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //
         final String rawData = object.toString();
         taskQueue.add(new CephPostRequest(params.getSession(), params.getCsrfToken(), rawData, url, new Response.Listener<String>() {
             @Override

@@ -402,7 +402,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private void setTextInput() {
-        host.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        host.setRawInputType(InputType.TYPE_CLASS_TEXT);
         port.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         name.setInputType(InputType.TYPE_CLASS_TEXT);
         password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);

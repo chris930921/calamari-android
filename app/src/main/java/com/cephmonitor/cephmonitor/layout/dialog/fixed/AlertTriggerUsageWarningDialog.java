@@ -21,15 +21,16 @@ public class AlertTriggerUsageWarningDialog extends AlertTriggerUsagePercentageD
         setTitle(getContext().getString(R.string.settings_alert_triggers_usage_warning_dialog_title));
         setCalculatorUnit(getContext().getString(R.string.other_calculater_unit_usage));
         getCalculator().setTotal(storage.getAlertTriggerUsageTotal());
-        getCalculator().setMaxPercentage(0.85F);
+        getCalculator().setMaxPercentage(storage.getAlertTriggerUsageError());
         getCalculator().setMinPercentage(0.05F);
         getCalculator().setPartPercentage(storage.getAlertTriggerUsageWarning());
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginParams params = new LoginParams(getContext());
                 final float realValue = getCalculator().getResultValue();
                 int value = (int) (realValue * 100);
-                start("usage_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/usage/warning", new Runnable() {
+                start("usage_warning", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/usage/warning", new Runnable() {
                     @Override
                     public void run() {
                         storage.setAlertTriggerUsageWarning(realValue);
