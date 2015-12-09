@@ -132,19 +132,19 @@ public class TimePeriodFragment extends Fragment {
         String title, fullTime;
 
         if (resourceId < 0 || resourceId == R.string.settings_time_period_normal_title) {
-            fullTime = FullTimeDecorator.change(settingStorage.getTimePeriodNormal());
+            fullTime = FullTimeDecorator.change(getActivity(), settingStorage.getTimePeriodNormal());
             title = getString(R.string.settings_time_period_normal_content);
             title = String.format(title, fullTime);
             layout.normalPeriod.setSubTitle(title);
         }
         if (resourceId < 0 || resourceId == R.string.settings_time_period_abnormal_title) {
-            fullTime = FullTimeDecorator.change(settingStorage.getTimerPeriodAbnormal());
+            fullTime = FullTimeDecorator.change(getActivity(), settingStorage.getTimerPeriodAbnormal());
             title = getString(R.string.settings_time_period_abnormal_content);
             title = String.format(title, fullTime);
             layout.abnormalPeriod.setSubTitle(title);
         }
         if (resourceId < 0 || resourceId == R.string.settings_time_period_server_abnormal_title) {
-            fullTime = FullTimeDecorator.change(settingStorage.getTimerPeriodServerAbnormal());
+            fullTime = FullTimeDecorator.change(getActivity(), settingStorage.getTimerPeriodServerAbnormal());
             title = getString(R.string.settings_time_period_server_abnormal_content);
             title = String.format(title, fullTime);
             layout.serverAbnormalPeriod.setSubTitle(title);

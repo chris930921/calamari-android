@@ -1,5 +1,9 @@
 package com.cephmonitor.cephmonitor.model.logic;
 
+import android.content.Context;
+
+import com.cephmonitor.cephmonitor.R;
+
 /**
  * Created by User on 5/26/2015.
  */
@@ -11,23 +15,24 @@ public class FullTimeDecorator {
     public static final long SECOND_OF_MIN = 60;
     public static final long SECOND = 1;
 
-    public static final String UNIT_OF_YEAR = "year";
-    public static final String UNIT_OF_MONTH = "month";
-    public static final String UNIT_OF_DAY = "day";
-    public static final String UNIT_OF_HOUR = "hour";
-    public static final String UNIT_OF_MIN = "minute";
-    public static final String UNIT_OF_SECOND = "second";
-
-    public static final String MULTIPLE_SYMBOL = "s";
+    public static final int UNIT_OF_YEAR = R.string.other_time_unit_year;
+    public static final int UNIT_OF_MONTH = R.string.other_time_unit_month;
+    public static final int UNIT_OF_DAY = R.string.other_time_unit_day;
+    public static final int UNIT_OF_HOUR = R.string.other_time_unit_hour;
+    public static final int UNIT_OF_MIN = R.string.other_time_unit_min;
+    public static final int UNIT_OF_SECOND = R.string.other_time_unit_second;
+    public static final int MULTIPLE_SYMBOL = R.string.other_time_unit_multiple;
 
     private long currentSeconds;
     private String result;
+    private Context context;
 
-    public static String change(long seconds) {
-        return new FullTimeDecorator().changeValue(seconds);
+    public static String change(Context context, long seconds) {
+        return new FullTimeDecorator(context).changeValue(seconds);
     }
 
-    private FullTimeDecorator() {
+    private FullTimeDecorator(Context context) {
+        this.context = context;
     }
 
     private String changeValue(long seconds) {
@@ -47,16 +52,16 @@ public class FullTimeDecorator {
         return result;
     }
 
-    private void connectSuitableTime(long unit, String unitText) {
+    private void connectSuitableTime(long unit, int unitText) {
         if (currentSeconds >= unit) {
             int count = (int) (currentSeconds / unit);
             String plurality = checkMultiple(count);
-            result = result + count + " " + unitText + plurality + " ";
+            result = result + count + " " + context.getString(unitText) + plurality + " ";
             currentSeconds = currentSeconds - (unit * count);
         }
     }
 
     private String checkMultiple(int count) {
-        return (count > 1) ? MULTIPLE_SYMBOL : "";
+        return (count > 1) ? context.getString(MULTIPLE_SYMBOL) : "";
     }
 }
