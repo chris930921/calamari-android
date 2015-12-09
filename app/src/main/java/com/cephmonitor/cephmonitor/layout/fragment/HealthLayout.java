@@ -14,6 +14,8 @@ import com.cephmonitor.cephmonitor.layout.component.card.HealthIopsCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthPoolsCard;
 import com.cephmonitor.cephmonitor.layout.component.card.HealthUsageCard;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleRelativeLayout;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -31,11 +33,13 @@ public class HealthLayout extends FractionAbleRelativeLayout {
 
     private Context context;
     private WH ruler;
+    private DesignSpec designSpec;
 
     public HealthLayout(Context context) {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.designSpec = ThemeManager.getStyle(getContext());
 
         setId(RandomId.get());
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -61,7 +65,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private ScrollView cardContainer() {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         params.addRule(ALIGN_PARENT_TOP);
 
         ScrollView v = new ScrollView(context);
@@ -72,20 +78,28 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private LinearLayout cardList() {
-        ScrollView.LayoutParams params = new ScrollView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        ScrollView.LayoutParams params = new ScrollView.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
 
         LinearLayout v = new LinearLayout(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setOrientation(LinearLayout.VERTICAL);
         v.setGravity(Gravity.CENTER_HORIZONTAL);
-        v.setPadding(ruler.getW(1.42), ruler.getW(1.42), ruler.getW(1.42), ruler.getW(1.42));
+        v.setPadding(
+                ruler.getW(designSpec.getMargin().getLeftRightTwo()),
+                ruler.getW(designSpec.getMargin().getTopBottomTwo()),
+                ruler.getW(designSpec.getMargin().getLeftRightTwo()),
+                ruler.getW(designSpec.getMargin().getTopBottomTwo()));
 
         return v;
     }
 
     private HealthBaseCard healthCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -106,7 +120,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard osdCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -125,7 +141,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard monCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -145,7 +163,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthPoolsCard poolsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthPoolsCard v = new HealthPoolsCard(context);
@@ -164,7 +184,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard hostsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -186,7 +208,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthBaseCard pgStatusCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthBaseCard v = new HealthBaseCard(context);
@@ -206,7 +230,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthUsageCard usageCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthUsageCard v = new HealthUsageCard(context);
@@ -226,7 +252,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private HealthIopsCard iopsCard() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
 
         HealthIopsCard v = new HealthIopsCard(context);
@@ -241,7 +269,9 @@ public class HealthLayout extends FractionAbleRelativeLayout {
     }
 
     private View cardDivider() {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ruler.getH(3));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                ruler.getW(designSpec.getMargin().getTopBottomTwo()));
         params.weight = 1;
 
         View v = new LinearLayout(context);

@@ -24,7 +24,7 @@ public class LooperService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (isFirstOpen) {
-            startForeground(1, new NotificationCompat.Builder(this).setContentTitle("").build());
+            startForeground(0, new NotificationCompat.Builder(this).setContentTitle("").build());
             init();
             isFirstOpen = false;
         }

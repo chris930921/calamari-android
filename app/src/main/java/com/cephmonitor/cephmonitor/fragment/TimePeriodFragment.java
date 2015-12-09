@@ -16,11 +16,12 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.TimePeriodPickerDialog;
 import com.cephmonitor.cephmonitor.layout.fragment.TimePeriodLayout;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.logic.ApiSettingData;
 import com.cephmonitor.cephmonitor.model.logic.FullTimeDecorator;
 import com.cephmonitor.cephmonitor.model.logic.SecondToTime;
+import com.cephmonitor.cephmonitor.model.network.RemoteSettingToLocal;
 import com.cephmonitor.cephmonitor.receiver.ChangePeriodReceiver;
 import com.resourcelibrary.model.network.api.MutipleCookieHttpStack;
-import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephPostRequest;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
@@ -30,7 +31,6 @@ import org.json.JSONObject;
 
 public class TimePeriodFragment extends Fragment {
     public TimePeriodLayout layout;
-    //    public SettingStorage settingStorage;
     public static final int REFRESH_ALL = -1;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,49 +51,20 @@ public class TimePeriodFragment extends Fragment {
         layout.serverAbnormalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_server_abnormal_title));
 
         loadingDialog.show();
-        LoginParams params = new LoginParams(getActivity());
-        taskQueue.add(new CephGetRequest(params.getSession(), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/alert_rule", new Response.Listener<String>() {
+        RemoteSettingToLocal remoteSettingToLocal = new RemoteSettingToLocal(getActivity(), new LoginParams(getActivity()));
+        remoteSettingToLocal.access(new RemoteSettingToLocal.AccessListener() {
             @Override
-            public void onResponse(String s) {
-                try {
-                    JSONObject total = new JSONObject(s);
-                    long osdWarning = Long.parseLong(total.getString("osd_warning"));
-                    long osdError = Long.parseLong(total.getString("osd_error"));
-                    long monitorWarning = Long.parseLong(total.getString("mon_warning"));
-                    long monitorError = Long.parseLong(total.getString("mon_error"));
-                    float pgWarning = Float.parseFloat(total.getString("pg_warning")) / 100;
-                    float pgError = Float.parseFloat(total.getString("pg_error")) / 100;
-                    float usageWarning = Float.parseFloat(total.getString("usage_warning")) / 100;
-                    float usageError = Float.parseFloat(total.getString("usage_error")) / 100;
-                    long generalPolling = Long.parseLong(total.getString("general_polling"));
-                    long abnormalStatePolling = Long.parseLong(total.getString("abnormal_state_polling"));
-                    long abnormalServerStatePolling = Long.parseLong(total.getString("abnormal_server_state_polling"));
-
-                    SettingStorage settingStorage = new SettingStorage(getActivity());
-                    settingStorage.setAlertTriggerOsdWarning(osdWarning);
-                    settingStorage.setAlertTriggerOsdError(osdError);
-                    settingStorage.setAlertTriggerMonWarning(monitorWarning);
-                    settingStorage.setAlertTriggerMonError(monitorError);
-                    settingStorage.setAlertTriggerPgWarning(pgWarning);
-                    settingStorage.setAlertTriggerPgError(pgError);
-                    settingStorage.setAlertTriggerUsageWarning(usageWarning);
-                    settingStorage.setAlertTriggerUsageError(usageError);
-                    settingStorage.setTimePeriodNormal(generalPolling);
-                    settingStorage.setTimePeriodAbnormal(abnormalStatePolling);
-                    settingStorage.setTimePeriodServerAbnormal(abnormalServerStatePolling);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void success(ApiSettingData data) {
                 refreshSubTitle(REFRESH_ALL);
                 loadingDialog.cancel();
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void fail(VolleyError volleyError) {
                 Toast.makeText(getActivity(), "Load failed.", Toast.LENGTH_SHORT).show();
                 loadingDialog.cancel();
             }
-        }));
+        });
     }
 
     private View.OnClickListener showDialog(final int title) {

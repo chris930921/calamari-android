@@ -57,6 +57,7 @@ public class ClickAbleTabButton extends Button {
 
     public void setClickColor(int clickColor) {
         this.clickColor = clickColor;
+        this.bottomLinePaint.setColor(clickColor);
         invalidate();
     }
 
@@ -101,17 +102,18 @@ public class ClickAbleTabButton extends Button {
         float bottomLineWidth = 8;
         float halfBottomLineWidth = bottomLineWidth / 2;
         bottomLinePaint.setStrokeWidth(bottomLineWidth);
-        bottomLinePaint.setColor((isActive) ? clickColor : Color.TRANSPARENT);
 
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), fillPaint);
         canvas.drawLine(0, halfStrokeWidth, canvas.getWidth(), halfStrokeWidth, strokePaint);
         canvas.drawLine(
                 canvas.getWidth() - halfStrokeWidth, canvas.getHeight() * 0.2F,
                 canvas.getWidth() - halfStrokeWidth, canvas.getHeight() * 0.8F, strokePaint);
-        canvas.drawLine(
-                0, canvas.getHeight() - halfBottomLineWidth,
-                canvas.getWidth(), canvas.getHeight() - halfBottomLineWidth, bottomLinePaint);
 
+        if (isActive) {
+            canvas.drawLine(
+                    0, canvas.getHeight() - halfBottomLineWidth,
+                    canvas.getWidth(), canvas.getHeight() - halfBottomLineWidth, bottomLinePaint);
+        }
         super.onDraw(canvas);
     }
 }
