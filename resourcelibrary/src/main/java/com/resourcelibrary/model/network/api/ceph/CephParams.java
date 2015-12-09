@@ -46,6 +46,16 @@ public class CephParams {
         this.password = value;
     }
 
+    private String csrfToken = "";
+
+    public String getCsrfToken() {
+        return csrfToken;
+    }
+
+    public void setCsrfToken(String value) {
+        this.csrfToken = value;
+    }
+
     private String session = "";
 
     public String getSession() {

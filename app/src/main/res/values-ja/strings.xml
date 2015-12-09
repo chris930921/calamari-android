@@ -12,10 +12,11 @@
 	<string name="login_fail_content">\u0020 が正しくありません。</string>
 	<string name="login_fail_confirm">確認</string>
 	<string name="login_fail_sing_in">ユーザー名またはパスワードが違います</string>
+	<string name="login_fail_server_error">Failed to connect to server !</string>
 	<string name="login_sign_in">ログイン</string>
 	<string name="login_version">Ceph モニター版\u0020</string>
 	<string name="login_from">から</string>
-	<string name="login_developer">inWinstack によって開発され</string>
+	<string name="login_developer">によって開発され</string>
 
 	// MainActivity
 	<string name="main_activity_option_logs">ログ</string>

@@ -6,6 +6,7 @@ import android.view.View;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerMaxMinDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
 /**
  * Created by chriske on 2015/9/20.
@@ -27,8 +28,13 @@ public class AlertTriggerOsdWarningDialog extends AlertTriggerMaxMinDialog {
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                long value = getCalculator().getResultValue();
-                storage.setAlertTriggerOsdWarning(value);
+                final long value = getCalculator().getResultValue();
+                start("osd_warning", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/osd/warning", new Runnable() {
+                    @Override
+                    public void run() {
+                        storage.setAlertTriggerOsdWarning(value);
+                    }
+                });
             }
         });
     }

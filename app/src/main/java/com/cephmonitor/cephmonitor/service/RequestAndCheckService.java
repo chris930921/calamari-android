@@ -34,6 +34,7 @@ import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RequestAndCheckService extends Service {
     private LoginParams requestParams;
@@ -64,6 +65,7 @@ public class RequestAndCheckService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         requestParams = new LoginParams(this);
+        ShowLog.d("Start checking at " + new Date().toString() + ".");
         ShowLog.d("位址:" + requestParams.getHost());
         ShowLog.d("Port:" + requestParams.getPort());
         ShowLog.d("名稱:" + requestParams.getName());
@@ -182,8 +184,6 @@ public class RequestAndCheckService extends Service {
     private ClusterV1Space v1Space;
 
     private void dealWithClusterSpace(final String response) throws JSONException {
-        ShowLog.d("成功取得所有資料時，恢復正常檢查週期。");
-        ChangePeriodReceiver.sendDefaultMessage(this);
         v1Space = new ClusterV1Space(response);
 
         int trueCount = 0;
@@ -200,6 +200,9 @@ public class RequestAndCheckService extends Service {
         if (trueCount != clusterSpaceCheckList.size() + healthCountCheckList.size()) {
             ShowLog.d("檢查到錯誤，進入錯誤檢查週期。");
             ChangePeriodReceiver.sendCheckMessage(this);
+        }else{
+            ShowLog.d("成功取得所有資料且沒有錯誤，恢復正常檢查週期。");
+            ChangePeriodReceiver.sendDefaultMessage(this);
         }
     }
 

@@ -7,10 +7,12 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginFailDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginLanguageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.LanguageConfig;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
+import com.cephmonitor.cephmonitor.model.network.CheckVolleyError;
 import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.cephmonitor.cephmonitor.service.ServiceLauncher;
 import com.resourcelibrary.model.logic.emptycheck.EmptyChecker;
@@ -20,7 +22,6 @@ import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.network.api.ceph.single.LoginPostRequest;
 import com.resourcelibrary.model.view.dialog.CheckExitDialog;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
-import com.resourcelibrary.model.view.dialog.MessageDialog;
 
 import java.util.ArrayList;
 
@@ -42,24 +43,26 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         settingStorage = new SettingStorage(this);
         languageConfig = new LanguageConfig(this);
         languageConfig.setLocale(settingStorage.getLanguage());
-        layout = new LoginLayout(this);
-        setContentView(layout);
-
-        loginInfo = new LoginParams(this);
-        emptyChecker = new EmptyChecker();
-        activity = this;
-        params = new LoginParams(this);
-        loadingDialog = new LoadingDialog(this);
-
-        loginLanguageDialog = new LoginLanguageDialog(this);
 
         ServiceLauncher.startLooperService(this);
+        RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
+
+        activity = this;
+        loginInfo = new LoginParams(this);
+        loadingDialog = new LoadingDialog(this);
         if (loginInfo.isLogin()) {
             ActivityLauncher.goMainActivity(activity);
             loadingDialog.cancel();
             activity.finish();
+            return;
         }
-        RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
+
+        layout = new LoginLayout(this);
+        setContentView(layout);
+
+        emptyChecker = new EmptyChecker();
+        params = new LoginParams(this);
+        loginLanguageDialog = new LoginLanguageDialog(this);
         loginLanguageDialog.setSaveClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,26 +154,57 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         public void onErrorResponse(VolleyError volleyError) {
             loadingDialog.cancel();
             params.failLogin();
-            showLoginErrorDialog();
+
+            new CheckVolleyError(activity).setEvent(CheckVolleyError.ERROR_TIME_OUT, new CheckVolleyError.OnError() {
+                @Override
+                public void onError(String responseBody) {
+                    showServerErrorDialog();
+                }
+            }).setEvent(CheckVolleyError.ERROR_SERVER_ERROR, new CheckVolleyError.OnError() {
+                @Override
+                public void onError(String responseBody) {
+                    if (responseBody.contains("No authentication challenges found")) {
+                        showLoginFailDialog();
+                    } else {
+                        showServerErrorDialog();
+                    }
+                }
+            }).setEvent(CheckVolleyError.ERROR_404, new CheckVolleyError.OnError() {
+                @Override
+                public void onError(String responseBody) {
+                    showServerErrorDialog();
+                }
+            }).setEvent(CheckVolleyError.ERROR_UNKNOWN, new CheckVolleyError.OnError() {
+                @Override
+                public void onError(String responseBody) {
+                    showLoginFailDialog();
+                }
+            }).done(volleyError);
         }
     };
 
-    private void showLoginErrorDialog() {
-        MessageDialog dialog = new MessageDialog(activity);
-        dialog.setOnConfirmClickListener(null);
-        String title = getResources().getString(R.string.login_fail_title);
-        String content = getResources().getString(R.string.login_fail_sing_in);
-        String confirm = getResources().getString(R.string.login_fail_confirm);
-        dialog.show(title, content, confirm);
+    private void showServerErrorDialog() {
+        LoginFailDialog dialog = new LoginFailDialog(activity);
+        dialog.setConfirmClickEvent(null);
+        dialog.setContent(getResources().getString(R.string.login_fail_server_error));
+        dialog.show();
+    }
+
+    private void showLoginFailDialog() {
+        LoginFailDialog dialog = new LoginFailDialog(activity);
+        dialog.setConfirmClickEvent(null);
+        dialog.setContent(getResources().getString(R.string.login_fail_sing_in));
+        dialog.show();
     }
 
     private void showNoValueDialog(int noValueInputNameResource) {
-        MessageDialog dialog = new MessageDialog(activity);
-        dialog.setOnConfirmClickListener(clickNoValueConfirm);
-        String title = getResources().getString(R.string.login_fail_title);
         String content = getString(noValueInputNameResource) + getResources().getString(R.string.login_fail_content);
-        String confirm = getResources().getString(R.string.login_fail_confirm);
-        dialog.show(title, content, confirm);
+
+        LoginFailDialog dialog = new LoginFailDialog(activity);
+        dialog.setConfirmClickEvent(clickNoValueConfirm);
+        dialog.setContent(content);
+        dialog.show();
+
     }
 
     private View.OnClickListener clickNoValueConfirm = new View.OnClickListener() {

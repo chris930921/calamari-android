@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class ClockSetMoudle implements View.OnTouchListener {
+public class ClockSetModule implements View.OnTouchListener {
     public int showsixty = 0;
     public int showtwentyfour = 0;
     public View view;
@@ -32,7 +32,7 @@ public class ClockSetMoudle implements View.OnTouchListener {
     private static float angle = (float) Math.PI / 6;
 
 
-    public ClockSetMoudle(Context context) {
+    public ClockSetModule(Context context) {
         this.context = context;
         init();
     }
@@ -232,7 +232,7 @@ public class ClockSetMoudle implements View.OnTouchListener {
                 canvas.drawText(rightNumToStr, x / 200 * 122, y / 2 + x / 200 * 5, centerTextright);
             }
         };
-        view.setOnTouchListener(ClockSetMoudle.this);
+        view.setOnTouchListener(ClockSetModule.this);
     }
 
     @Override

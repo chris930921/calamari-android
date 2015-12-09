@@ -6,6 +6,7 @@ import android.view.View;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerUsagePercentageDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
 /**
  * Created by chriske on 2015/10/10.
@@ -27,7 +28,14 @@ public class AlertTriggerUsageErrorDialog extends AlertTriggerUsagePercentageDia
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                storage.setAlertTriggerUsageError(getCalculator().getResultValue());
+                final float realValue = getCalculator().getResultValue();
+                int value = (int) (realValue * 100);
+                start("usage_error", String.valueOf(value), "http://" + new LoginParams(getContext()).getHost() + "/api/v1/user/me/usage/error", new Runnable() {
+                    @Override
+                    public void run() {
+                        storage.setAlertTriggerUsageError(realValue);
+                    }
+                });
             }
         });
     }

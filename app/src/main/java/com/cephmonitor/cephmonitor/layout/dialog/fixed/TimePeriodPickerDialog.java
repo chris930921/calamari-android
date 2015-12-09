@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
-import com.cephmonitor.cephmonitor.layout.component.other.ClockSetMoudle;
+import com.cephmonitor.cephmonitor.layout.component.other.ClockSetModule;
 import com.cephmonitor.cephmonitor.layout.dialog.reuse.SettingDialog;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
@@ -17,7 +17,7 @@ import com.resourcelibrary.model.view.WH;
  * Created by chriske on 2015/9/20.
  */
 public class TimePeriodPickerDialog extends SettingDialog {
-    public ClockSetMoudle clockSetModule;
+    public ClockSetModule clockSetModule;
     public WH ruler;
 
     private DesignSpec designSpec;
@@ -38,12 +38,12 @@ public class TimePeriodPickerDialog extends SettingDialog {
         });
     }
 
-    private ClockSetMoudle clockSetModule() {
+    private ClockSetModule clockSetModule() {
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ruler.getW(80));
 
-        ClockSetMoudle v = new ClockSetMoudle(getContext());
+        ClockSetModule v = new ClockSetModule(getContext());
         v.view.setId(RandomId.get());
         v.view.setLayoutParams(params);
 
@@ -55,7 +55,7 @@ public class TimePeriodPickerDialog extends SettingDialog {
     }
 
     public void setOkClick(final OnClickListener event) {
-        addButton(R.string.settings_dialog_ok, designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
+        addButton(R.string.settings_dialog_save, designSpec.getPrimaryColors().getPrimary(), new OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();
