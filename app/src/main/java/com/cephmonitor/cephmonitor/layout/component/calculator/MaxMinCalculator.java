@@ -52,6 +52,8 @@ public class MaxMinCalculator extends OriginCalculator {
         fieldValue.setText("");
         resultValue = 0;
         validStateChangeEvent.onInvalidEvent();
+        // 要繪製其他元件來刷新 fieldValue 元件，不然Clear無法動作，系統Bug之一。
+        fieldUnit.setText(fieldUnit.getText());
     }
 
     public void setResultValue(long value) {

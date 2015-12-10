@@ -18,6 +18,7 @@ public class CheckVolleyError {
     public static final String ERROR_TIME_OUT = "ERROR_TIME_OUT";
     public static final String ERROR_SERVER_ERROR = "ERROR_SERVER_ERROR";
     public static final String ERROR_404 = "404";
+    public static final String ERROR_401 = "401";
 
     private Context context;
     private VolleyError volleyError;

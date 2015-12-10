@@ -151,7 +151,7 @@ public class MonHealthCardItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._666666);
@@ -166,7 +166,7 @@ public class MonHealthCardItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
+        v.setTextSize(14);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTextColor(ColorTable._666666);
 
