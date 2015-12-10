@@ -107,7 +107,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(20));
+        v.setTextSize(20);
         v.setTextColor(ColorTable._666666);
         v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER_VERTICAL);
@@ -122,7 +122,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(14));
+        v.setTextSize(14);
         v.setTextColor(ColorTable._999999);
         v.setGravity(Gravity.CENTER_VERTICAL);
 
@@ -162,7 +162,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setTextColor(ColorTable._666666);
         v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER_VERTICAL);
@@ -178,7 +178,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setTextColor(ColorTable._666666);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.pool_list_id_replicas);
@@ -219,7 +219,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setTextColor(ColorTable._666666);
         v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER_VERTICAL);
@@ -235,7 +235,7 @@ public class PoolListItem extends RelativeLayout {
         TextView v = new TextView(context);
         v.setId(GenerateViewId.get());
         v.setLayoutParams(params);
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setTextColor(ColorTable._666666);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setText(R.string.pool_list_id_pgs);

@@ -454,7 +454,12 @@ public class LoginLayout extends RelativeLayout {
 
     public void setNoValueInput(View v) {
         recoverInputStatus();
-        BorderEditText input = ((BorderEditText) v);
-        input.warningColor();
+        if (v instanceof BorderEditText) {
+            BorderEditText input = ((BorderEditText) v);
+            input.warningColor();
+        } else if (v instanceof BorderAutoCompleteEditText) {
+            BorderAutoCompleteEditText input = ((BorderAutoCompleteEditText) v);
+            input.warningColor();
+        }
     }
 }

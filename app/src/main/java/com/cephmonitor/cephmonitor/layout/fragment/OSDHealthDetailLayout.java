@@ -204,7 +204,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
     private TextView getTitle(int stringResource) {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
-        v.setTextSize(ruler.getTextSize(16));
+        v.setTextSize(16);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._666666);
@@ -216,7 +216,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
     private TextView getContent() {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
-        v.setTextSize(ruler.getTextSize(14));
+        v.setTextSize(14);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTextColor(ColorTable._666666);
         v.setText(" ");

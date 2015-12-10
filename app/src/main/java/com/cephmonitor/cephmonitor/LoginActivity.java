@@ -201,6 +201,11 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
                 public void onError(String responseBody) {
                     showServerErrorDialog();
                 }
+            }).setEvent(CheckVolleyError.ERROR_401, new CheckVolleyError.OnError() {
+                @Override
+                public void onError(String responseBody) {
+                    showLoginFailDialog();
+                }
             }).setEvent(CheckVolleyError.ERROR_UNKNOWN, new CheckVolleyError.OnError() {
                 @Override
                 public void onError(String responseBody) {
