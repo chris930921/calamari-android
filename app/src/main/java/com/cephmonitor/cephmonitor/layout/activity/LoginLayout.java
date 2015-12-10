@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.component.button.SelectLanguageButton;
+import com.cephmonitor.cephmonitor.layout.component.edittext.BorderAutoCompleteEditText;
 import com.cephmonitor.cephmonitor.layout.component.edittext.BorderEditText;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
@@ -30,9 +32,9 @@ import com.resourcelibrary.model.view.button.RoundFillColorButton;
 public class LoginLayout extends RelativeLayout {
     public ImageView inwinLogo;
 
-    public BorderEditText host;
-    public BorderEditText port;
-    public BorderEditText name;
+    public BorderAutoCompleteEditText host;
+    public BorderAutoCompleteEditText port;
+    public BorderAutoCompleteEditText name;
     public BorderEditText password;
     public SelectLanguageButton language;
 
@@ -148,37 +150,38 @@ public class LoginLayout extends RelativeLayout {
         return v;
     }
 
-    private BorderEditText host(View relativeView) {
+    private BorderAutoCompleteEditText host(View relativeView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = imageBottomMargin;
 
-        BorderEditText v = addInput(R.string.login_host);
+        BorderAutoCompleteEditText v = addAutoInput(R.string.login_host);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private BorderEditText port(View relativeView) {
+
+    private BorderAutoCompleteEditText port(View relativeView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
 
-        BorderEditText v = addInput(R.string.login_port);
+        BorderAutoCompleteEditText v = addAutoInput(R.string.login_port);
         v.setLayoutParams(params);
 
         return v;
     }
 
-    private BorderEditText name(View relativeView) {
+    private BorderAutoCompleteEditText name(View relativeView) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
 
-        BorderEditText v = addInput(R.string.login_name);
+        BorderAutoCompleteEditText v = addAutoInput(R.string.login_name);
         v.setLayoutParams(params);
 
         return v;
@@ -226,6 +229,40 @@ public class LoginLayout extends RelativeLayout {
                 v.setHint(hintId);
             }
         });
+        v.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                v.setSelection(v.getText().length());
+            }
+        });
+
+        return v;
+    }
+
+    private BorderAutoCompleteEditText addAutoInput(final int hintId) {
+        final BorderAutoCompleteEditText v = new BorderAutoCompleteEditText(context);
+        v.setId(RandomId.get());
+        v.setSingleLine(true);
+        v.setGravity(Gravity.CENTER_VERTICAL);
+        v.setPadding(ruler.getW(6.12), 0, ruler.getW(6.12), 0);
+        v.setHint(hintId);
+        v.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+        v.setTypeface(null, Typeface.BOLD);
+        v.setBackgroundColor(inputBackgroundColor);
+        inputTextStyle.style(v);
+        intermediary.refreshViewManager.addTask(new Runnable() {
+            @Override
+            public void run() {
+                v.setHint(hintId);
+            }
+        });
+        v.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                v.setSelection(v.getText().length());
+            }
+        });
+        v.setImeOptions(EditorInfo.IME_ACTION_NEXT);
 
         return v;
     }

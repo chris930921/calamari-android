@@ -21,16 +21,17 @@ public class ApiSettingData {
     public ApiSettingData(String json) {
         total = getJSONObject(json);
         osdWarning = getLong("osd_warning", 1);
-        osdError = getLong("osd_warning", 1);
+        osdError = getLong("osd_error", 1);
         monitorWarning = getLong("mon_warning", 1);
         monitorError = getLong("mon_error", 1);
-        pgWarning = getFloat("pg_warning", 20) / 100;
-        pgError = getFloat("pg_error", 20) / 100;
-        usageWarning = getFloat("usage_warning", 70) / 100;
-        usageError = getFloat("usage_error", 85) / 100;
+        pgWarning = getFloat("pg_warning", 0.20F);
+        pgError = getFloat("pg_error", 0.20F);
+        usageWarning = getFloat("usage_warning", 0.70F);
+        usageError = getFloat("usage_error", 0.85F);
         generalPolling = getLong("general_polling", 30);
         abnormalStatePolling = getLong("abnormal_state_polling", 60 * 2);
-        enableEmailNotify = getLong("enable_email_notify", 1) != 0;
+        abnormalServerStatePolling = getLong("abnormal_server_state_polling", 60 * 60);
+        enableEmailNotify = getBoolean("enable_email_notify", true);
     }
 
     private JSONObject getJSONObject(String json) {
@@ -44,7 +45,7 @@ public class ApiSettingData {
 
     private long getLong(String key, long defaultValue) {
         try {
-            return Long.parseLong(total.getString(key));
+            return total.getLong(key);
         } catch (JSONException e) {
             e.printStackTrace();
             return defaultValue;
@@ -53,7 +54,16 @@ public class ApiSettingData {
 
     private float getFloat(String key, float defaultValue) {
         try {
-            return Float.parseFloat(total.getString(key));
+            return (total.getLong(key) / 100F);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return defaultValue;
+        }
+    }
+
+    private boolean getBoolean(String key, boolean defaultValue) {
+        try {
+            return total.getBoolean(key);
         } catch (JSONException e) {
             e.printStackTrace();
             return defaultValue;

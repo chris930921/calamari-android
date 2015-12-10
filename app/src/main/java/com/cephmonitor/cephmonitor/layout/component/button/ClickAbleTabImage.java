@@ -89,6 +89,7 @@ public class ClickAbleTabImage extends RelativeLayout {
     public void setClickColor(int clickColor, int clickImageResource) {
         this.clickColor = clickColor;
         this.clickImageResource = clickImageResource;
+        this.bottomLinePaint.setColor(clickColor);
         invalidate();
     }
 
@@ -137,7 +138,6 @@ public class ClickAbleTabImage extends RelativeLayout {
         float bottomLineWidth = 8;
         float halfBottomLineWidth = bottomLineWidth / 2;
         bottomLinePaint.setStrokeWidth(bottomLineWidth);
-        bottomLinePaint.setColor((isActive) ? clickColor : Color.TRANSPARENT);
 
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), fillPaint);
         canvas.drawLine(0, halfStrokeWidth, canvas.getWidth(), halfStrokeWidth, strokePaint);
@@ -146,9 +146,11 @@ public class ClickAbleTabImage extends RelativeLayout {
                     canvas.getWidth() - halfStrokeWidth, canvas.getHeight() * 0.2F,
                     canvas.getWidth() - halfStrokeWidth, canvas.getHeight() * 0.8F, strokePaint);
         }
-        canvas.drawLine(
-                0, canvas.getHeight() - halfBottomLineWidth,
-                canvas.getWidth(), canvas.getHeight() - halfBottomLineWidth, bottomLinePaint);
+        if (isActive) {
+            canvas.drawLine(
+                    0, canvas.getHeight() - halfBottomLineWidth,
+                    canvas.getWidth(), canvas.getHeight() - halfBottomLineWidth, bottomLinePaint);
+        }
 
         super.dispatchDraw(canvas);
     }

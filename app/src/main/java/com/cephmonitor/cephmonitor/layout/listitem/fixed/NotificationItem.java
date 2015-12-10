@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.RoundLeftBarItem;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
@@ -29,7 +28,6 @@ public class NotificationItem extends RoundLeftBarItem {
     private int statusBarWidth;
     private int statusBarColor;
 
-    public View download;
     public TextView message;
     public RelativeLayout bottomContainer;
     public View statusIcon;
@@ -44,7 +42,7 @@ public class NotificationItem extends RoundLeftBarItem {
     private int backgroundColor;
     private int topBottomPaddingOne;
     private int leftRightPaddingOne;
-    private int downloadIconSize;
+    private int stateIconSize;
 
     public NotificationItem(Context context) {
         super(context);
@@ -61,7 +59,7 @@ public class NotificationItem extends RoundLeftBarItem {
         backgroundColor = designSpec.getPrimaryColors().getBackgroundThree();
         topBottomPaddingOne = ruler.getW(designSpec.getPadding().getTopBottomOne());
         leftRightPaddingOne = ruler.getW(designSpec.getPadding().getLeftRightOne());
-        downloadIconSize = ruler.getW(designSpec.getIconSize().getSubhead());
+        stateIconSize = ruler.getW(designSpec.getIconSize().getSubhead());
 
         setViewBackgroundColor(backgroundColor);
         setViewPadding(leftRightPaddingOne, topBottomPaddingOne, leftRightPaddingOne, topBottomPaddingOne);
@@ -71,14 +69,12 @@ public class NotificationItem extends RoundLeftBarItem {
         setBorderWidth(3);
         setRadius(10);
 
-        download = download();
-        message = message(download);
+        message = message();
         bottomContainer = bottomContainer(message);
         statusIcon = statusIcon();
         status = status(statusIcon);
         triggerTime = triggerTime(status);
 
-        addView(download);
         addView(message);
         addView(bottomContainer);
         bottomContainer.addView(statusIcon);
@@ -86,23 +82,10 @@ public class NotificationItem extends RoundLeftBarItem {
         bottomContainer.addView(triggerTime);
     }
 
-    protected View download() {
-        LayoutParams params = new LayoutParams(downloadIconSize, downloadIconSize);
-        params.addRule(ALIGN_PARENT_RIGHT);
-        params.leftMargin = leftRightPaddingOne;
-
-        View v = new View(getContext());
-        v.setId(RandomId.get());
-        v.setLayoutParams(params);
-        v.setBackgroundResource(R.drawable.icon037);
-
-        return v;
-    }
-
-    protected TextView message(View rightView) {
+    protected TextView message() {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.addRule(ALIGN_PARENT_TOP);
-        params.addRule(LEFT_OF, rightView.getId());
+        params.addRule(ALIGN_PARENT_LEFT);
         params.bottomMargin = topBottomPaddingOne;
 
         TextView v = new TextView(getContext());
@@ -127,7 +110,7 @@ public class NotificationItem extends RoundLeftBarItem {
 
 
     protected View statusIcon() {
-        LayoutParams params = new LayoutParams(downloadIconSize, downloadIconSize);
+        LayoutParams params = new LayoutParams(stateIconSize, stateIconSize);
         params.addRule(ALIGN_PARENT_TOP);
         params.addRule(CENTER_VERTICAL);
 
@@ -182,11 +165,6 @@ public class NotificationItem extends RoundLeftBarItem {
         this.status.setText(status);
         this.statusIcon.setBackgroundResource(statusConstant.getStatusIconGroup().get(status));
         this.status.setTextColor(statusConstant.getStatusTextColorGroup().get(status));
-        if (status.equals(CephNotificationConstant.STATUS_RESOLVED)) {
-            download.setVisibility(VISIBLE);
-        } else {
-            download.setVisibility(GONE);
-        }
     }
 
     public void setLevel(int level) {

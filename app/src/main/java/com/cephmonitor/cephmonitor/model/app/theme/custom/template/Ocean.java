@@ -398,7 +398,7 @@ public class Ocean extends DesignSpec {
 
             @Override
             public float getMessage() {
-                return 30F;
+                return 50F;
             }
 
             @Override

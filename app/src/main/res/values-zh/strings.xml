@@ -24,16 +24,16 @@
 	<string name="main_activity_option_logout">登出</string>
 
 	<string name="main_activity_fragment_health">儀表板</string>
-	<string name="main_activity_fragment_health_detail">健康詳細資訊</string>
-	<string name="main_activity_fragment_osd_health">OSD 健康</string>
-	<string name="main_activity_fragment_mon_health">監視器健康</string>
+	<string name="main_activity_fragment_health_detail">健康狀態詳細資訊</string>
+	<string name="main_activity_fragment_osd_health">OSD 健康狀態</string>
+	<string name="main_activity_fragment_mon_health">監控節點數健康狀態</string>
 	<string name="main_activity_fragment_notification">通知</string>
 	<string name="main_activity_fragment_notification_detail">通知詳細資訊</string>
 	<string name="main_activity_fragment_host_health">主機列表</string>
 	<string name="main_activity_fragment_pg_status">PG 狀態</string>
 	<string name="main_activity_fragment_usage_status">使用量狀態</string>
-	<string name="main_activity_fragment_pool_iops">集區 IOPS</string>
-	<string name="main_activity_fragment_pool_list">集區列表</string>
+	<string name="main_activity_fragment_pool_iops">資源池 IOPS</string>
+	<string name="main_activity_fragment_pool_list">資源池列表</string>
 
 	<string name="main_activity_fragment_tab_summary">總結</string>
 	<string name="main_activity_fragment_tab_all_cpus">整體 CPUs</string>
@@ -44,32 +44,32 @@
 	<string name="health_card_status_warning">警告</string>
 	<string name="health_card_status_error">錯誤</string>
 
-	<string name="health_card_health">健康</string>
+	<string name="health_card_health">健康狀態</string>
 	<string name="health_card_ago">前</string>
 
 	<string name="health_card_osd">OSD</string>
-	<string name="health_card_in_and_up">In \u0026 Up</string>
+	<string name="health_card_in_and_up">正常運作中</string>
 
-	<string name="health_card_mon">監視器</string>
-	<string name="health_card_quorum">Quorum</string>
+	<string name="health_card_mon">監控節點數</string>
+	<string name="health_card_quorum">台</string>
 
-	<string name="health_card_pools">集區</string>
-	<string name="health_card_active">活躍</string>
+	<string name="health_card_pools">資源池</string>
+	<string name="health_card_active"></string>
 
-	<string name="health_card_hosts">主機</string>
-	<string name="health_card_reporting">報告</string>
+	<string name="health_card_hosts">主機數</string>
+	<string name="health_card_reporting">運作中</string>
 
 	<string name="health_card_pg">PG 狀態</string>
-	<string name="health_card_clean">乾淨</string>
-	<string name="health_card_Working">工作中</string>
-	<string name="health_card_Dirty">污染</string>
+	<string name="health_card_clean">Clean</string>
+	<string name="health_card_Working">Working</string>
+	<string name="health_card_Dirty">Dirty</string>
 
 	<string name="health_card_usage">使用量</string>
 	<string name="health_card_used">已使用</string>
 	<string name="health_card_available">可使用</string>
 
 	<string name="health_card_iops">IOPS</string>
-	<string name="health_card_read_write">- 讀取 + 寫入</string>
+	<string name="health_card_read_write">讀 + 寫</string>
 
 	<string name="health_card_warnings">警告</string>
 	<string name="health_card_errors">錯誤</string>
@@ -174,7 +174,7 @@
 	<string name="osd_detail_host_name">主機名稱</string>
 	<string name="osd_detail_public_ip">公共 IP</string>
 	<string name="osd_detail_cluster_ip">叢集 IP</string>
-	<string name="osd_detail_pools">集區</string>
+	<string name="osd_detail_pools">資源池</string>
 	<string name="osd_detail_re_weight">Reweight</string>
 	<string name="osd_detail_uuid">UUID</string>
 
@@ -294,12 +294,12 @@
 	<string name="settings_alert_triggers_usage_error">錯誤</string>
 	<string name="settings_alert_triggers_usage_error_description">使用量超過 %1$s %% 時觸發警告通知</string>
 	<string name="settings_alert_triggers_usage_error_dialog_title">使用量錯誤</string>
-	<string name="settings_time_period_normal_title">Normal Status Period</string>
-	<string name="settings_time_period_normal_content">Check the system health every %1$s</string>
-	<string name="settings_time_period_abnormal_title">Abnormal Status Period</string>
-	<string name="settings_time_period_abnormal_content">Check the system health every %1$s</string>
-	<string name="settings_time_period_server_abnormal_title">Server Abnormal Status Period</string>
-	<string name="settings_time_period_server_abnormal_content">Check the server health every %1$s</string>
+	<string name="settings_time_period_normal_title">預設監控週期</string>
+	<string name="settings_time_period_normal_content">每 %1$s 檢查一次系統健康狀態</string>
+	<string name="settings_time_period_abnormal_title">異常監控週期</string>
+	<string name="settings_time_period_abnormal_content">每 %1$s 檢查一次系統健康狀態</string>
+	<string name="settings_time_period_server_abnormal_title">伺服器異常監控週期</string>
+	<string name="settings_time_period_server_abnormal_content">每 %1$s 檢查一次伺服器健康狀態</string>
 
 	// Other
 	<string name="other_empty"></string>

@@ -24,7 +24,7 @@ public class LooperService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (isFirstOpen) {
-            startForeground(1, new NotificationCompat.Builder(this).setContentTitle("").build());
+            startForeground(0, new NotificationCompat.Builder(this).setContentTitle("").build());
             init();
             isFirstOpen = false;
         }
@@ -45,7 +45,7 @@ public class LooperService extends Service {
             periodStatus = 0;
             SettingStorage settingStorage = new SettingStorage(this);
             long period = settingStorage.getTimePeriodNormal();
-            ShowLog.d("切換到預設週期：" + FullTimeDecorator.change(period));
+            ShowLog.d("切換到預設週期：" + FullTimeDecorator.change(this, period));
             changePeriod(period * 1000);
         }
     }
@@ -55,7 +55,7 @@ public class LooperService extends Service {
             periodStatus = 1;
             SettingStorage settingStorage = new SettingStorage(this);
             long period = settingStorage.getTimerPeriodAbnormal();
-            ShowLog.d("切換到檢查週期：" + FullTimeDecorator.change(period));
+            ShowLog.d("切換到檢查週期：" + FullTimeDecorator.change(this, period));
             changePeriod(period * 1000);
         }
     }
@@ -65,7 +65,7 @@ public class LooperService extends Service {
             periodStatus = 2;
             SettingStorage settingStorage = new SettingStorage(this);
             long period = settingStorage.getTimerPeriodServerAbnormal();
-            ShowLog.d("切換到伺服器錯誤週期：" + FullTimeDecorator.change(period));
+            ShowLog.d("切換到伺服器錯誤週期：" + FullTimeDecorator.change(this, period));
             changePeriod(period * 1000);
         }
     }

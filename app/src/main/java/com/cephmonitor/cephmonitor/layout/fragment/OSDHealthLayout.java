@@ -101,8 +101,8 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setImageViewSize(
-                ruler.getW(designSpec.getIconSize().getDefaultButton()),
-                ruler.getW(designSpec.getIconSize().getDefaultButton()));
+                ruler.getW(designSpec.getIconSize().getLargeButton()),
+                ruler.getW(designSpec.getIconSize().getLargeButton()));
         v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
         v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
         v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());
@@ -122,8 +122,8 @@ public class OSDHealthLayout extends FractionAbleRelativeLayout {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setImageViewSize(
-                ruler.getW(designSpec.getIconSize().getDefaultButton()),
-                ruler.getW(designSpec.getIconSize().getDefaultButton()));
+                ruler.getW(designSpec.getIconSize().getLargeButton()),
+                ruler.getW(designSpec.getIconSize().getLargeButton()));
         v.setFillColor(designSpec.getPrimaryColors().getBackgroundTwo());
         v.setStrokeColor(designSpec.getPrimaryColors().getHorizontalTwo());
         v.setStrokeWidth((int) designSpec.getHorizontal().getHorizontalTwoHeight());

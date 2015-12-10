@@ -3,12 +3,14 @@ package com.cephmonitor.cephmonitor;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.cephmonitor.cephmonitor.layout.activity.LoginLayout;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginFailDialog;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.LoginLanguageDialog;
+import com.cephmonitor.cephmonitor.model.file.io.LoginAutoCompleteStorage;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
 import com.cephmonitor.cephmonitor.model.logic.LanguageConfig;
 import com.cephmonitor.cephmonitor.model.network.AnalyzeListener;
@@ -36,6 +38,7 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
     private SettingStorage settingStorage;
     private LoginLanguageDialog loginLanguageDialog;
     private LanguageConfig languageConfig;
+    private LoginAutoCompleteStorage autoCompleteStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         settingStorage = new SettingStorage(this);
         languageConfig = new LanguageConfig(this);
         languageConfig.setLocale(settingStorage.getLanguage());
+        autoCompleteStorage = new LoginAutoCompleteStorage(this);
 
         ServiceLauncher.startLooperService(this);
         RequestVolleyTask.enableFakeValue(BuildConfig.IS_LOCALHOST);
@@ -73,6 +77,8 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
                 refreshViewManager.refresh();
             }
         });
+        refreshAutoComplete();
+
 //        deleteDatabase(StoreNotifications.DB_NAME);
     }
 
@@ -101,10 +107,31 @@ public class LoginActivity extends Activity implements RefreshViewManager.Interf
         refreshViewManager.refresh();
     }
 
+    private void refreshAutoComplete() {
+        ArrayAdapter<String> hostKeywordGroup = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line,
+                autoCompleteStorage.getKeywordGroup(LoginAutoCompleteStorage.HOST));
+        ArrayAdapter<String> portKeywordGroup = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line,
+                autoCompleteStorage.getKeywordGroup(LoginAutoCompleteStorage.PORT));
+        ArrayAdapter<String> accountKeywordGroup = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line,
+                autoCompleteStorage.getKeywordGroup(LoginAutoCompleteStorage.ACCOUNT));
+
+        layout.host.setAdapter(hostKeywordGroup);
+        layout.port.setAdapter(portKeywordGroup);
+        layout.name.setAdapter(accountKeywordGroup);
+    }
+
     private View.OnClickListener clickSignIn() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                autoCompleteStorage.addKeyword(LoginAutoCompleteStorage.HOST, layout.host.getText().toString());
+                autoCompleteStorage.addKeyword(LoginAutoCompleteStorage.PORT, layout.port.getText().toString());
+                autoCompleteStorage.addKeyword(LoginAutoCompleteStorage.ACCOUNT, layout.name.getText().toString());
+                refreshAutoComplete();
+
                 ArrayList<String> noValueField = emptyChecker.checkEmpty();
                 if (noValueField.size() == 0) {
                     requestLoginPost();
