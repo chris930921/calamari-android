@@ -25,6 +25,7 @@ public class NotificationDetailFragment extends Fragment {
     }
 
     public void init() {
+        int value = 0;
         Bundle argGroup = getArguments();
         Calendar triggeredTime = Calendar.getInstance();
         triggeredTime.setTimeInMillis(argGroup.getLong("3"));
@@ -37,7 +38,7 @@ public class NotificationDetailFragment extends Fragment {
 
         layout.setMessage(argGroup.getString("1"));
         layout.setStatus(argGroup.getString("2"), resolvedTime);
-        layout.setDescription(getString(argGroup.getInt("5")), argGroup.getString("6"));
+        layout.setDescription(/*argGroup.getInt("7")*/value, getString(argGroup.getInt("5")), argGroup.getString("6"));
         layout.setTriggered(triggeredTime);
     }
 }

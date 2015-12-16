@@ -58,6 +58,8 @@
 
 	<string name="health_card_hosts">ホスト</string>
 	<string name="health_card_reporting">報告</string>
+	<string name="health_card_monitor">MONITOR</string>
+	<string name="health_card_osd_todo"></string>
 
 	<string name="health_card_pg">PG ステータス</string>
 	<string name="health_card_clean">クリーン</string>
@@ -177,15 +179,20 @@
 	<string name="osd_detail_pools">プール</string>
 	<string name="osd_detail_re_weight">Reweight</string>
 	<string name="osd_detail_uuid">UUID</string>
+	<string name="osd_detail_re_weight_help_title">HELP</string>
+	<string name="osd_detail_re_weight_help">Reweight represents the override weight on the OSD. If an OSD usage is higher than others, it could reduce the weight to try and compensate for it.</string>
 
 	// NotificationFragment
 	<string name="notification_work_find_line_one">いずれも持っていません</string>
 	<string name="notification_work_find_line_two">今すぐ通知する</string>
 	<string name="notification_detail_triggered_title">でトリガ</string>
 	<string name="notification_detail_resolved_title">で解決</string>
+	<string name="notification_detail_warning">Warnings</string>
 	<string name="notification_detail_error">エラー</string>
 	<string name="notification_detail_error_ratio">誤り率</string>
 	<string name="notification_detail_usage">使い</string>
+	<string name="notification_detail_count_help_title">HELP</string>
+	<string name="notification_detail_count_help">The number of errors is a cumulative total of health warnings or health errors, so it may exceed the maximum of the system.</string>
 
 	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">ディスク使用状況の統計情報</string>
