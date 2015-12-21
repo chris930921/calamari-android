@@ -189,6 +189,7 @@
 	<string name="notification_detail_resolved_title">修復時間</string>
 	<string name="notification_detail_warning">警告數</string>
 	<string name="notification_detail_error">錯誤數</string>
+	<string name="notification_detail_warning_ratio">警告比率</string>
 	<string name="notification_detail_error_ratio">錯誤比率</string>
 	<string name="notification_detail_usage">使用量</string>
 	<string name="notification_detail_count_help_title">說明</string>

@@ -189,6 +189,7 @@
 	<string name="notification_detail_resolved_title">Resolved at</string>
 	<string name="notification_detail_warning">Warnings</string>
 	<string name="notification_detail_error">Errors</string>
+	<string name="notification_detail_warning_ratio">Warning ratio</string>
 	<string name="notification_detail_error_ratio">Error ratio</string>
 	<string name="notification_detail_usage">Usage</string>
 	<string name="notification_detail_count_help_title">HELP</string>

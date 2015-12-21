@@ -12,7 +12,7 @@
 	<string name="login_fail_content">\u0020 が正しくありません。</string>
 	<string name="login_fail_confirm">確認</string>
 	<string name="login_fail_sing_in">ユーザー名またはパスワードが違います</string>
-	<string name="login_fail_server_error">Failed to connect to server !</string>
+	<string name="login_fail_server_error">Connection Server 障害!</string>
 	<string name="login_sign_in">ログイン</string>
 	<string name="login_version">Ceph モニター版\u0020</string>
 	<string name="login_from">から</string>
@@ -26,7 +26,7 @@
 	<string name="main_activity_fragment_health">ダッシュボード</string>
 	<string name="main_activity_fragment_health_detail">ヘルス詳細</string>
 	<string name="main_activity_fragment_osd_health">OSD ヘルス</string>
-	<string name="main_activity_fragment_mon_health">MON ヘルス</string>
+	<string name="main_activity_fragment_mon_health">ノード健康状態の監視</string>
 	<string name="main_activity_fragment_notification">通知</string>
 	<string name="main_activity_fragment_notification_detail">通知の詳細</string>
 	<string name="main_activity_fragment_host_health">リストホスト</string>
@@ -48,17 +48,17 @@
 	<string name="health_card_ago">前</string>
 
 	<string name="health_card_osd">OSD</string>
-	<string name="health_card_in_and_up">In \u0026 Up</string>
+	<string name="health_card_in_and_up">通常運転中</string>
 
 	<string name="health_card_mon">モニター</string>
-	<string name="health_card_quorum">Quorum</string>
+	<string name="health_card_quorum">ノード監視</string>
 
 	<string name="health_card_pools">プール</string>
 	<string name="health_card_active">アクティブ</string>
 
 	<string name="health_card_hosts">ホスト</string>
-	<string name="health_card_reporting">報告</string>
-	<string name="health_card_monitor">MONITOR</string>
+	<string name="health_card_reporting">運転中</string>
+	<string name="health_card_monitor">ノード監視</string>
 	<string name="health_card_osd_todo"></string>
 
 	<string name="health_card_pg">PG ステータス</string>
@@ -177,22 +177,23 @@
 	<string name="osd_detail_public_ip">パブリックIP</string>
 	<string name="osd_detail_cluster_ip">クラスタIP</string>
 	<string name="osd_detail_pools">プール</string>
-	<string name="osd_detail_re_weight">Reweight</string>
+	<string name="osd_detail_re_weight">重量配分</string>
 	<string name="osd_detail_uuid">UUID</string>
-	<string name="osd_detail_re_weight_help_title">HELP</string>
-	<string name="osd_detail_re_weight_help">Reweight represents the override weight on the OSD. If an OSD usage is higher than others, it could reduce the weight to try and compensate for it.</string>
+	<string name="osd_detail_re_weight_help_title">説明</string>
+	<string name="osd_detail_re_weight_help">重量配分は、OSD容量の調整値であります、プリセット値100%。各OSDの記憶容量は、バランスではない場合、重量配分はOSD使用状態のバランスをとるために一時的に調整する。</string>
 
 	// NotificationFragment
 	<string name="notification_work_find_line_one">いずれも持っていません</string>
 	<string name="notification_work_find_line_two">今すぐ通知する</string>
 	<string name="notification_detail_triggered_title">でトリガ</string>
 	<string name="notification_detail_resolved_title">で解決</string>
-	<string name="notification_detail_warning">Warnings</string>
+	<string name="notification_detail_warning">発生した警告の数</string>
 	<string name="notification_detail_error">エラー</string>
+	<string name="notification_detail_warning_ratio">警告比率</string>
 	<string name="notification_detail_error_ratio">誤り率</string>
 	<string name="notification_detail_usage">使い</string>
-	<string name="notification_detail_count_help_title">HELP</string>
-	<string name="notification_detail_count_help">The number of errors is a cumulative total of health warnings or health errors, so it may exceed the maximum of the system.</string>
+	<string name="notification_detail_count_help_title">説明</string>
+	<string name="notification_detail_count_help">エラー番号は、システムの警告やシステムエラーの合計数です。この値が原因でシステムの状態に増加します。これは、システムの最大値を超えること。</string>
 
 	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">ディスク使用状況の統計情報</string>
@@ -301,12 +302,12 @@
 	<string name="settings_alert_triggers_usage_error">エラー</string>
 	<string name="settings_alert_triggers_usage_error_description">使用率が %1$s %%を超えた場合に警報を発します</string>
 	<string name="settings_alert_triggers_usage_error_dialog_title">使い エラー</string>
-	<string name="settings_time_period_normal_title">Normal Status Period</string>
-	<string name="settings_time_period_normal_content">Check the system health every %1$s</string>
-	<string name="settings_time_period_abnormal_title">Abnormal Status Period</string>
-	<string name="settings_time_period_abnormal_content">Check the system health every %1$s</string>
-	<string name="settings_time_period_server_abnormal_title">Server Abnormal Status Period</string>
-	<string name="settings_time_period_server_abnormal_content">Check the server health every %1$s</string>
+	<string name="settings_time_period_normal_title">プリセット監視周期</string>
+	<string name="settings_time_period_normal_content">%1$sに1回、システムの健康状態をチェックします</string>
+	<string name="settings_time_period_abnormal_title">例外監視周期</string>
+	<string name="settings_time_period_abnormal_content">%1$sに1回、システムの健康状態をチェックします</string>
+	<string name="settings_time_period_server_abnormal_title">サーバ例外監視周期</string>
+	<string name="settings_time_period_server_abnormal_content">%1$sに1回、サーバの健康状態をチェックします</string>
 
 	// Other
 	<string name="other_empty"></string>

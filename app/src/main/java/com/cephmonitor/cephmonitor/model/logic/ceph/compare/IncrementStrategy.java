@@ -193,9 +193,10 @@ public class IncrementStrategy {
     }
 
     private void updateOtherParams(RecordedData recorded) {
+        int description = (recorded.level == 3) ? R.string.notification_detail_warning : R.string.notification_detail_error;
         RecordedOperator recordedOperator = new RecordedOperator(context);
         recordedOperator.setValue(recorded);
-        recordedOperator.addOtherParam("description_title", R.string.notification_detail_error);
+        recordedOperator.addOtherParam("description_title", description);
         recordedOperator.addOtherParam("description", String.valueOf((int) recorded.count));
     }
 }
