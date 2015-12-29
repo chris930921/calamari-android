@@ -81,8 +81,9 @@ public class ClickAbleTabButton extends Button {
     }
 
     public void recover() {
-        setTextColor(originTextColor);
         isActive = false;
+        setTextColor(originTextColor);
+        invalidate();
     }
 
     @Override
