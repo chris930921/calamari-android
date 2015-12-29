@@ -58,6 +58,8 @@
 
 	<string name="health_card_hosts">HOSTS</string>
 	<string name="health_card_reporting">Reporting</string>
+	<string name="health_card_monitor">MONITOR</string>
+	<string name="health_card_osd_todo"></string>
 
 	<string name="health_card_pg">PG STATUS</string>
 	<string name="health_card_clean">Clean</string>
@@ -177,15 +179,21 @@
 	<string name="osd_detail_pools">Pools</string>
 	<string name="osd_detail_re_weight">Reweight</string>
 	<string name="osd_detail_uuid">UUID</string>
+	<string name="osd_detail_re_weight_help_title">HELP</string>
+	<string name="osd_detail_re_weight_help">Reweight represents the override weight on the OSD. If an OSD usage is higher than others, it could reduce the weight to try and compensate for it.</string>
 
 	// NotificationFragment
 	<string name="notification_work_find_line_one">You don\'t have any</string>
 	<string name="notification_work_find_line_two">notifications right now!</string>
 	<string name="notification_detail_triggered_title">Triggered at</string>
 	<string name="notification_detail_resolved_title">Resolved at</string>
+	<string name="notification_detail_warning">Warnings</string>
 	<string name="notification_detail_error">Errors</string>
+	<string name="notification_detail_warning_ratio">Warning ratio</string>
 	<string name="notification_detail_error_ratio">Error ratio</string>
 	<string name="notification_detail_usage">Usage</string>
+	<string name="notification_detail_count_help_title">HELP</string>
+	<string name="notification_detail_count_help">The number of errors is a cumulative total of health warnings or health errors, so it may exceed the maximum of the system.</string>
 
 	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">Disk Usage Statistics</string>
@@ -240,7 +248,7 @@
 	<string name="host_detail_iops">- IOPS\u0020</string>
 
 	// SettingsFragment
-	<string name="settings_profile">Profile</string>
+	<string name="settings_profile">Personal</string>
 	<string name="settings_profile_language">Language</string>
 	<string name="settings_profile_formats">Date Formats</string>
 	<string name="settings_alert">Alert</string>

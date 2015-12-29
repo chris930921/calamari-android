@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.container.FractionAbleScrollView;
 import com.cephmonitor.cephmonitor.layout.component.other.FloatLayoutLabel;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
+import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
 
@@ -20,6 +23,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
     private Context context;
     private WH ruler;
     private int dividerHeight;
+    private DesignSpec designSpec;
 
     public RelativeLayout container;
 
@@ -32,6 +36,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
     public TextView poolsTitle;
     public FloatLayoutLabel poolLabels;
     public TextView reweightTitle;
+    public ImageView reweightHelp;
     public TextView reweightContent;
     public TextView uuidTitle;
     public TextView uuidContent;
@@ -41,6 +46,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
         this.context = context;
         this.ruler = new WH(context);
         this.dividerHeight = ruler.getW(5);
+        this.designSpec = ThemeManager.getStyle(getContext());
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -57,6 +63,7 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
         container.addView(poolsTitle = poolsTitle(clusterIpContent));
         container.addView(poolLabels = poolLabels(poolsTitle));
         container.addView(reweightTitle = reweightTitle(poolLabels));
+        container.addView(reweightHelp = reweightHelp(reweightTitle));
         container.addView(reweightContent = reweightContent(reweightTitle));
         container.addView(uuidTitle = uuidTitle(reweightContent));
         container.addView(uuidContent = uuidContent(uuidTitle));
@@ -160,12 +167,37 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
     }
 
     private TextView reweightTitle(View topView) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
         params.setMargins(0, dividerHeight, 0, 0);
 
-        TextView v = getTitle(R.string.osd_detail_re_weight);
+        TextView v = getTitle(getContext().getString(R.string.osd_detail_re_weight) + "   ");
         v.setLayoutParams(params);
+
+        return v;
+    }
+
+    private ImageView reweightHelp(final View leftView) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
+        params.addRule(RelativeLayout.ALIGN_TOP, leftView.getId());
+
+        ImageView v = new ImageView(getContext()) {
+            @Override
+            protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+                super.onSizeChanged(w, h, oldw, oldh);
+                int size = leftView.getHeight();
+                if (size != h) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                    params.height = size;
+                    params.width = size;
+                    setLayoutParams(params);
+                }
+            }
+        };
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setImageResource(R.drawable.icon044);
 
         return v;
     }
@@ -201,16 +233,20 @@ public class OSDHealthDetailLayout extends FractionAbleScrollView {
         return v;
     }
 
-    private TextView getTitle(int stringResource) {
+    private TextView getTitle(String text) {
         TextView v = new TextView(context);
         v.setId(RandomId.get());
         v.setTextSize(16);
         v.setGravity(Gravity.CENTER_VERTICAL);
         v.setTypeface(null, Typeface.BOLD);
         v.setTextColor(ColorTable._666666);
-        v.setText(stringResource);
+        v.setText(text);
 
         return v;
+    }
+
+    private TextView getTitle(int stringResource) {
+        return getTitle(getContext().getString(stringResource));
     }
 
     private TextView getContent() {

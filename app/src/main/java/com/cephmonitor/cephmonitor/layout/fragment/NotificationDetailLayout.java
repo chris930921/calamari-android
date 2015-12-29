@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
     public View statusIcon;
     public TextView status;
     public TextView descriptionTitle;
+    public ImageView descriptionHelp;
     public TextView description;
     public TextView triggeredTitle;
     public TextView triggered;
@@ -75,6 +77,7 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
         statusIcon = statusIcon();
         status = status(statusIcon);
         descriptionTitle = descriptionTitle(bottomContainer);
+        descriptionHelp = descriptionHelp(descriptionTitle);
         description = description(descriptionTitle);
         triggeredTitle = triggeredTitle(description);
         triggered = triggered(triggeredTitle);
@@ -85,6 +88,7 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
         container.addView(message);
         container.addView(bottomContainer);
         container.addView(descriptionTitle);
+        container.addView(descriptionHelp);
         container.addView(description);
         container.addView(triggeredTitle);
         container.addView(triggered);
@@ -195,7 +199,7 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
 
     protected TextView descriptionTitle(View topView) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, topView.getId());
         params.topMargin = dividerHeight;
@@ -275,8 +279,13 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
         }
     }
 
-    public void setDescription(String title, String content) {
-        descriptionTitle.setText(title);
+    public void setDescription(int monitorType, String title, String content) {
+        if (1 == monitorType || 2 == monitorType || 3 == monitorType) {
+            descriptionHelp.setVisibility(View.VISIBLE);
+        } else {
+            descriptionHelp.setVisibility(View.GONE);
+        }
+        descriptionTitle.setText(title + "   ");
         description.setText(content);
     }
 
@@ -286,5 +295,38 @@ public class NotificationDetailLayout extends FractionAbleScrollView {
         SimpleDateFormat datetimeFormat = SettingConstant.getSimpleFormat(id);
 
         triggered.setText(datetimeFormat.format(calendar.getTime()));
+    }
+
+    private ImageView descriptionHelp(final View leftView) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
+        params.addRule(RelativeLayout.ALIGN_TOP, leftView.getId());
+
+        ImageView v = new ImageView(getContext()) {
+            @Override
+            protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+                super.onSizeChanged(w, h, oldw, oldh);
+                final int size = leftView.getHeight();
+                final ImageView v = this;
+                if (size != h) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                            params.width = size;
+                            params.height = size;
+                            setLayoutParams(params);
+                        }
+                    });
+                }
+            }
+        };
+        v.setId(RandomId.get());
+        v.setLayoutParams(params);
+        v.setImageResource(R.drawable.icon044);
+
+        return v;
     }
 }

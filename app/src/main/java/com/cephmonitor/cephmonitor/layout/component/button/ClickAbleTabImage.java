@@ -115,6 +115,7 @@ public class ClickAbleTabImage extends RelativeLayout {
     public void recover() {
         image.setImageResource(originImageResource);
         isActive = false;
+        invalidate();
     }
 
     public void setDividerLine(boolean isShow) {

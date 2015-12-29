@@ -201,10 +201,11 @@ public class PgStrategy {
     }
 
     private void updateOtherParams(RecordedData recorded) {
+        int description = (recorded.level == 3) ? R.string.notification_detail_warning_ratio : R.string.notification_detail_error_ratio;
         String showPercent = String.format("%.2f", recorded.count * 100);
         RecordedOperator recordedOperator = new RecordedOperator(context);
         recordedOperator.setValue(recorded);
-        recordedOperator.addOtherParam("description_title", R.string.notification_detail_error_ratio);
+        recordedOperator.addOtherParam("description_title", description);
         recordedOperator.addOtherParam("description", showPercent + "% (" + elementValue + "/" + denominatorValue + ")");
     }
 }

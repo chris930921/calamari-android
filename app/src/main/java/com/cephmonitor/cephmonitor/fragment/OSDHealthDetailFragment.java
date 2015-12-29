@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cephmonitor.cephmonitor.InitFragment;
+import com.cephmonitor.cephmonitor.layout.dialog.fixed.OsdReweightHelpDialog;
 import com.cephmonitor.cephmonitor.layout.fragment.OSDHealthDetailLayout;
 import com.resourcelibrary.model.network.api.ceph.object.ClusterV2OsdData;
 import com.resourcelibrary.model.network.api.ceph.object.PoolV1ListData;
@@ -21,6 +22,7 @@ public class OSDHealthDetailFragment extends Fragment {
     private ClusterV2OsdData osdData;
     private PoolV1ListData poolData;
     private ArrayList<String> names;
+    private OsdReweightHelpDialog dialog;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -40,11 +42,18 @@ public class OSDHealthDetailFragment extends Fragment {
             poolData.inBox(arg);
             mapPoolsIdToName();
 
+            dialog = new OsdReweightHelpDialog(getActivity());
             layout.hostNameContent.setText(osdData.getServer());
             layout.publicIpContent.setText(osdData.getPublicAddr());
             layout.clusterIpContent.setText(osdData.getClusterAddr());
             layout.poolLabels.setData(names);
             layout.reweightContent.setText(((int) Math.ceil(osdData.getReweight() * 100.0)) + "%");
+            layout.reweightHelp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.show();
+                }
+            });
             layout.uuidContent.setText(osdData.getUUID());
         } catch (JSONException e) {
             e.printStackTrace();

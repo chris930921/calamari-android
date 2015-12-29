@@ -12,7 +12,7 @@
 	<string name="login_fail_content">\u0020不正確</string>
 	<string name="login_fail_confirm">確認</string>
 	<string name="login_fail_sing_in">無效的帳號或是密碼</string>
-	<string name="login_fail_server_error">Failed to connect to server !</string>
+	<string name="login_fail_server_error">連接伺服器失敗 !</string>
 	<string name="login_sign_in">登入</string>
 	<string name="login_version">Ceph Monitor Version\u0020</string>
 	<string name="login_from">由</string>
@@ -50,7 +50,7 @@
 	<string name="health_card_osd">OSD</string>
 	<string name="health_card_in_and_up">正常運作中</string>
 
-	<string name="health_card_mon">監控節點數</string>
+	<string name="health_card_mon">監控節點</string>
 	<string name="health_card_quorum">台</string>
 
 	<string name="health_card_pools">資源池</string>
@@ -58,6 +58,8 @@
 
 	<string name="health_card_hosts">主機數</string>
 	<string name="health_card_reporting">運作中</string>
+	<string name="health_card_monitor">監控節點</string>
+	<string name="health_card_osd_todo">儲存節點</string>
 
 	<string name="health_card_pg">PG 狀態</string>
 	<string name="health_card_clean">Clean</string>
@@ -79,11 +81,11 @@
 	<string name="health_detail_work_fine">系統正常運作 !</string>
 
 	// RequestAndCheckService 舊版訊息
-	<string name="check_service_mon_count_error_title">錯誤！Monitor 損毀</string>
-	<string name="check_service_mon_count_error_content">有 %1$s 個 Monitor 損毀！</string>
+	<string name="check_service_mon_count_error_title">錯誤！監控節點損毀</string>
+	<string name="check_service_mon_count_error_content">有 %1$s 個監控節點損毀！</string>
 
-	<string name="check_service_mon_count_warn_title">警告！Monitor 異常</string>
-	<string name="check_service_mon_count_warn_content">有 %1$s 個 Monitor 異常！</string>
+	<string name="check_service_mon_count_warn_title">警告！監控節點異常</string>
+	<string name="check_service_mon_count_warn_content">有 %1$s 個監控節點異常！</string>
 
 	<string name="check_service_osd_count_error_title">錯誤！OSD 損毀</string>
 	<string name="check_service_osd_count_error_content">有 %1$s 個 OSD 損毀！</string>
@@ -123,19 +125,19 @@
 
 	// RequestAndCheckService Monitor Warning
 	<string name="check_service_023001_abnormal_title">儲存系統警告</string>
-	<string name="check_service_023001_abnormal_content_new">發生 Monitor 異常！</string>
-	<string name="check_service_023001_abnormal_content_more">Monitor 異常數增加！</string>
-	<string name="check_service_023001_abnormal_content_relapse">Monitor 異常數增加！</string>
+	<string name="check_service_023001_abnormal_content_new">發生監控節點異常！</string>
+	<string name="check_service_023001_abnormal_content_more">監控節點異常數增加！</string>
+	<string name="check_service_023001_abnormal_content_relapse">監控節點異常數增加！</string>
 	<string name="check_service_023001_normal_title">儲存系統警告</string>
-	<string name="check_service_023001_normal_content_finish">Monitor 修復完成！</string>
+	<string name="check_service_023001_normal_content_finish">監控節點修復完成！</string>
 
 	// RequestAndCheckService Monitor Error
 	<string name="check_service_022001_abnormal_title">儲存系統錯誤</string>
-	<string name="check_service_022001_abnormal_content_new">發生 Monitor 損毀！</string>
-	<string name="check_service_022001_abnormal_content_more">Monitor 損毀數增加！</string>
-	<string name="check_service_022001_abnormal_content_relapse">Monitor 損毀數增加！</string>
+	<string name="check_service_022001_abnormal_content_new">發生監控節點損毀！</string>
+	<string name="check_service_022001_abnormal_content_more">監控節點損毀數增加！</string>
+	<string name="check_service_022001_abnormal_content_relapse">監控節點損毀數增加！</string>
 	<string name="check_service_022001_normal_title">儲存系統警告</string>
-	<string name="check_service_022001_normal_content_finish">Monitor 修復完成！</string>
+	<string name="check_service_022001_normal_content_finish">監控節點修復完成！</string>
 
 	// RequestAndCheckService PG Warning
 	<string name="check_service_033001_abnormal_title">儲存系統警告</string>
@@ -175,17 +177,23 @@
 	<string name="osd_detail_public_ip">公共 IP</string>
 	<string name="osd_detail_cluster_ip">叢集 IP</string>
 	<string name="osd_detail_pools">資源池</string>
-	<string name="osd_detail_re_weight">Reweight</string>
+	<string name="osd_detail_re_weight">權重分配</string>
 	<string name="osd_detail_uuid">UUID</string>
+	<string name="osd_detail_re_weight_help_title">說明</string>
+	<string name="osd_detail_re_weight_help">權重分配為 OSD 容量調整值，預設值為 100%，當各 OSD 儲存容量不平均時，可用來暫時調整使各 OSD 使用狀況達到平衡。</string>
 
 	// NotificationFragment
 	<string name="notification_work_find_line_one">現在沒有任何通知!</string>
 	<string name="notification_work_find_line_two"></string>
 	<string name="notification_detail_triggered_title">觸發時間</string>
-	<string name="notification_detail_resolved_title">解決時間</string>
-	<string name="notification_detail_error">錯誤</string>
+	<string name="notification_detail_resolved_title">修復時間</string>
+	<string name="notification_detail_warning">警告數</string>
+	<string name="notification_detail_error">錯誤數</string>
+	<string name="notification_detail_warning_ratio">警告比率</string>
 	<string name="notification_detail_error_ratio">錯誤比率</string>
 	<string name="notification_detail_usage">使用量</string>
+	<string name="notification_detail_count_help_title">說明</string>
+	<string name="notification_detail_count_help">錯誤數為系統發生的總警告數或總錯誤數，因該值會隨系統狀況累加，故可能超過系統最大值。</string>
 
 	// UsageStatusFragment
 	<string name="usage_status_disk_usage_statistics">硬碟使用量統計</string>

@@ -152,6 +152,7 @@ public class NotificationFragment extends Fragment {
                 e.printStackTrace();
                 argGroup.putString("6", getString(R.string.other_empty));
             }
+            argGroup.putInt("7", recorded.monitorType);
             FragmentLauncher.goNotificationDetailFragment(getActivity(), argGroup);
         }
     };
