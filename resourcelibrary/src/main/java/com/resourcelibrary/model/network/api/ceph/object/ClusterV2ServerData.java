@@ -6,11 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by User on 4/22/2015.
  */
 public class ClusterV2ServerData extends PortableJsonObject {
+    final static Pattern pattern = Pattern.compile("[\\d]+$");
+
     public ClusterV2ServerData(String Json) throws JSONException {
         super(Json);
     }
@@ -44,5 +48,18 @@ public class ClusterV2ServerData extends PortableJsonObject {
             }
         }
         return result;
+    }
+
+    public int getNumberBehindHostName() {
+        int number = -1;
+        try {
+            Matcher matcher = pattern.matcher(getHostName());
+            if (matcher.find()) {
+                number = Integer.parseInt(matcher.group());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return number;
     }
 }

@@ -35,13 +35,10 @@ public class ClusterV2ServerListData extends PortableJsonArray {
                 result.add(server);
             }
         }
+
         Collections.sort(result, new Comparator<ClusterV2ServerData>() {
             public int compare(ClusterV2ServerData one, ClusterV2ServerData other) {
-                try {
-                    return one.getHostName().compareTo(other.getHostName());
-                } catch (JSONException e) {
-                    return -1;
-                }
+                return one.getNumberBehindHostName() - other.getNumberBehindHostName();
             }
         });
         return result;
