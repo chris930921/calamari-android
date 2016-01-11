@@ -137,9 +137,9 @@ public class LoginLanguageDialog extends SettingDialog {
     public void show() {
         SettingStorage settingStorage = new SettingStorage(getContext());
         selectedId = settingStorage.getLanguage();
-        english.filedValue.setState(english.getTag() == selectedId);
-        chinese.filedValue.setState(chinese.getTag() == selectedId);
-        japanese.filedValue.setState(japanese.getTag() == selectedId);
+        english.filedValue.setState(((int) english.getTag()) == selectedId);
+        chinese.filedValue.setState(((int) chinese.getTag()) == selectedId);
+        japanese.filedValue.setState(((int) japanese.getTag()) == selectedId);
         setTitle(getContext().getString(R.string.settings_profile_language));
         super.show();
     }

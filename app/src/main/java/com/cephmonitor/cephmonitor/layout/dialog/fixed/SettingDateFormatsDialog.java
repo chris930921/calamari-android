@@ -125,9 +125,9 @@ public class SettingDateFormatsDialog extends SettingDialog {
     public void show() {
         SettingStorage settingStorage = new SettingStorage(getContext());
         selectedId = settingStorage.getDateFormats();
-        dateYearMonthDay.filedValue.setState(dateYearMonthDay.getTag() == selectedId);
-        dateMonthDayYear.filedValue.setState(dateMonthDayYear.getTag() == selectedId);
-        dateDayMonthYear.filedValue.setState(dateDayMonthYear.getTag() == selectedId);
+        dateYearMonthDay.filedValue.setState(((int) dateYearMonthDay.getTag()) == selectedId);
+        dateMonthDayYear.filedValue.setState(((int) dateMonthDayYear.getTag()) == selectedId);
+        dateDayMonthYear.filedValue.setState(((int) dateDayMonthYear.getTag()) == selectedId);
         super.show();
     }
 

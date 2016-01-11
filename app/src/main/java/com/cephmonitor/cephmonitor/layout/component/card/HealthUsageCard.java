@@ -8,7 +8,6 @@ import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.ColorTable;
 import com.cephmonitor.cephmonitor.layout.component.progress.UsageCardProgress;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
-import com.cephmonitor.cephmonitor.model.app.theme.custom.object.FontStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
 import com.resourcelibrary.model.logic.ByteUnit;
 import com.resourcelibrary.model.logic.RandomId;
@@ -20,14 +19,9 @@ public class HealthUsageCard extends HealthBaseCard {
     public UsageCardProgress usageCardProgress;
     public DesignSpec designSpec;
 
-    private FontStyle bodyTwo;
-    private FontStyle note;
-
     public HealthUsageCard(Context context) {
         super(context);
         designSpec = ThemeManager.getStyle(context);
-        bodyTwo = designSpec.getStyle().getBodyTwo();
-        note = designSpec.getStyle().getNote();
 
         usageCardProgress = usageCardProgress();
         setCenterView(usageCardProgress);
@@ -49,8 +43,12 @@ public class HealthUsageCard extends HealthBaseCard {
         v.setId(RandomId.get());
         v.setLayoutParams(params);
         v.setText(getResources().getString(R.string.health_card_used));
-        v.setPercentTextStyle(bodyTwo.getSize(), bodyTwo.getTypeface());
-        v.setBottomTextStyle(note.getSize(), note.getTypeface());
+        v.setPercentTextStyle(
+                designSpec.getStyle().getHeadline().getSize(),
+                designSpec.getStyle().getHeadline().getTypeface());
+        v.setBottomTextStyle(
+                designSpec.getStyle().getBodyOne().getSize(),
+                designSpec.getStyle().getBodyOne().getTypeface());
 
         return v;
     }
