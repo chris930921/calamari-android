@@ -80,7 +80,7 @@ public class HealthFragment extends Fragment {
     public int pgCardDirtyCount;
 
     private long usageSpace;
-    private long totalSpace;
+    private long availableSpace;
 
     private LoadingDialog loadingDialog;
 
@@ -452,7 +452,7 @@ public class HealthFragment extends Fragment {
         public boolean doInBackground(String s) {
             try {
                 ClusterV1Space data = new ClusterV1Space(s);
-                totalSpace = data.getCapacityBytes();
+                availableSpace = data.getFreeBytes();
                 usageSpace = data.getUsedBytes();
                 return true;
             } catch (JSONException e) {
@@ -463,7 +463,7 @@ public class HealthFragment extends Fragment {
 
         @Override
         public void onPostExecute() {
-            layout.usageCard.setLongValue(usageSpace, totalSpace);
+            layout.usageCard.setLongValue(usageSpace, availableSpace);
             layout.removeCallbacks(updateViewTask);
             layout.post(updateViewTask);
         }
@@ -551,7 +551,7 @@ public class HealthFragment extends Fragment {
                 settingStorage.setAlertTriggerOsdTotal(oadCardTotalCount);
                 settingStorage.setAlertTriggerMonTotal(monCardTotalCount);
                 settingStorage.setAlertTriggerPgTotal(pgCardTotalCount);
-                settingStorage.setAlertTriggerUsageTotal(totalSpace);
+                settingStorage.setAlertTriggerUsageTotal(availableSpace);
             } catch (Exception e) {
                 ShowLog.d("Fragment finished, stop update view.", e);
             }
