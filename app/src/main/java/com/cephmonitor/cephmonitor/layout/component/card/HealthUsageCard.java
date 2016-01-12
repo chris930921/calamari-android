@@ -68,7 +68,8 @@ public class HealthUsageCard extends HealthBaseCard {
         rightValueText.setTextColor(rightColor);
         rightValueText.setText(ByteUnit.change(rightValue));
 
-        double percent = (rightValue != 0) ? (leftValue * 100) / rightValue : 0;
+        double total = leftValue + rightValue;
+        double percent = (total != 0) ? (leftValue * 100) / total : 0;
         percent = (percent < 1.0) ? Math.ceil(percent) : percent;
         usageCardProgress.setPercent((float) percent);
         if (percent >= 85) {

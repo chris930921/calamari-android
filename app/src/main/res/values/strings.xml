@@ -231,7 +231,7 @@
 	<string name="host_detail_summary_active">- Active\u0020</string>
 	<string name="host_detail_summary_buffers">- Buffers\u0020</string>
 	<string name="host_detail_summary_free">- Free\u0020</string>
-	<string name="host_detail_summary_cached">- cached\u0020</string>
+	<string name="host_detail_summary_cached">- Cached\u0020</string>
 
 	// HostDetailAllCPUsFragment
 	<string name="host_detail_all_cpus_title_cpu_detail">\u0020CPU Detail</string>
