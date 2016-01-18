@@ -96,12 +96,13 @@ public class TimePeriodFragment extends Fragment {
     }
 
     public String getUrl(int title) {
+        LoginParams params = new LoginParams(getActivity());
         if (title == R.string.settings_time_period_normal_title) {
-            return "http://" + new LoginParams(getActivity()).getHost() + "/api/v1/user/me/polling/general";
+            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/general";
         } else if (title == R.string.settings_time_period_abnormal_title) {
-            return "http://" + new LoginParams(getActivity()).getHost() + "/api/v1/user/me/polling/abnormal_state";
+            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/abnormal_state";
         } else {
-            return "http://" + new LoginParams(getActivity()).getHost() + "/api/v1/user/me/polling/abnormal_server_state";
+            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/abnormal_server_state";
         }
     }
 
