@@ -271,7 +271,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private Button signIn(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = buttonTopMargin;
