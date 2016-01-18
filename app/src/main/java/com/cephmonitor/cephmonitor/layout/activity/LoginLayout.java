@@ -24,6 +24,7 @@ import com.cephmonitor.cephmonitor.layout.component.edittext.BorderEditText;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.TextViewStyle;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.manager.ThemeManager;
 import com.cephmonitor.cephmonitor.model.app.theme.custom.prototype.DesignSpec;
+import com.cephmonitor.cephmonitor.model.logic.DpToPx;
 import com.cephmonitor.cephmonitor.model.tool.RefreshViewManager;
 import com.resourcelibrary.model.logic.RandomId;
 import com.resourcelibrary.model.view.WH;
@@ -49,6 +50,7 @@ public class LoginLayout extends RelativeLayout {
 
     private Context context;
     private WH ruler;
+    private DpToPx equalizer;
     private String versionName;
 
     private DesignSpec designSpec;
@@ -71,6 +73,7 @@ public class LoginLayout extends RelativeLayout {
         super(context);
         this.context = context;
         this.ruler = new WH(context);
+        this.equalizer = new DpToPx(context);
         this.intermediary = (RefreshViewManager.Interface) context;
         this.designSpec = ThemeManager.getStyle(context);
         backgroundColor = designSpec.getPrimaryColors().getBackgroundOne();
@@ -151,7 +154,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private BorderAutoCompleteEditText host(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = imageBottomMargin;
@@ -164,7 +167,7 @@ public class LoginLayout extends RelativeLayout {
 
 
     private BorderAutoCompleteEditText port(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
@@ -176,7 +179,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private BorderAutoCompleteEditText name(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
@@ -188,7 +191,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private BorderEditText password(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
@@ -200,7 +203,7 @@ public class LoginLayout extends RelativeLayout {
     }
 
     private SelectLanguageButton language(View relativeView) {
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, ruler.getW(13));
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, equalizer.change(44));
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(BELOW, relativeView.getId());
         params.topMargin = inputTopMargin;
