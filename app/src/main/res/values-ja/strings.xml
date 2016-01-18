@@ -54,7 +54,7 @@
 	<string name="health_card_quorum">ノード監視</string>
 
 	<string name="health_card_pools">プール</string>
-	<string name="health_card_active">アクティブ</string>
+	<string name="health_card_active"></string>
 
 	<string name="health_card_hosts">ホスト</string>
 	<string name="health_card_reporting">運転中</string>
