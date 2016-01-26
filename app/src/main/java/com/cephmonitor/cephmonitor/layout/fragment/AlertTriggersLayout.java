@@ -3,6 +3,7 @@ package com.cephmonitor.cephmonitor.layout.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -339,13 +340,12 @@ public class AlertTriggersLayout extends FractionAbleRelativeLayout {
 
     public void setDialogSaveFinishedEvent(OnSaveFinishedEvent dialogSaveFinishedEvent) {
         this.dialogSaveFinishedEvent = dialogSaveFinishedEvent;
-
     }
 
     private OnSaveFinishedEvent dialogSaveFinishedEvent = new OnSaveFinishedEvent() {
         @Override
         public void onFinish(AlertTriggerOriginCalculatorDialog dialog) {
-
+            Log.d("onFinish", "dialogSaveFinishedEvent");
         }
     };
 }

@@ -1,4 +1,4 @@
-package com.cephmonitor.cephmonitor.model.network;
+package com.cephmonitor.cephmonitor.model.network.remotesetting;
 
 import android.content.Context;
 import android.os.Handler;
@@ -8,7 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
-import com.cephmonitor.cephmonitor.model.logic.ApiSettingData;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.data.ApiV1UserMeAlertRuleGetData;
 import com.resourcelibrary.model.network.api.MutipleCookieHttpStack;
 import com.resourcelibrary.model.network.api.ceph.CephGetRequest;
 import com.resourcelibrary.model.network.api.ceph.CephParams;
@@ -38,7 +38,7 @@ public class RemoteSettingToLocal {
 
                     @Override
                     public void run() {
-                        final ApiSettingData data = new ApiSettingData(s);
+                        final ApiV1UserMeAlertRuleGetData data = new ApiV1UserMeAlertRuleGetData(s);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -71,7 +71,7 @@ public class RemoteSettingToLocal {
 
 
     public interface AccessListener {
-        void success(ApiSettingData data);
+        void success(ApiV1UserMeAlertRuleGetData data);
 
         void fail(VolleyError volleyError);
     }

@@ -3,9 +3,12 @@ package com.cephmonitor.cephmonitor.layout.dialog.fixed;
 import android.content.Context;
 import android.view.View;
 
+import com.android.volley.Response;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerMaxMinDialog;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
+import com.cephmonitor.cephmonitor.model.logic.AlertTriggerDialogRequest;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.RemoteSettingApiUrl;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 
 /**
@@ -14,7 +17,7 @@ import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
     private SettingStorage storage;
 
-    public AlertTriggerMonErrorDialog(Context context) {
+    public AlertTriggerMonErrorDialog(final Context context) {
         super(context);
         storage = new SettingStorage(getContext());
 
@@ -28,12 +31,15 @@ public class AlertTriggerMonErrorDialog extends AlertTriggerMaxMinDialog {
         setSaveClick(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginParams params = new LoginParams(getContext());
                 final long value = getCalculator().getResultValue();
-                start("mon_error", String.valueOf(value), "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/mon/error", new Runnable() {
+                LoginParams params = new LoginParams(getContext());
+                String url = RemoteSettingApiUrl.apiV1UserMeMonError(params);
+                String resourceName = "mon_error";
+                AlertTriggerDialogRequest.start(getContext(), params, url, resourceName, value, new Response.Listener<String>() {
                     @Override
-                    public void run() {
+                    public void onResponse(String s) {
                         storage.setAlertTriggerMonError(value);
+                        callTask();
                     }
                 });
             }

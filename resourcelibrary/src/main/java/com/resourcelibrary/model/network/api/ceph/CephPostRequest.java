@@ -10,6 +10,8 @@ import com.android.volley.toolbox.StringRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by User on 2/3/2015.
@@ -35,6 +37,12 @@ public class CephPostRequest extends StringRequest {
         if (!token.equals("")) {
             headers.put("X-XSRF-TOKEN", token);
             headers.put("XSRF-TOKEN", token);
+        }
+        Pattern pattern = Pattern.compile("\\d*\\.\\d*\\.\\d*\\.\\d*");
+        Matcher mather = pattern.matcher(getUrl());
+        if (mather.find()) {
+            String host = mather.group();
+            headers.put("referer", "https://" + host + "/");
         }
         if (!session.equals("")) {
             headers.put("Cookie", "calamari_sessionid=" + session + "; XSRF-TOKEN=" + token);

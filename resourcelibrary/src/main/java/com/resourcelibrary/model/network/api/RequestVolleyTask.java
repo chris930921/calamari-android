@@ -108,6 +108,16 @@ public class RequestVolleyTask<T> {
                     return true;
                 }
             });
+
+            SSLContext tslContext = SSLContext.getInstance("TLS");
+            tslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(tslContext.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

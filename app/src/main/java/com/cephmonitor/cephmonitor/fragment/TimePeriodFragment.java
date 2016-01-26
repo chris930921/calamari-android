@@ -7,31 +7,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.TimePeriodPickerDialog;
 import com.cephmonitor.cephmonitor.layout.fragment.TimePeriodLayout;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
-import com.cephmonitor.cephmonitor.model.logic.ApiSettingData;
+import com.cephmonitor.cephmonitor.model.file.io.SettingUpdateThread;
 import com.cephmonitor.cephmonitor.model.logic.FullTimeDecorator;
 import com.cephmonitor.cephmonitor.model.logic.SecondToTime;
-import com.cephmonitor.cephmonitor.model.network.RemoteSettingToLocal;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.RemoteSettingApiUrl;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.api.ApiV1userMePolling;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.data.ApiV1UserMeAlertRuleGetData;
 import com.cephmonitor.cephmonitor.receiver.ChangePeriodReceiver;
-import com.resourcelibrary.model.network.api.MutipleCookieHttpStack;
-import com.resourcelibrary.model.network.api.ceph.CephPostRequest;
 import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
 
 public class TimePeriodFragment extends Fragment {
     public TimePeriodLayout layout;
     public static final int REFRESH_ALL = -1;
+    public static HashMap<Integer, RequestType> resourceMap;
+    private LoginParams params;
+    private LoadingDialog loadingDialog;
+
+    class RequestType {
+        String url;
+        String resourceName;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -43,77 +48,112 @@ public class TimePeriodFragment extends Fragment {
     }
 
     public void init() {
-        taskQueue = Volley.newRequestQueue(getActivity(), new MutipleCookieHttpStack());
+        params = new LoginParams(getActivity());
         loadingDialog = new LoadingDialog(getActivity());
 
+        initDataMapApi();
+        clickPeriodTimer();
+        loadingDialog.show();
+        SettingUpdateThread.update(getActivity(), accessListener);
+    }
+
+    public void initDataMapApi() {
+        resourceMap = new HashMap<>();
+
+        RequestType generalRequest = new RequestType();
+        generalRequest.url = RemoteSettingApiUrl.apiV1UserMePollingGeneral(params);
+        generalRequest.resourceName = "general_polling";
+        resourceMap.put(R.string.settings_time_period_normal_title, generalRequest);
+
+        RequestType abnormalRequest = new RequestType();
+        abnormalRequest.url = RemoteSettingApiUrl.apiV1UserPollingAbnormalState(params);
+        abnormalRequest.resourceName = "abnormal_state_polling";
+        resourceMap.put(R.string.settings_time_period_abnormal_title, abnormalRequest);
+
+        RequestType abnormalServerRequest = new RequestType();
+        abnormalServerRequest.url = RemoteSettingApiUrl.apiV1UserPollingAbnormalServerStatePost(params);
+        abnormalServerRequest.resourceName = "abnormal_server_state_polling";
+        resourceMap.put(R.string.settings_time_period_server_abnormal_title, abnormalServerRequest);
+    }
+
+    public void clickPeriodTimer() {
         layout.normalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_normal_title));
         layout.abnormalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_abnormal_title));
         layout.serverAbnormalPeriod.setOnClickListener(showDialog(R.string.settings_time_period_server_abnormal_title));
-
-        loadingDialog.show();
-        RemoteSettingToLocal remoteSettingToLocal = new RemoteSettingToLocal(getActivity(), new LoginParams(getActivity()));
-        remoteSettingToLocal.access(new RemoteSettingToLocal.AccessListener() {
-            @Override
-            public void success(ApiSettingData data) {
-                refreshSubTitle(REFRESH_ALL);
-                loadingDialog.cancel();
-            }
-
-            @Override
-            public void fail(VolleyError volleyError) {
-                Toast.makeText(getActivity(), "Load failed.", Toast.LENGTH_SHORT).show();
-                loadingDialog.cancel();
-            }
-        });
     }
+
+    SettingUpdateThread.AccessListener accessListener = new SettingUpdateThread.AccessListener() {
+        @Override
+        public void success(ApiV1UserMeAlertRuleGetData data) {
+            refreshSubTitle(REFRESH_ALL);
+            loadingDialog.cancel();
+        }
+
+        @Override
+        public void fail(VolleyError volleyError) {
+            Toast.makeText(getActivity(), "Save setting configuration failed.", Toast.LENGTH_SHORT).show();
+            loadingDialog.cancel();
+        }
+    };
 
     private View.OnClickListener showDialog(final int title) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long originValue = 0;
-                SettingStorage settingStorage = new SettingStorage(getActivity());
-                if (title == R.string.settings_time_period_normal_title) {
-                    originValue = settingStorage.getTimePeriodNormal();
-                } else if (title == R.string.settings_time_period_abnormal_title) {
-                    originValue = settingStorage.getTimerPeriodAbnormal();
-                } else if (title == R.string.settings_time_period_server_abnormal_title) {
-                    originValue = settingStorage.getTimerPeriodServerAbnormal();
-                }
+                long originValue = getOriginValue(title);
                 SecondToTime secondToTime = new SecondToTime(originValue);
-                final TimePeriodPickerDialog dialog = new TimePeriodPickerDialog(getActivity());
+                TimePeriodPickerDialog dialog = new TimePeriodPickerDialog(getActivity());
                 dialog.setTitle(title);
                 dialog.setTime(secondToTime.getHour(), secondToTime.getMinute(), secondToTime.getSecond());
-                dialog.setOkClick(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        start(getResourceName(title), String.valueOf(dialog.getSecondPeriod()), getUrl(title), title, dialog);
-                    }
-                });
+                dialog.setOkClick(clickDialogOk(title, dialog));
                 dialog.show();
             }
         };
     }
 
-    public String getUrl(int title) {
-        LoginParams params = new LoginParams(getActivity());
+    private long getOriginValue(int title) {
+        SettingStorage settingStorage = new SettingStorage(getActivity());
         if (title == R.string.settings_time_period_normal_title) {
-            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/general";
+            return settingStorage.getTimePeriodNormal();
         } else if (title == R.string.settings_time_period_abnormal_title) {
-            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/abnormal_state";
+            return settingStorage.getTimerPeriodAbnormal();
+        } else if (title == R.string.settings_time_period_server_abnormal_title) {
+            return settingStorage.getTimerPeriodServerAbnormal();
         } else {
-            return "http://" + params.getHost() + ":" + params.getPort() + "/api/v1/user/me/polling/abnormal_server_state";
+            throw new RuntimeException("Not found any resource map storage.");
         }
     }
 
-    public String getResourceName(int title) {
-        if (title == R.string.settings_time_period_normal_title) {
-            return "general_polling";
-        } else if (title == R.string.settings_time_period_abnormal_title) {
-            return "abnormal_state_polling";
-        } else {
-            return "abnormal_server_state_polling";
-        }
+    private View.OnClickListener clickDialogOk(final int title, final TimePeriodPickerDialog dialog) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingDialog.show();
+                ApiV1userMePolling task = new ApiV1userMePolling(getActivity());
+                task.setParams(params);
+
+                RequestType type = resourceMap.get(title);
+                task.setUrl(type.url);
+
+                String period = String.valueOf(dialog.getSecondPeriod());
+                task.addPostParams(type.resourceName, period);
+
+                task.request(new Response.Listener() {
+                    @Override
+                    public void onResponse(Object o) {
+                        loadingDialog.cancel();
+                        storeTimePeriod(title, dialog);
+                        refreshSubTitle(title);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getActivity(), "Saved failed.", Toast.LENGTH_SHORT).show();
+                        loadingDialog.cancel();
+                    }
+                });
+            }
+        };
     }
 
     public void storeTimePeriod(int title, TimePeriodPickerDialog dialog) {
@@ -152,32 +192,5 @@ public class TimePeriodFragment extends Fragment {
         }
     }
 
-    private RequestQueue taskQueue;
-    private LoadingDialog loadingDialog;
 
-    public void start(String resourceName, String value, String url, final int title, final TimePeriodPickerDialog dialog) {
-        loadingDialog.show();
-        LoginParams params = new LoginParams(getActivity());
-        JSONObject object = new JSONObject();
-        try {
-            object.put(resourceName, value);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        final String rawData = object.toString();
-        taskQueue.add(new CephPostRequest(params.getSession(), params.getCsrfToken(), rawData, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                loadingDialog.cancel();
-                storeTimePeriod(title, dialog);
-                refreshSubTitle(title);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getActivity(), "Saved failed.", Toast.LENGTH_SHORT).show();
-                loadingDialog.cancel();
-            }
-        }));
-    }
 }

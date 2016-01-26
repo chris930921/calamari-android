@@ -1,9 +1,9 @@
-package com.cephmonitor.cephmonitor.model.logic;
+package com.cephmonitor.cephmonitor.model.network.remotesetting.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ApiSettingData {
+public class ApiV1UserMeAlertRuleGetData {
     private JSONObject total;
     public long osdWarning;
     public long osdError;
@@ -18,7 +18,7 @@ public class ApiSettingData {
     public long abnormalServerStatePolling;
     public boolean enableEmailNotify;
 
-    public ApiSettingData(String json) {
+    public ApiV1UserMeAlertRuleGetData(String json) {
         total = getJSONObject(json);
         osdWarning = getLong("osd_warning", 1);
         osdError = getLong("osd_error", 1);

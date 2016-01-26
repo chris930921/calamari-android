@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.cephmonitor.cephmonitor.InitFragment;
 import com.cephmonitor.cephmonitor.R;
 import com.cephmonitor.cephmonitor.layout.dialog.fixed.OnSaveFinishedEvent;
@@ -17,10 +15,8 @@ import com.cephmonitor.cephmonitor.layout.dialog.reuse.AlertTriggerOriginCalcula
 import com.cephmonitor.cephmonitor.layout.fragment.AlertTriggersLayout;
 import com.cephmonitor.cephmonitor.layout.listitem.reuse.SettingDescriptionItem;
 import com.cephmonitor.cephmonitor.model.file.io.SettingStorage;
-import com.cephmonitor.cephmonitor.model.logic.ApiSettingData;
-import com.cephmonitor.cephmonitor.model.network.RemoteSettingToLocal;
-import com.resourcelibrary.model.network.api.MutipleCookieHttpStack;
-import com.resourcelibrary.model.network.api.ceph.params.LoginParams;
+import com.cephmonitor.cephmonitor.model.file.io.SettingUpdateThread;
+import com.cephmonitor.cephmonitor.model.network.remotesetting.data.ApiV1UserMeAlertRuleGetData;
 import com.resourcelibrary.model.view.dialog.LoadingDialog;
 
 import java.util.LinkedHashMap;
@@ -31,7 +27,6 @@ public class AlertTriggersFragment extends Fragment {
     public Object[] paramsGroup;
     private LinkedHashMap<SettingDescriptionItem, Integer> updateDescriptionMap;
     private LoadingDialog loadingDialog;
-    private RequestQueue taskQueue;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (layout == null) {
@@ -43,7 +38,6 @@ public class AlertTriggersFragment extends Fragment {
     }
 
     public void init() {
-        taskQueue = Volley.newRequestQueue(getActivity(), new MutipleCookieHttpStack());
         loadingDialog = new LoadingDialog(getActivity());
         updateDescriptionMap = new LinkedHashMap<>();
         storage = new SettingStorage(getActivity());
@@ -57,30 +51,32 @@ public class AlertTriggersFragment extends Fragment {
         updateDescriptionMap.put(layout.usageWarning, R.string.settings_alert_triggers_usage_warning_description);
         updateDescriptionMap.put(layout.usageError, R.string.settings_alert_triggers_usage_error_description);
 
-        layout.setDialogSaveFinishedEvent(new OnSaveFinishedEvent() {
-            @Override
-            public void onFinish(AlertTriggerOriginCalculatorDialog dialog) {
-                updateAllDescription();
-            }
-        });
+        layout.setDialogSaveFinishedEvent(onSaveFinished);
 
         loadingDialog.show();
-        RemoteSettingToLocal remoteSettingToLocal = new RemoteSettingToLocal(getActivity(), new LoginParams(getActivity()));
-        remoteSettingToLocal.access(new RemoteSettingToLocal.AccessListener() {
-            @Override
-            public void success(ApiSettingData data) {
-                updateAllDescription();
-                loadingDialog.cancel();
-            }
-
-            @Override
-            public void fail(VolleyError volleyError) {
-                Toast.makeText(getActivity(), "Load failed.", Toast.LENGTH_SHORT).show();
-                loadingDialog.cancel();
-            }
-        });
+        SettingUpdateThread.update(getActivity(), accessListener);
     }
 
+    private OnSaveFinishedEvent onSaveFinished = new OnSaveFinishedEvent() {
+        @Override
+        public void onFinish(AlertTriggerOriginCalculatorDialog dialog) {
+            updateAllDescription();
+        }
+    };
+
+    private SettingUpdateThread.AccessListener accessListener = new SettingUpdateThread.AccessListener() {
+        @Override
+        public void success(ApiV1UserMeAlertRuleGetData data) {
+            updateAllDescription();
+            loadingDialog.cancel();
+        }
+
+        @Override
+        public void fail(VolleyError volleyError) {
+            Toast.makeText(getActivity(), "Save setting configuration failed.", Toast.LENGTH_SHORT).show();
+            loadingDialog.cancel();
+        }
+    };
 
     private void updateAllDescription() {
         paramsGroup = new Object[]{
