@@ -9,6 +9,16 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 /**
  * Created by User on 2/3/2015.
  */
@@ -17,9 +27,9 @@ public class RequestVolleyTask<T> {
     private static boolean isFakeValue = false;
     //測試資料的回應時間。
     private int fakeRequestTime = 300;
-    //Volley的請求佇列，只使用唯一實體。
+    //Volley 的請求佇列，只使用唯一實體。
     private static RequestQueue taskQueue;
-    //API需要的參數。
+    //API 需要的參數。
     private T params;
     private Context context;
 
@@ -27,6 +37,7 @@ public class RequestVolleyTask<T> {
     public RequestVolleyTask(Context context) {
         this.context = context;
         if (taskQueue == null) {
+            trustAllSslCertificate();
             taskQueue = Volley.newRequestQueue(context, new MutipleCookieHttpStack());
         }
     }
@@ -67,6 +78,39 @@ public class RequestVolleyTask<T> {
                 successFake.onResponse(fakeValue(params));
             }
         }, fakeRequestTime);
+    }
+
+    // 使用 SSL 時，信任所有沒有第三方驗證的憑證
+    private void trustAllSslCertificate() {
+        try {
+            X509TrustManager x509TrustManager = new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    X509Certificate[] myTrustedAnchors = new X509Certificate[0];
+                    return myTrustedAnchors;
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            };
+            TrustManager[] trustAllCerts = new TrustManager[]{x509TrustManager};
+
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //假資料內容，如需要就在子類別中覆寫此方法。
